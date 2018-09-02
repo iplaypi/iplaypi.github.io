@@ -28,6 +28,8 @@ script:
 - hexo generate
 after_success:
 - cd ./public
+# 复制必须的配置文件
+- cp ../_config.yml ../README.md ./
 - git init
 - git add --all .
 - git commit -m "Travis CI Auto Builder"
