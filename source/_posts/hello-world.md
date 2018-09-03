@@ -1,7 +1,13 @@
 ---
 title: Hello World
+tags: 建站
+date: 2017-10-29
+categories: 基础技术知识
 ---
+
 Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
+
+<!-- more -->
 
 ## Quick Start
 
