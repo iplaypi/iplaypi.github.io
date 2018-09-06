@@ -80,4 +80,4 @@ theme: next
 deploy:
   type: git
   repo: https://www.github.com/iplaypi/iplaypi.github.io.git
-  branch: dev
+  branch: gh-pages
