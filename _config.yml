@@ -79,5 +79,5 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/liupengfeigithub/liupengfeigithub.github.io.git
-  branch: master
+  repo: https://www.github.com/iplaypi/iplaypi.github.io.git
+  branch: dev
