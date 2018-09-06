@@ -65,5 +65,5 @@ notifications:
   email:
     - 1305098770@qq.com
     - pengfei@hudongpai.com
-  on_success: change
+  on_success: always
   on_failure: always
