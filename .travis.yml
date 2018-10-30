@@ -1,7 +1,8 @@
 # 使用语言
 language: node_js
-# node版本
-node_js: stable
+# node版本,node 11.0.0版本yarn install 会报错不支持
+# node_js: stable
+node_js: 10.10.0
 # 设置只监听哪个分支
 branches:
   only:
