@@ -1,5 +1,5 @@
 {# 添加参数 is_pv {% macro render(post, is_index, is_pv, post_extra_class) %} #}
-{% macro render(post, is_index, is_pv, post_extra_class) %}
+{% macro render(post, is_index, post_extra_class) %}
 
   {% set headlessPost = Array.prototype.indexOf.call(['quote', 'picture'], post.type) > -1 %}
 
@@ -211,17 +211,22 @@
           {% endif %}
 
           {% if not is_index and theme.busuanzi_count.enable and theme.busuanzi_count.page_pv %}
+		    <span id="busuanzi_container_page_pv" style='display:none'><span class="post-meta-divider">|</span> {{ __('post.visitors') }} <span id="busuanzi_value_page_pv"></span>
+            </span>
+		    {# 自己加代码
             <span class="post-meta-divider">|</span>
             <span class="page-pv">{{ theme.busuanzi_count.page_pv_header }}
             <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>{{ theme.busuanzi_count.page_pv_footer }}
             </span>
+			#}
           {% endif %}
 
-          {# 添加单个文章的阅读数 #}
+          {# 添加单个文章的阅读数 移动到上面去了
           {% if is_pv %}
             <span id="busuanzi_container_page_pv" style='display:none'><span class="post-meta-divider">|</span> {{ __('post.visitors') }} <span id="busuanzi_value_page_pv"></span>
             </span>
           {% endif %}
+		  #}
 
            {# 文章字数和阅读时长 #}
           {% if theme.post_wordcount.wordcount or theme.post_wordcount.min2read %}

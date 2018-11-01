@@ -11,7 +11,6 @@
 {% block content %}
   <section id="posts" class="posts-expand">
     {% for post in page.posts %}
-      {# {{ post_template.render(post, true, true) }}指定显示首页的阅读数,不要显示,会错乱 #}
       {{ post_template.render(post, true) }}
     {% endfor %}
   </section>
