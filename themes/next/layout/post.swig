@@ -11,7 +11,8 @@
 {% block content %}
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+     {# 指定显示阅读数 {{ post_template.render(page, false, true) }} #}
+    {{ post_template.render(page, false, true) }}
 
     <div class="post-spread">
       {% if theme.jiathis %}

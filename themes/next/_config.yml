@@ -18,6 +18,7 @@ override: false
 
 # For example, you put your favicons into `hexo-site/source/images` directory.
 # Then need to rename & redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.
+# 图标
 favicon:
   small: /images/favicon-16x16-next.png
   medium: /images/favicon-32x32-next.png
@@ -27,7 +28,7 @@ favicon:
   #ms_browserconfig: /images/browserconfig.xml
 
 # Set default keywords (Use a comma to separate)
-keywords: "Hexo, NexT"
+keywords: "Come on, playpi"
 
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
@@ -39,8 +40,8 @@ footer:
   # If not defined, current year will be used.
   since: 2016
 
-  # Icon between year and copyright info.
-  icon: user
+  # Icon between year and copyright info. es:user
+  icon: heart
 
   # If not defined, will be used `author` from Hexo main config.
   copyright:
@@ -52,7 +53,7 @@ footer:
     # Theme & scheme info link (Theme - NexT.scheme).
     enable: true
     # Version info of NexT after scheme info (vX.X.X).
-    version: true
+    version: false
   # -------------------------------------------------------------
   # Any custom text can be defined here.
   #custom_text: Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
@@ -120,6 +121,7 @@ scheme: Mist
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
   GitHub: https://github.com/iplaypi || github
+  微博: https://weibo.com/u/3086148515 || weibo
   #E-Mail: mailto:yourname@gmail.com || envelope
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
@@ -152,8 +154,8 @@ links_layout: block
 toc:
   enable: true
 
-  # Automatically add list number to toc.
-  number: true
+  # Automatically add list number to toc. 目录自动编号
+  number: false
 
   # If true, all words will placed on next lines if header width longer then sidebar width.
   wrap: false
@@ -200,7 +202,7 @@ sidebar:
 scroll_to_more: true
 
 # Automatically saving scroll position on each post/page in cookies.
-save_scroll: false
+save_scroll: true
 
 # Automatically excerpt description in homepage as preamble text.
 excerpt_description: true
@@ -222,8 +224,11 @@ post_meta:
 # Dependencies: https://github.com/willin/hexo-wordcount
 post_wordcount:
   item_text: true
-  wordcount: false
-  min2read: false
+  # 单篇文章字数统计
+  wordcount: true
+  # 阅读时长
+  min2read: true
+  # 总字数统计
   totalcount: false
   separated_meta: true
 
@@ -522,6 +527,7 @@ leancloud_visitors:
   app_id: #<app_id>
   app_key: #<app_key>
 
+# 不蒜子的统计信息,不用这里的,自己添加脚本代码
 # Show PV/UV of the website/page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi/
 busuanzi_count:
@@ -581,7 +587,7 @@ algolia_search:
 # Local search
 # Dependencies: https://github.com/flashlab/hexo-generator-search
 local_search:
-  enable: false
+  enable: true
   # if auto, trigger search by changing input
   # if manual, trigger search by pressing enter key or search button
   trigger: auto

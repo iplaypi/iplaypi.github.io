@@ -1,4 +1,5 @@
-{% macro render(post, is_index, post_extra_class) %}
+{# 添加参数 is_pv {% macro render(post, is_index, is_pv, post_extra_class) %} #}
+{% macro render(post, is_index, is_pv, post_extra_class) %}
 
   {% set headlessPost = Array.prototype.indexOf.call(['quote', 'picture'], post.type) > -1 %}
 
@@ -63,9 +64,11 @@
         <div class="post-meta">
           <span class="post-time">
             {% if theme.post_meta.created_at %}
+            {# 注释掉小图标
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
+            #}
               {% if theme.post_meta.item_text %}
                 <span class="post-meta-item-text">{{ __('post.posted') }}</span>
               {% endif %}
@@ -79,11 +82,13 @@
             {% endif %}
 
             {% if theme.post_meta.updated_at %}
+            {# 注释掉小图标
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-check-o"></i>
               </span>
+            #}
               {% if theme.post_meta.item_text %}
-                <span class="post-meta-item-text">{{ __('post.modified') }}&#58;</span>
+                <span class="post-meta-item-text">{{ __('post.modified') }}</span>
               {% endif %}
               <time title="{{ __('post.modified') }}" itemprop="dateModified" datetime="{{ moment(post.updated).format() }}">
                 {{ date(post.updated, config.date_format) }}
@@ -96,9 +101,11 @@
             {% if theme.post_meta.created_at or theme.post_meta.updated_at %}
               <span class="post-meta-divider">|</span>
             {% endif %}
+            {# 注释掉小图标
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
+            #}
               {% if theme.post_meta.item_text %}
                 <span class="post-meta-item-text">{{ __('post.in') }}</span>
               {% endif %}
@@ -210,20 +217,29 @@
             </span>
           {% endif %}
 
+          {# 添加单个文章的阅读数 #}
+          {% if is_pv %}
+            <span id="busuanzi_container_page_pv" style='display:none'><span class="post-meta-divider">|</span> {{ __('post.visitors') }} <span id="busuanzi_value_page_pv"></span>
+            </span>
+          {% endif %}
+
+           {# 文章字数和阅读时长 #}
           {% if theme.post_wordcount.wordcount or theme.post_wordcount.min2read %}
             <div class="post-wordcount">
               {% if theme.post_wordcount.wordcount %}
                 {% if not theme.post_wordcount.separated_meta %}
                   <span class="post-meta-divider">|</span>
                 {% endif %}
+				{# 字数统计注释掉小图标
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
                 </span>
+				#}
                 {% if theme.post_wordcount.item_text %}
-                  <span class="post-meta-item-text">{{ __('post.wordcount') }}&#58;</span>
+                  <span class="post-meta-item-text">{{ __('post.wordcount') }}</span>
                 {% endif %}
                 <span title="{{ __('post.wordcount') }}">
-                  {{ wordcount(post.content) }}
+                  {{ wordcount(post.content) }}字
                 </span>
               {% endif %}
 
@@ -232,14 +248,16 @@
               {% endif %}
 
               {% if theme.post_wordcount.min2read %}
+                {# 阅读时长统计注释掉小图标
                 <span class="post-meta-item-icon">
                   <i class="fa fa-clock-o"></i>
                 </span>
+                #}
                 {% if theme.post_wordcount.item_text %}
                   <span class="post-meta-item-text">{{ __('post.min2read') }} &asymp;</span>
                 {% endif %}
                 <span title="{{ __('post.min2read') }}">
-                  {{ min2read(post.content) }}
+                  {{ min2read(post.content) }}分钟
                 </span>
               {% endif %}
             </div>
@@ -346,7 +364,8 @@
       {% if post.tags and post.tags.length and not is_index %}
         <div class="post-tags">
           {% for tag in post.tags %}
-            <a href="{{ url_for(tag.path) }}" rel="tag"># {{ tag.name }}</a>
+		  {# 标签的#替换为图标 #}
+            <a href="{{ url_for(tag.path) }}" rel="tag"><i class="fa fa-tag"></i> {{ tag.name }}</a>
           {% endfor %}
         </div>
       {% endif %}
