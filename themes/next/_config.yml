@@ -229,7 +229,7 @@ post_wordcount:
   # 阅读时长
   min2read: true
   # 总字数统计
-  totalcount: false
+  totalcount: true
   separated_meta: true
 
 # Wechat Subscriber

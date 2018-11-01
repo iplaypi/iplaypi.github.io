@@ -1,22 +1,24 @@
 <div class="copyright">{#
 #}{% set current = date(Date.now(), "YYYY") %}{#
-#}&copy; {% if theme.footer.since and theme.footer.since != current %}{{ theme.footer.since }} &ndash; {% endif %}{#
+#}&copy; {% if theme.footer.since and theme.footer.since != current %}{{ theme.footer.since }}&ndash;{% endif %}{#
 #}<span itemprop="copyrightYear">{{ current }}</span>
+  <span class="post-meta-divider">|</span>
   <span class="with-love">
     <i class="fa fa-{{ theme.footer.icon }}"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">{{ theme.footer.copyright || config.author }}</span>
 
+  {# 全站字数统计 #}
   {% if theme.post_wordcount.totalcount %}
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
     {% if theme.post_wordcount.item_text %}
-      <span class="post-meta-item-text">{{ __('post.totalcount') }}&#58;</span>
+      <span class="post-meta-item-text">{{ __('post.totalcount') }}</span>
     {% endif %}
     <span title="{{ __('post.totalcount') }}">{#
-    #}{{ totalcount(site, '0,0.0a') }}{#
+    #}{{ totalcount(site, '0,0.0a') }}字{#
   #}</span>
   {% endif %}
 </div>
@@ -41,10 +43,9 @@
   {#添加页面底部统计信息在一行
   #}
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-divider">|</span>
-    <span id="busuanzi_container_site_pv" style='display:none'> 总访问量 <span id="busuanzi_value_site_pv"></span> 次 <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv" style='display:none'><span class="post-meta-divider">|</span> 总访问量 <span id="busuanzi_value_site_pv"></span> 次 
     </span>
-    <span id="busuanzi_container_site_uv" style='display:none'> 总访客 <span id="busuanzi_value_site_uv"></span> 人</span>
+    <span id="busuanzi_container_site_uv" style='display:none'><span class="post-meta-divider">|</span> 总访客 <span id="busuanzi_value_site_uv"></span> 人</span>
   </div>
 {% endif %}
 
