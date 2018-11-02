@@ -24,8 +24,8 @@
 </div>
 
 {% if theme.footer.powered %}
-  <div class="powered-by">{#
-  #}{{ __('footer.powered', '<a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a>') }}{#
+  <div class="powered-by">{#反垃圾链接 rel="external nofollow"
+  #}{{ __('footer.powered', '<a class="theme-link" target="_blank" href="https://hexo.io" rel="external nofollow">Hexo</a>') }}{#
 #}</div>
 {% endif %}
 
@@ -35,8 +35,8 @@
 
 {% if theme.footer.theme.enable %}
   <div class="theme-info">{#
-  #}{{ __('footer.theme') }}&nbsp;{#
-  #}<a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">{#
+  #}{{ __('footer.theme') }}&nbsp;{#反垃圾链接
+  #}<a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">{#
     #}NexT.{{ theme.scheme }}{#
   #}</a>{% if theme.footer.theme.version %} v{{ theme.version }}{% endif %}{#
   #}
