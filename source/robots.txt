@@ -1,5 +1,3 @@
-layout: false
----
 # hexo robots.txt
 User-agent: *
 Allow: /
