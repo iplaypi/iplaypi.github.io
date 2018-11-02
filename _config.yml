@@ -12,9 +12,19 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://www.playpi.org
 root: /
-permalink: :year/:month/:day/:title/
+# 站点生成
+Plugins:
+- hexo-generator-baidu-sitemap
+- hexo-generator-sitemap
+baidusitemap:
+  path: baidusitemap.xml
+sitemap:
+  path: sitemap.xml
+
+# permalink: :year/:month/:day/:title/
+permalink: :title.html
 permalink_defaults:
 
 # Directory
