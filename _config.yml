@@ -14,7 +14,7 @@ timezone:
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://www.playpi.org
 root: /
-# 站点生成
+# 站点生成,插件,给谷歌/百度
 Plugins:
 - hexo-generator-baidu-sitemap
 - hexo-generator-sitemap
