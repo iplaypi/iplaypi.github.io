@@ -34,9 +34,8 @@ before_install:
 # 字数统计,时长统计需要工具,Node版本7.6.0之前,请安装2.x版本,npm install hexo-wordcount@2 --save
 - npm install hexo-wordcount --save
 # 站点地图,seo优化使用
-npm install hexo-generator-sitemap --save
-npm install hexo-generator-baidu-sitemap --save
-
+- npm install hexo-generator-sitemap --save
+- npm install hexo-generator-baidu-sitemap --save
 install:
 # 不用yarn的话这里改成 npm i 即可
 - yarn
