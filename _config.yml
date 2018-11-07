@@ -5,11 +5,12 @@
 # Site
 title: 虾丸派
 subtitle: 烂笔头
-description: 记录知识|分享技术
+description: 记录知识 | 分享技术
 author: playpi
 language: zh-Hans
 timezone: Asia/Shanghai
-
+# 主题中开启seo导致decription不用于展示侧边栏
+signature: 记录知识 | 分享技术
 # 在中文和英文之间加入空格,这个没用
 # auto_spacing: true
 # URL
@@ -108,6 +109,24 @@ feed:
   type: atom
   path: atom.xml
   limit: 20
+
+# Live2D
+## https://github.com/EYHN/hexo-helper-live2d
+live2d:
+  tagMode: true
+  model: hijiki # 模型名称 默认值: z16
+  width: 150 # 宽度 默认值: 150
+  height: 300 # 高度 默认值: 300
+  scaling: 1 # 分辨率缩放倍率 默认值: 2
+  opacityDefault: 0.7 # 初始的透明度 默认值: 0.7
+  opacityHover: 1 # 鼠标悬浮时的透明度 默认值: 1
+  mobileShow: false # 是否在移动设备上显示 默认值: true
+  mobileScaling: 0.5 # 移动设备缩放倍率 默认值: 0.5
+  position: right # 模型左右侧放置位置 默认值: right
+  horizontalOffset: 0 # 元素的水平偏移 默认值: 0
+  verticalOffset: -20 # 元素的底部偏移 默认值: -20
+  id: live2dcanvas # 元素的id 默认值: live2dcanvas
+  deviceJsSource: local # current-device 脚本的来源 默认值: local
 
 # 自动部署功能,用不到了,在gh-pages分支测试
 # Deployment
