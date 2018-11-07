@@ -10,6 +10,8 @@ author: playpi
 language: zh-Hans
 timezone:
 
+# 在中文和英文之间加入空格
+auto_spacing: true
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://www.playpi.org
@@ -35,6 +37,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
+# 跳过,不渲染的文件
 skip_render:
 
 # Writing
