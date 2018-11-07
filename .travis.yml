@@ -44,6 +44,8 @@ before_install:
 - npm install hexo-pangu-spacing --save
 # rss订阅插件
 - npm install hexo-generator-feed --save
+# 三维卡通人物
+- npm install --save hexo-helper-live2d
 install:
 # 不用yarn的话这里改成 npm i 即可
 - yarn

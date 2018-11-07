@@ -122,7 +122,7 @@ live2d:
   opacityHover: 1 # 鼠标悬浮时的透明度 默认值: 1
   mobileShow: false # 是否在移动设备上显示 默认值: true
   mobileScaling: 0.5 # 移动设备缩放倍率 默认值: 0.5
-  position: right # 模型左右侧放置位置 默认值: right
+  position: left # 模型左右侧放置位置 默认值: right
   horizontalOffset: 0 # 元素的水平偏移 默认值: 0
   verticalOffset: -20 # 元素的底部偏移 默认值: -20
   id: live2dcanvas # 元素的id 默认值: live2dcanvas
