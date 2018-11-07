@@ -20,10 +20,10 @@ override: false
 # Then need to rename & redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.
 # 图标
 favicon:
-  small: /images/favicon-16x16-next.png
-  medium: /images/favicon-32x32-next.png
-  apple_touch_icon: /images/apple-touch-icon-next.png
-  safari_pinned_tab: /images/logo.svg
+  small: /images/favicon-16x12-playpi.png
+  medium: /images/favicon-32x24-playpi.png
+  apple_touch_icon: /images/apple-touch-icon-playpi.png
+  safari_pinned_tab: /images/logo-playpi.svg
   #android_manifest: /images/manifest.json
   #ms_browserconfig: /images/browserconfig.xml
 
@@ -657,8 +657,8 @@ motion:
 # Fancybox
 fancybox: true
 
-# Progress bar in the top during page loading.
-pace: false
+# Progress bar in the top during page loading.顶部进度条
+pace: true
 # Themes list:
 #pace-theme-big-counter
 #pace-theme-bounce

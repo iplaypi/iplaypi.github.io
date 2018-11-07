@@ -10,21 +10,26 @@ author: playpi
 language: zh-Hans
 timezone:
 
-# 在中文和英文之间加入空格
-auto_spacing: true
+# 在中文和英文之间加入空格,这个没用
+# auto_spacing: true
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://www.playpi.org
 root: /
+# Plugins一定要大写,否则generater和server都会失败,而且不报错,被坑了
 # 站点生成,插件,给谷歌/百度
 Plugins:
 - hexo-generator-baidu-sitemap
 - hexo-generator-sitemap
+# 中英文之间插入空白符的插件
+- hexo-pangu-spacing
+# 站点地图
 baidusitemap:
   path: baidusitemap.xml
 sitemap:
   path: sitemap.xml
 
+# url的格式
 # permalink: :year/:month/:day/:title/
 permalink: :title.html
 permalink_defaults:
@@ -37,8 +42,8 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-# 跳过,不渲染的文件
-skip_render:
+# 跳过,不渲染的文件,只是source目录下面的
+skip_render: [robots.txt, google14e242670e17efce.html]
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -89,13 +94,14 @@ pagination_dir: page
 ## theme: landscape
 # 主题
 theme: next
-# 搜索
+# 本地搜索功能
 search:
   path: search.xml
   field: post
   format: html
   limit: 10000
 
+# 自动部署功能,用不到了,在gh-pages分支测试
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
