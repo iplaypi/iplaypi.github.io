@@ -8,7 +8,7 @@ subtitle: 烂笔头
 description: 记录知识|分享技术
 author: playpi
 language: zh-Hans
-timezone:
+timezone: Asia/Shanghai
 
 # 在中文和英文之间加入空格,这个没用
 # auto_spacing: true
@@ -23,6 +23,8 @@ Plugins:
 - hexo-generator-sitemap
 # 中英文之间插入空白符的插件
 - hexo-pangu-spacing
+# rss订阅
+- hexo-generator-feed
 # 站点地图
 baidusitemap:
   path: baidusitemap.xml
@@ -100,6 +102,12 @@ search:
   field: post
   format: html
   limit: 10000
+
+#rss订阅
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
 
 # 自动部署功能,用不到了,在gh-pages分支测试
 # Deployment

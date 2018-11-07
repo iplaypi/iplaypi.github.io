@@ -33,7 +33,7 @@ keywords: "playpi,虾丸派,烂笔头,记录知识,分享技术"
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
 # Set rss to specific value if you have burned your feed already.
-rss:
+rss: /atom.xml
 
 footer:
   # Specify the date when the site was setup.
@@ -102,7 +102,7 @@ menu_icons:
 # ---------------------------------------------------------------
 # Scheme Settings
 # ---------------------------------------------------------------
-
+# 主题选择
 # Schemes
 scheme: Mist
 #scheme: Mist
@@ -122,7 +122,7 @@ scheme: Mist
 social:
   GitHub: https://github.com/iplaypi || github
   微博: https://weibo.com/u/3086148515 || weibo
-  #E-Mail: mailto:yourname@gmail.com || envelope
+  E-Mail: mailto:plpaypi@qq.com || envelope
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
@@ -137,18 +137,19 @@ social_icons:
   icons_only: false
   transition: false
 
+# 友情链接
 # Blog rolls
 links_icon: link
-links_title: Links
+links_title: 友情链接
 links_layout: block
 #links_layout: inline
-#links:
-  #Title: http://example.com/
+links:
+  Github: https://github.com/iplaypi
 
-# Sidebar Avatar
+# Sidebar Avatar,站点概览
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
-#avatar: /images/avatar.gif
+avatar: /images/favicon-1638x1538-playpi.png
 
 # Table Of Contents in the Sidebar
 toc:
@@ -166,6 +167,7 @@ toc:
 #creative_commons: by-nc-sa
 #creative_commons:
 
+# 侧边展示
 sidebar:
   # Sidebar Position, available value: left | right (only for Pisces | Gemini).
   position: left
@@ -187,8 +189,9 @@ sidebar:
   # Back to top in sidebar (only for Pisces | Gemini).
   b2t: false
 
+# 文章进度百分比显示,在箭头旁边
   # Scroll percent label in b2t button.
-  scrollpercent: false
+  scrollpercent: true
 
   # Enable sidebar on narrow view (only for Muse | Mist).
   onmobile: false
@@ -207,6 +210,7 @@ save_scroll: true
 # Automatically excerpt description in homepage as preamble text.
 excerpt_description: true
 
+# 首页文章以摘要形式显示,不推荐,使用more标记比较好
 # Automatically Excerpt. Not recommend.
 # Please use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
@@ -232,19 +236,20 @@ post_wordcount:
   totalcount: true
   separated_meta: true
 
+# 微信订阅,放公众号二维码
 # Wechat Subscriber
 #wechat_subscriber:
   #enabled: true
   #qcode: /path/to/your/wechatqcode ex. /uploads/wechat-qcode.jpg
   #description: ex. subscribe to my blog by scanning my public wechat account
 
-# Reward
-#reward_comment: Donate comment here
-#wechatpay: /images/wechatpay.jpg
-#alipay: /images/alipay.jpg
+# Reward,打赏,放收钱码
+reward_comment: 在这打赏吧
+wechatpay: /images/apple-touch-icon-playpi.png
+alipay: /images/apple-touch-icon-playpi.png
 #bitcoin: /images/bitcoin.png
 
-# Declare license on posts
+# Declare license on posts,法律协议
 post_copyright:
   enable: false
   license: CC BY-NC-SA 3.0
@@ -677,15 +682,13 @@ pace: true
 # pace_theme: pace-theme-center-simple
 pace_theme: pace-theme-minimal
 
+# 背景动画
 # Canvas-nest
 canvas_nest: false
-
 # three_waves
 three_waves: false
-
 # canvas_lines
 canvas_lines: false
-
 # canvas_sphere
 canvas_sphere: false
 

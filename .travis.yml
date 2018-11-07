@@ -42,6 +42,8 @@ before_install:
 # 中英文之间自动增加空格插件
 # - npm install hexo-filter-auto-spacing --save(这个人用的少,不用了)
 - npm install hexo-pangu-spacing --save
+# rss订阅插件
+- npm install hexo-generator-feed --save
 install:
 # 不用yarn的话这里改成 npm i 即可
 - yarn
