@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.playpi.org/hello-world.html</loc>
-    <lastmod>2018-11-07T21:55:20.149Z</lastmod>
+    <loc>https://www.playpi.org/2017102901.html</loc>
+    <lastmod>2018-11-08T17:47:17.309Z</lastmod>
   </url>  <url>
-    <loc>https://www.playpi.org/%E5%BD%92%E6%9D%A5.html</loc>
-    <lastmod>2018-11-07T21:55:20.149Z</lastmod>
+    <loc>https://www.playpi.org/2018090501.html</loc>
+    <lastmod>2018-11-08T17:47:17.309Z</lastmod>
   </url>  <url>
-    <loc>https://www.playpi.org/%E5%BD%92%E6%9D%A52.html</loc>
+    <loc>https://www.playpi.org/2018110902.html</loc>
+    <lastmod>2018-11-08T17:44:11.000Z</lastmod>
+  </url>  <url>
+    <loc>https://www.playpi.org/2018110901.html</loc>
+    <lastmod>2018-11-08T17:37:18.000Z</lastmod>
+  </url>  <url>
+    <loc>https://www.playpi.org/2018090601.html</loc>
     <lastmod>2018-10-31T16:00:00.000Z</lastmod>
   </url>
 </urlset>
