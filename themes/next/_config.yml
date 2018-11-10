@@ -20,9 +20,9 @@ override: false
 # Then need to rename & redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.
 # 图标
 favicon:
-  small: /images/favicon-16x12-playpi.png
-  medium: /images/favicon-32x24-playpi.png
-  apple_touch_icon: /images/apple-touch-icon-playpi.png
+  small: /images/favicon-16x16-playpi.png
+  medium: /images/favicon-32x32-playpi.png
+  apple_touch_icon: /images/apple-touch-icon-240x240-playpi.png
   safari_pinned_tab: /images/logo-playpi.svg
   #android_manifest: /images/manifest.json
   #ms_browserconfig: /images/browserconfig.xml
@@ -244,9 +244,9 @@ post_wordcount:
   #description: ex. subscribe to my blog by scanning my public wechat account
 
 # Reward,打赏,放收钱码
-reward_comment: 在这里打赏
-wechatpay: /images/apple-touch-icon-playpi.png
-alipay: /images/apple-touch-icon-playpi.png
+reward_comment: 在这里赞赏
+wechatpay: /images/wechat-pay-playpi.png
+# alipay: /images/apple-touch-icon-playpi.png
 #bitcoin: /images/bitcoin.png
 
 # Declare license on posts,法律协议
