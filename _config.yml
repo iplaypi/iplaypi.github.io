@@ -9,6 +9,8 @@ description: 记录知识 | 分享技术
 author: playpi
 language: zh-Hans
 timezone: Asia/Shanghai
+# 设置站点关键词,seo优化
+keywords: playpi,虾丸派,烂笔头,记录知识,分享技术
 # 主题中开启seo导致decription不用于展示侧边栏
 signature: 记录知识 | 分享技术
 # 在中文和英文之间加入空格,这个没用
@@ -46,7 +48,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 # 跳过,不渲染的文件,只是source目录下面的
-skip_render: [robots.txt, google14e242670e17efce.html]
+skip_render: [robots.txt, google14e242670e17efce.html, baidu_verify_hfab04Fh5L.html]
 
 # Writing
 new_post_name: :title.md # File name of new posts

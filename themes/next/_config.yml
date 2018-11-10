@@ -28,7 +28,7 @@ favicon:
   #ms_browserconfig: /images/browserconfig.xml
 
 # Set default keywords (Use a comma to separate)
-keywords: "playpi,虾丸派,烂笔头,记录知识,分享技术"
+keywords: playpi,虾丸派,烂笔头,记录知识,分享技术
 
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
@@ -149,7 +149,7 @@ links:
 # Sidebar Avatar,站点概览
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
-avatar: /images/favicon-1638x1538-playpi.png
+avatar: /images/favicon-1536x1536-playpi.png
 
 # Table Of Contents in the Sidebar
 toc:
@@ -244,7 +244,7 @@ post_wordcount:
   #description: ex. subscribe to my blog by scanning my public wechat account
 
 # Reward,打赏,放收钱码
-reward_comment: 在这打赏吧
+reward_comment: 在这里打赏
 wechatpay: /images/apple-touch-icon-playpi.png
 alipay: /images/apple-touch-icon-playpi.png
 #bitcoin: /images/bitcoin.png
