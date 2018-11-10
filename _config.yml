@@ -131,7 +131,7 @@ live2d:
   debug: false
   model:
     # 使用哪个模型,https://github.com/xiazeyu/live2d-widget-models
-    use: live2d-widget-model-hijiki
+    use: ./source/live2d_models/hijiki
     # 模型与canvas的缩放
     scale: 1
   display:
@@ -146,7 +146,7 @@ live2d:
     # 垂直偏移
     vOffset: -20
   mobile:
-    show: true
+    show: false
     # 移动设备是否开启重力感应
     motion: true
     scale: 0.3

@@ -46,8 +46,8 @@ before_install:
 - npm install hexo-generator-feed --save
 # 三维卡通人物
 - npm install --save hexo-helper-live2d
-# 三维卡通人物-小猫咪模型下载
-- npm install --save live2d-widget-model-hijiki
+# 三维卡通人物-小猫咪模型下载(保险起见,把模型文件放到自己的文件夹里,不用每次下载)
+# - npm install --save live2d-widget-model-hijiki
 install:
 # 不用yarn的话这里改成 npm i 即可
 - yarn
