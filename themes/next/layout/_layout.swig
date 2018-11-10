@@ -86,6 +86,6 @@
   {% include '_third-party/mathjax.swig' %}
   {% include '_third-party/scroll-cookie.swig' %}
   {% include '_third-party/exturl.swig' %}
-  {{ live2d() }}
+  {# 小挂饰配置,内嵌版本,不用了 live2d() #}
 </body>
 </html>

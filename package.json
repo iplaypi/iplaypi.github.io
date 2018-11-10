@@ -23,6 +23,7 @@
     "hexo-renderer-marked": "^0.3.0",
     "hexo-renderer-stylus": "^0.3.1",
     "hexo-server": "^0.2.2",
-    "hexo-wordcount": "^2.0.1"
+    "hexo-wordcount": "^2.0.1",
+    "live2d-widget-model-hijiki": "^1.0.5"
   }
 }

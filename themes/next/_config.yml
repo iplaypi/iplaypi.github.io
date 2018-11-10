@@ -167,7 +167,7 @@ toc:
 #creative_commons: by-nc-sa
 #creative_commons:
 
-# 侧边展示
+# 侧边栏展示,只有点击图标的时候才打开
 sidebar:
   # Sidebar Position, available value: left | right (only for Pisces | Gemini).
   position: left
@@ -178,7 +178,7 @@ sidebar:
   #  - always  expand for all pages automatically
   #  - hide    expand only when click on the sidebar toggle icon.
   #  - remove  Totally remove sidebar including sidebar toggle.
-  display: post
+  display: hide
   #display: always
   #display: hide
   #display: remove

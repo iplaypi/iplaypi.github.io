@@ -117,23 +117,39 @@ feed:
   path: atom.xml
   limit: 20
 
-# Live2D,还没生效
-## https://github.com/EYHN/hexo-helper-live2d
+# Live2D,还没生效,设置小挂饰
+# https://github.com/EYHN/hexo-helper-live2d
+# 配置参数:https://l2dwidget.js.org/docs/class/src/index.js~L2Dwidget.html#instance-method-init
 live2d:
-  tagMode: true
-  model: hijiki # 模型名称 默认值: z16
-  width: 150 # 宽度 默认值: 150
-  height: 300 # 高度 默认值: 300
-  scaling: 1 # 分辨率缩放倍率 默认值: 2
-  opacityDefault: 0.7 # 初始的透明度 默认值: 0.7
-  opacityHover: 1 # 鼠标悬浮时的透明度 默认值: 1
-  mobileShow: false # 是否在移动设备上显示 默认值: true
-  mobileScaling: 0.5 # 移动设备缩放倍率 默认值: 0.5
-  position: left # 模型左右侧放置位置 默认值: right
-  horizontalOffset: 0 # 元素的水平偏移 默认值: 0
-  verticalOffset: -20 # 元素的底部偏移 默认值: -20
-  id: live2dcanvas # 元素的id 默认值: live2dcanvas
-  deviceJsSource: local # current-device 脚本的来源 默认值: local
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  # 不使用标签内嵌模式
+  tagMode: false
+  debug: false
+  model:
+    # 使用哪个模型,https://github.com/xiazeyu/live2d-widget-models
+    use: live2d-widget-model-hijiki
+    # 模型与canvas的缩放
+    scale: 1
+  display:
+    # 位置,左,右
+    position: left
+    # canvas的长度
+    width: 120
+    # canvas的高度
+    height: 240
+    # 水平偏移
+    hOffset: 0
+    # 垂直偏移
+    vOffset: -20
+  mobile:
+    show: true
+    # 移动设备是否开启重力感应
+    motion: true
+    scale: 0.3
 
 # 自动部署功能,用不到了,在gh-pages分支测试
 # Deployment
