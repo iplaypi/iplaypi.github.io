@@ -138,9 +138,9 @@ live2d:
     # 位置,左,右
     position: left
     # canvas的长度
-    width: 120
+    width: 100
     # canvas的高度
-    height: 240
+    height: 200
     # 水平偏移
     hOffset: 0
     # 垂直偏移
