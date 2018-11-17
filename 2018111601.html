@@ -104,6 +104,13 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3j16ymwj20hf03eglj.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3pjtymuj20g60dp75k.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3ly1fxbhx6e12jj20h004qgln.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo5moanxj20cj0a5dga.jpg “开启系统代理并使用 PAC 模式”">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo6rej96j20ip0axjs7.jpg “PAC 模式下更新 GFWList 内容”">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo7ifow9j20j80apt9k.jpg “PAC 模式下自定义过滤规则”">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbof33m9dj20ij0aa0tl.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxboiacqtbj20se0kojse.jpg “浏览器代理配置”">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbooa2ikvj20xc0pwq93.jpg “Edge 浏览器设置代理脚本”">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbp79ywuej21hc0q20v7.jpg “SwitchyOmega 插件配置”">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa0mkrws7j20pc0nkglz.jpg">
 <meta property="og:updated_time" content="2018-11-16T11:25:52.000Z">
 <meta name="twitter:card" content="summary">
@@ -377,7 +384,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,378字
+                  2,778字
                 </span>
               
 
@@ -391,7 +398,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5分钟
+                  10分钟
                 </span>
               
             </div>
@@ -495,11 +502,25 @@
 <p>实际上下载程序后，无需安装，直接解压即可，解压后只有一个 exe 文件，双击即可运行（最好放入指定文件夹中，便于程序管理和升级）。第一次启动，需要设置参数，如上图所示，至少配置一台机器，另外还可以设置开机启动，以后不用重新打开。此外，如果有更新版本的程序，会放在 ss_win_temp 文件夹下，直接解压后复制替换掉当前的 exe 文件即可；如果文件夹中有 gui-config.json、statistics-config.json 这 2 个文本文件，它们是程序的配置以及前面设置的翻墙配置，不能删掉；如果使用系统代理的 PAC 模式（推荐使用），会生成 pac.txt 文本文件，存放从 GFWList 获取的被墙的网址，必要时才会通过翻墙代理访问，其它正常的网址则直接访问，这样可以节约流量。</p>
 <p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3ly1fxbhx6e12jj20h004qgln.jpg" alt="ss 文件夹" title="ss 文件夹"></p>
 <p>如果有切换代理的需求，搭配浏览器的插件来完成，例如 <a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN" target="_blank" rel="noopener">Proxy SwitchyOmega</a> 就可以。</p>
+<p>关于启动系统代理并使用 PAC 模式（根据条件过滤，不满足的直连），如果是入门级别使用，直接设置完就可以用了，不用再管其它设置，切记要定时更新 GFWList 列表，因为如果某些网站最近刚刚被屏蔽，不在以前的 HFWList 列表里面，就会导致无法连接，只有及时更新才能正常连接。但是还有一种极端情况，就是某些网站 GFWList 迟迟没有收录，怎么更新都不会起作用，别着急，此时可以使用用户自定义规则，模仿 GFWList 填写自己的过滤规则，即可实现灵活的切换，使用用户自定义规则后会在安装文件夹中生成 user-rule.txt 文本文件。</p>
+<p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo5moanxj20cj0a5dga.jpg “开启系统代理并使用 PAC 模式”" alt="开启系统代理并使用 PAC 模式"></p>
+<p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo6rej96j20ip0axjs7.jpg “PAC 模式下更新 GFWList 内容”" alt="PAC 模式下更新 GFWList 内容"></p>
+<p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo7ifow9j20j80apt9k.jpg “PAC 模式下自定义过滤规则”" alt="PAC 模式下自定义过滤规则"></p>
+<p>其实，PAC 模式的原理就是根据公共的过滤规则（收集被屏蔽的网站列表），自动生成了一个脚本文件，把脚本文件绑定到浏览器的代理设置中，使浏览器访问网站前都会运行这个脚本，根据脚本的结果决定是直接访问还是通过本地代理访问，脚本在 Shadowsocks 的 PAC 设置中可以看到，浏览器的设置信息可以在代理设置中看到（浏览器在 Shadowsocks 开启系统代理的时候会自动设置代理，无需人工干预）。由此可以得知，通过本机访问网络，决定是直接连接还是通过 Shadowsocks 代理连接的是 PAC 脚本，并不是 Shadowsocks 本身，所以如果使用系统的 Ping 命令访问 <a href="http://www.google.com" target="_blank" rel="noopener">www.google.com</a> 仍然是不能访问的，因为直接 Ping 没有经过 PAC 脚本，还是直接连接了，不可能访问成功。除了浏览器之外，如果其它程序也想访问被屏蔽的网站（例如 Git、Maven 仓库），只能通过程序自己的代理设置进行配置，完成访问的目的。（如果放弃 PAC 模式，直接使用全局模式，则不需要配置任何信息，本机所有的网络请求会全部经过翻墙代理，当然这样做会导致流量消耗过大，并且国内的正常网站访问速度也会很慢）</p>
+<p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbof33m9dj20ij0aa0tl.jpg" alt="获取 PAC 的脚本地址" title="获取 PAC 的脚本地址"><br>获取到的 PAC 脚本地址为：<a href="http://127.0.0.1:1080/pac?t=20181118030355597&amp;secret=qZKsW49fDFezR4jJQtRDhUVPRqnFu6JC3Nc+vtXDb0g=" target="_blank" rel="noopener">http://127.0.0.1:1080/pac?t=20181118030355597&amp;secret=qZKsW49fDFezR4jJQtRDhUVPRqnFu6JC3Nc+vtXDb0g=</a></p>
+<p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxboiacqtbj20se0kojse.jpg “浏览器代理配置”" alt="浏览器代理配置"></p>
+<p>以上是查看 Chrome 浏览器和 IE 浏览器的代理设置信息，对于 Microsoft Edge（Windows 10 自带）浏览器来说，界面有点不一样，在设置 -&gt; 高级 -&gt; 代理设置里面。</p>
+<p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbooa2ikvj20xc0pwq93.jpg “Edge 浏览器设置代理脚本”" alt="Edge 浏览器设置代理脚本"></p>
+<p>此外，如果在浏览器中有更灵活的需求应用， 例如在设置多个代理的情况下，针对公司内网是一套，针对指定的几个网站是一套，针对被屏蔽的网站是一套，剩余的直接连接。在这种情况下仅仅使用代理脚本就不能完成需求了，显得场景很单一，当然也可以把脚本写的复杂一点，但是成本太高，而且不方便维护更新。这个时候就需要浏览器的插件出场了，例如在 Chrome 下我选择了 <a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN" target="_blank" rel="noopener">SwitchyOmega</a> 这个插件，可以设置多种情景模式，根据实际情况自由切换，非常方便。我设置了三种情景模式：hdpProxy（公司内网）、shadowSocks（翻墙代理）、auto switch（根据条件自动切换），前面两种情景模式直接设置完成即可，最后的 auto switch 需要配置得复杂一点，根据正则表达式或者通配符指定某些网站的访问方式必须使用 hdpProxy 代理，另外其它的根据规则列表（<a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt，和" target="_blank" rel="noopener">https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt，和</a> Shadowsocks 的 GFWList 列表类似）必须通过翻墙代理，剩余的才是直接连接。当然，此时就不需要把 Shadowsocks 设置为系统代理了，保持 Shadowsocks 后台运行就可以了。</p>
+<p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbp79ywuej21hc0q20v7.jpg “SwitchyOmega 插件配置”" alt="SwitchyOmega 插件配置"></p>
 <h2 id="Android- 平台使用"><a href="#Android- 平台使用" class="headerlink" title="Android 平台使用"></a>Android 平台使用 </h2><p> 下载 Android 平台的客户端，下载地址：<a href="http://shadowsocks.org/en/download/clients.html" target="_blank" rel="noopener">shadowsocks 官网</a>。</p>
 <h1 id="踩坑记录"><a href="# 踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h1><p>1、在云主机安装服务端后，又安装了防火墙，但是没有开启 Shadowsocks 需要的端口，导致启动 Shadowsocks 总是失败，但是报错信息又是 Python 和 Linux 的，看不懂，搜索资料也搜不到，后来重装，并且想清楚每一步骤是干什么的，会造成什么影响，通过排除法找到了根本原因。</p>
 <p>2、在 Windows 平台使用的时候，安装了客户端，也安装了 .NET Framework 组件，配置信息确认无误，但是就是上不了外网，同样的操作使用 Android 客户端却可以，所以有理由怀疑是自己的主机问题。后来，重启系统，检查网络，关闭杀毒软件，还是不行，后来，依靠搜索，找到了是杀毒软件 Avast 的问题，扫描 SSL 连接被开启了，大坑，关闭即可。</p>
 <p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa0mkrws7j20pc0nkglz.jpg" alt="Avast 截图"></p>
 <p>3、参考：<a href="https://github.com/sirzdy/shadowsocks" target="_blank" rel="noopener">梯子搭建</a></p>
+<p>4、本来以为 Shadowsocks 的系统代理中的 PAC 模式会在接收到网络请求的基础上进行过滤，即 Shadowsocks 能控制所有的网络请求进行过滤判断，然后该翻墙的翻墙，该直连的直连，后来发现不是的，浏览器插件 SwitchyOmega 设置代理规则后，PAC 脚本就不会生效了，全部使用 Shadowsocks 代理的网站都直接翻墙，不会有任何判断了，导致优酷视频消耗了大量的流量，而且速度还很慢。另外，为了保证国内的网站不是经过翻墙代理，能直接连接，就不能使用全局模式。</p>
+<p>5、使用插件 SwitchyOmega 的过程中，一开始是自己整理一些规则，而没有使用 <a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="noopener">https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</a> 列表规则，导致配置信息很多，而且自己看着头都大，不好维护与查看，后来就发现了列表规则，解放了劳动力。</p>
+<p>6、解决了 Chrome 浏览器的收藏跨平台自动更新同步的问题，以前在三台电脑之间添加取消收藏，总是不能更新同步，需要手动开启系统代理设置全局模式（Chrome 浏览器的收藏同步功能被屏蔽了，我又不知道 url 是什么），等一会更新同步之后再关闭（防止其它场景也翻墙了）。目前使用规则列表，收藏可以自动更新同步了，不需要手动来回切换了，也不用担忘记同步的情况了。</p>
 
       
     </div>
@@ -785,7 +806,7 @@
     
       <span class="post-meta-item-text">全站字数统计</span>
     
-    <span title="全站字数统计">1.7k字</span>
+    <span title="全站字数统计">3.1k字</span>
   
 </div>
 
