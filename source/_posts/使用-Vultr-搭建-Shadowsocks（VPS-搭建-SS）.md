@@ -146,6 +146,11 @@ ssserver -c /etc/shadowsocks.json
 
 ![ss 配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3pjtymuj20g60dp75k.jpg "ss 配置")
 
+实际上下载程序后，无需安装，直接解压即可，解压后只有一个 exe 文件，双击即可运行（最好放入指定文件夹中，便于程序管理和升级）。第一次启动，需要设置参数，如上图所示，至少配置一台机器，另外还可以设置开机启动，以后不用重新打开。此外，如果有更新版本的程序，会放在ss_win_temp文件夹下，直接解压后复制替换掉当前的exe文件即可；如果文件夹中有 gui-config.json、statistics-config.json 这2个文本文件，它们是程序的配置以及前面设置的翻墙配置，不能删掉；如果使用系统代理的PAC模式（推荐使用），会生成pac.txt文本文件，存放从GFWList获取的被墙的网址，必要时才会通过翻墙代理访问，其它正常的网址则直接访问，这样可以节约流量。
+
+![ss 文件夹](https://ws1.sinaimg.cn/large/b7f2e3a3ly1fxbhx6e12jj20h004qgln.jpg "ss 文件夹")
+
+如果有切换代理的需求，搭配浏览器的插件来完成，例如 [Proxy SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN) 就可以。
 
 ## Android平台使用
 

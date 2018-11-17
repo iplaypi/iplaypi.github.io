@@ -48,9 +48,10 @@ type: about
 - IntelliJ IDEA 插件官方仓库：[JetBrains 插件官方仓库](https://plugins.jetbrains.com)
 - VPS，使用 Vultr：[Vultr](https://my.vultr.com)
 - 梯子客户端：[Shadowsocks](http://shadowsocks.org/en/download/clients.html)
+- 域名与DNS解析：[Godaddy](https://sg.godaddy.com)
 - 未完待续
 
-## 技术框架列表
+## 技术列表
 
 - Java
 - Python
