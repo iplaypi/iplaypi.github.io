@@ -103,6 +103,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3hxmaftj20jd04zmx6.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3j16ymwj20hf03eglj.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3pjtymuj20g60dp75k.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3ly1fxbhx6e12jj20h004qgln.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa0mkrws7j20pc0nkglz.jpg">
 <meta property="og:updated_time" content="2018-11-16T11:25:52.000Z">
 <meta name="twitter:card" content="summary">
@@ -376,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,103字
+                  1,378字
                 </span>
               
 
@@ -390,7 +391,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4分钟
+                  5分钟
                 </span>
               
             </div>
@@ -491,6 +492,9 @@
 <p>但是注意配置内容（端口、密码、加密协议等等），另外注意有些 Windows 系统缺失 Shadowsocks 必要的组件（.NET Framework），需要安装，官网也有说明。</p>
 <p>配置示例：</p>
 <p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3pjtymuj20g60dp75k.jpg" alt="ss 配置" title="ss 配置"></p>
+<p>实际上下载程序后，无需安装，直接解压即可，解压后只有一个 exe 文件，双击即可运行（最好放入指定文件夹中，便于程序管理和升级）。第一次启动，需要设置参数，如上图所示，至少配置一台机器，另外还可以设置开机启动，以后不用重新打开。此外，如果有更新版本的程序，会放在 ss_win_temp 文件夹下，直接解压后复制替换掉当前的 exe 文件即可；如果文件夹中有 gui-config.json、statistics-config.json 这 2 个文本文件，它们是程序的配置以及前面设置的翻墙配置，不能删掉；如果使用系统代理的 PAC 模式（推荐使用），会生成 pac.txt 文本文件，存放从 GFWList 获取的被墙的网址，必要时才会通过翻墙代理访问，其它正常的网址则直接访问，这样可以节约流量。</p>
+<p><img src="https://ws1.sinaimg.cn/large/b7f2e3a3ly1fxbhx6e12jj20h004qgln.jpg" alt="ss 文件夹" title="ss 文件夹"></p>
+<p>如果有切换代理的需求，搭配浏览器的插件来完成，例如 <a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN" target="_blank" rel="noopener">Proxy SwitchyOmega</a> 就可以。</p>
 <h2 id="Android- 平台使用"><a href="#Android- 平台使用" class="headerlink" title="Android 平台使用"></a>Android 平台使用 </h2><p> 下载 Android 平台的客户端，下载地址：<a href="http://shadowsocks.org/en/download/clients.html" target="_blank" rel="noopener">shadowsocks 官网</a>。</p>
 <h1 id="踩坑记录"><a href="# 踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h1><p>1、在云主机安装服务端后，又安装了防火墙，但是没有开启 Shadowsocks 需要的端口，导致启动 Shadowsocks 总是失败，但是报错信息又是 Python 和 Linux 的，看不懂，搜索资料也搜不到，后来重装，并且想清楚每一步骤是干什么的，会造成什么影响，通过排除法找到了根本原因。</p>
 <p>2、在 Windows 平台使用的时候，安装了客户端，也安装了 .NET Framework 组件，配置信息确认无误，但是就是上不了外网，同样的操作使用 Android 客户端却可以，所以有理由怀疑是自己的主机问题。后来，重启系统，检查网络，关闭杀毒软件，还是不行，后来，依靠搜索，找到了是杀毒软件 Avast 的问题，扫描 SSL 连接被开启了，大坑，关闭即可。</p>
@@ -781,7 +785,7 @@
     
       <span class="post-meta-item-text">全站字数统计</span>
     
-    <span title="全站字数统计">1.5k字</span>
+    <span title="全站字数统计">1.7k字</span>
   
 </div>
 
