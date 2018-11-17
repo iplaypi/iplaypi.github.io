@@ -154,26 +154,29 @@ ssserver -c /etc/shadowsocks.json
 
 关于启动系统代理并使用 PAC 模式（根据条件过滤，不满足的直连），如果是入门级别使用，直接设置完就可以用了，不用再管其它设置，切记要定时更新GFWList列表，因为如果某些网站最近刚刚被屏蔽，不在以前的HFWList列表里面，就会导致无法连接，只有及时更新才能正常连接。但是还有一种极端情况，就是某些网站GFWList迟迟没有收录，怎么更新都不会起作用，别着急，此时可以使用用户自定义规则，模仿GFWList填写自己的过滤规则，即可实现灵活的切换，使用用户自定义规则后会在安装文件夹中生成 user-rule.txt 文本文件。
 
-![开启系统代理并使用PAC模式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo5moanxj20cj0a5dga.jpg “开启系统代理并使用 PAC 模式”)
+![开启系统代理并使用PAC模式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo5moanxj20cj0a5dga.jpg "开启系统代理并使用 PAC 模式")
 
-![PAC 模式下更新 GFWList 内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo6rej96j20ip0axjs7.jpg “PAC 模式下更新 GFWList 内容”)
+![PAC 模式下更新 GFWList 内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo6rej96j20ip0axjs7.jpg "PAC 模式下更新 GFWList 内容")
 
-![PAC 模式下自定义过滤规则](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo7ifow9j20j80apt9k.jpg “PAC 模式下自定义过滤规则”)
+![PAC 模式下自定义过滤规则](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo7ifow9j20j80apt9k.jpg "PAC 模式下自定义过滤规则")
 
 其实，PAC 模式的原理就是根据公共的过滤规则（收集被屏蔽的网站列表），自动生成了一个脚本文件，把脚本文件绑定到浏览器的代理设置中，使浏览器访问网站前都会运行这个脚本，根据脚本的结果决定是直接访问还是通过本地代理访问，脚本在 Shadowsocks 的 PAC 设置中可以看到，浏览器的设置信息可以在代理设置中看到（浏览器在 Shadowsocks 开启系统代理的时候会自动设置代理，无需人工干预）。由此可以得知，通过本机访问网络，决定是直接连接还是通过 Shadowsocks 代理连接的是 PAC 脚本，并不是 Shadowsocks 本身，所以如果使用系统的 Ping 命令访问 www.google.com 仍然是不能访问的，因为直接 Ping 没有经过 PAC 脚本，还是直接连接了，不可能访问成功。除了浏览器之外，如果其它程序也想访问被屏蔽的网站（例如 Git、Maven 仓库），只能通过程序自己的代理设置进行配置，完成访问的目的。（如果放弃 PAC 模式，直接使用全局模式，则不需要配置任何信息，本机所有的网络请求会全部经过翻墙代理，当然这样做会导致流量消耗过大，并且国内的正常网站访问速度也会很慢）
 
 ![获取 PAC 的脚本地址](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbof33m9dj20ij0aa0tl.jpg "获取 PAC 的脚本地址")
-获取到的 PAC 脚本地址为：http://127.0.0.1:1080/pac?t=20181118030355597&secret=qZKsW49fDFezR4jJQtRDhUVPRqnFu6JC3Nc+vtXDb0g=
 
-![浏览器代理配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxboiacqtbj20se0kojse.jpg “浏览器代理配置”)
+获取到的 PAC 脚本地址为：
+http://127.0.0.1:1080/pac?t=20181118030355597&secret=qZKsW49fDFezR4jJQtRDhUVPRqnFu6JC3Nc+vtXDb0g=
+
+![浏览器代理配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxboiacqtbj20se0kojse.jpg "浏览器代理配置")
 
 以上是查看 Chrome 浏览器和 IE 浏览器的代理设置信息，对于 Microsoft Edge（Windows 10 自带）浏览器来说，界面有点不一样，在设置->高级->代理设置里面。
 
-![Edge 浏览器设置代理脚本](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbooa2ikvj20xc0pwq93.jpg “Edge浏览器设置代理脚本”)
+![Edge 浏览器设置代理脚本](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbooa2ikvj20xc0pwq93.jpg "Edge浏览器设置代理脚本")
 
-此外，如果在浏览器中有更灵活的需求应用， 例如在设置多个代理的情况下，针对公司内网是一套，针对指定的几个网站是一套，针对被屏蔽的网站是一套，剩余的直接连接。在这种情况下仅仅使用代理脚本就不能完成需求了，显得场景很单一，当然也可以把脚本写的复杂一点，但是成本太高，而且不方便维护更新。这个时候就需要浏览器的插件出场了，例如在 Chrome 下我选择了 [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN) 这个插件，可以设置多种情景模式，根据实际情况自由切换，非常方便。我设置了三种情景模式：hdpProxy（公司内网）、shadowSocks（翻墙代理）、auto switch（根据条件自动切换），前面两种情景模式直接设置完成即可，最后的 auto switch 需要配置得复杂一点，根据正则表达式或者通配符指定某些网站的访问方式必须使用 hdpProxy 代理，另外其它的根据规则列表（https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt，和Shadowsocks的 GFWList 列表类似）必须通过翻墙代理，剩余的才是直接连接。当然，此时就不需要把 Shadowsocks 设置为系统代理了，保持 Shadowsocks 后台运行就可以了。
+此外，如果在浏览器中有更灵活的需求应用， 例如在设置多个代理的情况下，针对公司内网是一套，针对指定的几个网站是一套，针对被屏蔽的网站是一套，剩余的直接连接。在这种情况下仅仅使用代理脚本就不能完成需求了，显得场景很单一，当然也可以把脚本写的复杂一点，但是成本太高，而且不方便维护更新。这个时候就需要浏览器的插件出场了，例如在 Chrome 下我选择了 [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN) 这个插件，可以设置多种情景模式，根据实际情况自由切换，非常方便。我设置了三种情景模式：hdpProxy（公司内网）、shadowSocks（翻墙代理）、auto switch（根据条件自动切换），前面两种情景模式直接设置完成即可，最后的 auto switch 需要配置得复杂一点，根据正则表达式或者通配符指定某些网站的访问方式必须使用 hdpProxy 代理，另外其它的根据规则列表
+（https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt ，和Shadowsocks的 GFWList 列表类似）必须通过翻墙代理，剩余的才是直接连接。当然，此时就不需要把 Shadowsocks 设置为系统代理了，保持 Shadowsocks 后台运行就可以了。
 
-![SwitchyOmega 插件配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbp79ywuej21hc0q20v7.jpg “SwitchyOmega 插件配置”)
+![SwitchyOmega 插件配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbp79ywuej21hc0q20v7.jpg "SwitchyOmega 插件配置")
 
 ## Android平台使用
 
@@ -191,6 +194,7 @@ ssserver -c /etc/shadowsocks.json
 
 4、本来以为 Shadowsocks 的系统代理中的 PAC 模式会在接收到网络请求的基础上进行过滤，即 Shadowsocks 能控制所有的网络请求进行过滤判断，然后该翻墙的翻墙，该直连的直连，后来发现不是的，浏览器插件 SwitchyOmega 设置代理规则后，PAC 脚本就不会生效了，全部使用 Shadowsocks 代理的网站都直接翻墙，不会有任何判断了，导致优酷视频消耗了大量的流量，而且速度还很慢。另外，为了保证国内的网站不是经过翻墙代理，能直接连接，就不能使用全局模式。
 
-5、使用插件 SwitchyOmega 的过程中，一开始是自己整理一些规则，而没有使用 https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt 列表规则，导致配置信息很多，而且自己看着头都大，不好维护与查看，后来就发现了列表规则，解放了劳动力。
+5、使用插件 SwitchyOmega 的过程中，一开始是自己整理一些规则，而没有使用
+https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt 列表规则，导致配置信息很多，而且自己看着头都大，不好维护与查看，后来就发现了列表规则，解放了劳动力。
 
 6、解决了 Chrome 浏览器的收藏跨平台自动更新同步的问题，以前在三台电脑之间添加取消收藏，总是不能更新同步，需要手动开启系统代理设置全局模式（Chrome 浏览器的收藏同步功能被屏蔽了，我又不知道 url 是什么），等一会更新同步之后再关闭（防止其它场景也翻墙了）。目前使用规则列表，收藏可以自动更新同步了，不需要手动来回切换了，也不用担忘记同步的情况了。
