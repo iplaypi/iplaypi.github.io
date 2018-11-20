@@ -1,5 +1,5 @@
 ---
-title: 注册Facebook Twitter Tumblr过程与遇到问题
+title: 注册Facebook Twitter Tumblr的过程与遇到的问题
 id: 2018020101
 date: 2018-02-01 19:25:16
 updated: 2018-11-20 19:25:16
