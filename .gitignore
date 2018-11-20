@@ -1,5 +1,6 @@
 /public/
 /.deploy_git/
-/package-lock.json
 /node_modules/
 /live2d_models/
+/db.json
+/debug.log

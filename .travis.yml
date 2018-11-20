@@ -72,6 +72,8 @@ after_success:
 - cp -rf ../public/* ./
 # 必要配置文件
 - cp -rf ../README.md ../.gitignore ../CNAME ./
+# 更改.gitignore内容,与source分支的不一样,直接置空,目前没有需要过滤的
+- echo "" > ./.gitignore
 - git add .
 # 提交记录包含时间 跟上面更改时区配合
 - git commit -m "Travis CI Auto Builder at `date +"%Y-%m-%d %H:%M"`"
