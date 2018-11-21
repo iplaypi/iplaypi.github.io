@@ -151,6 +151,29 @@ live2d:
     motion: true
     scale: 0.3
 
+# 文件压缩,设置一些需要跳过的文件
+# hexo-neat
+neat_enable: true
+# 压缩html
+neat_html:
+  enable: true
+  exclude:
+# 压缩css
+neat_css:
+  enable: true
+  exclude:
+    - '**/*.min.css'
+# 压缩js
+neat_js:
+  enable: true
+  mangle: true
+  output:
+  compress:
+  exclude:
+    - '**/*.min.js'
+    - '**/jquery.fancybox.pack.js'
+    - '**/index.js'
+
 # 自动部署功能,用不到了,在gh-pages分支测试
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
