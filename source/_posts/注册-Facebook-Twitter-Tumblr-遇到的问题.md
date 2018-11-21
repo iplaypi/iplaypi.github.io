@@ -5,7 +5,7 @@ date: 2018-02-01 19:25:16
 updated: 2018-11-20 19:25:16
 categories: 知识改变生活
 tags: [Facebook,Twitter,Tumblr]
-keywords: Facebook,Twitter,Tumblr
+keywords: Facebook,Twitter,Tumblr,Twitter绑定手机号,Twitter冻结,Twitter被封
 ---
 
 本文讲述注册使用 Facebook、Twitter、Tumblr 等社交账号的过程、遇到的问题、解决的办法，给自己留一个备份，同时也可能给大家带去一丝方便。
@@ -27,7 +27,7 @@ keywords: Facebook,Twitter,Tumblr
 由于我选择的是 Google 邮箱注册，注册完成之后正常登录，但是进入不到主页面，就被绑定手机号页面拦截了，一直提示需要添加一个手机号，要不然就在当前页面，什么也做不了，除非退出。
 ![Add a phone number](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxerje8k7wj20p00exglz.jpg "Add a phone number")
 
-但是呢，诡异的是我使用自己的手机号进行绑定时，提示错误：由于技术问题，无法支持当前的手机号，我怀疑是因为中国的手机号无法进行绑定。上网搜索了一下资料，果然是这个原因，大家都建议一开始直接使用手机号注册，不要使用邮箱注册，就不会有这个问题了。接下来没有办法了，只能尝试寻找可行的办法，毕竟邮箱已经注册过了，不想浪费。
+但是呢，诡异的是我使用自己的手机号进行绑定时，提示错误：由于技术问题，无法完成当前的请求，请重试（Due to a technical issue, we couldn't complete this request. Please try again.），我怀疑是因为中国的手机号无法进行绑定。上网搜索了一下资料，果然是这个原因，大家都建议一开始直接使用手机号注册，不要使用邮箱注册，就不会有这个问题了。接下来没有办法了，只能尝试寻找可行的办法，毕竟邮箱已经注册过了，不想浪费。
 
 ## 绑定手机号解决方案尝试
 
