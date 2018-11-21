@@ -1,9 +1,9 @@
 ---
-title: 注册Facebook Twitter Tumblr的过程与遇到的问题
+title: 注册 Facebook Twitter Tumblr 遇到的问题
 id: 2018020101
 date: 2018-02-01 19:25:16
 updated: 2018-11-20 19:25:16
-categories: 技术改变生活
+categories: 知识改变生活
 tags: [Facebook,Twitter,Tumblr]
 keywords: Facebook,Twitter,Tumblr
 ---
@@ -66,7 +66,24 @@ Hello,
 ```
 ![回复邮件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxeso1yjgrj21870e3my0.jpg "回复邮件")
 
-接下来就是等待官方的回复了（未完待续）。
+接下来就是等待官方的回复了（希望晚上睡一觉后明天有好消息）。
+
+在等待了一夜后，又过了半天时间（总共大概17个小时），收到了 Twitter 官方的回复，说我的帐号已经解冻，并解释了原因。这次回复等待了这么长时间，不像上次申诉回复那么快，说明很大可能是人工审核的，然后解冻了你的帐号，再回复这封通知邮件给我。不管怎样，帐号可以使用了。
+![官方解冻邮件回复](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxfnvviw2gj21dk0n7mzb.jpg "官方解冻邮件回复")
+
+接下来为了保证不被封号，最好重新设置一下昵称，并且填写一些必要的信息：用户名（id）、头像、生日、国家、描述等，也可以关注一些其他推主。
+
+更改用户名在“Settings and Privacy”里面，由于用户名是唯一的（和 GitHub 的策略一样），所以常用的都被别人注册过了，自己要注意寻找，否则更改不了，显示被占用。
+![更改用户名](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxfp8312wuj216i0p6gnu.jpg "更改用户名")
+
+更改昵称、头像、背景墙、描述等在“Profile”里面。
+![更改基本信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxfpeugi9zj218p0p6wi6.jpg "更改基本信息")
+
+流程总结：
+1、只针对使用 Google 邮箱注册的情况，注册后帐号被冻结，什么也做不了，绑定手机号又说不支持，只能通过申诉来解决；
+2、申诉的目的是为了解冻帐号，但是官方是自动回复，让绑定手机号，又回到了原地；
+3、在步骤2的基础上可以直接回复邮件（邮件中有提示），说明遇到的问题，等待将近一天就行了；（如果没有步骤2，直接给官方技术支持发邮件，不知道行不行）
+4、步骤3官方回复的邮件中，提示说不要回复此邮件。（回复了应该也没人理）
 
 # Tumblr
 

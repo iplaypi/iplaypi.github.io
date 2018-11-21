@@ -18,6 +18,7 @@ type: about
   - 插件之注解工具：[Lombok](https://github.com/mplushnikov/lombok-intellij-plugin)、[JetBrains官方仓库](https://plugins.jetbrains.com/plugin/6317-lombok-plugin)
   - 未完待续
 - 项目管理工具：[Git]()
+  - 使用 Git Windows 版本切记修改显示编码，否则命令行里面都是乱码
 - 依赖管理工具：[Maven]()
 - Chrome 浏览器（下载使用需要翻墙，插件可以去官方商店直接安装，或者有各种第三方镜像库，下载 crx 文件再安装）：[Chrome 浏览器](https://www.google.com/chrome/)
   - 插件之去除广告：[Adblock Plus](https://adblockplus.org/)
@@ -59,4 +60,15 @@ type: about
 - ElasticSearch
 - Hadoop
 - HBase
+- 未完待续
+
+## 归档分类
+
+- 游玩
+- 菜谱
+- 语言学习
+- 知识改变生活
+- 基础技术知识
+- Hadoop 从零基础到入门系列
+- Linux 命令系列
 - 未完待续
