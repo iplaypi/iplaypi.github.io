@@ -122,7 +122,7 @@ scheme: Mist
 social:
   GitHub: https://github.com/iplaypi || github
   微博: https://weibo.com/u/3086148515 || weibo
-  E-Mail: mailto:plpaypi@qq.com || envelope
+  E-Mail: mailto:playpi@qq.com || envelope
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
@@ -145,6 +145,8 @@ links_layout: block
 #links_layout: inline
 links:
   GitHub: https://github.com/iplaypi
+  Weibo: https://weibo.com/u/3086148515
+  playpi: https://www.playpi.org
 
 # Sidebar Avatar,站点概览
 # in theme directory(source/images): /images/avatar.gif
