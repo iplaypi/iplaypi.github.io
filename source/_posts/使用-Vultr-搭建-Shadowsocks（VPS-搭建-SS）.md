@@ -78,6 +78,24 @@ vi  /etc/shadowsocks.json
 }
 ```
 
+配置多端口信息（纯净版本，更改 ip、端口等信息直接复制使用）：
+
+```json
+{
+    "server": "x.x.x.x",
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "port_password": {
+        "1227": "vpn1227",
+        "1226": "vpn1226",
+        "1225": "vpn"
+    },
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false
+}
+```
+
 配置一个端口信息（只有一个帐号，多人也可用）：
 
 ```json
@@ -87,6 +105,21 @@ vi  /etc/shadowsocks.json
     "local_address":"127.0.0.1",
     "local_port":1080,
     "password":"pengfeivpn"（唯一的密码）,
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open":false
+}
+```
+
+配置一个端口信息（纯净版本，更改 ip、端口等信息直接复制使用）：
+
+```json
+{
+    "server":"x.x.x.x",  
+    "server_port":1225,
+    "local_address":"127.0.0.1",
+    "local_port":1080,
+    "password":"vpn",
     "timeout":300,
     "method":"aes-256-cfb",
     "fast_open":false
