@@ -56,6 +56,7 @@ type: about
 - 阿里巴巴矢量图标库：[iconfont](http://www.iconfont.cn)
 - 俄罗斯一款搜索引擎：[yandex](https://www.yandex.com)
 - Google 翻译：[translate](https://translate.google.com)
+- 图标库：[fontawesome](https://fontawesome.com)
 - 未完待续
 
 ## 技术列表
