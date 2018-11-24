@@ -48,7 +48,13 @@ Aria2 是一个多平台轻量级的下载工具，支持 Http、Ftp、BitTorren
 
 单命令行启动任务示例，从电影天堂下载《一出好戏》这部电影。如果下载百度网盘的文件，需要使用 [baiduexporter](https://chrome.google.com/webstore/detail/baiduexporter/jgebcefbdjhkhapijgbhkidaegoocbjj?hl=zh-CN) 插件生成 url，生成方式见后续步骤。
 ```bash
-aria2c.exe -c -s32 -k32M -x16 -t1 -m0 --enable-rpc=true 下载url取值
+aria2c.exe -c -s32 -k32M -x16 -t1 -m0 --enable-rpc=true 下载 url 取值
+-t1 表示的是每隔1秒重试一次
+-m0 表示的是重试设置
+此外，下载 url 中会包含 --header 的信息：User-Agent、Referer、Cookie、url
+理论上 User-Agent、Referer 应该时固定的，Cookie、url 每次会生成不一样的
+User-Agent: netdisk;5.3.4.5;PC;PC-Windows;5.1.2600;WindowsBaiduYunGuanJia
+Referer: http://pan.baidu.com/disk/home"
 ```
 ![aria2 命令行参数](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjec4bt6kj20gj0ahgm8.jpg "aria2 命令行参数")
 
