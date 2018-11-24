@@ -57,6 +57,8 @@ type: about
 - 俄罗斯一款搜索引擎：[yandex](https://www.yandex.com)
 - Google 翻译：[translate](https://translate.google.com)
 - 图标库：[fontawesome](https://fontawesome.com)
+- 下载工具：[IDM](https://www.internetdownloadmanager.com)
+- 下载工具：[FDM](https://www.freedownloadmanager.org)
 - 未完待续
 
 ## 技术列表

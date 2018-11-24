@@ -158,7 +158,7 @@ toc:
   enable: true
 
   # Automatically add list number to toc. 目录自动编号
-  number: false
+  number: true
 
   # If true, all words will placed on next lines if header width longer then sidebar width.
   wrap: false
