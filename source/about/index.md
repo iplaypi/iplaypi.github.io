@@ -97,4 +97,4 @@ type: about
 - Hadoop 从零基础到入门系列
 - Linux 命令系列
 - Android 逆向系列
-- 未完待续
+- 其它

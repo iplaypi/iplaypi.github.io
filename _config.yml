@@ -80,6 +80,14 @@ index_generator:
 default_category: uncategorized
 category_map:
   基础技术知识: basic-technical-knowledge
+  游玩: have-for-fun
+  菜谱: cookbook
+  语言学习: language-learning
+  建站: building
+  知识改变生活: knowledge-for-life
+  Hadoop 从零基础到入门系列: series-of-hadoop
+  Linux 命令系列: series-of-linux-cmd
+  Android 逆向系列: series-of-reverse-for-android
   其它: others
 tag_map:
   建站: building
