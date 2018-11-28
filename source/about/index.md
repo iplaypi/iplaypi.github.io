@@ -18,13 +18,13 @@ type: about
 - 2004.09 - 2006.06：江阴市徐霞客实验小学，小学
 - 1999.09 - 2004.06：王人镇前辛小学，小学
 
-## 作者技能
+## 技能列表
 
 - 打杂工程师，技能包括但不限于重装系统、组装电脑、硬盘数据恢复、解决上网问题、手机刷机、视频剪辑、微信小程序开发
 - 主业写代码，会用 Java、Python、Scala、Shell 等，了解 Spark、ElasticSearch、HBase、Java Web 等，打工挣个生活费
 - 副业学习、赚钱、做菜，多投资自己，寻找机会，为了生活与未来
 - 阅读多种杂书，浏览多种信息，了解多种价值观，不断丰富自己的认知
-- 未完待续
+- 其它
 
 ## 开发工具
 
@@ -52,7 +52,7 @@ type: about
   - 应用之需求设计作图工具（流程图、类图、时序图）：[Gliffy Diagrams](https://chrome.google.com/webstore/detail/gliffy-diagrams/bhmicilclplefnflapjmnngmkkkkpfad?hl=zh-CN)
   - 应用之模拟 Http 请求工具：[Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=zh-CN)
   - 应用未完待续
-- 未完待续
+- 其它
 
 ## 辅助工具
 
@@ -73,7 +73,8 @@ type: about
 - 图标库：[fontawesome](https://fontawesome.com)
 - 下载工具：[IDM](https://www.internetdownloadmanager.com)
 - 下载工具：[FDM](https://www.freedownloadmanager.org)
-- 未完待续
+- Java 系列学习站点：[jenkov](http://tutorials.jenkov.com)
+- 其它
 
 ## 技术列表
 
@@ -84,7 +85,7 @@ type: about
 - ElasticSearch
 - Hadoop
 - HBase
-- 未完待续
+- 其它
 
 ## 归档分类
 
