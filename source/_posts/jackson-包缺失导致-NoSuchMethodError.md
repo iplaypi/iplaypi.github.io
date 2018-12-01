@@ -1,5 +1,5 @@
 ---
-title: jackson 包缺失导致 NoSuchMethodError
+title: jackson 包版本低导致 NoSuchMethodError
 id: 2018120101
 date: 2018-12-01 02:02:03
 updated: 2018-12-01 02:02:03
@@ -8,7 +8,7 @@ tags: [NoSuchMethodError,jackson,Maven,SpringMVC]
 keywords: java.lang.NoSuchMethodError:com.fasterxml.jackson.databind,java.lang.NoSuchMethodError,com.fasterxml.jackson.databind.JavaType.isReferenceType(),Maven包冲突,Maven包缺失
 ---
 
-本文讲述 Java 项目由 Maven 包冲突或者缺失导致的运行时错误：
+本文讲述 Java 项目由 Maven 包冲突或者版本不合适导致的运行时错误：
 ```java
 java.lang.NoSuchMethodError: com.fasterxml.jackson.databind.JavaType.isReferenceType()Z
 ```
@@ -78,6 +78,6 @@ jackson-databind 的版本为2.9.3
 
 2、为了统一，jackson-core 的版本要与 jackson-databind 的版本一致，jackson-databind 里面是已经自带了 jackson-annotations 的，由于 jackson-databind 里面的类继承了 jackson-core 里面的，所以才都要升级并且保持版本一致。
 
-3、搜索类方法时，注意留意父类和接口里面，不一定非要在当前类里面出现。更改版本后同样也去类里面搜索一下，看看有没有需要额度方法出现，确定版本用对了再继续做测试。
+3、搜索类方法时，注意留意父类和接口里面，不一定非要在当前类里面出现。更改版本后同样也去类里面搜索一下，看看有没有需要调用的方法出现，确定版本用对了再继续做测试。
 
 4、这种错误在编译、打包、部署阶段是检查不出来的，因为代码并没有实际调用到，属于运行时错误，只有跑起来程序，执行到需要使用该方法的时候，才会报错。
