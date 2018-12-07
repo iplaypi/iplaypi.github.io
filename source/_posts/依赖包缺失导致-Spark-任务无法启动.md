@@ -18,7 +18,9 @@ class "javax.servlet.FilterRegistration"'s signer information does not match sig
 
 # 遇到问题
 
-使用 es-hadoop 包处理 elasticsearch 里面的数据，具体点就是通过 es-spark 直接读取 elasticsearch 里面的数据，生成 RDD，然后简单处理，直接写入 HDFS 里面。
+由于最近的 elasticsearch 集群升级版本，到了 v5.6.8 版本，所用的功能为了兼容处理高版本的 elasticsearch 集群，需要升级相关依赖包，结果就遇到了问题。
+
+使用 es-hadoop 包（v5.6.8）处理 elasticsearch （v5.6.8）里面的数据，具体点就是通过 es-spark 直接读取 elasticsearch 里面的数据，生成 RDD，然后简单处理，直接写入 HDFS 里面。
 
 编译、打包的过程正常，运行代码的时候，抛出异常：
 ```bash
