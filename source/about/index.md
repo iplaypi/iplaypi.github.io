@@ -75,6 +75,9 @@ type: about
 - 下载工具：[IDM](https://www.internetdownloadmanager.com)
 - 下载工具：[FDM](https://www.freedownloadmanager.org)
 - Java 系列学习站点：[jenkov](http://tutorials.jenkov.com)
+- 代码在线生成图片：[carbon](https://carbon.now.sh)
+- 在线正则验证、分析、可视化工具（需要翻墙）：[regex101](https://regex101.com/)
+- 在线正则验证、可视化工具：[regexr](https://regexr.com/)
 - 其它
 
 ## 技术列表

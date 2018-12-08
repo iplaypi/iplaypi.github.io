@@ -68,7 +68,7 @@ neat_js:
 # 查看效果
 
 在执行 hexo generate 的命令行中就可以看到压缩率输出。
-![压缩率输出](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxg6uqzz3aj20gj0ahdgr.jpg "压缩率输出")
+![压缩率输出](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxzdwrue7aj20gj0ahdgr.jpg "压缩率输出")
 
 8个 html 文件被压缩后，大小只有206 K，和之前的314 K比少了108 K，虽然只是简单的数字，也可以看到压缩效果不错。
 ![8个文件压缩后](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxg6y7u1mej20ro0guq49.jpg "8个文件压缩后")

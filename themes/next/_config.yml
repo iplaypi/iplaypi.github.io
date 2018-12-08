@@ -146,7 +146,9 @@ links_layout: block
 links:
   GitHub: https://github.com/iplaypi
   Weibo: https://weibo.com/u/3086148515
-  playpi: https://www.playpi.org
+  playpi.org: https://www.playpi.org
+  廖雪峰的官方网站: https://www.liaoxuefeng.com
+  阮一峰的个人网站: http://www.ruanyifeng.com
 
 # Sidebar Avatar,站点概览
 # in theme directory(source/images): /images/avatar.gif
