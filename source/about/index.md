@@ -78,6 +78,9 @@ type: about
 - 代码在线生成图片：[carbon](https://carbon.now.sh)
 - 在线正则验证、分析、可视化工具（需要翻墙）：[regex101](https://regex101.com/)
 - 在线正则验证、可视化工具：[regexr](https://regexr.com/)
+- 廖雪峰的官方网站：[https://www.liaoxuefeng.com](https://www.liaoxuefeng.com/)
+- 阮一峰的个人网站：[http://www.ruanyifeng.com](http://www.ruanyifeng.com)
+- 在线可视化交互学习 Git：[learngitbranching](https://learngitbranching.js.org)，[GitHub 项目](https://github.com/pcottle/learnGitBranching)
 - 其它
 
 ## 技术列表
