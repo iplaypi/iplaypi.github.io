@@ -81,6 +81,8 @@ type: about
 - 廖雪峰的官方网站：[https://www.liaoxuefeng.com](https://www.liaoxuefeng.com/)
 - 阮一峰的个人网站：[http://www.ruanyifeng.com](http://www.ruanyifeng.com)
 - 在线可视化交互学习 Git：[learngitbranching](https://learngitbranching.js.org)，[GitHub 项目](https://github.com/pcottle/learnGitBranching)
+- 基础算法数据结构学习可视化站点：[Algorithm Visualizer](https://algorithm-visualizer.org)，[GitHub 项目](https://github.com/algorithm-visualizer/algorithm-visualizer)
+- 通过动画学习算法和数据结构：[VisuAlgo](https://visualgo.net)
 - 其它
 
 ## 技术列表
