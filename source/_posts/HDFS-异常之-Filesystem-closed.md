@@ -4,12 +4,18 @@ id: 2018122701
 date: 2018-12-27 17:35:54
 updated: 2018-12-27 17:35:54
 categories: Hadoop 从零基础到入门系列
-tags: [Hadoop,Spark,Filesystem]
-keywords: Hadoop,Spark,Filesystem
+tags: [Hadoop,Spark,Filesystem,HDFS]
+keywords: Hadoop,Spark,Filesystem,HDFS
 ---
 
 
-引言
+今天通过 Hadoop 的 api 去操作 HDFS 里面的文件，读取文本内容，但是在代码里面总是抛出以下异常：
+
+````java
+Caused by: java.io.IOException: Filesystem closed
+````
+
+然而文本内容又是正常读取出来的，但是我隐隐觉得读取的文本内容可能不全，应该只是所有文本内容的一部分。本文就记录这个问题的原因、影响以及解决方法。
 
 
 <!-- more -->
@@ -57,7 +63,7 @@ Caused by: java.io.IOException: Filesystem closed
 Caused by: java.io.IOException: Filesystem closed
 ````
 
-上述异常信息表明 HDFS 的 Filesystem 被关闭了，但是代码仍旧试图读取内容。
+上述异常信息表明 HDFS 的 Filesystem 被关闭了，但是代码仍旧试图打开文件流读取内容。
 
 
 # 问题解决
@@ -67,7 +73,7 @@ Caused by: java.io.IOException: Filesystem closed
 
 根据上述信息，查看代码，每次操作 HDFS 都是独立的，会先根据统一的 conf 创建 Filesystem，然后根据文件路径创建 Path，打开输入流，读取内容，读取完成后关闭 Filesystem，没有什么异常的地方。
 
-同时，根据异常信息可以发现，异常的抛出点并不是业务逻辑代码，更像是已经开始读取文件，读着读着 Filesystem 就被关闭了，然后引发了异常，而业务逻辑中并没有突然关闭 Filesystem 的地方，也没有多线程操作 Filesystem 的地方。
+同时，根据异常信息可以发现，异常的抛出点并不是业务逻辑代码，更像是已经开始开启文件流读取文件，读着读着 Filesystem 就被关闭了，然后引发了异常，而业务逻辑中并没有突然关闭 Filesystem 的地方，也没有多线程操作 Filesystem 的地方。
 
 ````java
     /**
@@ -112,11 +118,11 @@ Caused by: java.io.IOException: Filesystem closed
 
 通过查找文档发现，这个异常是 Filesystem 的缓存导致的。
 
-当任务提交到集群上面以后，多个 datanode 在 getFileSystem 过程中，由于 Configuration 一样，会得到同一个 FileSystem。如果有一个 datanode 在使用完关闭连接，其它的 datanode 在访问时就会出现上述异常，导致数据缺失。
+当任务提交到集群上面以后，多个 datanode 在 getFileSystem 过程中，由于 Configuration 一样，会得到同一个 FileSystem。如果有一个 datanode 在使用完关闭连接，其它的 datanode 在访问时就会出现上述异常，导致数据缺失（如果数据恰好只存在一个 datanode 上面，可能没问题）。
 
 ## 找到方法
 
-通过上面的分析，找到了原因所在，解决方法有2种：
+通过上面的分析，找到了原因所在，那么解决方法有2种：
 
 1、可以在 HDFS 的 core-site.xml 配置文件里面把 fs.hdfs.impl.disable.cache 设置为 true，这样设置会全局生效，所有使用这个配置文件的连接都会使用这种方式，有时候可能不想这样更改，那就使用第2种方式；
 
@@ -134,7 +140,7 @@ Caused by: java.io.IOException: Filesystem closed
 CONF.setBoolean("fs.hdfs.impl.disable.cache", true);
 ````
 
-上面2种方法的目的都是为了关闭缓存 Filesyetem 实例，这样每次获得的 Filesystem 实例都是独立的，不会产生上述的异常，缺点就是会增加网络的 IO。
+上面2种方法的目的都是为了关闭缓存 Filesyetem 实例，这样每次获得的 Filesystem 实例都是独立的，不会产生上述的异常，但是缺点就是会增加网络的 I/O，频繁开启、关闭文件流。
 
 
 # 问题总结
@@ -144,6 +150,7 @@ CONF.setBoolean("fs.hdfs.impl.disable.cache", true);
 
 2、保留日志，查看日志很重要；
 
-3、FileSytem 类内部有一个 static CACHE，用来保存每种文件系统的实例集合，FileSystem 类中可以通过参数 fs.%s.impl.disable.cache 来指定是否缓存 FileSystem 实例（其中 %s 替换为相应的scheme，比如 hdfs、local、s3、s3n等）。即一旦创建了相应的 FileSystem 实例，这个实例将会保存在缓存中，此后每次 get 都会获取同一个实例。
+3、FileSytem 类内部有一个 static CACHE，用来保存每种文件系统的实例集合，FileSystem 类中可以通过参数 fs.%s.impl.disable.cache 来指定是否禁用缓存 FileSystem 实例（其中 %s 替换为相应的scheme，比如 hdfs、local、s3、s3n等）。如果没禁用，一旦创建了相应的 FileSystem 实例，这个实例将会保存在缓存中，此后每次 get 都会获取同一个实例，但是如果被关闭了，则再次用到就会无法获取（多 datanode 读取数据的时候）；
 
+4、源码分析放在以后，留坑。
 

@@ -10,9 +10,11 @@ keywords: Spark依赖,Maven依赖,FilterRegistration
 
 
 本文讲述使用 Spark 的过程中遇到的错误：
+
 ```bash
 class "javax.servlet.FilterRegistration"'s signer information does not match signer information of other classes in the same package
 ```
+
 最终通过查找分析 Maven 依赖解决问题。
 
 
@@ -29,9 +31,11 @@ class "javax.servlet.FilterRegistration"'s signer information does not match sig
 
 
 编译、打包的过程正常，运行代码的时候，抛出异常：
+
 ```bash
 class "javax.servlet.FilterRegistration"'s signer information does not match signer information of other classes in the same package
 ```
+
 ![报错](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxyhhwukskj21g20aumyl.jpg "报错")
 
 
@@ -45,6 +49,7 @@ class "javax.servlet.FilterRegistration"'s signer information does not match sig
 
 
 现在就可以断定，是包缺失，通过搜索引擎查找文档，需要引入 javax.servlet-api 相关的包， pom.xml 文件的具体依赖信息是：
+
 ```xml
 <dependency>
     <groupId>javax.servlet</groupId>
@@ -52,6 +57,7 @@ class "javax.servlet.FilterRegistration"'s signer information does not match sig
     <version>4.0.1</version>
 </dependency>
 ```
+
 当然，版本信息根据实际的场景需要进行选择，我这里选择4.0.1版本。
 
 
@@ -59,14 +65,16 @@ class "javax.servlet.FilterRegistration"'s signer information does not match sig
 
 
 我这里遇到的问题比较简单，只是包缺失而已，如果遇到的是包版本冲突，需要移除不需要的版本，只保留一个依赖包即可，此时可以借助 Maven 的 dependency 构建来进行分析查找：
+
 ```bash
 mvn dependency:tree
 ```
 
-
 这个命令会输出项目的所有依赖树，非常清晰，如果内容太多，可以使用
+
 ```bash
 mvn dependency:tree > ./tree.txt
 ```
+
 重定向到文本文件中，再进行搜索查找。
 
