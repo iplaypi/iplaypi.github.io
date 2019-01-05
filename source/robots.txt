@@ -13,4 +13,4 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 Sitemap: https://www.playpi.org/sitemap.xml
-Sitemap: https://www.playpi.org//baidusitemap.xml
+Sitemap: https://www.playpi.org/baidusitemap.xml
