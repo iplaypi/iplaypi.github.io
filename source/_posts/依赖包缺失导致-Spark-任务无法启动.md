@@ -86,3 +86,5 @@ mvn dependency:tree > ./tree.txt
 
 2、在本机连接测试环境的 yarn，创建 SparkContext 的时候无法指定用户名，默认总是当前系统的用户名，导致创建 SparkContext 失败，伪装用户无效，只有打 jar 包执行前使用命令切换用户名：export HADOOP_USER_NAME=xx，而在代码中设置 System.setProperty("user.name", "xx")、System.setProperty("HADOOP_USER_NAME", "xx") 是无效的（这个问题会有一篇文章专门分析，需要查看源代码）；
 
+3、针对2的情况，简单通过 local 模式解决，暂时不使用 yarn-client 模式；
+
