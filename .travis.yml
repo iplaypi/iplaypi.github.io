@@ -89,6 +89,6 @@ after_success:
 notifications:
   email:
     - 1305098770@qq.com
-    - pengfei@hudongpai.com
+    - pengfei@datastory.com.cn
   on_success: always
   on_failure: always
