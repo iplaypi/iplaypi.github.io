@@ -164,7 +164,7 @@ java.lang.IllegalArgumentException: progressed file size cannot be greater than 
 59156480KB=56.42M（正是需要发布的构件的大小）；
 58029604KB=55.34M；
 
-1、通过搜索引擎对异常信息的搜索，大部分结果显示和 Maven 后台的 Web 服务有关，如果使用的是 Nginx，会有一个参数用来限制上传文件的大小，上传文件的大小超过最大限制，就会上传失败，并且抛出异常。我部署其它的小构件没有问题，怀疑是这个原因，于是我询问运维人员公司的 Maven 私服对上传的公共构件有没有大小限制（即 Nginx 服务有没有限制上传文件的大小），运维说不会。但是我还是怀疑，于是想通过 Web 端的界面来手动上传我的构件，发现 Web 端的界面没有开放，无法完成上传操作，接下来我就想看看 Maven 后台服务的对应参数配置的值是多大（也可能使用的是默认值），但是不知道
+1、通过搜索引擎对异常信息的搜索，大部分结果显示和 Maven 后台的 Web 服务有关，如果使用的是 Nginx，会有一个参数用来限制上传文件的大小，上传文件的大小超过最大限制，就会上传失败，并且抛出异常。我部署其它的小构件没有问题，怀疑是这个原因，于是我询问运维人员公司的 Maven 私服对上传的公共构件有没有大小限制（即 Nginx 服务有没有限制上传文件的大小），运维说不会。但是我还是怀疑，于是想通过 Web 端的界面来手动上传我的构件，发现 Web 端的界面没有开放，无法完成上传操作，接下来我就想看看 Maven 后台服务的对应参数配置的值是多大（也可能使用的是默认值），但是不知道后台采用的是什么服务（Nginx 还是 Netty 不确定），先放弃这条路；
 
 2、也有结果显示是 Maven 的版本问题，有些版本有 bug，所以造成了这个问题。
 
@@ -178,6 +178,14 @@ java.lang.IllegalArgumentException: progressed file size cannot be greater than 
 
 对比图2个
 
+这一看就是把第三方各种依赖包都一起发布了，才会造成构件有这么大，于是更改 pom.xml 文件，把第三方依赖去除，deploy 的时候是不需要的，同时也删除了一些 resources 资源文件夹里面的文本文件，删除时发现文本文件竟然有几十 M，怪不得以前发布的构件大小有60M 左右，原来都是文本文件在占用空间；
+
+更新了之后，直接重新 deploy，不报错了，直接 deploy 成功，去仓库搜索查看；
+
+仓库图一张
+
+2、问题使用方法一已经解决了，也就是和 Maven 版本没有关系了，而且，在我的当前 Maven 环境下，我去 deploy 其它构件也是成功的，不会有任务报错，所以也从侧面反映了这个问题和 Mave 版本无关，和 Maven 环境也无关；
+
 
 # 问题总结
 
@@ -189,4 +197,5 @@ apache 的官方 jira：
 
 [https://issues.apache.org/jira/browse/MNG-6469?page=com.atlassian.jira.plugin.system.issuetabpanels%3Aall-tabpanel](https://issues.apache.org/jira/browse/MNG-6469?page=com.atlassian.jira.plugin.system.issuetabpanels%3Aall-tabpanel) ；
 
+这个问题去网上搜索不到资料，很痛苦，问人也没有能帮到我的，只能自己去慢慢摸索试验，整个过程比较艰难；
 
