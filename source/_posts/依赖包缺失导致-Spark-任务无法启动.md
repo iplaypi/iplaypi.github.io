@@ -82,3 +82,14 @@ mvn dependency:tree > ./tree.txt
 
 3、针对2的情况，简单通过 local 模式解决，暂时不使用 yarn-client 模式；
 
+4、针对2的情况，还有一种简单的方法，那就是直接设置 IDEA 的环境变量参数（不是设置操作系统的环境变量，我试了无效），如下图（和设置运行参数类似）；
+设置 IEDA 的环境变量：
+![设置 IEDA 的环境变量](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j8oe0tm5j20li024q2w.jpg "设置 IEDA 的环境变量")
+
+5、此外，还有一种情况，当需要操作 HDFS 的时候，发现无论怎么设置环境变量都不可以（配置文件配置、代码设置），总是读取的系统默认用户，就和2中讲的一致，其实如果只是单纯地操作 HDFS，还可以在创建文件流的时候指定用户名（不过这种方法要先从 conf 中获取 uri）；
+
+```java
+String uri = conf.get("fs.defaultFS");
+FileSystem fs = FileSystem.get(new URI(uri), CONF, "zeus");
+```
+
