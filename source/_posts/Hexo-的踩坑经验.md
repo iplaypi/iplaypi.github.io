@@ -20,7 +20,7 @@ keywords: hexo,markdown,java,bash,xml
 
 前言描述的很好，很理想，但是有时候总会出现一些未知的问题，而我又不了解其中的技术，所以解决起来很麻烦，大部分时候都是靠蒙的（当然，也可以直接在 Hexo 的官方项目上提出 Issue，让作者帮忙解决）。下面就记录一些遇到的问题，以及我自己找到的原因。
 
-## 1-Markdown 语法不规范
+# 1-Markdown 语法不规范
 
 这个错误有在 travis 上面出现过，在 travis 的116号、117号错误：https://travis-ci.org/iplaypi/iplaypi.github.io/builds/476399853 。
 
@@ -54,7 +54,7 @@ travis-cli 日志2
 travis-cli 日志3
 ![travis-cli 日志3](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7jokkp6j20rh0p4dj2.jpg "travis-cli 日志3")
 
-## 2-Hexo 报错奇怪
+# 2-Hexo 报错奇怪
 
 这个错误还没有到 travis 上面，所以 travis 上面没有记录；
 
@@ -65,7 +65,7 @@ travis-cli 日志3
 
 总的来说，就是报错有误导性，没有报模块缺失，而我又不懂这些，查了一些资料，手动测试了一些方法，总算找到原因所在。找到原因，那解决办法很简单了，直接安装缺失的模块即可，使用 **nmp install** 命令安装 package.json 里面的模块。
 
-## 3-Hexo 配置错误引起的误导性
+# 3-Hexo 配置错误引起的误导性
 
 这个错误还没有到 travis 上面，所以 travis 上面没有记录；
 
@@ -80,7 +80,7 @@ travis-cli 日志3
 最后发现是配置信息里面的参数（官方定义的关键词）错误了，里面的 **Plugins** 这个参数应该使用首字母大写，这谁能想到，正确的配置参数如下图：
 ![plugins 改为首字母大写](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7lre005j20nb08udgb.jpg "plugins 改为首字母大写")
 
-## 4-travis 配置问题
+# 4-travis 配置问题
 
 这个错误有在 travis 上面出现过，在 travis 的27号：https://travis-ci.org/iplaypi/iplaypi.github.io/builds/448152737 。
 
@@ -100,7 +100,7 @@ error Found incompatible module
 
 看来还是在搞清楚新旧版本之间的差异后再想着升级版本，不要随意来，要不然浪费的是自己的时间。后来解决办法就是手动指定 node_js 的版本。
 
-## 5-无缘无故出现的问题
+# 5-无缘无故出现的问题
 
 这个错误有在 travis 上面出现过，在 travis 的133号、134号错误、135号错误、136号错误，举例：https://travis-ci.org/iplaypi/iplaypi.github.io/builds/498318318 ；
 
@@ -122,4 +122,8 @@ npm ERR!     /home/travis/.npm/_logs/2019-02-25T18_45_08_713Z-debug.log
 ```
 
 等待找问题的原因。
+
+好，仔细看了日志、找了博客文档，没有解决方法，我也不懂，看到可能是版本原因（我不能升级 nodejs 版本，与 yarn 有关），可能是权限问题（我用 sudo npm install -g hexo-cli 试了试，明显不行：https://travis-ci.org/iplaypi/iplaypi.github.io/builds/498794142 ），然后我就放弃了，直接改回来提交了，没想到无缘无故就可以了（构建日志：https://travis-ci.org/iplaypi/iplaypi.github.io/builds/498796865 ）。
+
+准备发邮件问问 travis 客服，我现在单方面怀疑是 travis 的环境问题。
 
