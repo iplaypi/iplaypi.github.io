@@ -28,7 +28,7 @@ before_install:
 - curl -o- -L https://yarnpkg.com/install.sh | bash
 - export PATH=$HOME/.yarn/bin:$PATH
 # hexo 基础工具
-- npm install -g hexo-cli
+- sudo npm install -g hexo-cli
 # 初始化所需模块,在package.json中配置的有,这样node_modules就不用提交到github了
 # 下次如果换电脑,安装完nodejs,全局(-g参数)安装完hexo-cli,直接在项目根目录初始化即可(在package.json配置的都会自动下载)
 - npm install
@@ -89,6 +89,5 @@ after_success:
 notifications:
   email:
     - 1305098770@qq.com
-    - pengfei@datastory.com.cn
   on_success: always
   on_failure: always
