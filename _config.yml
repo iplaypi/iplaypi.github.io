@@ -24,7 +24,7 @@ root: /
 Plugins:
 - hexo-generator-baidu-sitemap
 - hexo-generator-sitemap
-# 中英文之间插入空白符的插件
+# 中英文之间插入空白符的插件,如果标题中有了空格,会导致html目录不会跳转
 - hexo-pangu-spacing
 # rss订阅
 - hexo-generator-feed
