@@ -56,6 +56,7 @@ default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
+# 开启预览草稿模式,如果不开启就要在每次 generate server 时加上 --draft 参数才能看到草稿的内容
 render_drafts: false
 post_asset_folder: false
 relative_link: false
