@@ -54,6 +54,9 @@ travis-cli 日志2
 travis-cli 日志3
 ![travis-cli 日志3](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7jokkp6j20rh0p4dj2.jpg "travis-cli 日志3")
 
+此外，写 Markdown 文档，使用代码块标记的时候，使用3个反单引号来标记，如果不熟悉代码块里面的编程语言，可以省略类型（例如 java、bash、javascript），不要填写，否则填错了生成的 html 静态文件是空白的。还有就是如果代码块里面放的是一段英文文本，和编程语言无关，也不要填写类型，否则生成的 html 静态文件也是空白的。
+
+
 # 2-Hexo 报错奇怪
 
 这个错误还没有到 travis 上面，所以 travis 上面没有记录；
