@@ -137,6 +137,8 @@ Shadowsocks 性能优化：
 yum install firewalld
 # 启动防火墙
 systemctl start firewalld
+# 查看目前已经开启的端口号
+firewall-cmd --list-ports
 # 端口号是你自己设置的端口
 firewall-cmd --permanent --zone=public --add-port=1225/tcp
 firewall-cmd --permanent --zone=public --add-port=1226/tcp

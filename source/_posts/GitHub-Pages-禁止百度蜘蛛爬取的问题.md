@@ -82,7 +82,7 @@ curl https://www.playpi.org/baidusitemap.xml
 
 接下来我又查找了资料，发现网上确实有很多这种说法，而且大家都遇到了这种问题，但是并没有官方的说明放出来。
 
-于是，接着我又回复了百度站长对方的反馈，直接问是不是因为 GitHub Pages 禁止了百度爬虫，所以百度爬取的结果总是 403 错误。等了几个小时，对方果然这样回复，说是的（对方没有明确回复，可能是不想承认）。
+于是，接着我又回复了百度站长对方的反馈，直接问是不是因为 GitHub Pages 禁止了百度爬虫，所以百度爬取的结果总是 403 错误。等了几个小时，对方果然这样回复，说是的（对方没有明确回复，可能是不想承认，那我也不管了）。
 图。。。
 
 ## 通过 GitHub Pages 找原因
@@ -187,9 +187,10 @@ DNSPod 账号自行注册，我使用免费版本，当然会有一些限制，�
 我没有使用第三方托管服务器，例如：gitcafe、码市、coding，而是直接使用自己的 VPS，然后搭配 Nginx 使用。
 
 #### 安装Nginx（基于 CentOS 7 X64）
-CentOS 的安装过程参考（但是，不是全部可信，抽取有用的）：https://gist.github.com/ifels/c8cfdfe249e27ffa9ba1 。
+CentOS 的安装过程参考：https://gist.github.com/ifels/c8cfdfe249e27ffa9ba1 。但是，不是全部可信，抽取有用的即可。而且这种方式安装的是已经规划好的一个庞大的包，里面包含了一些常用的模块，可能有一些模块没用，而且如果自己想再安装一些新的模块，就不支持了，必须重新下源码编译安装。总而言之，这种安装方式就是给入门级别的人使用的，不能自定义。
 
 1、由于Nginx的源头问题，先创建配置文件
+
 ```bash
 cd /etc/yum.repos.d/
 vim nginx.repo
@@ -256,6 +257,8 @@ http {
 
 3、开启80端口（不开启不行），启动Nginx
 ```bash
+# 查看已经开启的端口
+firewall-cmd --list-ports
 # 开启端口
 firewall-cmd --permanent --zone=public --add-port=80/tcp
 # 重载更新的端口信息 
@@ -269,28 +272,133 @@ service nginx start
 
 #### 额外考虑情况
 
-1、关于https认证
-要不要考虑 https 的情况，如果百度爬虫没用到 https 抓取（除了 sitemap.xml 文件还要考虑文件里面的所有链接格式，也是 https 的），就算了。其实不能算了，百度爬虫用到了 https 链接去抓取，所以还要想办法开启 Nginx 的 https。
+**1、关于https认证**
+要不要考虑 https 的情况，如果百度爬虫没用到 https 抓取（除了 sitemap.xml 文件还要考虑文件里面的所有链接格式，也是 https 的），就不考虑。其实一定要考虑，因为百度爬虫用到了 https 链接去抓取，所以还要想办法开启 Nginx 的 https。此外，在百度的 https 认证里面，也是需要开启 https 的，否则申请不通过。
 
-。。。
+我的域名不知道什么时候验证失败了，但是一开始的时候是验证成功的（可能是 GitHub Pages 禁止百度爬虫的原因，因为以前全部都是 GitHub Pages 提供站点支持）
+![https验证失败](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmkhqwygj20z40lojsp.jpg "https验证失败")
 
-2、端口的问题
-为什么在上面配置域名解析记录的时候，百度的 A 记录配置 VPS 的 ip  就行了呢，这是因为在 VPS 上面只有 Nginx 这一种 Web 服务，机器会分配给它一个端口（默认80，也是 http 的默认端口，可以配置），然后 www 的访问就使用这个端口，所以可以忽略端口的信息。但是如果一台机器上面有各种 Web 服务，切记确保端口不要冲突（例如 Tomcat 和 Nginx 同时存在的情况），并且给 Nginx 的就是80端口，然后如果有其它服务，可以使用 Nginx 做代理转发（例如把 email 二级域名转到一个端口，blog 二级域名转到另一个端口）。
+我想重新验证一下，没想到有次数限制，还是先把 Nginx 的 https 开启之后再验证吧
+![重新验证次数限制](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmkls6dkj20e008mweh.jpg "重新验证次数限制")
+
+开启 Nginx 的 https，并且保证站点全部的链接都是 https 的，但是同时也要支持 http，使用301重定向到 https。
+
+1-1、查看 Nginx 的 https 模块
+先查看我安装的小白版本的 Nginx 里面有没有关于 https 的模块，使用命令 **nginx -V**，可以看到是有的，这个模块就是 **--with-http_ssl_module**。
+图。。。
+
+1-2、申请证书
+可以购买或者从阿里云、腾讯云里面申请免费的，但是我还是觉得使用 OpenSSL 工具自己生成方便，先查看机器有没有安装 OpenSSL 工具，使用 **openssl version** 命令，如果没有则需要安装 **yum install -y openssl openssl-devel**，安装完成后开始生成证书。生成证书的命令：
+```
+openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -keyout /site/ssl-nginx.key -out /site/ssl-nginx.crt
+```
+
+在生成的过程中还需要填写一些参数信息：国家、城市、机构名称、机构单位名称、域名、邮箱等，这里特别注意我为了能让多个子域名公用一个证书，采用了泛域名的方式（星号的模糊匹配：\*.playpi.org）。这种生成证书的方式只是为了测试使用，最终的证书肯定是不可信的，浏览器会提示此证书不受信任，所以还是通过其它方式获取证书比较好。
+图。。。
+
+完整信息填写
+```
+Generating a 2048 bit RSA private key
+........+++
+..............+++
+writing new private key to '/site/ssl-nginx.key'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [XX]:CN
+State or Province Name (full name) []:Guangdong
+Locality Name (eg, city) [Default City]:Guangzhou
+Organization Name (eg, company) [Default Company Ltd]:playpi
+Organizational Unit Name (eg, section) []:playpi
+Common Name (eg, your name or your server's hostname) []:*.playpi.org
+Email Address []:playpi@qq.com
+```
+
+1-3、更改配置并重启 Nginx
+重新配置 http 与 https 的参数（只列出 server 的主要部分，blog 二级域名主要是为了测试使用的，blog 的流量全部导入我的 VPS 中）
+
+```
+server {
+    listen       80;
+    server_name  www.playpi.org;
+    access_log   /site/iplaypi.github.io.http-www-access.log  main;
+    rewrite ^(.*)$ https://www.playpi.org;
+    }
+
+    server {
+    listen       80;
+    server_name  blog.playpi.org;
+    access_log   /site/iplaypi.github.io.http-blog-access.log  main;
+    rewrite ^(.*)$ https://blog.playpi.org;
+    }
+
+    server {
+    listen 443 ssl;#监听端口
+    server_name www.playpi.org blog.playpi.org;#域名
+    access_log   /site/iplaypi.github.io.https-access.log  main;
+    root         /site/iplaypi.github.io;
+    ssl_certificate /site/ssl-nginx.crt;#证书路径
+    ssl_certificate_key /site/ssl-nginx.key;#key路径
+    ssl_session_cache shared:SSL:1m;#储存SSL会话的缓存类型和大小
+    ssl_session_timeout 5m;#配置会话超时时间
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;#为建立安全连接，服务器所允许的密码格式列表
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;#依赖SSLv3和TLSv1协议的服务器密码将优先于客户端密码
+    #减少点击劫持
+    add_header X-Frame-Options DENY;
+    #禁止服务器自动解析资源类型
+    add_header X-Content-Type-Options nosniff;
+    #防XSS攻击
+    add_header X-Xss-Protection 1;
+  }
+```
+
+开启443端口，重启Nginx
+```bash
+# 查看已经开启的端口
+firewall-cmd --list-ports
+# 开启端口
+firewall-cmd --permanent --zone=public --add-port=443/tcp
+# 重载更新的端口信息 
+firewall-cmd --reload
+# 验证Nginx配置是否准确
+nginx -t
+# 重新启动Nginx
+nginx -s reload
+```
+
+1-4、打开链接查看
+使用 blog 二级域名测试
+图。。。
+
+或者使用 curl 命令模拟请求
+图。。。
+
+去百度站长里面重新提交 https 认证
+图。。。
+
+**2、端口的问题**
+为什么在上面配置域名解析记录的时候，百度的 A 记录配置 VPS 的 ip  就行了呢，这是因为在 VPS 上面只有 Nginx 这一种 Web 服务，机器会分配给它一个端口（默认80，也是 http 的默认端口，可以配置），然后 www 的访问就使用这个端口（在 Nginx 的配置里面有，还有另外一个 blog 的），所以可以忽略端口的信息。但是如果一台机器上面有各种 Web 服务，切记确保端口不要冲突（例如 Tomcat 和 Nginx 同时存在的情况），并且给 Nginx 的就是80端口，然后如果有其它服务，可以使用 Nginx 做代理转发（例如把 email 二级域名转到一个端口，blog 二级域名转到另一个端口）。
 
 #### 完善自动获取更新脚本，拉取 mater 分支的静态页面
 
-1、先用简单的方式
+**1、先用简单的方式**
 使用 git 把项目克隆到：/site/iplaypi.github.io 即可。
 
-2、利用钩子自动拉取 master 分支内容到指定目录
+**2、利用钩子自动拉取 master 分支内容到指定目录**
 。。。
 
 ## 验证结果
 
 使用最简单的方式验证就是在百度站长工具里面使用**抓取诊断**来进行模拟抓取多次，看看成功率是否是100%。通过测试，可以看到，每次抓取都会成功，那么接下来就等待百度自己抓取了（百度爬虫抓取 sitemap.xml 文件的频率很低，可能要等一周）。
 
-使用抓取诊断方式来验证
-图。。。
+使用抓取诊断方式来验证，这个过程有一个插曲，就是无论怎么验证都是失败的，但是使用 curl 模拟请求却是成功的。我看了失败原因概述里面，抓取的 ip 地址仍旧是 GitHub Pages 的，说明百度爬虫的流量没有到我自己的 VPS 上面。我一开始还以为是 DNSPod 配置没生效，但是通过 curl 模拟请求却可以，说明 DNSPod 配置没问题，那就是百度的问题了，应该是缓存。后来，我在移动端 UA 与 PC 端 UA 切换了一下，然后就行了。
+![使用抓取诊断方式来验证](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmjyvmbtj218h0qx76r.jpg "使用抓取诊断方式来验证")
 
 此外，既然我们知道了百度爬虫设置的用户代理，那么就可以直接使用 curl 命令来模拟百度爬虫的请求，观察返回的 http 结果是否正常。模拟命令如下：
 
@@ -299,7 +407,10 @@ curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/
 ```
 
 模拟请求的结果，可以看到也是正常的
-图。。。
+![模拟请求的结果](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmjky1dwj20v50hnq3v.jpg "模拟请求的结果")
+
+我也去看了 VPS 上面的 Nginx 日志，确实百度爬虫的流量都被引入到这里来了，皆大欢喜
+![Nginx 日志](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmj6s4syj21150a4dhn.jpg "Nginx 日志")
 
 后续还需要观察看看百度的收录结果（等待更新并截图）
 图。。。
@@ -315,4 +426,6 @@ curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/
 3、通过实战学习了一些网络知识，例如：CNAME、A 记录、域名服务器、二级域名等、https 证书，也学习了一些关于 Nginx 的知识。
 
 4、关于访问速度的问题，GitHub Pages 的 CDN 还是很强大的，不会出现卡顿的情况。但是有时候貌似 GitHub 会被墙，打不开。此外，我搞这么久就是为了让百度爬虫能收录我的站点文章，所以自己搭建的 VPS 只是为了给百度爬虫爬取用的，其它正常人或者爬虫仍旧是访问 GitHub Pages 的链接。
+
+5、关于 https，使用 GitHub Pages 的时候，服务全部是 GitHub Pages 提供的，我无需关心。但是，自己使用 VPS 做了一个镜像，就需要配置一模一样的环境给百度爬虫使用，否则会导致一些失败的现象，例如 htps 认证失败、链接抓取失败。因此，一定要开启 https，并且同时也支持 http。
 
