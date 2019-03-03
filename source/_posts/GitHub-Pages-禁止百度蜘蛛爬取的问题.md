@@ -161,7 +161,7 @@ DNSPod 账号自行注册，我使用免费版本，当然会有一些限制，�
 不使用A记录的配置方式
 ![不使用A记录的配置方式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovk0xljij21hc0qxta3.jpg "不使用A记录的配置方式")
 
-3、在 Godday 中绑定自定义 域名服务器
+3、在 Godday 中绑定自定义域名服务器
 第2个步骤完成，我们回到 DNSPod 的域名界面，可以看到提示我们修改 NS 地址，如果不知道是什么意思，可以点击提示链接查看帮助手册（其实就是去购买域名的服务商那里绑定 DNSPod 的域名服务器）。
 
 提示我们修改 NS 地址
@@ -285,7 +285,7 @@ service nginx start
 
 1-1、查看 Nginx 的 https 模块
 先查看我安装的小白版本的 Nginx 里面有没有关于 https 的模块，使用命令 **nginx -V**，可以看到是有的，这个模块就是 **--with-http_ssl_module**。
-图。。。
+![查看ssl模块](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0prgtihdkj21gr060js0.jpg "查看ssl模块")
 
 1-2、申请证书
 可以购买或者从阿里云、腾讯云里面申请免费的，但是我还是觉得使用 OpenSSL 工具自己生成方便，先查看机器有没有安装 OpenSSL 工具，使用 **openssl version** 命令，如果没有则需要安装 **yum install -y openssl openssl-devel**，安装完成后开始生成证书。生成证书的命令：
@@ -294,7 +294,7 @@ openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -keyout /site/ssl-nginx.ke
 ```
 
 在生成的过程中还需要填写一些参数信息：国家、城市、机构名称、机构单位名称、域名、邮箱等，这里特别注意我为了能让多个子域名公用一个证书，采用了泛域名的方式（星号的模糊匹配：\*.playpi.org）。这种生成证书的方式只是为了测试使用，最终的证书肯定是不可信的，浏览器会提示此证书不受信任，所以还是通过其它方式获取证书比较好。
-图。。。
+![证书参数](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0prhfu9p8j20p40chwf7.jpg "证书参数")
 
 完整信息填写
 ```
@@ -320,21 +320,21 @@ Email Address []:playpi@qq.com
 ```
 
 1-3、更改配置并重启 Nginx
-重新配置 http 与 https 的参数（只列出 server 的主要部分，blog 二级域名主要是为了测试使用的，blog 的流量全部导入我的 VPS 中）
+重新配置 http 与 https 的参数（只列出 server 的主要部分，blog 二级域名主要是为了测试使用的，blog 的流量全部导入我的 VPS 中），特别注意 rewrite 的正则表达式，只替换域名部分，链接部分不能替换，否则都跳转到主页去了
 
 ```
 server {
     listen       80;
     server_name  www.playpi.org;
     access_log   /site/iplaypi.github.io.http-www-access.log  main;
-    rewrite ^(.*)$ https://www.playpi.org;
+    rewrite ^/(.*)$ https://www.playpi.org/$1 permanent;
     }
 
     server {
     listen       80;
     server_name  blog.playpi.org;
     access_log   /site/iplaypi.github.io.http-blog-access.log  main;
-    rewrite ^(.*)$ https://blog.playpi.org;
+    rewrite ^/(.*)$ https://blog.playpi.org/$1 permanent;
     }
 
     server {
@@ -374,10 +374,10 @@ nginx -s reload
 
 1-4、打开链接查看
 使用 blog 二级域名测试
-图。。。
+![使用 blog 二级域名测试](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pri38049j21hc0rymzk.jpg "使用 blog 二级域名测试")
 
-或者使用 curl 命令模拟请求
-图。。。
+或者使用 curl 命令模拟请求，由于有重定向的问题，所以失败
+![curl 无法获取重定向的内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0proxgda3j20u204q0ss.jpg "curl 无法获取重定向的内容")
 
 去百度站长里面重新提交 https 认证
 图。。。
@@ -395,6 +395,8 @@ nginx -s reload
 
 ## 验证结果
 
+以下验证都是在没有开启 https 的情况下，即没有对 http 进行301重定向，如果做了301重定向截图内容会有一点不一样，curl 也会直接失败。
+
 使用最简单的方式验证就是在百度站长工具里面使用**抓取诊断**来进行模拟抓取多次，看看成功率是否是100%。通过测试，可以看到，每次抓取都会成功，那么接下来就等待百度自己抓取了（百度爬虫抓取 sitemap.xml 文件的频率很低，可能要等一周）。
 
 使用抓取诊断方式来验证，这个过程有一个插曲，就是无论怎么验证都是失败的，但是使用 curl 模拟请求却是成功的。我看了失败原因概述里面，抓取的 ip 地址仍旧是 GitHub Pages 的，说明百度爬虫的流量没有到我自己的 VPS 上面。我一开始还以为是 DNSPod 配置没生效，但是通过 curl 模拟请求却可以，说明 DNSPod 配置没问题，那就是百度的问题了，应该是缓存。后来，我在移动端 UA 与 PC 端 UA 切换了一下，然后就行了。
@@ -406,7 +408,7 @@ nginx -s reload
 curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)" https://www.playpi.org/baidusitemap.xml
 ```
 
-模拟请求的结果，可以看到也是正常的
+模拟请求的结果，可以看到也是正常的（在没有开启 https 的情况下，如果开启301重定向就不行了）
 ![模拟请求的结果](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmjky1dwj20v50hnq3v.jpg "模拟请求的结果")
 
 我也去看了 VPS 上面的 Nginx 日志，确实百度爬虫的流量都被引入到这里来了，皆大欢喜
@@ -427,5 +429,7 @@ curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/
 
 4、关于访问速度的问题，GitHub Pages 的 CDN 还是很强大的，不会出现卡顿的情况。但是有时候貌似 GitHub 会被墙，打不开。此外，我搞这么久就是为了让百度爬虫能收录我的站点文章，所以自己搭建的 VPS 只是为了给百度爬虫爬取用的，其它正常人或者爬虫仍旧是访问 GitHub Pages 的链接。
 
-5、关于 https，使用 GitHub Pages 的时候，服务全部是 GitHub Pages 提供的，我无需关心。但是，自己使用 VPS 做了一个镜像，就需要配置一模一样的环境给百度爬虫使用，否则会导致一些失败的现象，例如 htps 认证失败、链接抓取失败。因此，一定要开启 https，并且同时也支持 http。
+5、关于 https，使用 GitHub Pages 的时候，服务全部是 GitHub Pages 提供的，我无需关心。但是，自己使用 VPS 做了一个镜像，就需要配置一模一样的环境给百度爬虫使用，否则会导致一些失败的现象，例如 htps 认证失败、链接抓取失败。因此，一定要开启 https，并且同时也支持 http。以下是整理的网络请求流程图，清晰明了。
+![网络请求流程图](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ptlseegej20p00howf6.jpg "网络请求流程图")
+
 
