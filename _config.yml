@@ -48,7 +48,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 # 跳过,不渲染的文件,只是source目录下面的
-skip_render: [robots.txt, google14e242670e17efce.html, baidu_verify_hfab04Fh5L.html, baidu_verify_MNSaWvaoIj.html]
+skip_render: [robots.txt, google14e242670e17efce.html, baidu_verify_hfab04Fh5L.html]
 
 # Writing
 new_post_name: :title.md # File name of new posts
