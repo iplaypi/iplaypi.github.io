@@ -4,8 +4,8 @@ id: 2018111601
 date: 2018-11-16 19:25:52
 updated: 2018-11-16 19:25:52
 categories:
-tags: [Shadowsocks,Vultr,Avast,VPS]
-keywords: Vultr,Shadowsocks,SS,VPS,搭梯子,梯子搭建,翻墙工具
+tags: [Shadowsocks,Vultr,Avast,VPS,影梭]
+keywords: Vultr,Shadowsocks,SS,VPS,搭梯子,梯子搭建,翻墙工具,影梭
 ---
 
 本文讲述通过 Vultr 云主机搭建 Shadowsocks 的过程，非常不详细。当然，关于云主机很多 VPS 都可以选择，根据价格、配置、地区等可以自由选择。
@@ -215,7 +215,27 @@ http://127.0.0.1:1080/pac?t=20181118030355597&secret=qZKsW49fDFezR4jJQtRDhUVPRqn
 
 ## Android平台使用
 
-下载Android平台的客户端，下载地址：[shadowsocks 官网](http://shadowsocks.org/en/download/clients.html)。
+Android 平台的安装使用方法就非常简单了，分为**安装、配置、启动**这3个步骤，没有其它多余的操作。
+
+### 安装
+
+下载 Android 平台的客户端，一般我们都称之为**影梭**，在应用商城是找不到的，因为通不过审核，所以只能去官网下载，下载地址：[shadowsocks 官网](http://shadowsocks.org/en/download/clients.html)。切记，千万不要去第三方网站下载，因为下载的安装包可能带有其它的应用，导致给你的手机安装了一堆软件。当然，如果你连官网都不信，可以自己下载源代码，自己打包 apk 文件，也是可以的，懂一点点 Android 开发就行了，源代码全部是开源的，放在了 GitHub 上面：https://github.com/Jigsaw-Code/outline-client/ 。
+
+下载完 apk 文件，安装也就是和安装普通的应用一样，需要注意的是有些 Android 手机会禁止外部来源的 app（不是从应用商店下载安装的）安装，所以需要同意一下，也就是**信任此应用**，才能顺利完成安装。
+
+### 配置
+
+需要配置的内容和 Windows 平台的一样，把那些必要的参数填进去就行了，其它内容不需要关心。例如我这里配置了ip、端口、密码、加密方式等。
+![配置信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pzdu7hdhj20u01me0xa.jpg "配置信息")
+
+### 启动
+
+启动只要点击右上角的灰色圆形按钮，里面有一个小飞机，大概等待几秒钟，就会变绿，表示已经连接上 VPN 了，此时手机就可以连接被屏蔽的网站了。唯一的缺点就是，不支持设置类似于 PAC 规则的站点切换（**路由**默认设置的是绕过中国大陆地址），因为只要一连上 VPN，手机上所有的国外连接都是走 VPN，会导致连某些正常的国外的网站也会慢一点，还浪费 VPS 的流量。当然，如果是在 WIFI 的环境下，通过 Android 系统的网络代理设置也可以设置一些类似于 PAC 的规则，就不细说了。启动后，还可以看到流量发送接收统计信息。
+![启动成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pzebvxr7j20u01mcae9.jpg "启动成功")
+
+在手机的设置里面也可以看到 VPN 的开启
+![查看系统开启的VPN](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pzegquf2j20u01jc0wu.jpg "查看系统开启的VPN")
+
 
 # 踩坑记录
 
@@ -233,3 +253,4 @@ http://127.0.0.1:1080/pac?t=20181118030355597&secret=qZKsW49fDFezR4jJQtRDhUVPRqn
 https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt 列表规则，导致配置信息很多，而且自己看着头都大，不好维护与查看，后来就发现了列表规则，解放了劳动力。
 
 6、解决了 Chrome 浏览器的收藏跨平台自动更新同步的问题，以前在三台电脑之间添加取消收藏，总是不能更新同步，需要手动开启系统代理设置全局模式（Chrome 浏览器的收藏同步功能被屏蔽了，我又不知道 url 是什么），等一会更新同步之后再关闭（防止其它场景也翻墙了）。目前使用规则列表，收藏可以自动更新同步了，不需要手动来回切换了，也不用担忘记同步的情况了。
+
