@@ -151,17 +151,17 @@ I've confirmed that we are currently blocking the Baidu user agent from crawling
 ### 更改域名服务器和相关配置
 
 1、在DNSPod中添加域名
-DNSPod 账号自行注册，我使用免费版本，当然会有一些限制，例如解析的域名A记录个数限制为2个（GitHub Pages 有4个 ip，我在 Godday 中都是配置4个，但是没影响，配置2个也。或者直接配置 CNAME 记录就行了，以前我不懂就配置了 ip，多麻烦，ip 还要通过 ping iplaypi.github.io 获取，每次还不一样，一共得到了4个，多此一举。当然，如果域名被墙了而 ip 没被墙，还是需要这样配置的）。
+DNSPod 账号自行注册，我使用免费版本，当然会有一些限制，例如解析的域名A记录个数限制为2个（GitHub Pages 有4个 ip，我在 Godaddy 中都是配置4个，但是没影响，配置2个也。或者直接配置 CNAME 记录就行了，以前我不懂就配置了 ip，多麻烦，ip 还要通过 ping iplaypi.github.io 获取，每次还不一样，一共得到了4个，多此一举。当然，如果域名被墙了而 ip 没被墙，还是需要这样配置的）。
 ![在DNSPod中添加域名](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0oviygtn3j21hc0qxgnz.jpg "在DNSPod中添加域名")
 
 2、添加域名解析记录
-我把 Godday 中的解析记录直接抄过来就行，不同的是由于使用的是 DNSPod 免费版本，A 记录会少配置2个，基本不会有啥影响**（其实不配置 A 记录最好，直接配置 CNAME 就行了，会根据域名自动寻找 ip，以前我不懂）**。另外还有一个就是需要针对百度爬虫专门配置一条 www 的 A 记录，针对百度的线路指向自己服务器的 ip（截图只是演示，其中 CNAME 记录应该配置域名，A 记录才是配置 ip），如果使用的是第三方托管服务，直接添加 CNAME 记录，配置域名就行（例如 yoursite.gitcafe.io）。
+我把 Godaddy 中的解析记录直接抄过来就行，不同的是由于使用的是 DNSPod 免费版本，A 记录会少配置2个，基本不会有啥影响**（其实不配置 A 记录最好，直接配置 CNAME 就行了，会根据域名自动寻找 ip，以前我不懂）**。另外还有一个就是需要针对百度爬虫专门配置一条 www 的 A 记录，针对百度的线路指向自己服务器的 ip（截图只是演示，其中 CNAME 记录应该配置域名，A 记录才是配置 ip），如果使用的是第三方托管服务，直接添加 CNAME 记录，配置域名就行（例如 yoursite.gitcafe.io）。
 ![添加域名解析记录](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovjinxzvj21hc0qxac2.jpg "添加域名解析记录")
 
 不使用A记录的配置方式
 ![不使用A记录的配置方式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovk0xljij21hc0qxta3.jpg "不使用A记录的配置方式")
 
-3、在 Godday 中绑定自定义域名服务器
+3、在 Godaddy 中绑定自定义域名服务器
 第2个步骤完成，我们回到 DNSPod 的域名界面，可以看到提示我们修改 NS 地址，如果不知道是什么意思，可以点击提示链接查看帮助手册（其实就是去购买域名的服务商那里绑定 DNSPod 的域名服务器）。
 
 提示我们修改 NS 地址
@@ -170,7 +170,7 @@ DNSPod 账号自行注册，我使用免费版本，当然会有一些限制，�
 帮助手册
 ![帮助手册](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovkoigmaj20s60lymyk.jpg "帮助手册")
 
-我是在 Godday 中购买的域名（不需要备案），所以需要在 Godday 中取消默认的 DNS 域名服务器，然后把 DNSPod 分配的域名服务器配置在 Godday 中。这里需要注意，在配置了新的域名服务器的时候，以前的配置的解析记录都没用了，因为 Godday 直接把域名解析的工作转给了我配置的 DNSPod 域名服务器（配置信息都转到了 DNSPod 中，也就是步骤1、步骤2中的工作）。
+我是在 Godaddy 中购买的域名（不需要备案），所以需要在 Godaddy 中取消默认的 DNS 域名服务器，然后把 DNSPod 分配的域名服务器配置在 Godaddy 中。这里需要注意，在配置了新的域名服务器的时候，以前的配置的解析记录都没用了，因为 Godaddy 直接把域名解析的工作转给了我配置的 DNSPod 域名服务器（配置信息都转到了 DNSPod 中，也就是步骤1、步骤2中的工作）。
 原有的解析记录与原有的域名服务器
 ![原有的解析记录](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovn10ghwj20wt0mvgm6.jpg "原有的解析记录")
 
