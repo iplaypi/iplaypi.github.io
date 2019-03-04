@@ -82,8 +82,8 @@ curl https://www.playpi.org/baidusitemap.xml
 
 接下来我又查找了资料，发现网上确实有很多这种说法，而且大家都遇到了这种问题，但是并没有官方的说明放出来。
 
-于是，接着我又回复了百度站长对方的反馈，直接问是不是因为 GitHub Pages 禁止了百度爬虫，所以百度爬取的结果总是 403 错误。等了几个小时，对方果然这样回复，说是的（对方没有明确回复，可能是不想承认，那我也不管了）。
-图。。。
+于是，接着我又回复了百度站长对方的反馈，直接问是不是因为 GitHub Pages 禁止了百度爬虫，所以百度爬取的结果总是 403 错误。等了2天多（赶上周末），对方没有明确回复，说的都是废话，可能是不想承认，那我也不管了。
+![百度反馈中心再次回复](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r3ajynl5j20z20ne76i.jpg "百度反馈中心再次回复")
 
 ## 通过 GitHub Pages 找原因
 
@@ -293,7 +293,7 @@ service nginx start
 openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -keyout /site/ssl-nginx.key -out /site/ssl-nginx.crt
 ```
 
-在生成的过程中还需要填写一些参数信息：国家、城市、机构名称、机构单位名称、域名、邮箱等，这里特别注意我为了能让多个子域名公用一个证书，采用了泛域名的方式（星号的模糊匹配：\*.playpi.org）。这种生成证书的方式只是为了测试使用，最终的证书肯定是不可信的，浏览器会提示此证书不受信任，所以还是通过其它方式获取证书比较好。
+在生成的过程中还需要填写一些参数信息：国家、城市、机构名称、机构单位名称、域名、邮箱等，这里特别注意我为了能让多个子域名公用一个证书，采用了泛域名的方式（星号的模糊匹配：\*.playpi.org）。这种生成证书的方式只是为了测试使用，最终的证书肯定是不可信的，浏览器会提示此证书不受信任，所以还是通过其它方式获取证书比较好（后续我会通过阿里云或者 letsencrypt 获取免费的证书，具体博客参考可以使用相关关键词在站内搜索）。
 ![证书参数](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0prhfu9p8j20p40chwf7.jpg "证书参数")
 
 完整信息填写
@@ -373,14 +373,19 @@ nginx -s reload
 ```
 
 1-4、打开链接查看
-使用 blog 二级域名测试
+使用 blog 二级域名测试（也需要在 DNSPod 中配置一条 A 记录解析规则）
 ![使用 blog 二级域名测试](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pri38049j21hc0rymzk.jpg "使用 blog 二级域名测试")
 
 或者使用 curl 命令模拟请求，由于有重定向的问题，所以失败
 ![curl 无法获取重定向的内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0proxgda3j20u204q0ss.jpg "curl 无法获取重定向的内容")
 
-去百度站长里面重新提交 https 认证
-图。。。
+既然开启了 https，可以使用 curl 关闭失效证书的方式（-k 参数）访问 https 链接
+![curl关闭证书认证访问https链接](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0qmesphe5j20rb0g0q3o.jpg "curl关闭证书认证访问https链接")
+
+去百度站长里面重新提交 https 认证（使用上面的测试证书是认证失败的，我去阿里云重新申请了证书，认证成功了，申请证书的教程可以在本站搜索，为了给2个二级域名不同的证书，nginx 还需要重新配置 server 信息）
+![blog二级域名认证成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r33rvt0oj21hc0q9tdh.jpg "blog二级域名认证成功")
+
+![www二级域名认证成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r34hh1lxj21hc0q90xi.jpg "www二级域名认证成功")
 
 **2、端口的问题**
 为什么在上面配置域名解析记录的时候，百度的 A 记录配置 VPS 的 ip  就行了呢，这是因为在 VPS 上面只有 Nginx 这一种 Web 服务，机器会分配给它一个端口（默认80，也是 http 的默认端口，可以配置），然后 www 的访问就使用这个端口（在 Nginx 的配置里面有，还有另外一个 blog 的），所以可以忽略端口的信息。但是如果一台机器上面有各种 Web 服务，切记确保端口不要冲突（例如 Tomcat 和 Nginx 同时存在的情况），并且给 Nginx 的就是80端口，然后如果有其它服务，可以使用 Nginx 做代理转发（例如把 email 二级域名转到一个端口，blog 二级域名转到另一个端口）。
@@ -395,7 +400,7 @@ nginx -s reload
 
 ## 验证结果
 
-以下验证都是在没有开启 https 的情况下，即没有对 http 进行301重定向，如果做了301重定向截图内容会有一点不一样，curl 也会直接失败。
+以下验证都是在没有开启 https 的情况下，即没有对 http 进行301重定向，如果做了301重定向截图内容会有一点不一样，curl 也会直接失败（需要访问 https 格式的链接）。
 
 使用最简单的方式验证就是在百度站长工具里面使用**抓取诊断**来进行模拟抓取多次，看看成功率是否是100%。通过测试，可以看到，每次抓取都会成功，那么接下来就等待百度自己抓取了（百度爬虫抓取 sitemap.xml 文件的频率很低，可能要等一周）。
 
@@ -405,11 +410,14 @@ nginx -s reload
 此外，既然我们知道了百度爬虫设置的用户代理，那么就可以直接使用 curl 命令来模拟百度爬虫的请求，观察返回的 http 结果是否正常。模拟命令如下：
 
 ```bash
-curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)" https://www.playpi.org/baidusitemap.xml
+curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)" http://blog.playpi.org/baidusitemap.xml
 ```
 
-模拟请求的结果，可以看到也是正常的（在没有开启 https 的情况下，如果开启301重定向就不行了）
+模拟请求的结果，可以看到也是正常的（下面的截图在没有开启 https 的情况下，如果开启301重定向就不行了，需要直接访问 https 链接）
 ![模拟请求的结果](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmjky1dwj20v50hnq3v.jpg "模拟请求的结果")
+
+如果开启了 https，即对 http 请求进行301重定向，则可以直接访问 https 链接（如果证书是无效的，像我截图中的，则可以使用 curl 关闭无效证书的方式，加一个 -k 参数）
+![curl关闭证书认证访问https链接](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0qmguu51qj21660i9ab1.jpg "curl关闭证书认证访问https链接")
 
 我也去看了 VPS 上面的 Nginx 日志，确实百度爬虫的流量都被引入到这里来了，皆大欢喜
 ![Nginx 日志](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmj6s4syj21150a4dhn.jpg "Nginx 日志")
