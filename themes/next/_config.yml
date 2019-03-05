@@ -141,12 +141,13 @@ social_icons:
 # Blog rolls
 links_icon: link
 links_title: 友情链接
-links_layout: block
-#links_layout: inline
+#links_layout: block
+links_layout: inline
 links:
   GitHub: https://github.com/iplaypi
   Weibo: https://weibo.com/u/3086148515
-  playpi.org: https://www.playpi.org
+  虾丸派: https://www.playpi.org
+  playpi: https://www.playpi.org
   廖雪峰: https://www.liaoxuefeng.com
   阮一峰: http://www.ruanyifeng.com
   travis-ci: https://travis-ci.org/iplaypi/iplaypi.github.io
