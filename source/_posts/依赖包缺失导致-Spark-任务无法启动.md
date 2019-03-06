@@ -76,7 +76,7 @@ mvn dependency:tree > ./tree.txt
 # 总结
 
 
-1、还遇到一种情况，在正式环境运行正常（没有单独配置这个依赖，使用的是别的依赖包里面的同名类，org.eclipse.jetty.orbit:javax.servlet），但是在本机跑，创建 SparkContext 的时候就会报错，无法创建成功；
+1、还遇到一种情况，在正式环境运行正常【没有单独配置这个依赖，使用的是别的依赖包里面的同名类，org.eclipse.jetty.orbit:javax.servlet】，但是在本机跑，创建 SparkContext 的时候就会报错，无法创建成功。其实还是因为包缺失，确保要使用 javax.servlet-api 这个依赖，其它的都不好使。
 
 2、在本机连接测试环境的 yarn，创建 SparkContext 的时候无法指定用户名，默认总是当前系统的用户名，导致创建 SparkContext 失败，伪装用户无效，只有打 jar 包执行前使用命令切换用户名：export HADOOP_USER_NAME=xx，而在代码中设置 System.setProperty("user.name", "xx")、System.setProperty("HADOOP_USER_NAME", "xx") 是无效的（这个问题会有一篇文章专门分析，需要查看源代码）；
 
