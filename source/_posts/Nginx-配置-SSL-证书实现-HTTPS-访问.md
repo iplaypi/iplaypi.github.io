@@ -1,18 +1,12 @@
 ---
 title: Nginx 配置 SSL 证书实现 HTTPS 访问
 categories: 建站
-tags:
-  - Nginx
-  - https
-  - ssl
-  - 证书
-keywords: 'Nginx,https,ssl,证书'
-id: 2019-03-05 02:14:23
+tags: [Nginx,https,ssl,证书]
+keywords: Nginx,https,ssl,证书
+id: 2019030501
 date: 2019-03-05 02:14:23
 updated: 2019-03-05 02:14:23
 ---
-
-
 
 
 由于 GitHub Pages 把百度爬虫屏蔽了，导致百度爬虫爬取不到我的个人主页，所以被百度收录的内容很少，能收录的基本都是我手动提交的。后来我的解决办法就是自己搭建了一台 Web 服务器，然后在 DNSPod 中把百度爬虫的访问流量引到我的 Web 服务器上面，服务器主机是我自己购买的 VPS，服务器应用我选择的是强大的 Nginx。本文就记录 Web 服务器搭建以及配置 SSL 证书这个过程。
