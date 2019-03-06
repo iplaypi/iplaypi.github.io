@@ -289,6 +289,7 @@ service nginx start
 
 1-2、申请证书
 可以购买或者从阿里云、腾讯云里面申请免费的，但是我还是觉得使用 OpenSSL 工具自己生成方便，先查看机器有没有安装 OpenSSL 工具，使用 **openssl version** 命令，如果没有则需要安装 **yum install -y openssl openssl-devel**，安装完成后开始生成证书。生成证书的命令：
+
 ```
 openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -keyout /site/ssl-nginx.key -out /site/ssl-nginx.crt
 ```
