@@ -22,7 +22,9 @@ keywords: GitHub Pages,SEO,百度蜘蛛,Baiduspider
 
 利用搜索引擎的 site 搜索可以看到百度与谷歌明显的差别
 百度搜索结果（只有少量的收录，仅有的还是通过主动推送与自动推送提交的）
-![百度搜索结果](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojip7wffj20mf0q1abw.jpg "百度搜索结果")
+
+上面那个图片被封了，再来一张局部截图
+![百度搜索结果-局部](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ujsyasw0j20en0ie42d.jpg "百度搜索结果-局部")
 
 谷歌搜索结果（收录很多，而且很全面）
 ![谷歌搜索结果](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojj5hv3qj20ng0pp0uv.jpg "谷歌搜索结果")
