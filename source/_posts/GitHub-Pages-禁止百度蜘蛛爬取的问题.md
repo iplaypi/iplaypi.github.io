@@ -423,8 +423,8 @@ curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/
 我也去看了 VPS 上面的 Nginx 日志，确实百度爬虫的流量都被引入到这里来了，皆大欢喜
 ![Nginx 日志](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmj6s4syj21150a4dhn.jpg "Nginx 日志")
 
-后续还需要观察看看百度的收录结果（等待更新并截图）
-图。。。
+后续还需要观察看看百度的收录结果（等待3天后更新了，结果如下）
+![sitemap方式提交链接生效](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0uis3rezoj21hc0q9wgm.jpg "sitemap方式提交链接生效")
 
 
 # 问题总结
