@@ -18,6 +18,8 @@ updated: 2019-03-05 02:14:23
 # 安装Nginx
 
 
+Nginx 官方网站：[https://www.nginx.com/resources/wiki/start/topics/tutorials/install](https://www.nginx.com/resources/wiki/start/topics/tutorials/install) 。
+
 我的 VPS 是 CentOS 7 X64 版本的，所以安装 Nginx 的过程比较麻烦一点，需要自己下载源码、编译、安装，如果需要用到附加模块【例如 http_ssl 证书模块】，还需要重新编译，整个过程比较耗时。如果不熟悉的话，遇到问题也要折腾半天才能解决。所以，我在不熟悉的 Nginx 的情况下选择了一种简单的方式，直接自动安装，并自带了一些常用的模块，例如 ssl 证书模块。但是缺点就是安装过程稍微长一点，在网络好的情况下可能需要3-5分钟。我还参考了别人的文档：[https://gist.github.com/ifels/c8cfdfe249e27ffa9ba1](https://gist.github.com/ifels/c8cfdfe249e27ffa9ba1) ，但是仅供参考，因为我发现也有一些不能使用的地方。
 
 ## 创建源配置文件
