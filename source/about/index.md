@@ -86,6 +86,7 @@ type: about
 - 基础算法数据结构学习可视化站点：[Algorithm Visualizer](https://algorithm-visualizer.org)，[GitHub 项目](https://github.com/algorithm-visualizer/algorithm-visualizer)
 - 通过动画学习算法和数据结构：[VisuAlgo](https://visualgo.net)
 - Emoji 字符搜索：[emoji 百科](https://emojipedia.org)
+- 图标库：[https://www.easyicon.net](https://www.easyicon.net)
 - 其它
 
 ## 技术列表
