@@ -58,6 +58,13 @@ Referer: http://pan.baidu.com/disk/home
 ```
 ![aria2 命令行参数](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjec4bt6kj20gj0ahgm8.jpg "aria2 命令行参数")
 
+这里再给一个完整的下载命令示例：
+
+```
+aria2c -c -s256 -k2M -x256 -t1 -m0 --enable-rpc=true -o "pyspark-part1.zip" --header "User-Agent: netdisk;5.3.4.5;PC;PC-Windows;5.1.2600;WindowsBaiduYunGuanJia" --header "Referer: http://pan.baidu.com/disk/home" --header "Cookie: BDUSS=FFzb2s3Z2NRcnlTRE00WkxLYn5jTzhLdXktflVYbWprdXRpZm5EQ1FnYXlyTzFaSVFBQUFBJCQAAAAAAAAAAAEAAADYoS0veWVhckxQRjEzMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALIfxlmyH8ZZb; pcsett=1506245668-3f7c157ceb2130e195638efdf62944aa" "https://pcs.baidu.com/rest/2.0/pcs/file?method=download&app_id=250528&path=%2FQQ%E7%BE%A4%E5%90%88%E4%B9%B0%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%A7%86%E9%A2%91%2Fxtwy%E4%B9%8Bpyspark%E8%A7%86%E9%A2%91%2F%E5%AD%A6%E5%BE%92%E6%97%A0%E5%BF%A7pyspark%E8%AF%BE%E7%A8%8Bpart1.zip"
+
+```
+
 2、如果是后台启动，通过其它管理插件来创建下载任务，则直接使用配置文件，文件名称为 aria2.conf，并在启动 aria2 时指定配置文件的位置。这样做的好处是使用一个配置文件就可以指定常用的参数配置，不用更改，每次下载文件前启动 aria2 即可。
 
 配置文件可选项如下，例如下载文件存放位置、是否开启RPC、是否开启断点续传，具体更为详细的内容请参考文档：[Aria2 配置信息文档](https://aria2.github.io/manual/en/html/index.html)
