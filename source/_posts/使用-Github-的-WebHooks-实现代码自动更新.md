@@ -20,11 +20,12 @@ keywords: Github,PHP,WebHooks,Git,自动更新,钩子
 # 配置服务器的 PHP 支持
 
 
-VPS 上面的 Nginx 已经安装好了，就不再赘述过程，不清楚的可以参考我的另外一篇文章：[GitHub Pages 禁止百度蜘蛛爬取的问题](https://www.playpi.org/2019010501.html) 。配置 PHP 后台主要有三个步骤：一是配置安装 PHP，包括附加模块 PHP-FPM，二是配置启动 PHP-FPM 模块，三是配置重启 Nginx。由于我的机器配置问题，在这个过程踩了很多坑，我也会一一记录下来。
+VPS 上面的 Nginx 已经安装好了，就不再赘述过程，不清楚的可以参考我的另外一篇文章：[GitHub Pages 禁止百度蜘蛛爬取的问题](https://www.playpi.org/2019010501.html) 。配置 PHP 后台主要有三个步骤：一是配置安装 PHP，包括附加模块 PHP-FPM，二是配置启动 PHP-FPM 模块，三是配置重启 Nginx。由于我的机器资源问题，在这个过程踩了很多坑，我也会一一记录下来。
 
-毕竟我是新手，有很多地方不是太懂，所以参考了一些别人的博客和官网，有时候看多了也会迷惑，有些内容描述的不一样。这些链接我放在这里给大家参考：[参考 PHP 官网](https://secure.php.net/manual/zh/install.unix.nginx.php) 、[CentOS 7.2环境搭建实录(第二章：php安装)](https://segmentfault.com/a/1190000013344675) 、[如何正确配置Nginx+PHP](https://www.cnblogs.com/ldj3/p/9298734.html) 、[PHP-FPM 与 Nginx 的通信机制总结](https://segmentfault.com/a/1190000018464303) 、[使用Github的WebHooks实现生产环境代码自动更新](https://qq52o.me/2482.html) 。
+毕竟我是新手，有很多地方不是太懂，所以参考了一些别人的博客和官网，有时候看多了也会迷惑，有些内容描述的不一样。这些链接我放在这里给大家参考：[参考 PHP 官网](https://secure.php.net/manual/zh/install.unix.nginx.php) 、[CentOS 7.2环境搭建实录(第二章：php安装)](https://segmentfault.com/a/1190000013344675) 、[PHP-FPM 与 Nginx 的通信机制总结](https://learnku.com/articles/23694) 、[使用Github的WebHooks实现生产环境代码自动更新](https://qq52o.me/2482.html) 。
 
 先安装软件仓库，我的已经安装好了，重复安装也没影响。
+
 ```
 yum -y install epel-release
 ```
@@ -32,6 +33,7 @@ yum -y install epel-release
 ## 踩着坑安装 PHP
 
 1、下载指定版本的 PHP 源码，我这里选择了最新的版本 7.3.3，然后解压。
+
 ```
 -- 下载
 wget http://php.net/get/php-7.3.3.tar.gz/from/this/mirror -O ./php-7.3.3.tar.gz
@@ -40,12 +42,17 @@ tar zxvf php-7.3.3.tar.gz
 ```
 
 2、configure【配置】，指定 PHP 安装目录【默认是 /usr/local/php】和 PHP 配置目录【默认和 PHP 安装目录一致】，我这里特意指定各自的目录，更方便管理。
+
 ```
 -- 配置,并且开启 PHP-FPM 模块
 ./configure --prefix=/site/php/ --with-config-file-path=/site/php/conf/ --enable-fpm
 ```
 
-遇到报错：**configure: error: no acceptable C compiler found in $PATH**，竟然缺少 c 编译器，那就安装吧。
+遇到报错：**configure: error: no acceptable C compiler found in $PATH**。
+图。。
+
+竟然缺少 c 编译器，那就安装吧。
+
 ```
 -- 安装 gcc 编译器
 yum install gcc
@@ -53,15 +60,24 @@ yum install gcc
 
 安装成功
 图。。
+图。。
 
-安装完成后，接着配置，又报错：**configure: error: libxml2 not found. Please check your libxml2 installation.**，这肯定是缺少对应的依赖环境库，接着安装就行。
+安装完成后，接着配置，又报错：**configure: error: libxml2 not found. Please check your libxml2 installation.**。
+图。。
+
+这肯定是缺少对应的依赖环境库，接着安装就行。
+
 ```
 -- 安装2个，环境库
 yum install libxml2
 yum install libxml2-devel -y
 ```
 
-接着就顺利通过配置。
+安装成功
+图。。
+
+接着就重复上述的配置操作，顺利通过配置。
+图。。
 
 3、编译、安装。
 ```
@@ -70,6 +86,7 @@ make && make install
 ```
 
 遇到报错：
+
 ```
 cc: internal compiler error: Killed (program cc1)
 Please submit a full bug report,
@@ -77,9 +94,13 @@ with preprocessed source if appropriate.
 See <http://bugzilla.redhat.com/bugzilla> for instructions.
 make: *** [ext/fileinfo/libmagic/apprentice.lo] Error 1
 ```
+
+图。。
+
 这是由于服务器内存小于1G所导致编译占用资源不足【好吧，我的服务器一共就 512M 的内存，当然不足】。解决办法：在编译参数后面加上一行内容 **--disable-fileinfo**，减少内存的开销。
 
 接着编译又报错：
+
 ```
 cc: internal compiler error: Killed (program cc1)
 Please submit a full bug report,
@@ -87,54 +108,98 @@ with preprocessed source if appropriate.
 See <http://bugzilla.redhat.com/bugzilla> for instructions.
 make: *** [Zend/zend_execute.lo] Error 1
 ```
-这是因为虚拟内存不够用，我的主机只有 512M。没办法了，降低版本试试，先降为 v7.0.0【或者开启 swap 试试，不用了，切换低版本可以了】，接着重新下载、配置、编译、安装，从头再来。
+这是因为虚拟内存不够用，我的主机只有 512M。没办法了，降低版本试试，先降为 v7.0.0【或者开启 swap 试试，后面发现不用了，切换低版本后就成功了】，接着重新下载、配置、编译、安装，从头再来。
+
 ```
 -- 下载的时候改版本号就行
 wget http://php.net/get/php-7.0.0.tar.gz/from/this/mirror -O php-7.0.0.tar.gz
 ```
 
-更换了版本后，一切操作都很顺利，就不用考虑开启 swap 了。
+更换了版本后，一切操作都很顺利，就不用考虑开启 swap 了，最终编译安装完成。
+图。。
 
 ## 真正开始配置
 
-配置、编译、安装完成后，开始编辑配置文件，更改默认参数，包括配置 PHP 与 PHP-FPM 模块。
+配置、编译、安装完成后，开始编辑各个模块的配置文件，更改默认参数，包括配置 PHP 与 PHP-FPM 模块。
 
-1、PHP 配置文件，在编译安装的目录，复制配置文件 **php.ini-development** 到 PHP 的配置目录【如果一开始 configure 时没有显示指定 PHP 的配置目录，默认应该和 PHP 的安装目录一致，要复制在 /usr/local/php 中，而我指定了 PHP 的配置目录 /site/php/conf】。
+### PHP 配置文件
+
+在编译安装的目录，复制配置文件 **php.ini-development** 到 PHP 的配置目录【如果一开始 configure 时没有显示指定 PHP 的配置目录，默认应该和 PHP 的安装目录一致，要复制在 /usr/local/php 中，而我指定了 PHP 的配置目录 /site/php/conf】。
+
 ```
 cp php.ini-development /site/php/conf/php.ini
 ```
 
-更改 PHP 的配置文件，以避免遭受恶意脚本注入的攻击。
+更改 PHP 的配置文件，更改 **cgi.fix_pathinfo** 的值为0，以避免遭受恶意脚本注入的攻击。
+
 ```
 vi /site/php/conf/php.ini
 cgi.fix_pathinfo=0
 ```
 
-2、PHP-FPM 配置文件，在 PHP 的安装目录中，找到 etc 目录【如果在一开始的 configure 没有显示指定 PHP 的安装目录，默认安装在 /usr/local/php 中，则需要到此目录下寻找 etc 目录，而我指定了 PHP 的安装目录 /site/php/】，复制 PHP-FPM 模块的配置文件 **php-fpm.conf.default**。
+### PHP-FPM 配置文件
+
+在 PHP 的安装目录中，找到 etc 目录【如果在一开始的 configure 没有显示指定 PHP 的安装目录，默认安装在 /usr/local/php 中，则需要到此目录下寻找 etc 目录，而我指定了 PHP 的安装目录 /site/php/】，复制 PHP-FPM 模块的配置文件 **php-fpm.conf.default**。
+
 ```
 -- PHP 的附加模块的配置默认安装在了 etc 目录下
 cd /site/php/etc
 cp php-fpm.conf.default php-fpm.conf
 ```
 
-在上面的 etc 目录中，继续复制 PHP-FPM 模块的默认配置文件。
+在上面的 etc 目录中，继续复制 PHP-FPM 模块的默认配置文件。因为在上述的配置文件 **php-fpm.conf** 中，指定了 **include=/site/php/etc/php-fpm.d/\*.conf**，也就是会从此目录 **/site/php/etc/php-fpm.d/** 加载多份有效的配置文件，至少要有一份存在，否则后续启动 PHP-FPM 的时候会报错。
+
 ```
+-- 先直接使用模板,不改配置参数
 cp php-fpm.d/www.conf.default php-fpm.d/www.conf
 ```
 
 配置完成后，开始启动 PHP-FPM 模块，在 PHP 的安装目录中执行。
+
 ```
 -- PHP 的附加模块的脚本默认安装在了 sbin 目录下
+-- 为了方便可以添加环境变量,把 sbin、bin 这2个目录都加进去
 cd /site/php
+-- 配置文件合法性测试
+./sbin/php-fpm -t
+-- 启动,现在还不能使用 service php-fpm start 的方式,因为没有把此模块配置到系统里面
 ./sbin/php-fpm
 -- 检验是否启动
 ps aux|grep php-fpm
 ```
 
+配置文件合法性检测
+图。。
+
 可以看到正常启动了
 图。。
 
-3、接下来就是更改 Nginx 的配置文件，让 Nginx 支持 PHP 请求，并且设置反向代理，把请求转给 PHP-FPM 模块处理【前提是在不影响 html 请求的情况下】，在 server 中增加一个配置 location。
+那怎么关闭以及重启呢，PHP 5.3.3 以后的 PHP-FPM 模块不再支持 PHP-FPM 以前具有的 **./sbin/php-fpm (start|stop|reload)** 等命令，所以不要再看这种古老的命令了，需要使用信号控制：
+- INT，TERM，立刻终止
+- QUIT 平滑终止
+- USR1 重新打开日志文件
+- USR2 平滑重载所有 worker 进程并重新载入配置和二进制模块
+
+所以可以使用命令 **kill -INT pid** 来停止 PHP-FPM 模块，pid 的值可以使用 **ps aux|grep php-fpm** 获取。当然，也可以使用 **kill -INT pid 配置文件路径** 来停止 PHP-FPM 模块，pid 配置文件路径 可以在 php-fpm.conf 中查看，**pid 参数**，默认是关闭的。
+图。。
+
+为了能使用 **service php-fpm start|stop|restart|reload)** 的方式来进行启动、停止、重启、重载配置，显得优雅，需要把此模块配置到系统里面。在 PHP 的编译安装目录，复制文件 **sapi/fpm/init.d.php-fpm** ，到系统指定的目录即可。
+
+```
+cd /site/php-7.0.0
+-- 复制文件
+cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+-- 添加执行权限
+chmod +x /etc/init.d/php-fpm
+-- 添加服务
+chkconfig --add php-fpm
+```
+
+图。。
+
+### Nginx 的配置文件
+
+接下来就是更改 Nginx 的配置文件，让 Nginx 支持 PHP 请求，并且设置反向代理，把请求转给 PHP-FPM 模块处理【前提是在不影响 html 请求的情况下】，在 server 中增加一个配置 location。
 
 ```
 -- 打开配置文件
@@ -154,11 +219,29 @@ nginx -s reload
 
 这样配置就会把所有的 PHP 请求转给 PHP-FPM 模块处理，同时并不会影响原来的 html 请求。
 
+### 额外优化配置项
+
+此外，还有一些环境变量配置、开机启动配置，这里就不再赘述了，这些配置好了可以方便后续的命令简化。
+
+```
+-- 设置开机启动的 chkconfig 方法,以下是添加服务
+cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+chmod +x /etc/init.d/php-fpm
+chkconfig --add php-fpm
+-- 设置开机启动
+chkconfig php-fpm on
+-- 添加环境变量,php 的相关命令就可以直接使用了
+vi /etc/profile
+export PATH=$PATH:/site/php/bin:/site/php/sbin
+source /etc/profile
+```
+
 
 # PHP 脚本
 
 
-先在静态站点的根目录下，添加默认的 index.php 文件，用来测试，内容如下，内容的意思是输出 PHP 的所有信息。
+先在静态站点的根目录下，添加默认的 index.php 文件，用来测试，内容如下，内容的意思是输出 PHP 的所有信息。注意，PHP 文件的格式是以 **\<?php** 开头，以 **?>** 结尾。
+
 ```
 vi index.php
 <?php phpinfo(); ?>
@@ -167,18 +250,173 @@ vi index.php
 打开浏览器访问，可以看到成功。
 图。。
 
-接下来就测试复杂的脚本，用来自动拉取 GitHub 的提交。再创建一个 auto_pull.php 文件，内容如下，会自动到执行目录拉取 GitHub 的更新，这样就能实现镜像的自动更新了【还加入了可靠性验证】。
+接下来就测试复杂的脚本，用来自动拉取 GitHub 的提交。再创建一个 auto_pull.php 文件，内容如下，会自动到执行目录拉取 GitHub 的更新，这样就能实现镜像的自动更新了【还加入了秘钥验证】。
+
 ```
 vi auto_pull.php
-
+<?php
+// 生产环境 web 目录
+$target = '/site/iplaypi.github.io';
+// 密钥,验证 GitHub 的请求
+$secret = "test666";
+// 获取 GitHub 发送的内容
+$json = file_get_contents('php://input');
+$content = json_decode($json, true);
+// GitHub发送过来的签名
+$signature = $_SERVER['HTTP_X_HUB_SIGNATURE'];
+if (!$signature) {
+   return http_response_code(404);
+}
+list($algo, $hash) = explode('=', $signature, 2);
+// 计算签名
+$payloadHash = hash_hmac($algo, $json, $secret);
+// 获取分支名字
+$branch = $content['ref'];
+// 判断签名是否匹配,分支是否匹配
+if ($hash === $payloadHash && 'refs/heads/master' === $branch) {
+    $cmd = "cd $target && git pull";
+    $res = shell_exec($cmd);
+    $res_log = 'Success:'.PHP_EOL;
+    $res_log .= $content['head_commit']['committer']['name'] . ' 在' . date('Y-m-d H:i:s') . '向' . $content['repository']['name'] . '项目的' . $content['ref'] . '分支push了' . count($content['commits']) . '个commit：' . PHP_EOL;
+    $res_log .= $res.PHP_EOL;
+    $res_log .= '======================================================================='.PHP_EOL;
+    echo $res_log;
+} else {
+    $res_log  = 'Error:'.PHP_EOL;
+    $res_log .= $content['head_commit']['committer']['name'] . ' 在' . date('Y-m-d H:i:s') . '向' . $content['repository']['name'] . '项目的' . $content['ref'] . '分支push了' . count($content['commits']) . '个commit：' . PHP_EOL;
+    $res_log .= '密钥不正确或者分支不是master,不能pull'.PHP_EOL;
+    $res_log .= '======================================================================='.PHP_EOL;
+    echo $res_log;
+}
+?>
 ```
 
-接下来先手工测试一下 PHP 文件的访问是否正常，然后再测试对应的 GitHub 的 WebHooks 效果。
-。。。
+接下来先手工测试一下 PHP 文件的访问是否正常，可以使用 curl 模拟请求，或者直接使用 GitHub 的 WebHooks 请求。我这里为了简单，先使用 curl 命令来测试，后面的内容才使用 GitHub 来测试。
+
+```
+curl -H 'X-Hub-Signature:test'  https://blog.playpi.org/auto_pull.php
+```
+
+可以看到，访问正常，先不管功能上能不能正常实现，至少保证 PHP 可以正常提供服务，后面会和 GitHub 对接。
+图。。
 
 
 # 测试 WebHooks 效果
 
 
+在 GitHub 中使用 WebHooks，为了表现出它的效果是什么样，我画了一个流程图，可以直观看到它优雅的工作方式。
+图。。
 
+在上一步骤中，自动拉取更新的脚本已经写好，并且测试过模拟访问可用，那接下来就测试功能是否可用，当然，踩坑是避免不了的，优化脚本内容也是必要的。特别要注意用户权限和脚本内容这两方面，用户权限方面我直接使用 root 用户，踩坑比较少，脚本内容方面要保证你的服务器支持 **shell_exec()** 这个 PHP 函数，可以在 **index.php** 文件中加一段代码 **echo shell_exec('ls -la');**，测试一下。我的机器经过测试时支持的。
+图。。
+
+## 在 GitHub 设置 WebHooks
+
+在 GitHub 对应项目的设置【Settings】中，找到 **Webhooks** 选项，可以看到已经有一些设置完成的 WebHook，这里面就包括 travis-ci 的自动构建。
+图。。
+
+然后点击新建按钮，创建一个新的 WeHook【这个过程需要重新填写密码确认】，填写必要的参数，url 地址、秘钥、触发的事件，然后确认保存即可。
+图。。
+
+如果是第一次创建，还没有请求的历史记录，可以先手动在 master 分支做一次变更提交，然后就会触发一次 WebHooks 事件。我这里已经有触发历史了，拿一个出来看就行了。注意，为了方便测试，只要有一次请求就行了，因为如果后续更改了脚本，不用再手动向 master 分支做一次变更提交，可以直接重新发送【redeliver】。
+触发请求的信息，主要是 http 请求头和请求体
+图。。
+
+VPS 返回的信息，可以看到正常处理了 WebHooks 请求，但是没有做拉取更新的操作，原因可能是秘钥不对或者分支不对。
+图。。
+
+## 测试功能是否可用
+
+以下内容所需要的 PHP 脚本：index.php、auto_pull.php
+
+```
+<?php
+echo shell_exec("id -a");
+echo shell_exec('ls -la');
+phpinfo();
+?>
+```
+
+```
+<?php
+// 生产环境 web 目录
+$target = '/site/iplaypi.github.io';
+// 密钥,验证 GitHub 的请求
+$secret = "test666";
+// 获取 GitHub 发送的内容,解析
+$json = file_get_contents('php://input');
+$content = json_decode($json, true);
+// GitHub发送过来的签名,一定要大写,虽然http请求里面是驼峰法命名的
+$signature = $_SERVER['HTTP_X_HUB_SIGNATURE'];
+if (!$signature) {
+   return http_response_code(404);
+}
+// 使用等号分割,得到算法和签名
+list($algo, $hash) = explode('=', $signature, 2);
+// 在本机计算签名
+$payloadHash = hash_hmac($algo, $json, $secret);
+// 获取分支名字
+$branch = $content['ref'];
+// 日志内容
+$logMessage = '[' . $content['head_commit']['committer']['name'] . ']在[' . date('Y-m-d H:i:s') . ']向项目[' . $content['repository']['name'] . ']的分支[' . $content['ref'] . ']push了[' . count($content['commits']) . ']个commit' . PHP_EOL;
+$logMessage .= 'ret:[' . $content['ref'] . '],payloadHash:[' . $payloadHash . ']' . PHP_EOL;
+// 判断签名是否匹配,分支是否匹配
+if ($hash === $payloadHash && 'refs/heads/master' === $branch) {
+    // 增加执行脚本日志重定向输出到文件
+    $cmd = "cd $target && git pull";
+    $res = shell_exec($cmd);
+    $res_log = 'Success:' . PHP_EOL;
+    $res_log .= $logMessage;
+    $res_log .= $res . PHP_EOL;
+    $res_log .= '======================================================================='.PHP_EOL;
+    echo $res_log;
+} else {
+    $res_log  = 'Error:' . PHP_EOL;
+    $res_log .= $logMessage;
+    $res_log .= '密钥不正确或者分支不是master,不能pull' . PHP_EOL;
+    $res_log .= '======================================================================='.PHP_EOL;
+    echo $res_log;
+}
+?>
+```
+
+上面已经测试了访问正常，但是为了保证 PHP 脚本的功能正常执行，接下来要优化 PHP 脚本内容了。我分析一下，根据脚本的内容，只有当秘钥正确并且当前变更的分支是 master 时才会执行拉取更新操作，看返回结果也是这样的。当前没有执行拉取更新的操作，但是我的这一个触发通知里面是表明了 master 分支【根据 ref 参数】，那就是秘钥的问题了，需要详细看一下秘钥计算的那段 PHP 代码。如果怕麻烦，直接把加密这个流程去掉【会导致恶意请求，浪费 CPU 资源】，GitHub 并没有要求一定要填写秘钥，但是我为了安全，仍旧填写。
+
+我看了一下代码，并没有发现问题，于是加日志把后台处理的一些结果返回，看看哪里出问题了。最终发现竟然是分支名字的问题，PHP 代码通过 **$content** 没有获取到任何内容，包括分支名字、项目名字、提交信息等，而秘钥签名的处理是正常的。
+图。。
+
+然后我发现，竟然是创建 WebHook 的时候内容传输类型设置错误，不能使用默认的，要设置为 **application/json**，否则后台的 PHP 代码处理不了，获取的全部是空内容。
+图。。
+
+好，一切准备就绪，再来试一次，问题又来了，果然用户权限问题是逃不了的。这个问题我早有防备，本质就是没有设置好 PHP 的用户，导致 PHP 执行脚本的时候，没有权限获取与 Git 有关的信息。
+图。。
+
+接下来就简单了，去设置 PHP 的执行用户，可能还要涉及到 Nginx。先在原先的 **index.php** 脚本中增加内容 **echo shell_exec("id -a");**，用来输出当前用户信息，发现是 nobody。
+图。。
+
+为了规范起来便于管理，还是改为和 Nginx 同一个用户比较好，还记得 PHP-FPM 模块的配置文件吗 **/site/php/etc/php-fpm.d/www\.conf **，去里面找到用户和组的配置项 **user、group**，把 nobody 改为 nginx。
+图。。
+
+为什么是 nginx 用户呢，因为我的 Nginx 服务使用的就是 nginx 用户，可以去配置文件 **/etc/nginx/nginx.conf** 里面查看。
+图。。
+
+其实，用户的设置是随意的，如果把 PHP-FPM 的用户设置为 root 更方便，但是这样有很大风险，所以不要这么做。如果非要使用 nobody 也是可以的，我只是为了方便管理用户，和 Nginx 服务共同使用一个用户。一切配置完成后别忘记重启 PHP-FPM 模块。
+
+接着就是最重要的步骤了，把本地的 GitHub 项目所属用户设置为 nginx，并且保证 nginx 用户的家目录有 ssh 认证相关的秘钥信息，这样在以后的自动拉取更新时才能畅通无阻。我把原先的项目删掉，然后使用 sudo 命令给 nginx 用户生成 ssh 认证信息，并且重新克隆项目，克隆的同时指定所属用户为 nginx。【由于用户 nginx 没有登录 Shell 的权限，所以不能直接使用 nginx 用户登录后再操作的方式解决】
+
+```
+-- 目录不存在先创建,赋给 nginx 用户权限
+mkdir -p /home/nginx/.ssh/
+chown nginx:nginx -R /home/nginx/.ssh/
+-- H 参数表示设置家目录环境,u 参数表示用户名
+cd /site/
+sudo -Hu nginx ssh-keygen -t rsa -C "plapyi@qq.com"
+sudo -Hu nginx git clone https://github.com/iplaypi/iplaypi.github.io.git
+-- 如果没有 iplaypi.github.io 目录的权限,也要赋予 nginx 用户
+mkdir iplaypi.github.io
+chown nginx:nginx iplaypi.github.io
+```
+
+好，一切准备就绪，我再来试一次。可以看到，完美执行。
+图。。
 
