@@ -73,7 +73,7 @@ after_success:
 - git checkout master
 - cp -rf ../public/* ./
 # 必要配置文件
-- cp -rf ../README.md ../.gitignore ../CNAME ./
+- cp -rf ../README.md ../.gitignore ../CNAME ../index.php ./
 # 更改.gitignore内容,与source分支的不一样,直接置空,目前没有需要过滤的
 - echo "" > ./.gitignore
 - git add .
