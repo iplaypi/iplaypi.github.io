@@ -106,7 +106,10 @@ export LESSCHARSET=utf-8
 
 ## 验证
 
-验证提交时填写中文日志，不仅可以填写中文日志，Git 的输出日志也是以中文来显示的。
+add 执行的时候 Git 输出的日志都是中文显示的，特别是带有中文名称的文件。
+![add命令输出中文](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17bv0ph2yj20l50f20uh.jpg "add命令输出中文")
+
+验证提交时填写日志信息，不仅可以填写中文日志，Git 的输出日志也是以中文来显示的。
 ![验证提交时填写中文日志](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17boorhqyj20l50cpgn8.jpg "验证提交时填写中文日志")
 
 验证使用 **git log** 查看历史日志时正常显示中文内容
