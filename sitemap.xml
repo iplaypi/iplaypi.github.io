@@ -2,58 +2,65 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.playpi.org/2019031901.html</loc>
+    
+    <lastmod>2019-03-19T15:22:16.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.playpi.org/tags/index.html</loc>
     
-    <lastmod>2019-03-17T16:42:26.397Z</lastmod>
+    <lastmod>2019-03-18T14:42:42.378Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/live2d_models/hijiki/hijiki.pose.json</loc>
     
-    <lastmod>2019-03-17T16:42:26.393Z</lastmod>
+    <lastmod>2019-03-18T14:42:42.374Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/live2d_models/hijiki/hijiki.model.json</loc>
     
-    <lastmod>2019-03-17T16:42:26.393Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/categories/index.html</loc>
-    
-    <lastmod>2019-03-17T16:42:26.385Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/archives/index.html</loc>
-    
-    <lastmod>2019-03-17T16:42:26.385Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/about/index.html</loc>
-    
-    <lastmod>2019-03-17T16:42:26.385Z</lastmod>
+    <lastmod>2019-03-18T14:42:42.374Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/2018090501.html</loc>
     
-    <lastmod>2019-03-17T16:42:26.385Z</lastmod>
+    <lastmod>2019-03-18T14:42:42.366Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/2017102901.html</loc>
     
-    <lastmod>2019-03-17T16:42:26.385Z</lastmod>
+    <lastmod>2019-03-18T14:42:42.366Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/categories/index.html</loc>
+    
+    <lastmod>2019-03-18T14:42:42.366Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/archives/index.html</loc>
+    
+    <lastmod>2019-03-18T14:42:42.366Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/about/index.html</loc>
+    
+    <lastmod>2019-03-18T14:42:42.366Z</lastmod>
     
   </url>
   
