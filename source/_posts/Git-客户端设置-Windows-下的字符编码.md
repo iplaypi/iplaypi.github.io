@@ -57,6 +57,20 @@ alias ls="ls --show-control-chars --color"
 更改完成后，可以看到能正常显示系统中的带有中文名称的文件了。
 ![ls可以正常显示中文](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17bo2mcrej20l50cpq4y.jpg "ls可以正常显示中文")
 
+但是还要注意一点，如果使用 Git 客户端的 Bash 处理其它命令，一定会乱码的，因为不像 **ls** 那样做了编码转换。以下2例【分别时使用 elasticsearch、java 命令】：
+![elasticsearch命令乱码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g185ktkbutj20l50cp0ul.jpg "elasticsearch命令乱码")
+
+![java命令乱码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g185l2lrrhj20l50ghmz2.jpg "java命令乱码")
+
+那这个现象有没有办法解决呢，网上大多数解决办法都是说把 Git 客户端的编码设置为和 Windows 系统一样，一般设置为 GBK，这显然是又倒退回去了【为了满足 Git 一定要设置为 UTF-8】。其实唯一的解决办法就是从命令的参数下手，把原生的命令利用别名机制给加上编码有关的参数，和修改 **ls** 命令的做法一致。以下供参考：
+
+```
+-- 在文件最后追加,不要修改文件原有的内容
+vi /etc/bash.bashrc
+alias javac="javac -J-Dfile.encoding=UTF-8"
+alias java="java -Dfile.encoding=UTF-8"
+```
+
 ## 设置 Git
 
 接下来就是设置 Git 进行版本控制时使用的编码方式，例如提交信息时支持输入中文日志、输出 log 可以正常显示中文。
