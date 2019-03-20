@@ -386,12 +386,22 @@ changyan:
 # You can get your appid and appkey from https://leancloud.cn
 # more info please open https://github.com/xCss/Valine
 valine:
+  # 开启评论
   enable: true
+  # 设置应用id和key
   appid: FC5Jijeg1meo2K2OzPYWK327-gzGzoHsz
   appkey: 6A1ReY8tjhPutK00F01YbJSq
-  notify: false # mail notifier , https://github.com/xCss/Valine/wiki
-  verify: true
+  # mail notifier , https://github.com/xCss/Valine/wiki
+  # 关闭提醒与验证
+  notify: false
+  verify: false
+  # 文本框占位文字
   placeholder: 永不止步
+  # 需要填写的信息字段
+  guest_info: nick,email
+  # 默认头像
+  avatar: mm
+  # 每页显示的评论数
   pageSize: 10
 
 # Support for youyan comments system.

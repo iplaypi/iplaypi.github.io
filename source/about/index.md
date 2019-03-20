@@ -2,6 +2,7 @@
 title: 关于
 date: 2018-10-30 11:07:56
 type: about
+comments: false
 ---
 
 ## 工作经历
