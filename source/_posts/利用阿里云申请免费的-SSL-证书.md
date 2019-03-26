@@ -18,7 +18,7 @@ keywords: 阿里云,SSL证书,Nginx,https,Lets Encrypt
 # 注册阿里云、开启实名认证
 
 
-这个步骤就不多说了，需要证书总得注册一个帐号吧，也方便后续管理。此外，国内的证书服务商都要求实名认证，这个也没办法。如果不想实名认证，可以使用开源的 [Lets Encrypt](https://letsencrypt.org) ，只不过有效期只能是3个月，也就是说每隔3个月就要更新一次，GitHub Pages 使用的就是它。阿里云的官网链接：(https://www.aliyun.com)[https://www.aliyun.com]。
+这个步骤就不多说了，需要证书总得注册一个帐号吧，也方便后续管理。此外，国内的证书服务商都要求实名认证，这个也没办法。如果不想实名认证，可以使用开源的 [Lets Encrypt](https://letsencrypt.org) ，只不过有效期只能是3个月，也就是说每隔3个月就要更新一次，GitHub Pages 使用的就是它。阿里云的官网链接：[https://www.aliyun.com](https://www.aliyun.com) 。
 
 
 # 购买 SSL 证书
