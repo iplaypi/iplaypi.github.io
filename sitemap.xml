@@ -2,58 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.playpi.org/tags/index.html</loc>
+    
+    <lastmod>2019-03-28T18:06:31.003Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.playpi.org/live2d_models/hijiki/hijiki.pose.json</loc>
     
-    <lastmod>2019-03-28T15:34:49.783Z</lastmod>
+    <lastmod>2019-03-28T18:06:30.999Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/live2d_models/hijiki/hijiki.model.json</loc>
     
-    <lastmod>2019-03-28T15:34:49.783Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/tags/index.html</loc>
-    
-    <lastmod>2019-03-28T15:34:49.783Z</lastmod>
+    <lastmod>2019-03-28T18:06:30.999Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/categories/index.html</loc>
     
-    <lastmod>2019-03-28T15:34:49.775Z</lastmod>
+    <lastmod>2019-03-28T18:06:30.991Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/archives/index.html</loc>
     
-    <lastmod>2019-03-28T15:34:49.775Z</lastmod>
+    <lastmod>2019-03-28T18:06:30.991Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/about/index.html</loc>
     
-    <lastmod>2019-03-28T15:34:49.775Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/2017102901.html</loc>
-    
-    <lastmod>2019-03-28T15:34:49.771Z</lastmod>
+    <lastmod>2019-03-28T18:06:30.991Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/2018090501.html</loc>
     
-    <lastmod>2019-03-28T15:34:49.771Z</lastmod>
+    <lastmod>2019-03-28T18:06:30.991Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/2017102901.html</loc>
+    
+    <lastmod>2019-03-28T18:06:30.991Z</lastmod>
     
   </url>
   
@@ -61,6 +61,13 @@
     <loc>https://www.playpi.org/2019032701.html</loc>
     
     <lastmod>2019-03-27T13:28:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/2019032501.html</loc>
+    
+    <lastmod>2019-03-24T17:02:40.000Z</lastmod>
     
   </url>
   
