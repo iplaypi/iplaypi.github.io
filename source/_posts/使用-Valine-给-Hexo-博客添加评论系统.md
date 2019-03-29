@@ -81,7 +81,7 @@ valine:
 
 这里面我发现一个问题，就是有一些配置项不生效，例如：**meta**、**avatar**，我也不知道是 Hexo 的问题还是 Valine 的问题，我也不懂，就先不管了，因为不影响评论这个功能。
 
-另外还有一个就是评论的时候总会强制检验邮箱和 url 的规范性，如果没填或者填的不规范就弹框提示，我不知道怎么取消，只好在在 GitHub 提了一个 Issue，详见：[https://github.com/xCss/Valine/issues/168](https://github.com/xCss/Valine/issues/168) ，但是作者一直没回。
+另外还有一个就是评论的时候总会强制检验邮箱和 url 的规范性，如果没填或者填的不规范就弹框提示，我不知道怎么取消，只好在在 GitHub 提了一个 Issue，详见：[https://github.com/xCss/Valine/issues/168](https://github.com/xCss/Valine/issues/168) ，但是作者一直没回。等了几天，作者回复了，说是我的 Valine 版本太低，让我升级。我看了本地的 Valine 的版本，已经是 v1.3.5 了，然后我就怀疑可能是 Hexo 的版本问题，但是我自己做了很多自定义的配置，改了很多 css、js 文件，不能随便升级，等以后有时间做一个大版本的升级，再好好整理。
 ![强制检验邮箱和 url 的规范性](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1d7da6215j20u30fsdgb.jpg "强制检验邮箱和 url 的规范性")
 
 那怎么才能让博客文章的底部显示评论对话框呢，其实很简单，什么都不用做，Hexo 默认是给每个页面都开启评论的【前提是在 Hexo 的配置文件中开启了一种评论系统】。它背后的配置就是 Markdown 文件的 comments 属性，默认设置是 true，所以不用配置了，如果非要配置也可以，如下图。
