@@ -34,3 +34,6 @@ yarn application -kill application_1542870632001_26426
 ```
 
 4、需要注意的是，步骤1中去查看日志，要确保当前 HADOOP_USER_NAME 用户是提交 Spark 任务的用户，否则是看不到日志的，因为日志是放在 HDFS 对应的目录中的，其中路径中会有用户名。此外，步骤1中的日志要等 Spark 任务运行完了才能看到，否则日志文件不存在（还没收集到 HDFS 中）。
+
+在 Linux 环境中可以使用 **export HADOOP_USER_NAME=xxx** 临时伪装用户。
+
