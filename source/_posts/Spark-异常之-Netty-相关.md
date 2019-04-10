@@ -175,3 +175,14 @@ org.jboss.netty 依赖
 
 3、这个错误信息挺有意思的，解决过程也很好玩，边找边学习；
 
+4、对于这种重名的类【类的包路径名、类名】，竟然对应的 jar 包不一样，这种极其特殊的情况也可以使用插件检测出来：
+
+```
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-enforcer-plugin</artifactId>
+```
+
+使用 **enforcer:enforce** 命令即可。
+
+当然，这个插件还可以用来校验很多地方，例如代码中引用了 **@Deprecated** 的方法，也会给出提示信息，可以按照需求给插件配置需要校验的方面。
+
