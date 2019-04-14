@@ -12,7 +12,7 @@ keywords: JNI,字段描述符,FieldDescriptors
 平时在做 Java 开发的时候，难免遇到异常信息中包含一种特殊的表达字符串，例如：
 
 ```
-method: createWorker signature: (Ljava/util/concurrent/Executor;) Lorg/jboss/netty/channel/socket/nio/AbstractNioWorker;) 
+method: createWorker signature: (Ljava/util/concurrent/Executor;) Lorg/jboss/netty/channel/socket/nio/AbstractNioWorker;
 ```
 
 或者
