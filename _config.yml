@@ -92,7 +92,10 @@ category_map:
   ItChat 系列: series-of-itchat
   其它: others
 tag_map:
+# 避免中英文的误跳转,同时存在中英文的情况下中文翻译加上后缀-chn
+# 例如'数据库'和'database',配置'数据库'的时候使用'database-chn'
   建站: building
+  数据库: database-chn
   其它: others
 
 # Date / Time format

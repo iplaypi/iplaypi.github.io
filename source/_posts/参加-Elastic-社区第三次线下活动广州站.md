@@ -3,7 +3,7 @@ title: 参加 Elastic 社区第三次线下活动广州站
 id: 2019033001
 date: 2019-03-30 00:41:05
 updated: 2019-04-07 00:41:05
-categories: 游记
+categories: 游玩
 tags: [Elastic,线下活动,广州]
 keywords: Elastic,线下活动,广州
 ---

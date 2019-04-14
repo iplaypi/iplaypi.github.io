@@ -9,31 +9,40 @@ keywords: Mysql,数据库,database,space
 ---
 
 
-
-
-
-待整理。
-
-
+最近接到一个小的新需求，需求很容易实现，就是定时把一些分析得出的指标从 Elasticsearch 中离线存储到 Mysql 数据库中，方便以后查询。离线存储的原因是因为资源不足，Elasticsearch 会自动删除15天以前的原始数据，而且 Elasticsearch 每天都会新产生数十万到数百万的数据，依据这些原始数据只会产生几十条分析结果，显然离线存储到 Mysql 中更为合理。在处理这个需求时，接着就遇到了一个小问题，当前业务组没有数据库资源，需要申请，而且由于资源不足，不能随便申请，要给出合理的预估值。这样，就涉及到数据库占用空间大小的预估了，本文记录一种简单的方法。
 
 <!-- more -->
 
 
+# 数据大小和索引大小预估
 
 
+我当前使用的是 Mysql 数据库，其它数据库产品查询方式可能会有所不同，请根据实际情况操作。
 
-待整理。
+在数据库中，使用系统数据库的表 **TABLES** 进行查询：
 
-数据库表空间预估：<https://blog.csdn.net/laiyijian/article/details/70873568> ；
+```
+SELECT data_length,index_length
+FROM information_schema.TABLES t
+WHERE table_schema='your_db_name'
+AND table_name = 'your_table_name';
+```
 
-select data_length,index_length
-from information_schema.tables t
-where table_schema='db_yeezhao_stats'
-and table_name = 't_banyan_elk_request';
+其中，系统数据库是 **information_schema**，存储表信息的表是 **TABLES**，**data_length**、**index_length** 这2个字段表示数据大小、索引大小，单位是字节 B。
+![SQL查询数据空间大小](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g228n8cy91j20cd06gq2x.jpg "SQL查询数据空间大小")
 
+当然，如果使用可视化的数据库连接管理工具，也可以通过管理工具直接鼠标点击查看，其实背后的逻辑仍旧是查询 **TABLES** 表，例如我通过 **Navicat** 工具查看。
+![Navicat查看表信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g228nw2hx5j20er0c1t8y.jpg "Navicat查看表信息")
 
+可见，无论使用哪种方式，都可以把需要的信息查询出来，然后就可以预估数据大小了。我截图的信息显示，数据大小**8.5MB**，索引大小**0MB**，还要结合数据条数，我查了一下有10000条数据，因此可以粗略估计每条数据的大小为**0.85KB**。这里需要注意一下，预估数据大小之前要保证数据的字段取值接近真实情况，最好能有数据示例可以参考，而且数据量要尽量大一些，例如几万条，不能只有几十条、几百条。
 
-待看：
+如果确实没有数据示例参考，需要自己模拟生成，尽量把字段的取值多生成一些实际中可能出现的值。例如字符串类型如果是 **vachar**，要把每种长度的取值都生成一些，或者根据实际场景，某些长度的字符串出现的可能性大一点，那就多生成一些。
 
-https://blog.csdn.net/bisal/article/details/74784124 。
+总之，就是为了接近真实，才能更为准确地预估出数据占用的空间大小，实际去申请资源时才能有理有据。
+
+此外，这个 **TABLES** 表里面的内容很丰富的，有需要的可以查询一下，查看数据表的字段信息 SQL 语句：
+
+```
+SHOW COLUMNS FROM TABLES;
+```
 
