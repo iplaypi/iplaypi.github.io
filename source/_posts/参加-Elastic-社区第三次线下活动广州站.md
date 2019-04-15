@@ -116,3 +116,9 @@ Elasticsearch 集群在雷达大数据平台的演进
 
 4、在 Elasticsearch 中，字段类型是可以节约存储空间与请求耗时的，例如 integer、long、short 的合理使用，但是切记存储的目的最终都是为了使用。
 
+
+# 备注
+
+
+如果需要查看分享者的 PPT 文档，可以在 Elastic 社区下载：[https://elasticsearch.cn/slides](https://elasticsearch.cn/slides) 。
+
