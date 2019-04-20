@@ -30,6 +30,19 @@ keywords: JDK,内存泄漏,内存溢出,jvm
 
 一开始没有指定 JVM 参数，因为使用的是 JDK1.7 版本的参数，不会生效，这就导致分配的默认堆取值偏小。
 
+JVM 参数设置：
+
+```
+JAVA=${JAVA_HOME}/bin/java
+#设置jvm的参数
+#HEAP_OPTS="-Xms12g -Xmx12g"
+HEAP_OPTS="-Xms6g -Xmx6g -Xmn2g"
+# JDK8以后取消了 PermSize
+#PERM_OPTS="-XX:PermSize=1024M -XX:MaxPermSize=2048m -XX:+UseConcMarkSweepGC -XX:+UseParNewGC"
+#JDK8的MetaspaceSize
+PERM_OPTS="-XX:MetaspaceSize=1024m -XX:MaxMetaspaceSize=2048m -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+HeapDumpOnOutOfMemoryError"
+```
+
 待整理，重试，重现现象，确保问题准确复现。
 
 ## 掌握内存分析工具
