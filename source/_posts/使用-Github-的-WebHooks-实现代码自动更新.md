@@ -181,6 +181,10 @@ ps aux|grep php-fpm
 - USR1 重新打开日志文件
 - USR2 平滑重载所有 worker 进程并重新载入配置和二进制模块
 
+注意，这里的信号标识和 Unix 系统中的一样，被 kill 命令所使用，其中 USR1、USR2 是用户自定义信号，PHP-FPM 模块需要自定义实现，仅供参考。
+
+其中，根据 Unix 基础知识，INT【2】表示中断信号，等价于 Ctrl + C，TERM【15】表示终止信号【清除后正常终止，不同于编号9 KILL 的强制终止而不清除】，QUIT【3】表示退出信号，等价于 Ctrl + \，USR1【10】、USR2【12】这2个表示用户自定义信号。
+
 所以可以使用命令 **kill -INT pid** 来停止 PHP-FPM 模块，pid 的值可以使用 **ps aux|grep php-fpm** 获取。当然，也可以使用 **kill -INT pid 配置文件路径** 来停止 PHP-FPM 模块，pid 配置文件路径 可以在 php-fpm.conf 中查看，**pid 参数**，默认是关闭的。
 ![使用信号控制的方式停止 PHP-FPM](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1681vrhobj20om071mxh.jpg "使用信号控制的方式停止 PHP-FPM")
 
