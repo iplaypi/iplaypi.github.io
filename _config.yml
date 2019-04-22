@@ -90,6 +90,7 @@ category_map:
   Linux 命令系列: series-of-linux-cmd
   Android 逆向系列: series-of-reverse-for-android
   ItChat 系列: series-of-itchat
+  踩坑系列: series-of-fixbug
   其它: others
 tag_map:
 # 避免中英文的误跳转,同时存在中英文的情况下中文翻译加上后缀-chn
