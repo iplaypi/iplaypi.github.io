@@ -88,6 +88,7 @@ comments: false
 - 通过动画学习算法和数据结构：[VisuAlgo](https://visualgo.net)
 - Emoji 字符搜索：[emoji 百科](https://emojipedia.org)
 - 图标库：[https://www.easyicon.net](https://www.easyicon.net)
+- ikonate图标库，开源可商用：[https://www.ikonate.com](https://www.ikonate.com)
 - 其它
 
 ## 技术列表
@@ -96,9 +97,11 @@ comments: false
 - Python
 - Scala
 - Spark
-- ElasticSearch
+- Elasticsearch
 - Hadoop
 - HBase
+- Git
+- Maven
 - 其它
 
 ## 归档分类
