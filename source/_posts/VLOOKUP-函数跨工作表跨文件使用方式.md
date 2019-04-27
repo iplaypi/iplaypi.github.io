@@ -116,7 +116,7 @@ keywords: VLOOKUP,Excel
 ![成绩表信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h70cwm2tj20dm0n3t98.jpg "成绩表信息")
 
 学生表信息
-![学生表信息](http://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h70g4a24j20hn0oodgj.jpg "学生表信息")
+![学生表信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h70g4a24j20hn0oodgj.jpg "学生表信息")
 
 这里除了额外指定了参数**成绩表!A:E** 来指定**成绩表**这个 Sheet，其它的参数仍旧与前面一致。
 
