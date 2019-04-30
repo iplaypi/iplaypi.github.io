@@ -2,8 +2,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="{{ theme.android_chrome_color }}">
-{# 去除链接的引用来源,应对微博图床的防盗链 #}
-<meta name="referrer" content="no-referrer" />
+{# 去除链接的引用来源,应对微博图床的防盗链,但是会导致不蒜子无法统计阅读量,所以在layout/_macro/post.swig中到了文章真实内容再添加referrer属性 #}
+{# <meta name="referrer" content="no-referrer" />#}
 
 {% if theme.pace %}
   {% set pace_css_uri = url_for(theme.vendors._internal + '/pace/'+ theme.pace_theme +'.min.css?v=1.0.2') %}

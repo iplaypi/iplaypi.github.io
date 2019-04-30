@@ -28,6 +28,9 @@
       <meta itemprop="name" content="{{ config.title }}">
     </span>
 
+    {#################}
+    {### POST HEAD,定义一些除了文章内容外的属性,例如标题/发表时间/分类等,不能把refefrer设置为no-referfer,否则看不到不蒜子的统计信息 ###}
+    {#################}
     {% if not headlessPost %}
       <header class="post-header">
 
@@ -277,11 +280,15 @@
         </div>
       </header>
     {% endif %}
+    {#################}
+    {### END POST HEAD ###}
+    {#################}
 
     {#################}
-    {### POST BODY ###}
+    {### POST BODY,要在body中再增加referrer属性,看来还是不行,只能给每个<a href="">单独增加了 ###}
     {#################}
     <div class="post-body{% if theme.han %} han-init-context{% endif %}{% if post.direction && post.direction.toLowerCase() === 'rtl' %} rtl{% endif %}" itemprop="articleBody">
+    {# <meta name="referrer" content="no-referrer" /> #}
 
       {# Gallery support #}
       {% if post.photos and post.photos.length %}
