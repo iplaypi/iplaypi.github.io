@@ -24,28 +24,28 @@ keywords: GitHub Pages,SEO,百度蜘蛛,Baiduspider
 百度搜索结果（只有少量的收录，仅有的还是通过主动推送与自动推送提交的）
 
 上面那个图片被封了，再来一张局部截图
-![百度搜索结果-局部](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ujsyasw0j20en0ie42d.jpg "百度搜索结果-局部")
+![百度搜索结果-局部](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ujsyasw0j20en0ie42d.jpg "百度搜索结果-局部")
 
 谷歌搜索结果（收录很多，而且很全面）
-![谷歌搜索结果](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojj5hv3qj20ng0pp0uv.jpg "谷歌搜索结果")
+![谷歌搜索结果](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojj5hv3qj20ng0pp0uv.jpg "谷歌搜索结果")
 
 首先在百度站长工具（官方主页：https://ziyuan.baidu.com/ ）后台看到 baidusitemap.xml 抓取失败，查看具体原因是抓取失败（http 状态码 403）。
 
 抓取失败
-![抓取失败](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojjp6f0jj20um08h3yk.jpg "抓取失败")
+![抓取失败](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojjp6f0jj20um08h3yk.jpg "抓取失败")
 
 抓取失败原因概述
-![抓取失败原因概述](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojjzz7kaj20uj0l6wf0.jpg "抓取失败原因概述")
+![抓取失败原因概述](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojjzz7kaj20uj0l6wf0.jpg "抓取失败原因概述")
 
 根据抓取失败原因，我还以为是文件不存在，或者根据链接打不开（链接是：[https://www.playpi.org/baidusitemap.xml](https://www.playpi.org/baidusitemap.xml) ），我使用浏览器和 curl 命令都尝试过了，链接没有问题，可以正常打开。然后根据 403 错误发现是拒绝访问，那就有可能是百度爬虫的问题了（被 GitHub Pages 禁止爬取了）。
 
 使用浏览器打开
-![浏览器能正常打开](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojkc7sggj212a0kbgmb.jpg "浏览器能正常打开")
+![浏览器能正常打开](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojkc7sggj212a0kbgmb.jpg "浏览器能正常打开")
 
 这里需要注意一点，百度站长工具里面显示的链接是 http 开头的（如上面抓取失败原因概述截图中红框圈出的，不是 https 开头的，我觉得百度爬虫抓取使用的就是 http 开头的链接），不过没关系，我在域名解析里面已经配置了所有的域名情况，完全可以支持。但是有时候仍然会遇到打不开上面链接的情况（在某些电脑上面或者某些网络环境中），我猜测这可能是电脑的缓存或者当前网络的 DNS 设置问题，不是我的站点的问题。因为，哪怕你在浏览器中输入以 http 开头的链接，也会自动跳转到以 https 开头的链接去。
 
 浏览器打不开链接的情况（其实不是链接的问题）
-![浏览器打不开链接的情况](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojkvts8yj20v60jmjrm.jpg "浏览器打不开链接的情况")
+![浏览器打不开链接的情况](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojkvts8yj20v60jmjrm.jpg "浏览器打不开链接的情况")
 
 使用命令行打开（如下使用 curl  命令）
 
@@ -54,38 +54,38 @@ curl https://www.playpi.org/baidusitemap.xml
 ````
 
 执行命令结果截图
-![执行命令结果](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojlapxs2j20ke0f1t9f.jpg "执行命令结果")
+![执行命令结果](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojlapxs2j20ke0f1t9f.jpg "执行命令结果")
 
 ## 通过百度反馈寻找原因
 
 于是接下来，我就给官方提交了反馈，官方只是回复我说是链接问题（意思就是链接无法正常打开，其实使用浏览器或者检测工具都是可以打开的，但是使用百度爬虫就不行）。
 
 提交反馈（官方主页：https://ziyuan.baidu.com/feedback/apply ）
-![提交反馈](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojmrakf5j20v90c3dfy.jpg "提交反馈")
+![提交反馈](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojmrakf5j20v90c3dfy.jpg "提交反馈")
 
 反馈回复
-![反馈回复](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojn41t81j20r50n8jsy.jpg "反馈回复")
+![反馈回复](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojn41t81j20r50n8jsy.jpg "反馈回复")
 
 前面我已经证明了链接没问题，那我就要猜想是百度蜘蛛爬虫的问题了，于是按照官方回复的建议，使用诊断工具看看是否可行。
 
 诊断工具测试多次都失败
-![诊断工具测试多次都失败](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojnhzr7xj21060gqq3w.jpg "诊断工具测试多次都失败")
+![诊断工具测试多次都失败](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojnhzr7xj21060gqq3w.jpg "诊断工具测试多次都失败")
 
 如果抓取 UA 设置为移动端（即模拟手机、平板之类的设别），会有部分成功的，而使用 PC 端全部都是失败的。
-![诊断工具UA代理部分成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojnn4r5bj20zf0l3q49.jpg "诊断工具UA代理部分成功")
+![诊断工具UA代理部分成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojnn4r5bj20zf0l3q49.jpg "诊断工具UA代理部分成功")
 
 失败原因仍旧是拒绝访问（http 403状态码）
-![拒绝访问](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojnt73w4j20rb0ppgmu.jpg "拒绝访问")
+![拒绝访问](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojnt73w4j20rb0ppgmu.jpg "拒绝访问")
 
 我又接着查看文档（文档地址：https://ziyuan.baidu.com/college/courseinfo?id=267&page=9#007 ），发现拒绝访问的原因之一就是托管服务供应商阻止百度 Spider 访问我的网站，所以猜测是 GitHub Pages 拒绝了百度 Spider 的爬取请求，接着就想办法验证一下猜测是否正确。
 
 文档说明截取片段
-![文档说明](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojnz71jxj20rr04dmxf.jpg "文档说明")
+![文档说明](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojnz71jxj20rr04dmxf.jpg "文档说明")
 
 接下来我又查找了资料，发现网上确实有很多这种说法，而且大家都遇到了这种问题，但是并没有官方的说明放出来。
 
 于是，接着我又回复了百度站长对方的反馈，直接问是不是因为 GitHub Pages 禁止了百度爬虫，所以百度爬取的结果总是 403 错误。等了2天多（赶上周末），对方没有明确回复，说的都是废话，可能是不想承认，那我也不管了。
-![百度反馈中心再次回复](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r3ajynl5j20z20ne76i.jpg "百度反馈中心再次回复")
+![百度反馈中心再次回复](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r3ajynl5j20z20ne76i.jpg "百度反馈中心再次回复")
 
 ## 通过 GitHub Pages 找原因
 
@@ -94,10 +94,10 @@ curl https://www.playpi.org/baidusitemap.xml
 GitHub Pages 的反馈链接（填写姓名、邮箱、内容描述即可）：https://github.com/contact ；
 
 我发送了一封邮件过去，当然是借助谷歌翻译完成的，勉强能看
-![邮件内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojt87natj235s1zw4k8.jpg "邮件内容")
+![邮件内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojt87natj235s1zw4k8.jpg "邮件内容")
 
 成功发送邮件后的通知页面
-![成功发送邮件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojtr12gxj21hc0q9755.jpg "成功发送邮件")
+![成功发送邮件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojtr12gxj21hc0q9755.jpg "成功发送邮件")
 
 内容全文如下，仅供参考：
 ```
@@ -121,7 +121,7 @@ Perry
 ```
 
 没隔几个小时，就有回复了
-![GitHub邮件回复](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0oju7wg4tj21ar0npjtb.jpg "GitHub邮件回复")
+![GitHub邮件回复](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0oju7wg4tj21ar0npjtb.jpg "GitHub邮件回复")
 
 回复的重点内容如下：
 ```
@@ -129,7 +129,7 @@ I've confirmed that we are currently blocking the Baidu user agent from crawling
 ```
 
 那么，我们再来回看一下百度站长里面爬取失败原因的页面，里面有一个用户代理的配置，其实就是构造 http 请求使用的消息头，可以看到正是 Baiduspider/2.0，所以才会被 GitHub Pages 给禁止了。
-![百度爬虫的UA](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ojur917gj20sp0hz0t7.jpg "百度爬虫的UA")
+![百度爬虫的UA](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojur917gj20sp0hz0t7.jpg "百度爬虫的UA")
 
 
 # 解决方案
@@ -154,35 +154,35 @@ I've confirmed that we are currently blocking the Baidu user agent from crawling
 
 1、在DNSPod中添加域名
 DNSPod 账号自行注册，我使用免费版本，当然会有一些限制，例如解析的域名A记录个数限制为2个【GitHub Pages 有4个 ip，我在 Godaddy 中都是配置4个，但是没影响，配置2个也。或者直接配置 CNAME 记录就行了，以前我不懂就配置了 ip，多麻烦，ip 还要通过 ping iplaypi.github.io 获取，每次还不一样，一共得到了4个，多此一举。当然，如果域名被墙了而 ip 没被墙，还是需要这样配置的】。
-![在DNSPod中添加域名](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0oviygtn3j21hc0qxgnz.jpg "在DNSPod中添加域名")
+![在DNSPod中添加域名](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0oviygtn3j21hc0qxgnz.jpg "在DNSPod中添加域名")
 
 2、添加域名解析记录
 我把 Godaddy 中的解析记录直接抄过来就行，不同的是由于使用的是 DNSPod 免费版本，A 记录会少配置2个，基本不会有啥影响**【其实不配置 A 记录最好，直接配置 CNAME 就行了，会根据域名自动寻找 ip，以前我不懂】**。另外还有一个就是需要针对百度爬虫专门配置一条 www 的 A 记录，针对百度的线路指向自己服务器的 ip【截图只是演示，其中 CNAME 记录应该配置域名，A 记录才是配置 ip】，如果使用的是第三方托管服务，直接添加 CNAME 记录，配置域名就行【例如 yoursite.gitcafe.io】。
-![添加域名解析记录](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovjinxzvj21hc0qxac2.jpg "添加域名解析记录")
+![添加域名解析记录](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ovjinxzvj21hc0qxac2.jpg "添加域名解析记录")
 
 不使用A记录的配置方式
-![不使用A记录的配置方式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovk0xljij21hc0qxta3.jpg "不使用A记录的配置方式")
+![不使用A记录的配置方式](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ovk0xljij21hc0qxta3.jpg "不使用A记录的配置方式")
 
 3、在 Godaddy 中绑定自定义域名服务器
 第2个步骤完成，我们回到 DNSPod 的域名界面，可以看到提示我们修改 NS 地址，如果不知道是什么意思，可以点击提示链接查看帮助手册【其实就是去购买域名的服务商那里绑定 DNSPod 的域名服务器】。
 
 提示我们修改 NS 地址
-![提示我们修改 NS 地址](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovkf6k08j21hc0qxtb9.jpg "提示我们修改 NS 地址")
+![提示我们修改 NS 地址](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ovkf6k08j21hc0qxtb9.jpg "提示我们修改 NS 地址")
 
 帮助手册
-![帮助手册](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovkoigmaj20s60lymyk.jpg "帮助手册")
+![帮助手册](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ovkoigmaj20s60lymyk.jpg "帮助手册")
 
 我是在 Godaddy 中购买的域名【不需要备案】，所以需要在 Godaddy 中取消默认的 DNS 域名服务器，然后把 DNSPod 分配的域名服务器配置在 Godaddy 中。这里需要注意，在配置了新的域名服务器的时候，以前的配置的解析记录都没用了，因为 Godaddy 直接把域名解析的工作转给了我配置的 DNSPod 域名服务器【配置信息都转到了 DNSPod 中，也就是步骤1、步骤2中的工作】。
 原有的解析记录与原有的域名服务器
-![原有的解析记录](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovn10ghwj20wt0mvgm6.jpg "原有的解析记录")
+![原有的解析记录](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ovn10ghwj20wt0mvgm6.jpg "原有的解析记录")
 
-![原有的域名服务器](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovncqfzuj20ww0atdfw.jpg "原有的域名服务器")
+![原有的域名服务器](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ovncqfzuj20ww0atdfw.jpg "原有的域名服务器")
 
 配置完成新的域名服务器【以前的解析记录都消失了】
-![配置完成新的域名服务器](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovnq0lhgj20yi0m7q3i.jpg "配置完成新的域名服务器")
+![配置完成新的域名服务器](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ovnq0lhgj20yi0m7q3i.jpg "配置完成新的域名服务器")
 
 配置完成后使用**域名设置**里面的**自助诊断**功能，可以看到域名存在异常，主要是因为更改配置后的时间太少了，要耐心等待全球递归DNS服务器刷新【最多72小时】，不过一般10分钟就可以访问主页了。
-![自助诊断](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ovl23kqbj20tl0lfabk.jpg "自助诊断")
+![自助诊断](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ovl23kqbj20tl0lfabk.jpg "自助诊断")
 
 ### 设置镜像服务器
 
@@ -278,16 +278,16 @@ service nginx start
 要不要考虑 https 的情况，如果百度爬虫没用到 https 抓取（除了 sitemap.xml 文件还要考虑文件里面的所有链接格式，也是 https 的），就不考虑。其实一定要考虑，因为百度爬虫用到了 https 链接去抓取，所以还要想办法开启 Nginx 的 https。此外，在百度的 https 认证里面，也是需要开启 https 的，否则申请不通过。
 
 我的域名不知道什么时候验证失败了，但是一开始的时候是验证成功的（可能是 GitHub Pages 禁止百度爬虫的原因，因为以前全部都是 GitHub Pages 提供站点支持）
-![https验证失败](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmkhqwygj20z40lojsp.jpg "https验证失败")
+![https验证失败](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0pmkhqwygj20z40lojsp.jpg "https验证失败")
 
 我想重新验证一下，没想到有次数限制，还是先把 Nginx 的 https 开启之后再验证吧
-![重新验证次数限制](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmkls6dkj20e008mweh.jpg "重新验证次数限制")
+![重新验证次数限制](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0pmkls6dkj20e008mweh.jpg "重新验证次数限制")
 
 开启 Nginx 的 https，并且保证站点全部的链接都是 https 的，但是同时也要支持 http，使用301重定向到 https。
 
 1-1、查看 Nginx 的 https 模块
 先查看我安装的小白版本的 Nginx 里面有没有关于 https 的模块，使用命令 **nginx -V**，可以看到是有的，这个模块就是 **--with-http_ssl_module**。
-![查看ssl模块](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0prgtihdkj21gr060js0.jpg "查看ssl模块")
+![查看ssl模块](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0prgtihdkj21gr060js0.jpg "查看ssl模块")
 
 1-2、申请证书
 可以购买或者从阿里云、腾讯云里面申请免费的，但是我还是觉得使用 OpenSSL 工具自己生成方便，先查看机器有没有安装 OpenSSL 工具，使用 **openssl version** 命令，如果没有则需要安装 **yum install -y openssl openssl-devel**，安装完成后开始生成证书。生成证书的命令：
@@ -297,7 +297,7 @@ openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -keyout /site/ssl-nginx.ke
 ```
 
 在生成的过程中还需要填写一些参数信息：国家、城市、机构名称、机构单位名称、域名、邮箱等，这里特别注意我为了能让多个子域名公用一个证书，采用了泛域名的方式（星号的模糊匹配：\*.playpi.org）。这种生成证书的方式只是为了测试使用，最终的证书肯定是不可信的，浏览器会提示此证书不受信任，所以还是通过其它方式获取证书比较好（后续我会通过阿里云或者 letsencrypt 获取免费的证书，具体博客参考可以使用相关关键词在站内搜索）。
-![证书参数](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0prhfu9p8j20p40chwf7.jpg "证书参数")
+![证书参数](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0prhfu9p8j20p40chwf7.jpg "证书参数")
 
 完整信息填写
 ```
@@ -377,18 +377,18 @@ nginx -s reload
 
 1-4、打开链接查看
 使用 blog 二级域名测试（也需要在 DNSPod 中配置一条 A 记录解析规则）
-![使用 blog 二级域名测试](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pri38049j21hc0rymzk.jpg "使用 blog 二级域名测试")
+![使用 blog 二级域名测试](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0pri38049j21hc0rymzk.jpg "使用 blog 二级域名测试")
 
 或者使用 curl 命令模拟请求，由于有重定向的问题，所以失败
-![curl 无法获取重定向的内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0proxgda3j20u204q0ss.jpg "curl 无法获取重定向的内容")
+![curl 无法获取重定向的内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0proxgda3j20u204q0ss.jpg "curl 无法获取重定向的内容")
 
 既然开启了 https，可以使用 curl 关闭失效证书的方式（-k 参数）访问 https 链接
-![curl关闭证书认证访问https链接](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0qmesphe5j20rb0g0q3o.jpg "curl关闭证书认证访问https链接")
+![curl关闭证书认证访问https链接](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0qmesphe5j20rb0g0q3o.jpg "curl关闭证书认证访问https链接")
 
 去百度站长里面重新提交 https 认证（使用上面的测试证书是认证失败的，我去阿里云重新申请了证书，认证成功了，申请证书的教程可以在本站搜索，为了给2个二级域名不同的证书，nginx 还需要重新配置 server 信息）
-![blog二级域名认证成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r33rvt0oj21hc0q9tdh.jpg "blog二级域名认证成功")
+![blog二级域名认证成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r33rvt0oj21hc0q9tdh.jpg "blog二级域名认证成功")
 
-![www二级域名认证成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r34hh1lxj21hc0q90xi.jpg "www二级域名认证成功")
+![www二级域名认证成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r34hh1lxj21hc0q90xi.jpg "www二级域名认证成功")
 
 **2、端口的问题**
 为什么在上面配置域名解析记录的时候，百度的 A 记录配置 VPS 的 ip  就行了呢，这是因为在 VPS 上面只有 Nginx 这一种 Web 服务，机器会分配给它一个端口（默认80，也是 http 的默认端口，可以配置），然后 www 的访问就使用这个端口（在 Nginx 的配置里面有，还有另外一个 blog 的），所以可以忽略端口的信息。但是如果一台机器上面有各种 Web 服务，切记确保端口不要冲突（例如 Tomcat 和 Nginx 同时存在的情况），并且给 Nginx 的就是80端口，然后如果有其它服务，可以使用 Nginx 做代理转发（例如把 email 二级域名转到一个端口，blog 二级域名转到另一个端口）。
@@ -412,7 +412,7 @@ nginx -s reload
 使用最简单的方式验证就是在百度站长工具里面使用**抓取诊断**来进行模拟抓取多次，看看成功率是否是100%。通过测试，可以看到，每次抓取都会成功，那么接下来就等待百度自己抓取了（百度爬虫抓取 sitemap.xml 文件的频率很低，可能要等一周）。
 
 使用抓取诊断方式来验证，这个过程有一个插曲，就是无论怎么验证都是失败的，但是使用 curl 模拟请求却是成功的。我看了失败原因概述里面，抓取的 ip 地址仍旧是 GitHub Pages 的，说明百度爬虫的流量没有到我自己的 VPS 上面。我一开始还以为是 DNSPod 配置没生效，但是通过 curl 模拟请求却可以，说明 DNSPod 配置没问题，那就是百度的问题了，应该是缓存。后来，我在移动端 UA 与 PC 端 UA 切换了一下，然后就行了。
-![使用抓取诊断方式来验证](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmjyvmbtj218h0qx76r.jpg "使用抓取诊断方式来验证")
+![使用抓取诊断方式来验证](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0pmjyvmbtj218h0qx76r.jpg "使用抓取诊断方式来验证")
 
 此外，既然我们知道了百度爬虫设置的用户代理，那么就可以直接使用 curl 命令来模拟百度爬虫的请求，观察返回的 http 结果是否正常。模拟命令如下：
 
@@ -421,16 +421,16 @@ curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/
 ```
 
 模拟请求的结果，可以看到也是正常的（下面的截图在没有开启 https 的情况下，如果开启301重定向就不行了，需要直接访问 https 链接）
-![模拟请求的结果](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmjky1dwj20v50hnq3v.jpg "模拟请求的结果")
+![模拟请求的结果](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0pmjky1dwj20v50hnq3v.jpg "模拟请求的结果")
 
 如果开启了 https，即对 http 请求进行301重定向，则可以直接访问 https 链接（如果证书是无效的，像我截图中的，则可以使用 curl 关闭无效证书的方式，加一个 -k 参数）
-![curl关闭证书认证访问https链接](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0qmguu51qj21660i9ab1.jpg "curl关闭证书认证访问https链接")
+![curl关闭证书认证访问https链接](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0qmguu51qj21660i9ab1.jpg "curl关闭证书认证访问https链接")
 
 我也去看了 VPS 上面的 Nginx 日志，确实百度爬虫的流量都被引入到这里来了，皆大欢喜
-![Nginx 日志](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pmj6s4syj21150a4dhn.jpg "Nginx 日志")
+![Nginx 日志](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0pmj6s4syj21150a4dhn.jpg "Nginx 日志")
 
 后续还需要观察看看百度的收录结果（等待3天后更新了，结果如下）
-![sitemap方式提交链接生效](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0uis3rezoj21hc0q9wgm.jpg "sitemap方式提交链接生效")
+![sitemap方式提交链接生效](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0uis3rezoj21hc0q9wgm.jpg "sitemap方式提交链接生效")
 
 
 # 问题总结
@@ -445,6 +445,6 @@ curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/
 4、关于访问速度的问题，GitHub Pages 的 CDN 还是很强大的，不会出现卡顿的情况。但是有时候貌似 GitHub 会被墙，打不开。此外，我搞这么久就是为了让百度爬虫能收录我的站点文章，所以自己搭建的 VPS 只是为了给百度爬虫爬取用的，其它正常人或者爬虫仍旧是访问 GitHub Pages 的链接。
 
 5、关于 https，使用 GitHub Pages 的时候，服务全部是 GitHub Pages 提供的，我无需关心。但是，自己使用 VPS 做了一个镜像，就需要配置一模一样的环境给百度爬虫使用，否则会导致一些失败的现象，例如 htps 认证失败、链接抓取失败。因此，一定要开启 https，并且同时也支持 http。以下是整理的网络请求流程图，清晰明了。
-![网络请求流程图](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0ptlseegej20p00howf6.jpg "网络请求流程图")
+![网络请求流程图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ptlseegej20p00howf6.jpg "网络请求流程图")
 
 

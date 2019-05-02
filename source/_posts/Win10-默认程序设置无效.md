@@ -24,22 +24,22 @@ keywords: Win10默认程序设置,Win10,默认程序设置
 按照系统设置，把某些默认程序改为自己需要的，我这里把视频播放器改为迅雷影音，设置特定格式的文件（.mkv，.mp4 等等）使用迅雷影音打开。
 
 在桌面右下角打开**所有设置**选项
-![所有设置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy0n2j57csj20bq0ahmz4.jpg "所有设置")
+![所有设置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy0n2j57csj20bq0ahmz4.jpg "所有设置")
 
 在 Windows 设置中，选择**应用**选项
-![选择应用](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy0nlh83ifj20xc0pwdgf.jpg "选择应用")
+![选择应用](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy0nlh83ifj20xc0pwdgf.jpg "选择应用")
 
 选择默认应用，设置视频播放器为**迅雷影音**
-![设置视频播放器为迅雷影音](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy0nnjkzdcj20xc0pw445.jpg "设置视频播放器为迅雷影音")
+![设置视频播放器为迅雷影音](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy0nnjkzdcj20xc0pw445.jpg "设置视频播放器为迅雷影音")
 
 上述的设置步骤实际上还不够，因为视频类型有很多种，还需要进一步指定每种类型的默认播放器，在默认应用下方有一个**按文件类型指定默认应用**选项
-![按文件类型指定默认应用](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy0nqc3hdtj20xc0pw43w.jpg "按文件类型指定默认应用")
+![按文件类型指定默认应用](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy0nqc3hdtj20xc0pw43w.jpg "按文件类型指定默认应用")
 
 我这里特别关注 **.mkv**、**.mp4** 这2种格式的文件，默认应用设置为**迅雷影音**
-![单独设置2种文件类型](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy0nusxmrxj20md0pw0tu.jpg "单独设置2种文件类型")
+![单独设置2种文件类型](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy0nusxmrxj20md0pw0tu.jpg "单独设置2种文件类型")
 
 上述内容设置完成，就可以使用了，但是用不了多久，系统时不时就弹出提示框，通知默认程序重置，然后又被设置为系统内置的应用了
-![弹出提示框](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy0mr10t67j20bh0h977t.jpg "弹出提示框")
+![弹出提示框](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy0mr10t67j20bh0h977t.jpg "弹出提示框")
 
 
 # 解决方案
@@ -79,5 +79,5 @@ Get-AppxPacKage -allusers | foreach {Add-AppxPacKage -register "$($_.InstallLoca
 这个方法很简单，容易操作，直接在系统更新里面更新即可，确保要能更新到 **KB3135173**这个补丁才行（或者更高版本的补丁）。
 
 我这里是已经更新完成的，等待重启，补丁标识是 **KB4469342**。
-![系统更新](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy0n75u4o3j20xc0pw442.jpg "系统更新")
+![系统更新](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy0n75u4o3j20xc0pw442.jpg "系统更新")
 

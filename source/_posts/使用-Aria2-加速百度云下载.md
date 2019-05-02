@@ -37,10 +37,10 @@ Aria2 是一个多平台轻量级的下载工具，支持 Http、Ftp、BitTorren
 ### 安装
 
 去官网下载安装包：[Aria2 安装包](https://github.com/aria2/aria2/releases)，我的 Widows 系统64位，选择对应的安装包下载。
-![安装包下载](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjctk362fj20ih0gdt90.jpg "安装包下载")
+![安装包下载](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjctk362fj20ih0gdt90.jpg "安装包下载")
 
 下载完成后，得到一个 zip 格式的文件，其实直接解压即可，不需要安装，解压后会得到一系列文件，为了方便管理，都放在 aria2 文件夹下面，再复制到程序对应的目录。其中，有一个 .exe 文件，就是运行任务时需要的文件。此外，为了方便起见，把 .exe 文件的路径配置到系统的环境变量中去，这样在任何目录都可以执行 aria2 命令了；如果不配置则只能在 aria2 目录中执行相关命令，否则会找不到程序。
-![解压](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjcyfaaw9j20in08kmxd.jpg "解压")
+![解压](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjcyfaaw9j20in08kmxd.jpg "解压")
 
 ### 配置
 
@@ -56,7 +56,7 @@ aria2c.exe -c -s32 -k32M -x16 -t1 -m0 --enable-rpc=true 下载 url 取值
 User-Agent: netdisk;5.3.4.5;PC;PC-Windows;5.1.2600;WindowsBaiduYunGuanJia
 Referer: http://pan.baidu.com/disk/home
 ```
-![aria2 命令行参数](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjec4bt6kj20gj0ahgm8.jpg "aria2 命令行参数")
+![aria2 命令行参数](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjec4bt6kj20gj0ahgm8.jpg "aria2 命令行参数")
 
 这里再给一个完整的下载命令示例：
 
@@ -170,7 +170,7 @@ bt-seed-unverified=true
 ```bash
 aria2c.exe --conf-path=aria2.conf
 ```
-![aria2 配置文件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjeqk8oznj20l8096aai.jpg "aria2 配置文件")
+![aria2 配置文件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjeqk8oznj20l8096aai.jpg "aria2 配置文件")
 
 当然，这样做只是启动了 aria2，并没有开始创建下载任务，不像单个命令行那样简单，直接设置参数就起任务了。接下来还需要浏览器插件的配合，才能保证下载任务的创建与监控，虽然配置步骤麻烦一点，但是使用起来更为方便。
 
@@ -187,10 +187,10 @@ aria2c.exe --conf-path=aria2.conf
 生成下载 url 的过程需要借助 [baiduexporter](https://chrome.google.com/webstore/detail/baiduexporter/jgebcefbdjhkhapijgbhkidaegoocbjj?hl=zh-CN)、[YAAW for Chrome](https://chrome.google.com/webstore/detail/yaaw-for-chrome/dennnbdlpgjgbcjfgaohdahloollfgoc?hl=zh-CN) 插件，直接从 Chrome 浏览器的插件商店搜索安装即可，如果无法翻墙，也可以从离线镜像库下载离线文件进行安装，离线库可以参考本站点的[关于页面](https://www.playpi.org/about)给出的工具链接。
 
 接下来描述使用方式，登录百度网盘账号，把需要下载的文件保存在自己的网盘中，选择需要下载的文件，然后可以看到本来的下载按钮旁边又多了导出下载按钮，包含几个选项：ARIA2 RPC、文本导出、设置。
-![Aria2 导出下载](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjftqq3ugj210w0ejjs0.jpg "Aria2 导出下载")
+![Aria2 导出下载](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjftqq3ugj210w0ejjs0.jpg "Aria2 导出下载")
 
 选择文本导出就会弹出当前下载文件的下载 url，复制粘贴到命令后即可直接下载该资源。
-![Aria2 文本导出](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjfx3u157j21200ifmy2.jpg "Aria2 文本导出")
+![Aria2 文本导出](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjfx3u157j21200ifmy2.jpg "Aria2 文本导出")
 导出的内容格式如下，当然实际使用的时候里面的参数也是可以更改的，但是下载 url 一定不不能变的。
 
 ```bash
@@ -209,23 +209,23 @@ enable-rpc=true
 这样做了之后，aria2 后台服务会开启一个端口，一般默认6800（如果 aria2 更改了端口，YAAW for Chrome 也要做相应的配置），这个端口用来给 YAAW for Chrome 汇报下载任务的情况，并提供管理下载任务的接口，这样的话，直接通过 YAAW for Chrome 就可以通过可视化的方式创建、暂停、查看任务。
 
 后台启动 aria2，开启 RPC 模式。
-![后台启动 aria2](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjg7ftepxj20gj0ahmxk.jpg "后台启动 aria2")
+![后台启动 aria2](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjg7ftepxj20gj0ahmxk.jpg "后台启动 aria2")
 
 打开 YAAW for Chrome 插件查看端口配置信息。
-![YAAW 配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjga6q57mj20y30kyaav.jpg "YAAW 配置")
+![YAAW 配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjga6q57mj20y30kyaav.jpg "YAAW 配置")
 
 通过 baiduexporter 插件，直接选择 PRC 下载，再去 YAAW 界面刷新查看下载任务。
-![RPC 下载](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjgepy1l1j21400dcaao.jpg "RPC 下载")
+![RPC 下载](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjgepy1l1j21400dcaao.jpg "RPC 下载")
 
 可以看到，aria2 参数还没优化（线程数、分块大小设置），下载速度已经有将近400 Kb/s了。
-![YAAW 查看任务](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjgfb0g00j21000cnq3b.jpg "YAAW 查看任务")
+![YAAW 查看任务](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjgfb0g00j21000cnq3b.jpg "YAAW 查看任务")
 
 ## 使用油猴插件绕过浏览器下载大文件的限制
 
 ### 现象
 
 还是刚才那个文件，文件大小只有 149 M，不想通过百度网盘客户端下载，只想通过网页版下载，那就直接点击下载按钮，发现被限制了，必须让你安装百度网盘客户端。
-![网页限制大文件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjglvadsdj212c0hzwff.jpg "网页限制大文件")
+![网页限制大文件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjglvadsdj212c0hzwff.jpg "网页限制大文件")
 
 本来还在想通过网页版直接下载，速度也不会很慢，但是被限制了，这个时候我们的万能插件要出场了：[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=zh-CN)，又称油猴、暴力猴。
 
@@ -236,26 +236,26 @@ enable-rpc=true
 这个插件的作用其实就是帮你管理各种自定义脚本，并运用在网页解析渲染中，从而实现对网页内容的改变，例如：去除网页的广告、去除百度搜索内容的广告条目、更改新浪微博展示界面。其中，也包括让百度网盘的下载文件大小限制失效，从而可以自由下载。
 
 1、好，现在需要在插件的基础上安装一个脚本：百度网盘直接下载助手。要安装这个脚本，则首先需要找到它，选择获取新脚本，会引导我们进入脚本仓库。
-![获取新脚本](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjhpp1dbsj20ep0adt94.jpg "获取新脚本")
+![获取新脚本](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjhpp1dbsj20ep0adt94.jpg "获取新脚本")
 
 2、各种脚本仓库，我们选择 [GreasyFork](https://greasyfork.org/zh-CN)。
-![脚本仓库列表](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjhs41z1sj20zd0q2dhg.jpg "脚本仓库列表")
+![脚本仓库列表](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjhs41z1sj20zd0q2dhg.jpg "脚本仓库列表")
 
 3、在搜索框中搜索：百度网盘直接下载助手，选择其中一个。
-![选择脚本](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjhuwpvohj20s70q2n18.jpg "选择脚本")
+![选择脚本](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjhuwpvohj20s70q2n18.jpg "选择脚本")
 
 4、安装选择的脚本。
-![安装脚本](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjhwddpjgj20ro0q240i.jpg "安装脚本")
+![安装脚本](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjhwddpjgj20ro0q240i.jpg "安装脚本")
 
 5、可以看到脚本内容，点击安装。
-![脚本内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjhyame9cj20xg0q2dht.jpg "脚本内容")
+![脚本内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjhyame9cj20xg0q2dht.jpg "脚本内容")
 
 6、安装完成后，选择管理面板可以查看已经安装的脚本以及是否启用，也可以删除或者二次编辑。
-![管理面板](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxji95kjl0j21hc0693yu.jpg "管理面板")
+![管理面板](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxji95kjl0j21hc0693yu.jpg "管理面板")
 
 7、回到百度网盘，选择文件，可以看到多了一个下载助手选项，选择 API 下载，下载，即可使用浏览器直接下载，不会因为文件太大有网页的限制。
-![下载助手](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjidt1sdoj214a0q2ab1.jpg "下载助手")
+![下载助手](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjidt1sdoj214a0q2ab1.jpg "下载助手")
 
 8、当然，如果自己会写脚本，或者从别处直接复制的源脚本代码，在插件中选择添加新脚本，自己编辑即可。
-![添加新脚本](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjhte0bjfj20i009yt96.jpg "添加新脚本")
-![编辑脚本内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxjigww3m8j20k00fv74q.jpg "编辑脚本内容")
+![添加新脚本](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjhte0bjfj20i009yt96.jpg "添加新脚本")
+![编辑脚本内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxjigww3m8j20k00fv74q.jpg "编辑脚本内容")

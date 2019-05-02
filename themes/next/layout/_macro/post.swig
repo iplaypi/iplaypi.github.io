@@ -346,7 +346,8 @@
             {{ post.content }}
           {% endif %}
         {% endif %}
-      {% else %}
+      {% else %}{# 如果标记a可以单独加ref="noreferrer"的话,准备在这里进行搜索替换,测试发现post.content只包含p标记,没有包含a标记 #}
+        {# {{ post.content|replace('group', 'noreferrer', 'g') }} #}
         {{ post.content }}
       {% endif  %}
     </div>

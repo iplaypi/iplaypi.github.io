@@ -109,7 +109,7 @@ java.util.concurrent.TimeoutException: Futures timed out after [10000 millisecon
 ````
 
 错误日志截图：
-![错误日志局部](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fz5j8uvmnrj219y0kqdil.jpg "错误日志局部")
+![错误日志局部](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fz5j8uvmnrj219y0kqdil.jpg "错误日志局部")
 
 根据日志没有看出有关 Java 层面的什么问题，只能根据 JNI 字段描述符：
 ````java
@@ -124,24 +124,24 @@ method: createWorker signature: (Ljava/util/concurrent/Executor;)Lorg/jboss/nett
 然后在项目中使用 ctrl+shift+t 快捷键（全局搜索 Java 类，每个人的开发工具设置的可能不一样）搜索类：NioWorkerPool，发现这个类的来源不是新引入的依赖包，而是原本就有的 netty 相关包，所以此时就可以断定这个莫名其妙的错误的原因就在于这个类的 createWorker 方法返回类型上面了。
 
 搜索类 NioWorkerPool
-![搜索NioWorkerPool](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fz5j9dcym1j216q0aztai.jpg "搜索NioWorkerPool")
+![搜索NioWorkerPool](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fz5j9dcym1j216q0aztai.jpg "搜索NioWorkerPool")
 
 日志的 JNI 字段描述符显示返回类型是 AbstractNioWorker，但是这个一看就是抽象类，不是我们要找的，去类里面看源码，发现 createWorker 方法返回类型是 NioWorker：
 
 类 NioWorkerPool 源码
-![NioWorkerPool源码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fz5j9wfx1mj20wu0et3z8.jpg "NioWorkerPool源码")
+![NioWorkerPool源码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fz5j9wfx1mj20wu0et3z8.jpg "NioWorkerPool源码")
 
 继续搜索类 NioWorker
-![搜索NioWorker](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fz5jagdz1qj216t09wwg0.jpg "搜索NioWorker")
+![搜索NioWorker](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fz5jagdz1qj216t09wwg0.jpg "搜索NioWorker")
 
 好，此时发现问题了，这个类有2个，居然存在两个相同的包名，但是依赖坐标不一样，所以这个隐藏的原因在于类冲突，但是并不能算是依赖冲突引起的。也就是说，NioWorker 这个类重复了，但是依赖包坐标不一样，类的包路径却是一模一样的，不会引起版本冲突问题，而在实际运行任务的时候会抛出运行时异常，所以我觉得找问题的过程很艰辛。
 
 使用依赖树查看依赖关系，是看不到版本冲突问题的，2个依赖都存在：
 io.netty 依赖
-![io.netty依赖](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fz5jaxljmvj20mb05fglv.jpg "io.netty 依赖")
+![io.netty依赖](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fz5jaxljmvj20mb05fglv.jpg "io.netty 依赖")
 
 org.jboss.netty 依赖
-![org.jboss.netty 依赖](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fz5jb7z4o0j20la031t8r.jpg "org.jboss.netty 依赖")
+![org.jboss.netty 依赖](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fz5jb7z4o0j20la031t8r.jpg "org.jboss.netty 依赖")
 
 于是又在网上搜索了一下，发现果然是 netty 的问题，也就是新引入的依赖包导致的，但是根本原因令人哭笑：netty 的组织结构变化，发布的依赖坐标名称变化，但是所有的类的包名称并没有变化，导致了这个错误。
 
@@ -152,7 +152,7 @@ org.jboss.netty 依赖
 问题找到了，解决方法就简单了，移除传递依赖即可，同时也要注意以后再添加新的依赖一定要慎重，不然找问题的过程很是令人崩溃。
 
 移除依赖
-![移除依赖](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fz5jbj046wj20g907amxa.jpg "移除依赖")
+![移除依赖](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fz5jbj046wj20g907amxa.jpg "移除依赖")
 
 移除配置示例
 ````xml

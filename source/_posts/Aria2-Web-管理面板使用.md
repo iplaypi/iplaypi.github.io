@@ -35,53 +35,53 @@ keywords: Aria2,百度云,百度云下载,破解百度云,百度云限速
 一切准备就绪后，我先在后台启动 Aria2 进程。切记要开启 RPC 模式，否则 YAAW 插件无法监控后台的下载任务，也就无法进行管理了。还要开启断点续传，这样才能在下载出现异常中断之后，还能接着上次的进度继续下载，节约时间。
 
 启动 Aria2 进程
-![启动 Aria2 进程](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rdtxd1mj20nf0fbq47.jpg "启动 Aria2 进程")
+![启动 Aria2 进程](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rdtxd1mj20nf0fbq47.jpg "启动 Aria2 进程")
 
 ## YAAW
 
 如果一开始直接打开 YAAW 插件，会显示错误：**Error: Internal server error**，其实就是没有找到 Aria2 进程。
-![直接打开 YAAW 插件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rfb5jz5j21hc0rhmyg.jpg "直接打开 YAAW 插件")
+![直接打开 YAAW 插件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rfb5jz5j21hc0rhmyg.jpg "直接打开 YAAW 插件")
 
 那它们是怎么通信的呢，其实就是依靠一个端口，这个端口我们使用默认的就行了【默认就是6800】，否则要在 YAAW 和 Aria2 两边都要设置，并且保持一致。
 
 YAAW 插件设置端口
-![YAAW 插件设置端口](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rfu7534j21hc0rfjt6.jpg "YAAW 插件设置端口")
+![YAAW 插件设置端口](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rfu7534j21hc0rfjt6.jpg "YAAW 插件设置端口")
 
 Aria2 设置端口
-![Aria2 设置端口](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rfzt0nnj20j4036glo.jpg "Aria2 设置端口")
+![Aria2 设置端口](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rfzt0nnj20j4036glo.jpg "Aria2 设置端口")
 
 当然，从上面的截图中我们可以看到，还可以设置一些其它参数，例如：自动刷新时间、限速大小、用户代理、基础目录。然而，这些参数都是全局性的，我们没有必要设置，因为等到真正需要下载文件的时候，还可以重新设置，实际应用中不一定每次下载的设置都一致，所以放在每次下载文件的时候重新设置显得更灵活。
 
 ## baiduexporter
 
 baiduexporter 的安装就比较简单了，就是一个浏览器插件而已，安装后打开即可。
-![baiduexporter 插件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rgfsynwj20ge0craah.jpg "baiduexporter 插件")
+![baiduexporter 插件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rgfsynwj20ge0craah.jpg "baiduexporter 插件")
 
 ## 三者结合协同工作
 
 打开我的百度云网盘，随意找一个文件测试
-![打开百度网盘](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rgzfh7oj21hc0q90uf.jpg "打开百度网盘")
+![打开百度网盘](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rgzfh7oj21hc0q90uf.jpg "打开百度网盘")
 
 细心的人可以发现，在选中一个文件后，在本来的**下载**旁边多了一个选择项**导出下载**，如果移动鼠标到上面，**导出下载**会展开下拉列表，出来3个选项：Aria2 RPC、文本导出、设置。
-![导出下载](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rhn2uy2j21hc0q9q4p.jpg "导出下载")
+![导出下载](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rhn2uy2j21hc0q9q4p.jpg "导出下载")
 
 如果我选择第一个 Aria2 RPC，则会直接调用后台的 Aria2 进程，直接帮我下载文件了，不需要我使用 Aria2 的原生命令加上必要的参数去启动一个下载任务了。
-![Aria2 RPC 下载文件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12ric7fwqj21hc0q9taf.jpg "Aria2 RPC 下载文件")
+![Aria2 RPC 下载文件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12ric7fwqj21hc0q9taf.jpg "Aria2 RPC 下载文件")
 
 而第二个文本导出，其实就是导出这个百度云文件的 Aria2 完整的命令，这样我们就可以复制使用，在后台起一个 Aria2 的下载任务了【有了第一种的 RPC 方式，更为方便快捷，肯定不用这种方式】。
-![文本导出](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rixl1p1j21hc0q9ac0.jpg "文本导出")
+![文本导出](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rixl1p1j21hc0q9ac0.jpg "文本导出")
 
 而设置则是导出的参数设置，这个没什么好说的，一般使用默认的就行了。
-![导出的设置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rj8h9n9j21hc0q9410.jpg "导出的设置")
+![导出的设置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rj8h9n9j21hc0q9410.jpg "导出的设置")
 
 好，接下来重点来了，必将能让你感受到什么叫做方便快捷。前面说那么多操作步骤，是不是发现还没 YAAW 插件什么事情，别着急，接下来的描述都是它的。直接打开插件：
-![YAAW 任务列表](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rjw0jgyj21hc0q9t9j.jpg "YAAW 任务列表")
+![YAAW 任务列表](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rjw0jgyj21hc0q9t9j.jpg "YAAW 任务列表")
 
 有没有发现什么，刚才下载的任务已经在这里可以看到了。不仅如此，还可以在这个控制面板中随意操管理任务：暂定、开始、删除，还可以看到下载的网速和进度百分比，多方便，这已经近似于一个下载管理软件了【虽然很简陋，但是比直接操作 Aria2 后台方便多了】。
-![YAAW 任务管理](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rk0wdhej21hc0q9t9k.jpg "YAAW 任务管理")
+![YAAW 任务管理](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rk0wdhej21hc0q9t9k.jpg "YAAW 任务管理")
 
 刚才使用百度云下载文件的时候，是直接在**导出下载**中一键勾选的，很方便，但是如果是别人发给你一个 Aria2 能下载的链接，你该怎么办呢？是使用 Aria2 后台起一个下载任务，还是怎么样，因为此时没有像下载百度云盘文件那么方便的按钮给你选择。别担心，此时又要使用 YAAW 的另外一个功能了：创建任务，也就是相当于在迅雷中创建一个下载任务一样。在 YAAW 插件中有一个 **ADD** 按钮。
-![YAAW 任务创建](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rk5z1fhj21hc0q9ab6.jpg "YAAW 任务创建")
+![YAAW 任务创建](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rk5z1fhj21hc0q9ab6.jpg "YAAW 任务创建")
 
 点击后弹出一个配置的对话框，在里面填上对应的参数就行了。不知道大家有没有发现，这里面的参数和使用 baiduexporter 插件的**导出下载**里面的**文本导出**导出的文本里面的一些内容很是相似，另外需要自己设置一下文件名字、文件下载目录、用户代理等信息就行了。这里就不再具体演示了。
 
@@ -96,13 +96,13 @@ baiduexporter 的安装就比较简单了，就是一个浏览器插件而已，
 这时候各种开源的下载器就派上用场了，例如 Aria2 就是一个，但是缺点就是网速可能没有那么快，因为没有 p2p 加速机制。但是我仅仅是为了学习，测试一下也无妨。
 
 可以看到，使用迅雷下载是被禁止的。
-![迅雷下载被禁](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rl6jyahj209y0k6diy.jpg "迅雷下载被禁")
+![迅雷下载被禁](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rl6jyahj209y0k6diy.jpg "迅雷下载被禁")
 
 把 torrent 文件保存下来，转而使用 Aria2 下载，为了方便直接在 YAAW 插件上面建任务，直接上传 torrent 文件即可，其它参数则使用默认的。
-![保存 torrent 文件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rlh3exej217i0ndq4h.jpg "保存 torrent 文件")
+![保存 torrent 文件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rlh3exej217i0ndq4h.jpg "保存 torrent 文件")
 
 可以看到，下载速度可以达到 2M 以上。
-![下载顺利](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g12rlbkjcpj216q0ekq43.jpg "下载顺利")
+![下载顺利](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g12rlbkjcpj216q0ekq43.jpg "下载顺利")
 
 以上下载电影实践中，当然目的只是为了学习使用，给你们演示一下而已，不是提倡下载盗版电影，在下载一些被屏蔽的资源或者被限速的情况下，可以使用这种方式试试。
 

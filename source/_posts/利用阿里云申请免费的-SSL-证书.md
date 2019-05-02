@@ -25,44 +25,44 @@ keywords: 阿里云,SSL证书,Nginx,https,Lets Encrypt
 
 
 1、在阿里云系统找到关于 SSL 证书的服务，**产品与服务**->**安全（云盾）**->**SSL 证书（应用安全）**。
-![SSL 证书（应用安全）](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4q5ikmnj21hc0q9gp7.jpg "SSL 证书（应用安全）")
+![SSL 证书（应用安全）](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4q5ikmnj21hc0q9gp7.jpg "SSL 证书（应用安全）")
 
 2、进入后，点击右上角的**购买证书**。
-![购买证书](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4qkt3cwj21hc0q9tal.jpg "购买证书")
+![购买证书](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4qkt3cwj21hc0q9tal.jpg "购买证书")
 
 3、按照我截图中的步骤1、2、3选择，这里需要注意，这个免费的选项隐藏的很深，直接勾选是不会出现的，要按照我标识的步骤来勾选才行，这里看到出现的费用很贵不用害怕，等一下接着选择对了就会免费的。
-![正确的选择流程](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4qvpk2wj21hc0q9775.jpg "正确的选择流程")
+![正确的选择流程](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4qvpk2wj21hc0q9775.jpg "正确的选择流程")
 
 最终选择**免费型 DV SSL**，按照我下图中的选项，可以看到费用是0元。
-![免费型 DV SSL](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4r9iriij21hc0q9gob.jpg "免费型 DV SSL")
+![免费型 DV SSL](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4r9iriij21hc0q9gob.jpg "免费型 DV SSL")
 
 选择后，下单即可，虽然要走购买流程，但是是不用付钱的。
-![下单完成](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4rjfjm2j21hc0q9jtw.jpg "下单完成")
+![下单完成](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4rjfjm2j21hc0q9jtw.jpg "下单完成")
 
 
 # 绑定证书信息、等待审核
 
 
 1、下单完成后开始**申请**，这里的**申请**的意思是申请使用它，要填写一些基本的信息，包括个人信息和网站信息，后续还需要验证身份，看你有没有权限管理你配置的网站。如果不申请**使用**，证书其实就一直闲置在那里。
-![申请使用证书](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4rvewbsj21hc0q9jti.jpg "申请使用证书")
+![申请使用证书](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4rvewbsj21hc0q9jti.jpg "申请使用证书")
 
 填写个人信息，主要就是我个人的联系方式。
-![填写个人信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4s5trvij21hc0q9dho.jpg "填写个人信息")
+![填写个人信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4s5trvij21hc0q9dho.jpg "填写个人信息")
 
 填写网站信息，由于我使用的是自己的服务器上面搭建的 Web 服务，既没有使用阿里云也没有使用其它云服务，所以我选择了**文件验证**，即需要把验证文件上传到我的域名对应的目录下面，用来证明这个站点是我管理的。当然，验证通过后，这个文件可以删除。
-![文件验证](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4serk53j21hc0q9q58.jpg "文件验证")
+![文件验证](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4serk53j21hc0q9q58.jpg "文件验证")
 
 2、填写完成后，会生成一个文件 fileauthor.txt，我需要把这个文件下载下来，然后上传到我的服务器对应的目录中，才能点击**验证**按钮，如果通过了，说明这个站点就是我管理的，也就是一个权限验证。
 
 由于在验证 www 证书对应的文件的时候，需要把 fileauthor.txt 文件上传到服务器，但是由于在 DNSPod 中设置的域名解析是解析到 GitHub 的（没有专门针对阿里的设置），所以总是验证失败。后来就干脆临时把所有的 www 解析都指向我自己的服务器，等通过了验证再改回去，整个过程很是折腾。折腾了一大圈，最后还发现了更简单的方法，直接放弃 www 证书的申请，在 DNSPod 中把百度的流量通过 CNAME 直接引到 blog 上面去就行了，这样只要维护一个 blog 的 Web 服务就行了。这样只需要增加一条解析，而且 blog 的证书验证过程也方便简单。
 
 DNSPod 解析示例
-![DNSPod 解析示例](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4srjg4xj21hc0q9ac4.jpg "DNSPod 解析示例")
+![DNSPod 解析示例](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4srjg4xj21hc0q9ac4.jpg "DNSPod 解析示例")
 
 在这个过程中，我还发现验证过程需要一定的时间，一开始显示失败，但是不告诉我原因，还以为是自己的服务器的问题，重试了多种方法，包括重启 Web 服务。我等了十几分钟，证书就莫名其妙审核通过了，然后还发送了短信通知（到这里我猜测阿里云的 Web 界面显示的内容是滞后的，短信通知的内容才是实时的）。
 
 证书申请成功，可以使用了。
-![证书申请成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4t1jlj7j21hc0q9mz2.jpg "证书申请成功")
+![证书申请成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4t1jlj7j21hc0q9mz2.jpg "证书申请成功")
 
 
 # 下载证书、上传到自己的服务器
@@ -126,8 +126,8 @@ server {
 ```
 
 配置完成后重启 Nginx（使用 nginx -s reload），去浏览器查看证书信息，看到有效期一年。
-![去浏览器查看证书信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4tirwwkj20f00gdwfk.jpg "去浏览器查看证书信息")
+![去浏览器查看证书信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4tirwwkj20f00gdwfk.jpg "去浏览器查看证书信息")
 
 打开链接，看到左上角的小绿锁，好了，网站是经过验证的了。
-![打开链接](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0r4tu5l57j21hl0rr0wt.jpg "打开链接")
+![打开链接](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0r4tu5l57j21hl0rr0wt.jpg "打开链接")
 

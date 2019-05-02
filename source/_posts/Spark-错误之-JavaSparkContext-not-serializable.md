@@ -20,7 +20,7 @@ keywords: Spark,Spark序列化,JavaSparkContext not serializable,
 
 针对已有的项目改动了一点点，结果直接出现了这个错误：
 
-![日志报错](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fydoetmx57j21gx0hjgph.jpg "日志报错")
+![日志报错](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fydoetmx57j21gx0hjgph.jpg "日志报错")
 
 一开始疏忽大意了，以为像往常一样，是某些需要传递的对象对应的类没有序列化，由于对代码不敢改动太大，就想着用最简单的方法，把几个自定义类都序列化了，以为就应该可以了。结果，还是不行，此时虽然不会有自定义类的序列化问题了，但是却出现了终极错误：JavaSparkContext not serializable，这是什么意思呢，是说 JavaSparkContext 不能序列化，总不能把 JavaSparkContext 序列化吧，Spark 是不允许这么干的。
 

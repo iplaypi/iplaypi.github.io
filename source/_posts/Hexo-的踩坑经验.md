@@ -29,30 +29,30 @@ keywords: hexo,markdown,java,bash,xml
 代码块示例：
 
 Java 格式
-![Java 格式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7gk7162j20jn04bt8o.jpg "Java 格式")
+![Java 格式](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7gk7162j20jn04bt8o.jpg "Java 格式")
 
 xml 格式
-![xml 格式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7hmem4lj20de054mx2.jpg "xml 格式")
+![xml 格式](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7hmem4lj20de054mx2.jpg "xml 格式")
 
 bash 格式
-![bash 格式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7hyp6j3j209o02j0si.jpg "bash 格式")
+![bash 格式](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7hyp6j3j209o02j0si.jpg "bash 格式")
 
 例如我把图一的 java 误写成了 bash，**hexo g** 的时候没有报错，但是生成的 html 静态网页却是空白一片，打开了什么也看不到。
 
 空白页面
-![空白页面](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7if0nmuj21hk0s5q4y.jpg "空白页面")
+![空白页面](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7if0nmuj21hk0s5q4y.jpg "空白页面")
 
 但是如果把 java 误写成了 xml，在本地执行 ** hexo g** 的时候不会报错，生成的 html 静态网页也是正常的。而一旦使用 travis-cli 执行自动构建的时候，构建是失败的【在 travis 的116号、117号错误：https://travis-ci.org/iplaypi/iplaypi.github.io/builds/476399853 】，并且可以看到错误信息，图四，但是我看不懂错误原因，只能猜测找到问题所在，比较耗时。
 
 travis-cli 报错日志【我看不懂】：
 travis-cli 日志1
-![travis-cli 日志1](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7iqv9msj20th0ld0to.jpg "travis-cli 日志1")
+![travis-cli 日志1](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7iqv9msj20th0ld0to.jpg "travis-cli 日志1")
 
 travis-cli 日志2
-![travis-cli 日志2](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7jt59f2j20rh0nvjur.jpg "travis-cli 日志2")
+![travis-cli 日志2](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7jt59f2j20rh0nvjur.jpg "travis-cli 日志2")
 
 travis-cli 日志3
-![travis-cli 日志3](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7jokkp6j20rh0p4dj2.jpg "travis-cli 日志3")
+![travis-cli 日志3](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7jokkp6j20rh0p4dj2.jpg "travis-cli 日志3")
 
 此外，写 Markdown 文档，使用代码块标记的时候，使用3个反单引号来标记，如果不熟悉代码块里面的编程语言，可以省略类型，例如 java、bash、javascript，不要填写，否则填错了生成的 html 静态文件是空白的。还有就是如果代码块里面放的是一段英文文本，和编程语言无关，也不要填写类型，否则生成的 html 静态文件也是空白的。
 
@@ -62,7 +62,7 @@ travis-cli 日志3
 这个错误还没有到 travis 上面，所以 travis 上面没有记录；
 
 在本地测试过程中，无论是 **hexo s** 还是 **hexo g** 都会报错，错误信息如图：
-![报错信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7kb9p5zj20jt02k3yk.jpg "报错信息")
+![报错信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7kb9p5zj20jt02k3yk.jpg "报错信息")
 
 看着这个信息，很像在当前项目的目录中找不到 hexo 命令，和 java 类似，我就怀疑是不是安装的 hexo 被什么时候卸载了，其实不是的，在其它项目中还能用。后来我发现是当前项目使用的模块缺失，为什么会缺失我也不知道，由于这些缺失的模块是通过 hexo 引入的，所以直接报错：hexo not found，给人以误导。
 
@@ -73,15 +73,15 @@ travis-cli 日志3
 这个错误还没有到 travis 上面，所以 travis 上面没有记录；
 
 这个错误和上面的类似，但是如果从报错信息上面看，也具有误导性。在更改了 \_config.yml 配置文件后，按照正常步骤去生成、部署的时候【使用 **hexo g & hexo s**命令，直接报错了，把我整蒙了，报错信息如下：
-![报错信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7kzx1vij20k50iqq4q.jpg "报错信息")
+![报错信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7kzx1vij20k50iqq4q.jpg "报错信息")
 
 关键配置部分如下，后续找到问题确实出在这里：
-![关键配置部分](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7les4wdj20lu08wt9j.jpg "关键配置部分")
+![关键配置部分](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7les4wdj20lu08wt9j.jpg "关键配置部分")
 
 从图中看信息，我也看不到什么原因，因为确实不懂。注意，我为了测试，发现 **hexo g** 是没有问题的，也就是生成没问题，那问题就出在部署步骤了，它会不认这个**hexo s** 命令？我查了资料，发现大部分人都说缺失 hexo server 模块，我通过检查可以确保本机有这个模块，而且卸载了重新装，所以不是这个问题。
 
 最后发现是配置信息里面的参数【官方定义的关键词】错误了，里面的 **Plugins** 这个参数应该使用首字母大写，这谁能想到，正确的配置参数如下图：
-![plugins 改为首字母大写](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0j7lre005j20nb08udgb.jpg "plugins 改为首字母大写")
+![plugins 改为首字母大写](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0j7lre005j20nb08udgb.jpg "plugins 改为首字母大写")
 
 # 4-travis 配置问题
 
@@ -90,10 +90,10 @@ travis-cli 日志3
 在使用 travis 自动构建时，有一次突发奇想，想使用最新版本的 node_js，于是在 travis.yml 配置文件中，把 node_js 设为了 stable，即稳定版本，这样在构建的时候会使用最新稳定版本的 node_js，没想到就出问题了。
 
 node_js 的配置如下：
-![node_js 的配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0k90kw0e8j20oy0dujsd.jpg "node_js 的配置")
+![node_js 的配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0k90kw0e8j20oy0dujsd.jpg "node_js 的配置")
 
 travis 报错日志如下：
-![travis 报错日志](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0k91bjlrxj20rq0qxq4q.jpg "travis 报错日志")
+![travis 报错日志](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0k91bjlrxj20rq0qxq4q.jpg "travis 报错日志")
 
 重要部分：
 ```javascript
@@ -108,7 +108,7 @@ error Found incompatible module
 这个错误有在 travis 上面出现过，在 travis 的133号、134号错误、135号错误、136号错误，举例：https://travis-ci.org/iplaypi/iplaypi.github.io/builds/498318318 ；
 
 日志部分截图：
-![日志内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0k91nhkhkj20rk0l6761.jpg "日志内容")
+![日志内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0k91nhkhkj20rk0l6761.jpg "日志内容")
 
 这错误信息里面对我来说确实看不到有效的内容，还没找到解决办法，看似是文件路径不存在，但是项目配置也没变过。
 
@@ -131,7 +131,7 @@ npm ERR!     /home/travis/.npm/_logs/2019-02-25T18_45_08_713Z-debug.log
 准备发邮件问问 travis 客服，我现在单方面怀疑是 travis 的环境问题或者构建脚本所依赖的环境问题。由于时差问题，先记录几个时区的缩写，方便查看邮件内容的时候核对时间：UTC【世界标准时间】、EST【东部标准时间，UTC-5】、CET【欧洲中部时间，UTC+1】。
 
 我发送的邮件内容如下【发送于北京时间2019-02-28 14:42:00】：
-![我发送的邮件内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0s7r7q8rsj230g1rswyo.jpg "我发送的邮件内容")
+![我发送的邮件内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0s7r7q8rsj230g1rswyo.jpg "我发送的邮件内容")
 
 完整文字版供参考
 ```
@@ -159,10 +159,10 @@ Best wishes.
 ```
 
 发送后对方自动有一个回复，告知我他们的工作时间【中国北京时间与对方时差+13】：
-![对方自动回复](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0s7rpd5kbj219x0lq401.jpg "对方自动回复")
+![对方自动回复](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0s7rpd5kbj219x0lq401.jpg "对方自动回复")
 
 等了好几天，对方终于回复了【回复于北京时间2019-03-04 11:00:00】，对方回复内容如下：
-![对方回复](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0s7s5bo3uj219x0lswfv.jpg "对方回复")
+![对方回复](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0s7s5bo3uj219x0lswfv.jpg "对方回复")
 
 对方回复重要文字内容
 ```
@@ -178,7 +178,7 @@ Thanks in advance and happy building!
 ```
 
 看起来技术支持也没发现是啥问题，只是说有可能是 NPM 的问题，还给了一个链接：[https://status.npmjs.org/incidents/ptnlj2rtwfwm](https://status.npmjs.org/incidents/ptnlj2rtwfwm)，根据链接可以看到 NPM 的状态在某个时间点出问题了【时间点为2019-02-27 15:46:00 UTC，也就是北京时间2019-02-27 23:46:00】：
-![nmp问题](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0s7sku7hvj20p00k0gmb.jpg "nmp问题")
+![nmp问题](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0s7sku7hvj20p00k0gmb.jpg "nmp问题")
 
 但是我那个自动构建的问题是出在北京时间2019-02-26凌晨的，时间点也对不上，所以技术支持只是怀疑，也没有结论，那我也就不管了，继续观察以后有没有相同的问题出现。
 
@@ -197,5 +197,5 @@ Thanks in advance and happy building!
 我在使用 Hexo 的草稿功能时，发现一个问题，操作完成发布时，发现 Markdown 文档的头部描述信息变化了。例如我本来设置的 id 又变回了日期【可以理解，因为模板就是这样设置的】，然后 tags 的中括号中的标签变为了无需列表【不可理解】。暂时还没发现内容的变化，可能是内容中没有特殊符号。
 
 导致的问题就是草稿发布后【内容已经变化了】，提交到 source 分支，自动构建时，提交到主分支 master 后，这些文章的链接变为了日期的乱格式【因为是基于错误的 Markdown 文件构建的】。所以以后还是不要使用草稿功能了，没有必要，还麻烦，没写完也可以发布嘛，没啥大问题。
-![文章链接是错误的](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0tkfnu178j20w50gj0tq.jpg "文章链接是错误的")
+![文章链接是错误的](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0tkfnu178j20w50gj0tq.jpg "文章链接是错误的")
 

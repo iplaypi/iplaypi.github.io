@@ -65,20 +65,20 @@ keywords: Maven,JDK,证书
 证书可以在访问网站时，在 url 文本框的左侧，有一把小绿锁，选中点击，接着查看证书，下载即可。
 
 点击小绿锁
-![点击小绿锁](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tan4wr2ij20cm0aqwel.jpg "点击小绿锁")
+![点击小绿锁](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tan4wr2ij20cm0aqwel.jpg "点击小绿锁")
 
 下载证书
-![下载证书](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1taned34lj20d60i9wes.jpg "下载证书")
+![下载证书](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1taned34lj20d60i9wes.jpg "下载证书")
 
 此外也可以通过浏览器调试工具的 Security 标签查看下载证书，下图是使用 Chrome 浏览器的效果，其它浏览器可能会略有不同。
-![浏览器调试工具的 Security 标签](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tanr9da2j20l40mjdgo.jpg "浏览器调试工具的 Security 标签")
+![浏览器调试工具的 Security 标签](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tanr9da2j20l40mjdgo.jpg "浏览器调试工具的 Security 标签")
 
 ### 把证书文件导入证书库
 
 先要清楚本地 Java 的证书库的位置，一般在 **{JAVA_HOME}/jre/lib/security/** 目录下面，里面有一个 **cacerts** 文件，它就是所有证书的集合组成的文件。另外还要清楚 **keytool** 工具，它是 JDK 提供的可以操作证书的工具，可以直接使用。
 
 Java 证书库的位置
-![Java证书库的位置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tasd88jdj20rt0ffab4.jpg "Java证书库的位置")
+![Java证书库的位置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tasd88jdj20rt0ffab4.jpg "Java证书库的位置")
 
 以下命令供参考，特别需要注意**命令执行权限**、**文件写权限**：
 
@@ -155,7 +155,7 @@ Exit code: 1 - [path-to-file]:[linenumber]: warning: no description for @param
 ```
 
 deploy 失败日志截图
-![deploy 失败日志截图](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tay67elbj20qo0fqtfc.jpg "deploy 失败日志截图")
+![deploy 失败日志截图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tay67elbj20qo0fqtfc.jpg "deploy 失败日志截图")
 
 查看里面的关键信息，可以找出 **maven-javadoc-plugin** 这个插件，说明是这个插件在生成 Javadoc 的时候出问题了。而我回想了一下，最近的插件版本、代码结构并没有变化，唯一变化的就是开发环境，JDK 由1.7版本切换为了1.8版本，那就往这方面找问题了。
 
@@ -298,16 +298,16 @@ Exit code: 1 - javadoc:错误 - 无效的标记: -Xdoclint:none
 本意是想测试这个参数在 JDK7 环境中的效果【前面已经验证过在 JDK8 中是完美运行的】，发现报错了，但是错误信息是乱码的，导致看不出来错误信息是什么，也就没法解决问题。
 
 在 JDK7 中 deploy 报错乱码
-![Maven报错信息乱码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tb5tee2qj20qo0a1td9.jpg "Maven报错信息乱码")
+![Maven报错信息乱码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tb5tee2qj20qo0a1td9.jpg "Maven报错信息乱码")
 
 其实，这只是 IDEA 的编码设置问题，更改一下编码就行了。在 **setting --> maven --> rumnner --> VMoptions** ，添加参数：**-Dfile.encoding=GB2312** ，就可以正常输出了。当然，Windows 系统配置编码为 **GBK** 也行。
-![设置IDEA的Maven编码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tb6bm56gj20qo0fi0vd.jpg "设置IDEA的Maven编码")
+![设置IDEA的Maven编码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tb6bm56gj20qo0fi0vd.jpg "设置IDEA的Maven编码")
 
 为什么要这么配置呢，因为 Maven 是依赖于当前系统的编码的，可以使用 **mvn -version** 命令查看编码的信息，查看 **Default locale** 那一项，可以看到是 **GBK**。
-![查看Maven的编码使用](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tb6jiivhj20gj0ahaab.jpg "查看Maven的编码使用")
+![查看Maven的编码使用](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tb6jiivhj20gj0ahaab.jpg "查看Maven的编码使用")
 
 配置完成后，报错信息正常显示
-![报错信息正常显示](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tb6u2gzgj20qo0awq7a.jpg "报错信息正常显示")
+![报错信息正常显示](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tb6u2gzgj20qo0awq7a.jpg "报错信息正常显示")
 
 
 # 问题总结

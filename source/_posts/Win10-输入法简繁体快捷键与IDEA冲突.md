@@ -22,14 +22,14 @@ keywords: Win10输入法快捷键冲突,IDEA快捷键冲突
 2、信心满满，打开**搜狗输入法**的**属性设置**界面，找到**高级**选项，选择，可以看到里面有**快捷键**的相关配置；
 
 配置所有的快捷键
-![快捷键配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy0oij39bnj20ld0f0dgj.jpg "快捷键配置")
+![快捷键配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy0oij39bnj20ld0f0dgj.jpg "快捷键配置")
 
 3、看了半天，也就这么几个快捷键配置，里面根本没有**简体/繁体**切换这一个配置选择，去搜索了一下其它资料，发现**简体/繁体**切换这一个快捷键是 Windows 10系统内置的，默认就是 Ctrl + Shift + F，默认是给微软输入法使用的，某些版本的 Windows 10系统有 bug，无法更改，哪怕卸载微软输入法，安装其它输入法也无效；
 
 4、我看了我的 Windows 10系统版本，已经是新版本了，不会有那个 bug 出现了，所以要从系统设置入手了，应该有地方设置才对，查看了语言里面的设置信息，没找到，只能又返回到搜狗输入法里面，这时突然看到里面有一个**系统功能快捷键**选项；
 
-![系统功能快捷键](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy0ort48p1j20ld0f03z6.jpg "系统功能快捷键")
+![系统功能快捷键](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy0ort48p1j20ld0f03z6.jpg "系统功能快捷键")
 
 5、就是这里了，点进去，把**简繁切换**关闭（如果需要保留的话，更改快捷键即可），解决问题。
 
-![关闭简繁切换](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy0oua7u57j20dv09q3ym.jpg "关闭简繁切换")
+![关闭简繁切换](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy0oua7u57j20dv09q3ym.jpg "关闭简繁切换")

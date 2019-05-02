@@ -27,7 +27,7 @@ java.net.BindException: 地址已在使用
 
 异常截图
 
-![异常截图](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fymxb3zolsj210v0dzabe.jpg "异常截图")
+![异常截图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fymxb3zolsj210v0dzabe.jpg "异常截图")
 
 ````java
 // 第一次异常

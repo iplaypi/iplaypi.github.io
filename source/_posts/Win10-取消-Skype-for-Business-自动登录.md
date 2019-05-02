@@ -21,10 +21,10 @@ keywords: 取消 Skype for Business 自动登录,卸载 Skype
 最近在使用 Win10 的时候，每次开机后，Skype for Business（这个应用不同于 Skype，虽然功能一样）总会弹出来，提示我登录，我每次都会毫不犹豫地关掉它。
 
 Skype for Business 登录界面
-![Skype for Business 登录](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g09f643hbhj20dq0orwf8.jpg "Skype for Business 登录")
+![Skype for Business 登录](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g09f643hbhj20dq0orwf8.jpg "Skype for Business 登录")
 
 正常的 Skype 应用登录界面
-![正常的 Skype 应用登录](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g09f6h7kmtj20xc0pwgqj.jpg "正常的 Skype 应用登录")
+![正常的 Skype 应用登录](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g09f6h7kmtj20xc0pwgqj.jpg "正常的 Skype 应用登录")
 
 但是出现多次之后，很麻烦，当我想卸载这个应用的时候，发现从应用列表里面找不到，也就无从卸载。后来就想能不能关闭开机启动，找了一些文档发现可以，那就这么办了（而且还发现 Skype for Business 根本卸载不了）。
 
@@ -34,18 +34,18 @@ Skype for Business 登录界面
 1、Skype for Business 是属于 Office 套件中的一个软件，所以在安装整个 Office 的同时也会自动安装上 Skype for Business。由于是一次安装整个 Office 套件，所以无法单独删除其中的一个软件（Skype for Business）。如果不需要开机自动启动 Skype for Business（也就不会提示我登录了），可以在 Skype for Business 的**设置**菜单中的**个人**选项里将**当我登录到 Windows 时自动启动应用**这个设置取消。
 
 设置（在登录界面的右上角，有一个齿轮按钮）
-![设置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g09f7pheokj20dq0orq3b.jpg "设置")
+![设置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g09f7pheokj20dq0orq3b.jpg "设置")
 
 取消当我登录到 Windows 时自动启动应用
-![取消](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g09f87o24fj20qh09sgmz.jpg "取消")
+![取消](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g09f87o24fj20qh09sgmz.jpg "取消")
 
 2、不知道哪一天 Windows 升级到了新的系统后，Skype for Business 不见了（怎么找也找不到），随之而来的是 Skype，尽管它也属于 Office 中的一个应用（还有很多其它一系列应用），但是这个应用可以单独安装卸载，不再与 Office 绑为一个整体。
 
 打开我的 Office
-![打开我的 Office](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g09f8r9mqgj20i00iu46e.jpg "打开我的 Office")
+![打开我的 Office](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g09f8r9mqgj20i00iu46e.jpg "打开我的 Office")
 
 查看应用列表，也可以直接安装显示的应用
-![查看应用列表](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g09f989oipj20rh0go0ti.jpg "查看应用列表")
+![查看应用列表](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g09f989oipj20rh0go0ti.jpg "查看应用列表")
 
 
 # 问题总结

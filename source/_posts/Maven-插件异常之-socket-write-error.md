@@ -160,7 +160,7 @@ java.lang.IllegalArgumentException: progressed file size cannot be greater than 
 
 异常信息截图
 
-![构件大小相关异常](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzkj4vhui7j20vi06xdi6.jpg "构件大小相关异常")
+![构件大小相关异常](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzkj4vhui7j20vi06xdi6.jpg "构件大小相关异常")
 
 换算一下单位：
 59156480KB=56.42M（正是需要发布的构件的大小）；
@@ -180,15 +180,15 @@ java.lang.IllegalArgumentException: progressed file size cannot be greater than 
 
 以下放出对比图2个
 
-![旧版本正常构件大小](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzkisemw0oj20oy0d6glu.jpg "旧版本正常构件大小")
+![旧版本正常构件大小](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzkisemw0oj20oy0d6glu.jpg "旧版本正常构件大小")
 
-![本地新构件过大](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzkit8ztcpj20oy0d6t91.jpg "本地新构件过大")
+![本地新构件过大](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzkit8ztcpj20oy0d6t91.jpg "本地新构件过大")
 
 这一看就是把第三方各种依赖包都一起发布了，才会造成构件有这么大，于是更改 pom.xml 文件，把第三方依赖去除，deploy 的时候是不需要的，同时也删除了一些 resources 资源文件夹里面的文本文件，删除时发现文本文件竟然有几十 M，怪不得以前发布的构件大小有60M 左右，原来都是文本文件在占用空间；
 
 更新了之后，直接重新 deploy，不报错了，直接 deploy 成功，去私服仓库搜索查看，大概30M 左右，很正常
 
-![最终正常的构件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzkjfjiisoj20im0igdgr.jpg "最终正常的构件")
+![最终正常的构件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzkjfjiisoj20im0igdgr.jpg "最终正常的构件")
 
 2、问题使用方法一已经解决了，也就是和 Maven 版本没有关系了，而且，在我的当前 Maven 环境下，我去 deploy 其它构件也是成功的，不会有任务报错，所以也从侧面反映了这个问题和 Mave 版本无关，和 Maven 环境也无关；
 

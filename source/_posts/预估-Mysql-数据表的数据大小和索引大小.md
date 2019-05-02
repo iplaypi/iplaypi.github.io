@@ -29,10 +29,10 @@ AND table_name = 'your_table_name';
 ```
 
 其中，系统数据库是 **information_schema**，存储表信息的表是 **TABLES**，**data_length**、**index_length** 这2个字段表示数据大小、索引大小，单位是字节 B。
-![SQL查询数据空间大小](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g228n8cy91j20cd06gq2x.jpg "SQL查询数据空间大小")
+![SQL查询数据空间大小](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g228n8cy91j20cd06gq2x.jpg "SQL查询数据空间大小")
 
 当然，如果使用可视化的数据库连接管理工具，也可以通过管理工具直接鼠标点击查看，其实背后的逻辑仍旧是查询 **TABLES** 表，例如我通过 **Navicat** 工具查看。
-![Navicat查看表信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g228nw2hx5j20er0c1t8y.jpg "Navicat查看表信息")
+![Navicat查看表信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g228nw2hx5j20er0c1t8y.jpg "Navicat查看表信息")
 
 可见，无论使用哪种方式，都可以把需要的信息查询出来，然后就可以预估数据大小了。我截图的信息显示，数据大小**8.5MB**，索引大小**0MB**，还要结合数据条数，我查了一下有10000条数据，因此可以粗略估计每条数据的大小为**0.85KB**。这里需要注意一下，预估数据大小之前要保证数据的字段取值接近真实情况，最好能有数据示例可以参考，而且数据量要尽量大一些，例如几万条，不能只有几十条、几百条。
 

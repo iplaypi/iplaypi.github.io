@@ -15,10 +15,10 @@ keywords: Hexo,静态博客,压缩优化,gulp,hexo-neat
 # 当前现象
 
 为了简单起见，只是列举 html 文件来看现象，目前查看生成的8个 html 静态页面（为了具有对比性，不包含当前页面），大小为314 K。
-![8个 html 文件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxg5iuthmbj20sr0guta4.jpg "8个 html 文件")
+![8个 html 文件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxg5iuthmbj20sr0guta4.jpg "8个 html 文件")
 
 打开其中一个 html 文件查看内容，可以看到很多回车换行符。
-![连续多个回车换行符](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxg5kn3bz2j20u00iidgy.jpg "连续多个回车换行符")
+![连续多个回车换行符](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxg5kn3bz2j20u00iidgy.jpg "连续多个回车换行符")
 
 接下来就是要想办法消除这些空白符。
 
@@ -68,13 +68,13 @@ neat_js:
 # 查看效果
 
 在执行 hexo generate 的命令行中就可以看到压缩率输出。
-![压缩率输出](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxzdwrue7aj20gj0ahdgr.jpg "压缩率输出")
+![压缩率输出](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxzdwrue7aj20gj0ahdgr.jpg "压缩率输出")
 
 8个 html 文件被压缩后，大小只有206 K，和之前的314 K比少了108 K，虽然只是简单的数字，也可以看到压缩效果不错。
-![8个文件压缩后](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxg6y7u1mej20ro0guq49.jpg "8个文件压缩后")
+![8个文件压缩后](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxg6y7u1mej20ro0guq49.jpg "8个文件压缩后")
 
 继续打开先前打开的那个 html 文件，可以看到整个 html 文档被合并成为了一行文本内容，不影响浏览器对 html 文件的解析展示，回车换行的空白符内容肯定没有了。但是这样对于 html 文件的可读性变差了，最好还是使用一些回车换行符的，还好这些 html 文件我不会去看，能接受目前的效果。
-![html 文件内容合并为一行](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxg743fu8jj20u00igq3g.jpg "html 文件内容合并为一行")
+![html 文件内容合并为一行](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxg743fu8jj20u00igq3g.jpg "html 文件内容合并为一行")
 
 # 踩坑记录
 

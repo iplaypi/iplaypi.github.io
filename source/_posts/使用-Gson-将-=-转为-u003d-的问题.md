@@ -93,7 +93,7 @@ System.out.println("====unicode2String工具转换:" + unicodeStr2String(str));
 
 截图示例：
 
-![自己转换](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fyyep0kwtgj20yv0kk0ug.jpg "自己转换")
+![自己转换](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fyyep0kwtgj20yv0kk0ug.jpg "自己转换")
 
 
 # 问题后续
@@ -117,5 +117,5 @@ Gson gson2 = new GsonBuilder().disableHtmlEscaping().create();
 
 则不会出现这种情况。
 
-![正确使用Gson](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fyyeompqqcj20zr0k3jt4.jpg "正确使用Gson")
+![正确使用Gson](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fyyeompqqcj20zr0k3jt4.jpg "正确使用Gson")
 

@@ -57,10 +57,10 @@ service nginx start
 ```
 
 可以使用命令 **service nginx status** 查看 Nginx 是否启动：
-![查看Nginx状态](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0tj7nqpidj20pi085jrs.jpg "查看Nginx状态")
+![查看Nginx状态](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0tj7nqpidj20pi085jrs.jpg "查看Nginx状态")
 
 然后你就能看到 Nginx 的主页了，默认是80端口，直接使用 ip 访问即可【如果这里打不开，可能是端口80没有开启，被防火墙禁用了，需要重新开启，开启方法参考后面的章节】。
-![Nginx主页](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0tj9c3v7aj20hw075t92.jpg "Nginx主页")
+![Nginx主页](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0tj9c3v7aj20hw075t92.jpg "Nginx主页")
 
 
 # 获取SSL证书、配置参数
@@ -68,10 +68,10 @@ service nginx start
 ## SSL 证书获取
 
 证书的获取可以参考我的文章：[利用阿里云申请免费的 SSL 证书](https://www.playpi.org/2019030401.html)。我在阿里云获取的证书是免费的、有效期一年的，等证书过期了可以重新申请【不知道能不能自动续期】，因为我有阿里云的帐号，所以就直接使用了。当然，通过其它方式也可以获取 SSL 证书，大家自行选择。
-![阿里云申请的SSL证书](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0tj9zp4g1j21hc0qx0ub.jpg "阿里云申请的SSL证书")
+![阿里云申请的SSL证书](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0tj9zp4g1j21hc0qx0ub.jpg "阿里云申请的SSL证书")
 
 直接下载即可，下载后上传到站点的任意目录，但是要记住文件的位置，因为等一下配置 Nginx 的时候需要指定证书的位置。我把它们放在了 /site/ 目录，一共有2个文件：.key 文件时私钥文件，.pem 文件时公钥文件。
-![SSL证书的2个文件](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0tjanlqz3j20o80dbaav.jpg "SSL证书的2个文件")
+![SSL证书的2个文件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0tjanlqz3j20o80dbaav.jpg "SSL证书的2个文件")
 
 ## Nginx 参数配置
 
@@ -115,7 +115,7 @@ server {
 ```
 
 只要按照如上的配置，就可以同时接收 http 请求与 https 请求【实际上 http 的请求被永久重定向到了 https】，我的配置如下图【请忽略 www 二级域名的配置项】：
-![Nginx配置项server](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0tjbahmnzj20rm0kv75t.jpg "Nginx配置项server")
+![Nginx配置项server](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0tjbahmnzj20rm0kv75t.jpg "Nginx配置项server")
 
 ## 验证参数是否准确
 
@@ -126,7 +126,7 @@ nginx -t
 ```
 
 可以看到，配置项正常，接下来就可以启动 Nginx 了。
-![Nginx配置项检测](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0tjbrqeeuj20f603cglj.jpg "Nginx配置项检测")
+![Nginx配置项检测](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0tjbrqeeuj20f603cglj.jpg "Nginx配置项检测")
 
 
 # 开启端口、启动 Nginx
@@ -152,16 +152,16 @@ nginx -s reload
 ```
 
 大家看一下我的服务器的端口开启信息：
-![服务器端口开启情况](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0tjc9ygu2j20bo02s0sl.jpg "服务器端口开启情况")
+![服务器端口开启情况](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0tjc9ygu2j20bo02s0sl.jpg "服务器端口开启情况")
 
 
 # 验证站点
 
 打开站点[https://blog.playpi.org](https://blog.playpi.org) ，可以愉快地访问了，可以看到 https 链接的绿锁。
-![安全的站点主页](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0tjcrc2zbj21hk0s6n10.jpg "安全的站点主页")
+![安全的站点主页](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0tjcrc2zbj21hk0s6n10.jpg "安全的站点主页")
 
 接着查看一下 SSL 证书的信息。
-![查看SSL证书信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0tjd5kowxj20d60i90t0.jpg "查看SSL证书信息")
+![查看SSL证书信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0tjd5kowxj20d60i90t0.jpg "查看SSL证书信息")
 
 
 # 题外话
@@ -174,7 +174,7 @@ nginx -s reload
 ## Nginx 的 https 模块安装
 
 由于我使用的是简单小白的安装方式，不需要关心额外用到的模块，例如 http_ssl 模块，因为安装包里面自带了这个模块，可以使用 **nginx -V** 命令查看。
-![http_ssl模块查看](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0uj2a8vf6j21gm08smxy.jpg "http_ssl模块查看")
+![http_ssl模块查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0uj2a8vf6j21gm08smxy.jpg "http_ssl模块查看")
 
 因此，如果大家有使用源码编译安装的方式，注意 https 模块不能缺失，否则不能开启 https 的方式。
 

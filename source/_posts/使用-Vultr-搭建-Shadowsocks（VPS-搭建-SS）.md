@@ -42,11 +42,11 @@ pip install shadowsocks
 
 过程如图：
 
-![python-setuptools 安装](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa31ivc8mj21hc0mhdh5.jpg "python-setuptools 安装")
+![python-setuptools 安装](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa31ivc8mj21hc0mhdh5.jpg "python-setuptools 安装")
 
-![pip 安装](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3g9phq7j21hc0jb405.jpg "pip 安装")
+![pip 安装](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa3g9phq7j21hc0jb405.jpg "pip 安装")
 
-![ss 安装](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3h3eeyaj210k04edfx.jpg "ss 安装")
+![ss 安装](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa3h3eeyaj210k04edfx.jpg "ss 安装")
 
 配置服务器参数：
 
@@ -157,9 +157,9 @@ firewall-cmd --reload
 
 过程如图：
 
-![安装启动防火墙](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3il37mlj20ka074dfy.jpg "安装启动防火墙")
+![安装启动防火墙](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa3il37mlj20ka074dfy.jpg "安装启动防火墙")
 
-![开启端口重载](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3hxmaftj20jd04zmx6.jpg "开启端口重载")
+![开启端口重载](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa3hxmaftj20jd04zmx6.jpg "开启端口重载")
 
 启动 Shadowsocks：
 
@@ -172,7 +172,7 @@ ssserver -c /etc/shadowsocks.json
 
 过程如图：
 
-![启动 ss](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3j16ymwj20hf03eglj.jpg "启动 ss")
+![启动 ss](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa3j16ymwj20hf03eglj.jpg "启动 ss")
 
 
 
@@ -187,39 +187,39 @@ ssserver -c /etc/shadowsocks.json
 
 配置示例：
 
-![ss 配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa3pjtymuj20g60dp75k.jpg "ss 配置")
+![ss 配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa3pjtymuj20g60dp75k.jpg "ss 配置")
 
 实际上下载程序后，无需安装，直接解压即可，解压后只有一个 exe 文件，双击即可运行（最好放入指定文件夹中，便于程序管理和升级）。第一次启动，需要设置参数，如上图所示，至少配置一台机器，另外还可以设置开机启动，以后不用重新打开。此外，如果有更新版本的程序，会放在ss_win_temp文件夹下，直接解压后复制替换掉当前的exe文件即可；如果文件夹中有 gui-config.json、statistics-config.json 这2个文本文件，它们是程序的配置以及前面设置的翻墙配置，不能删掉；如果使用系统代理的PAC模式（推荐使用），会生成pac.txt文本文件，存放从GFWList获取的被墙的网址，必要时才会通过翻墙代理访问，其它正常的网址则直接访问，这样可以节约流量。
 
-![ss 文件夹](https://ws1.sinaimg.cn/large/b7f2e3a3ly1fxbhx6e12jj20h004qgln.jpg "ss 文件夹")
+![ss 文件夹](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3ly1fxbhx6e12jj20h004qgln.jpg "ss 文件夹")
 
 如果有切换代理的需求，搭配浏览器的插件来完成，例如 [Proxy SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN) 就可以。
 
 关于启动系统代理并使用 PAC 模式（根据条件过滤，不满足的直连），如果是入门级别使用，直接设置完就可以用了，不用再管其它设置，切记要定时更新GFWList列表，因为如果某些网站最近刚刚被屏蔽，不在以前的HFWList列表里面，就会导致无法连接，只有及时更新才能正常连接。但是还有一种极端情况，就是某些网站GFWList迟迟没有收录，怎么更新都不会起作用，别着急，此时可以使用用户自定义规则，模仿GFWList填写自己的过滤规则，即可实现灵活的切换，使用用户自定义规则后会在安装文件夹中生成 user-rule.txt 文本文件。
 
-![开启系统代理并使用PAC模式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo5moanxj20cj0a5dga.jpg "开启系统代理并使用 PAC 模式")
+![开启系统代理并使用PAC模式](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbo5moanxj20cj0a5dga.jpg "开启系统代理并使用 PAC 模式")
 
-![PAC 模式下更新 GFWList 内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo6rej96j20ip0axjs7.jpg "PAC 模式下更新 GFWList 内容")
+![PAC 模式下更新 GFWList 内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbo6rej96j20ip0axjs7.jpg "PAC 模式下更新 GFWList 内容")
 
-![PAC 模式下自定义过滤规则](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbo7ifow9j20j80apt9k.jpg "PAC 模式下自定义过滤规则")
+![PAC 模式下自定义过滤规则](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbo7ifow9j20j80apt9k.jpg "PAC 模式下自定义过滤规则")
 
 其实，PAC 模式的原理就是根据公共的过滤规则（收集被屏蔽的网站列表），自动生成了一个脚本文件，把脚本文件绑定到浏览器的代理设置中，使浏览器访问网站前都会运行这个脚本，根据脚本的结果决定是直接访问还是通过本地代理访问，脚本在 Shadowsocks 的 PAC 设置中可以看到，浏览器的设置信息可以在代理设置中看到（浏览器在 Shadowsocks 开启系统代理的时候会自动设置代理，无需人工干预）。由此可以得知，通过本机访问网络，决定是直接连接还是通过 Shadowsocks 代理连接的是 PAC 脚本，并不是 Shadowsocks 本身，所以如果使用系统的 Ping 命令访问 www.google.com 仍然是不能访问的，因为直接 Ping 没有经过 PAC 脚本，还是直接连接了，不可能访问成功。除了浏览器之外，如果其它程序也想访问被屏蔽的网站（例如 Git、Maven 仓库），只能通过程序自己的代理设置进行配置，完成访问的目的。（如果放弃 PAC 模式，直接使用全局模式，则不需要配置任何信息，本机所有的网络请求会全部经过翻墙代理，当然这样做会导致流量消耗过大，并且国内的正常网站访问速度也会很慢）
 
-![获取 PAC 的脚本地址](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbof33m9dj20ij0aa0tl.jpg "获取 PAC 的脚本地址")
+![获取 PAC 的脚本地址](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbof33m9dj20ij0aa0tl.jpg "获取 PAC 的脚本地址")
 
 获取到的 PAC 脚本地址为：
 http://127.0.0.1:1080/pac?t=20181118030355597&secret=qZKsW49fDFezR4jJQtRDhUVPRqnFu6JC3Nc+vtXDb0g=
 
-![浏览器代理配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxboiacqtbj20se0kojse.jpg "浏览器代理配置")
+![浏览器代理配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxboiacqtbj20se0kojse.jpg "浏览器代理配置")
 
 以上是查看 Chrome 浏览器和 IE 浏览器的代理设置信息，对于 Microsoft Edge（Windows 10 自带）浏览器来说，界面有点不一样，在设置->高级->代理设置里面。
 
-![Edge 浏览器设置代理脚本](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbooa2ikvj20xc0pwq93.jpg "Edge浏览器设置代理脚本")
+![Edge 浏览器设置代理脚本](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbooa2ikvj20xc0pwq93.jpg "Edge浏览器设置代理脚本")
 
 此外，如果在浏览器中有更灵活的需求应用， 例如在设置多个代理的情况下，针对公司内网是一套，针对指定的几个网站是一套，针对被屏蔽的网站是一套，剩余的直接连接。在这种情况下仅仅使用代理脚本就不能完成需求了，显得场景很单一，当然也可以把脚本写的复杂一点，但是成本太高，而且不方便维护更新。这个时候就需要浏览器的插件出场了，例如在 Chrome 下我选择了 [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN) 这个插件，可以设置多种情景模式，根据实际情况自由切换，非常方便。我设置了三种情景模式：hdpProxy（公司内网）、shadowSocks（翻墙代理）、auto switch（根据条件自动切换），前面两种情景模式直接设置完成即可，最后的 auto switch 需要配置得复杂一点，根据正则表达式或者通配符指定某些网站的访问方式必须使用 hdpProxy 代理，另外其它的根据规则列表
 （https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt ，和Shadowsocks的 GFWList 列表类似）必须通过翻墙代理，剩余的才是直接连接。当然，此时就不需要把 Shadowsocks 设置为系统代理了，保持 Shadowsocks 后台运行就可以了。
 
-![SwitchyOmega 插件配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxbp79ywuej21hc0q20v7.jpg "SwitchyOmega 插件配置")
+![SwitchyOmega 插件配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbp79ywuej21hc0q20v7.jpg "SwitchyOmega 插件配置")
 
 ## Android平台使用
 
@@ -234,15 +234,15 @@ Android 平台的安装使用方法就非常简单了，分为**安装、配置�
 ### 配置
 
 需要配置的内容和 Windows 平台的一样，把那些必要的参数填进去就行了，其它内容不需要关心。例如我这里配置了ip、端口、密码、加密方式等。
-![配置信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pzdu7hdhj20u01me0xa.jpg "配置信息")
+![配置信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0pzdu7hdhj20u01me0xa.jpg "配置信息")
 
 ### 启动
 
 启动只要点击右上角的灰色圆形按钮，里面有一个小飞机，大概等待几秒钟，就会变绿，表示已经连接上 VPN 了，此时手机就可以连接被屏蔽的网站了。唯一的缺点就是，不支持设置类似于 PAC 规则的站点切换（**路由**默认设置的是绕过中国大陆地址），因为只要一连上 VPN，手机上所有的国外连接都是走 VPN，会导致连某些正常的国外的网站也会慢一点，还浪费 VPS 的流量。当然，如果是在 WIFI 的环境下，通过 Android 系统的网络代理设置也可以设置一些类似于 PAC 的规则，就不细说了。启动后，还可以看到流量发送接收统计信息。
-![启动成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pzebvxr7j20u01mcae9.jpg "启动成功")
+![启动成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0pzebvxr7j20u01mcae9.jpg "启动成功")
 
 在手机的设置里面也可以看到 VPN 的开启
-![查看系统开启的VPN](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g0pzegquf2j20u01jc0wu.jpg "查看系统开启的VPN")
+![查看系统开启的VPN](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0pzegquf2j20u01jc0wu.jpg "查看系统开启的VPN")
 
 
 # 踩坑记录
@@ -251,7 +251,7 @@ Android 平台的安装使用方法就非常简单了，分为**安装、配置�
 
 2、在 Windows 平台使用的时候，安装了客户端，也安装了 .NET Framework 组件，配置信息确认无误，但是就是上不了外网，同样的操作使用Android 客户端却可以，所以有理由怀疑是自己的主机问题。后来，重启系统，检查网络，关闭杀毒软件，还是不行，后来，依靠搜索，找到了是杀毒软件 Avast 的问题，扫描 SSL 连接被开启了，大坑，关闭即可。
 
-![Avast 截图](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxa0mkrws7j20pc0nkglz.jpg)
+![Avast 截图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa0mkrws7j20pc0nkglz.jpg)
 
 3、参考：[梯子搭建](https://github.com/sirzdy/shadowsocks)
 

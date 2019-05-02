@@ -100,7 +100,7 @@ org.apache.hadoop.ipc.RemoteException(org.apache.hadoop.ipc.StandbyException): O
 
 可以看到，namenode 相关配置有2台机器：nn1、nn2，而上述产生异常的信息表明连接 nn1 被拒绝，那么我去看一下 HDFS 集群的状态，发现 nn1 果然是 standby 状态的，而 nn2（rocket15） 才是 active 状态。
 
-![nn2 的 active 状态](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fyluqlzruwj20ln0b6mxq.jpg "nn2 的 active 状态")
+![nn2 的 active 状态](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fyluqlzruwj20ln0b6mxq.jpg "nn2 的 active 状态")
 
 再仔细查看日志，没有发现连接 nn2 的异常，那就说明是第一次连接 nn1 抛出异常，然后试图连接 nn2，成功连接，没有抛出异常，接下来程序就正常处理数据了，对功能没有任何影响。
 

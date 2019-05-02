@@ -29,21 +29,21 @@ keywords: WPS关闭广告推送,WPS关闭自动升级
 如果你在互联网上搜索 WPS 广告推送相关话题，可以看到大量的帖子（或者说是方法教程）已经整理出了各种方案，可以帮你解决这个问题，例如：直接更改 WPS 安装目录中的某些文件、利用杀毒软件屏蔽广告推送、直接设置 WPS 等等。显然，前2种方案是在走弯路，而最后一种方案才是最简单直接的。
 
 1、打开 WPS 主页，在右上角找到**设置**按钮；
-![WPS 的设置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy4crah9c4j217w0n60u6.jpg "WPS 的设置")
+![WPS 的设置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy4crah9c4j217w0n60u6.jpg "WPS 的设置")
 
 2、点击**设置**，选择**配置和修复工具**；
 
-![WPS 的配置和修复工具](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy4csqhjngj21ag0md760.jpg "WPS 的配置和修复工具")
+![WPS 的配置和修复工具](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy4csqhjngj21ag0md760.jpg "WPS 的配置和修复工具")
 
 3、在弹出的对话框中选择**高级**；
-![WPS 的高级配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy4cuavhshj20jt0d80u2.jpg "WPS 的高级配置")
+![WPS 的高级配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy4cuavhshj20jt0d80u2.jpg "WPS 的高级配置")
 
 4、选择对话框的**其它选项**标签页，取消截图中的3项勾选，即同时关闭**升级完成后推荐精选软件**、**订阅 WPS 热点**、**接受广告推送**；
-![WPS 关闭广告推送](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy4cw03l87j20lc0l10tw.jpg "WPS 关闭广告推送")
+![WPS 关闭广告推送](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy4cw03l87j20lc0l10tw.jpg "WPS 关闭广告推送")
 
 此外，进入步骤3也可以直接通过系统的安装程序列表（开始-->所有程序-->WPS Office-->WPS Office 工具-->配置工具），步骤如下图：
-![系统的所有程序](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy4d3nem66j20e70qegos.jpg "系统的所有程序")
-![找到 WPS 的配置工具](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy4d2sadeoj20ec0qjtck.jpg "找到 WPS 的配置工具")
+![系统的所有程序](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy4d3nem66j20e70qegos.jpg "系统的所有程序")
+![找到 WPS 的配置工具](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy4d2sadeoj20ec0qjtck.jpg "找到 WPS 的配置工具")
 
 按照以上步骤设置， WPS 就不再会弹出广告推送和 WPS 热点推送了，亲测有效。
 
@@ -56,5 +56,5 @@ keywords: WPS关闭广告推送,WPS关闭自动升级
 
 3、WPS 每次更新后，上述设置会还原，也就是又回到默认开启的状态，此时需要重新设置一次。当然，为了以后不会莫名其妙又弹出广告推送，可以直接关闭自动升级（和前面关闭广告的步骤一致，但是选择的是**升级设置**标签页），以后想升级的时候再手动升级。
 
-![关闭自动升级](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fy4cflpmajj20lc0l10u0.jpg "关闭自动升级")
+![关闭自动升级](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fy4cflpmajj20lc0l10u0.jpg "关闭自动升级")
 

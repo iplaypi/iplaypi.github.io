@@ -65,7 +65,7 @@ Elasticsearch 版本为 v5.6.8。
 ```
 
 更多错误内容如截图所示
-![某个reduce任务的日志](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2cy72abpej20xt0bxq54.jpg "某个reduce任务的日志")
+![某个reduce任务的日志](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2cy72abpej20xt0bxq54.jpg "某个reduce任务的日志")
 
 找到里面的关键信息：**es_rejected_execution_exception**、**"status": 429**，到这里，可以确定这个错误不是由于数据格式不合法导致写入 Elasticsearch 失败，否则错误信息应该携带 **source invalid ** 字样。可惜，进一步，我看不懂这个异常错误，只能借助搜索引擎了。
 
@@ -74,28 +74,28 @@ Elasticsearch 版本为 v5.6.8。
 在这里先提前说明一下，以下内容的配置信息是基于**数据索引所在的集群、节点**，例如索引A在某个集群，分配了3个节点，那就只看这个集群的这3个节点，可能还有其它几百个节点存放的是其它的数据索引，不用关心。这样才能准确找到问题所在，否则如果看到配置信息对不上，就会感到疑惑。另外在使用 API 接口时，可以在 url 结尾增加 **?pretty** 协助格式化结果数据，查看更容易，**?v** 参数可以协助返回结果增加表头，显示更为友好。
 
 其实，Elasticsearch 分别对不同的操作【例如：index、bulk、get 等】提供不同的线程池，并设置线程池的线程个数与排队任务上限。可以在数据索引所在节点的 **settings** 中查看，如果有 head 插件【或者 kopf 插件】，在**概览 -> 选择节点 -> 集群节点信息**中查看详细配置。
-![使用 head 插件查看节点信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2cy83tslkj20iq0k5t93.jpg "使用 head 插件查看节点信息")
+![使用 head 插件查看节点信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2cy83tslkj20iq0k5t93.jpg "使用 head 插件查看节点信息")
 
 其中在**settings -> thread_pool**里面有各个操作的线程池配置。
-![使用 head 插件查看 thread_pool 信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2cy8baeesj20ek0f7zki.jpg "使用 head 插件查看 thread_pool 信息")
+![使用 head 插件查看 thread_pool 信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2cy8baeesj20ek0f7zki.jpg "使用 head 插件查看 thread_pool 信息")
 
 这里面，有两种类型的线程池，一种是 fixing，一种是 scaling，其中 fixing 是固定大小的线程池，默认是 core 个数的5倍，也可以指定大小，scaling 是动态变化的线程池，可以设置最大值、最小值。
 
 如果不使用 head 插件，直接通过 Elasticsearch 集群的 http 接口【前提是开放 http 端口或者设置了转发端口，否则无法访问】也可以获取这个数据，例如通过 **/\_nodes/节点唯一标识/settings/** 查看某个节点的配置信息。这个节点唯一标识【uuid】可以通过 head 插件获取，我这里使用 **q6GpFsnCSOOfLoLl72MVAg** 演示。
 
 使用 head 插件获取节点的唯一标识。
-![查看节点的唯一标识](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2cy972bq0j20md07p3yj.jpg "查看节点的唯一标识")
+![查看节点的唯一标识](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2cy972bq0j20md07p3yj.jpg "查看节点的唯一标识")
 
 使用 API 接口查看节点的配置信息
-![使用 API 查看节点的配置信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2cy9knbhej20ra0mm3z0.jpg "使用 API 查看节点的配置信息")
+![使用 API 查看节点的配置信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2cy9knbhej20ra0mm3z0.jpg "使用 API 查看节点的配置信息")
 
 可以看到数据所在节点的线程池配置，对于**bulk**类型的操作，线程池的大小为32【由于 min 和 max 都设置为了32，并且线程池类型为 fixing，所以是32】，队列上限为1500。好，至此，再结合上面错误日志中的信息：**bulk, queue capacity = 1500**、**Running, pool size = 32, active threads = 32, queued tasks = 4527**，可以发现，当前节点【某个 node，不能说整个集群】处理数据时线程的队列已经超过了上限1500，而且我惊讶地发现已经到达了4527，这种情况下 Elasticsearch 显然是要拒绝请求的。
 
 此外，使用集群的 API 接口也可以看到节点的线程池使用情况，包括拒绝请求量，**/\_cat/thread\_pool?v**，查看详情如下图所示。
-![使用 API 查看节点的线程池使用情况](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2cyav2c1rj20ke097aa9.jpg "使用 API 查看节点的线程池使用情况")
+![使用 API 查看节点的线程池使用情况](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2cyav2c1rj20ke097aa9.jpg "使用 API 查看节点的线程池使用情况")
 
 不妨再次探索一下 mapreduce 的日志，搜索关于 bulk 的错误，可以看到大量的错误都是这种，超过队列上限而被拒绝请求。
-![大量的线程池超过最大限制错误](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2cyb09mggj21dq0mcn28.jpg "大量的线程池超过最大限制错误")
+![大量的线程池超过最大限制错误](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2cyb09mggj21dq0mcn28.jpg "大量的线程池超过最大限制错误")
 
 ## 解决方案
 
@@ -129,7 +129,7 @@ threadpool.bulk.queue_size: 1500
 拿到错误日志后，简单搜索统计了一下，一个 reduce 任务的错误信息有16万次，也就是有16万条数据没有成功写入 Elasticsearch。而整个 mapreduce 作业的 reduce 个数为43，可以预估一下有688万次错误信息，也就是有688万条数据没有成功写入 Elasticsearch，这可是个大数目。
 
 再查看作业日志的统计值，累加器统计结果，在 driver 端的日志中，发现一共处理了1413万数据，这样一计算，漏掉了接近49%的数据，太严重了。
-![查看累加器的取值](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2cyb6wscxj20gv0kcgme.jpg "查看累加器的取值")
+![查看累加器的取值](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2cyb6wscxj20gv0kcgme.jpg "查看累加器的取值")
 
 再对比一下我文章开头的描述，每次重跑作业，总是有一部分数据可以重新写入 Elasticsearch，但是成功的数据量仅仅限于几十条、几条。最终还差500多条数据的时候，已经重跑了5次以上了，所以我才会更加怀疑是程序写入 Elasticsearch 方式的问题。
 

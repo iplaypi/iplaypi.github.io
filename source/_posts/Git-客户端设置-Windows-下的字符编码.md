@@ -23,7 +23,7 @@ Git 是一款非常好用的分布式版本控制系统，为了更好地使用�
 在 Windows 平台使用 Git 客户端的过程中，有一个问题你一定逃不掉，那就是乱码问题。这是因为 Windows 系统的编码是 GBK，而 Git 客户端的编码是 UTF-8，当两种不同的编码相遇，必然有一方会乱码。如果设置 Git 客户端的编码为 GBK，那么在使用 Git 客户端处理系统文件的时候可以正常显示，但是处理 Git 版本控制内容的时候，就会乱码，无法支持中文。如果反过来呢，把 Git 客户端的编码设置为 UTF-8，那么处理版本控制内容就可以有效支持中文，但是处理系统文件的时候又会乱码。
 
 Git 客户端设置 UTF-8 编码，处理系统文件显示乱码
-![ls命令中文乱码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17blzgl2zj20l50cpjt9.jpg "ls命令中文乱码")
+![ls命令中文乱码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17blzgl2zj20l50cpjt9.jpg "ls命令中文乱码")
 
 
 # 解决方式
@@ -32,18 +32,18 @@ Git 客户端设置 UTF-8 编码，处理系统文件显示乱码
 这样看起来似乎没有解决方法，其实不是的，还是有很好的解决方法的。我这里为了完全支持版本管理系统，版本管理优先，肯定要统一设置为 UTF-8 编码，然后通过 Git 客户端的编码自动转换来支持系统的 GBK 编码。
 
 这里先提前说明，在使用 Git 客户端的时候，Git 的安装目录【一般默认是 C:\Program Files\Git】，也就是 Git 的根目录。在使用 **ls** 等命令处理文件时，如果携带了 **/** 字符，其实就表示从 Git 的安装目录开始。例如在里面寻找 etc 目录，如果是使用 Git Bash 打开的，可以直接使用根目录的方式，**cd /etc/**。再例如 **vi /etc/git-completion.bash** 不是表示从系统的根目录开始寻找文件【Windows 系统也没有根目录的概念】，而是表示从 Git 的安装目录开始寻找文件。
-![Git安装目录](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17bn7wtv0j20nd0dumyg.jpg "Git安装目录")
+![Git安装目录](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17bn7wtv0j20nd0dumyg.jpg "Git安装目录")
 
 ## 设置 Git 客户端
 
 打开 Git 客户端的主页面，右键打开菜单栏【或者点击窗口的左上角也可以打开】，选择 **Options** 选项。
-![Options选项](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17bmpt7mnj20l50cp0tw.jpg "Options选项")
+![Options选项](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17bmpt7mnj20l50cp0tw.jpg "Options选项")
 
 接着选择 **Text** 参数配置，把编码方式由 GBK 改为 UTF-8【locale 也要设置为 zh_CN】。
-![Text参数配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17bnna4xyj20l50cpacj.jpg "Text参数配置")
+![Text参数配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17bnna4xyj20l50cpacj.jpg "Text参数配置")
 
 设置完成后，一定会导致一个现象，那就是使用 **ls** 查看系统文件时，带有中文的目录和带有中文的文件，一定是乱码的，根本看不清楚显示的是什么。不过不用担心，后面会通过设置让它恢复正常的。
-![ls命令中文乱码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17blzgl2zj20l50cpjt9.jpg "ls命令中文乱码")
+![ls命令中文乱码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17blzgl2zj20l50cpjt9.jpg "ls命令中文乱码")
 
 接下来要解决的是显示的问题，目的是保证 Windows 的 GBK 编码可以在 Git 客户端正常显示。由于 Git 客户端被设置为了 UTF-8 编码，使用 **ls** 命令查看目录文件详情的时候，一定是乱码的，什么也看不出来【数字和英文不受影响】。那就需要设置 **ls** 命令的参数，让它按照 Git 客户端的编码来显示，不支持的字符也要显示，这样再使用 **ls** 命令的时候，就会自动把 GBK 编码转为 UTF-8 编码，那么带有中文的目录、带有中文的文件都能正常显示了。
 
@@ -55,12 +55,12 @@ alias ls="ls --show-control-chars --color"
 ```
 
 更改完成后，可以看到能正常显示系统中的带有中文名称的文件了。
-![ls可以正常显示中文](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17bo2mcrej20l50cpq4y.jpg "ls可以正常显示中文")
+![ls可以正常显示中文](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17bo2mcrej20l50cpq4y.jpg "ls可以正常显示中文")
 
 但是还要注意一点，如果使用 Git 客户端的 Bash 处理其它命令，一定会乱码的，因为不像 **ls** 那样做了编码转换。以下2例【分别时使用 elasticsearch、java 命令】：
-![elasticsearch命令乱码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g185ktkbutj20l50cp0ul.jpg "elasticsearch命令乱码")
+![elasticsearch命令乱码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g185ktkbutj20l50cp0ul.jpg "elasticsearch命令乱码")
 
-![java命令乱码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g185l2lrrhj20l50ghmz2.jpg "java命令乱码")
+![java命令乱码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g185l2lrrhj20l50ghmz2.jpg "java命令乱码")
 
 那这个现象有没有办法解决呢，网上大多数解决办法都是说把 Git 客户端的编码设置为和 Windows 系统一样，一般设置为 GBK，这显然是又倒退回去了【为了满足 Git 一定要设置为 UTF-8】。其实唯一的解决办法就是从命令的参数下手，把原生的命令利用别名机制给加上编码有关的参数，和修改 **ls** 命令的做法一致。以下供参考：
 
@@ -121,16 +121,16 @@ export LESSCHARSET=utf-8
 ## 验证
 
 add 执行的时候 Git 输出的日志都是中文显示的，特别是带有中文名称的文件。
-![add命令输出中文](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17bv0ph2yj20l50f20uh.jpg "add命令输出中文")
+![add命令输出中文](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17bv0ph2yj20l50f20uh.jpg "add命令输出中文")
 
 验证提交时填写日志信息，可以直接填写中文日志，另外 Git 的输出日志也是以中文来显示的，可以看到哪些文件变更了。
-![验证提交时填写中文日志](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17boorhqyj20l50cpgn8.jpg "验证提交时填写中文日志")
+![验证提交时填写中文日志](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17boorhqyj20l50cpgn8.jpg "验证提交时填写中文日志")
 
 验证使用 **git log** 查看历史日志时正常显示中文内容
-![查看历史日志时正常显示中文内容1](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17bosnlsnj20l50cp0tt.jpg "查看历史日志时正常显示中文内容1")
+![查看历史日志时正常显示中文内容1](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17bosnlsnj20l50cp0tt.jpg "查看历史日志时正常显示中文内容1")
 
 
-![查看历史日志时正常显示中文内容2](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g17box3cduj20l50cp3zx.jpg "查看历史日志时正常显示中文内容2")
+![查看历史日志时正常显示中文内容2](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17box3cduj20l50cp3zx.jpg "查看历史日志时正常显示中文内容2")
 
 
 # 注意事项

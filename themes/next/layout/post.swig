@@ -1,8 +1,10 @@
+{# 继承 _layout.swig,并且把各个 block 替换掉 #}
 {% extends '_layout.swig' %}
+{# 导入swig #}
 {% import '_macro/post.swig' as post_template %}
 {% import '_macro/sidebar.swig' as sidebar_template %}
 
-
+{# 替换 block title #}
 {% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
 {% block page_class %}page-post-detail{% endblock %}

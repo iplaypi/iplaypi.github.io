@@ -43,7 +43,7 @@ keywords: ItChat,微信接口,自定义接口,自动回复,微信机器人
 去官网：https://www.python.org/downloads/windows ，选择自己需要的版本，我这里选择 Windows 系统的版本（64位操作系统），Python 2.7（这是一个很古老的版本了，推荐大家使用 3.x 版本）；
 
 我选择的版本
-![Windows系统64位](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzcck7qfjj21hc0p6n0z.jpg "Windows系统64位")
+![Windows系统64位](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcck7qfjj21hc0p6n0z.jpg "Windows系统64位")
 
 下载过程就和下载普通的文件、视频等一样，根据网速的限制有快有慢。
 
@@ -56,7 +56,7 @@ keywords: ItChat,微信接口,自定义接口,自动回复,微信机器人
 这里一定要注意安装的版本是否适配自己的操作系统（包括系统类型与系统位数）；
 
 在 Windows 系统的**程序和功能**中查看已经安装完成的 Python 程序（2.7版本，我是使用 Anaconda2 安装的，所以看起来有些不一样）：
-![windows程序和功能](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzcbr6amhj20y80k5q5m.jpg "windows程序和功能")
+![windows程序和功能](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcbr6amhj20y80k5q5m.jpg "windows程序和功能")
 
 ### 配置环境变量
 
@@ -65,19 +65,19 @@ keywords: ItChat,微信接口,自定义接口,自动回复,微信机器人
 配置环境变量的过程也不再赘述，大家自己利用搜索引擎获取，下图是基于 Windows 7版本的配置截图示例；
 
 **系统属性**
-![系统属性](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzcdqptjbj215o0ngtez.jpg "系统属性")
+![系统属性](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcdqptjbj215o0ngtez.jpg "系统属性")
 
 **高级系统设置**
-![高级系统设置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzcf7mux2j20fe0f7ta0.jpg "高级系统设置")
+![高级系统设置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcf7mux2j20fe0f7ta0.jpg "高级系统设置")
 
 **环境变量**，我这里编辑用户环境变量 PATH 的内容（如果不存在就新建，当然编辑系统环境变量 PATH 的内容也是可以的），切记内容一定是英文格式下的，多个使用英文逗号分隔
-![环境变量](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzcfp2cdvj20ei0e03zq.jpg "环境变量")
+![环境变量](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcfp2cdvj20ei0e03zq.jpg "环境变量")
 
 **用户环境变量**，我这里需要填写2条内容，使用英文逗号隔开（如果是直接安装的 Python，pip 和 python 应该在同一个路径下面，所以只需要1条就行了）
-![用户环境变量](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzcg8856yj20ei0e0q4d.jpg "用户环境变量")
+![用户环境变量](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcg8856yj20ei0e0q4d.jpg "用户环境变量")
 
 我的环境需要配置2条内容
-![配置2条内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzcgokfnqj209501tmwy.jpg "配置2条内容")
+![配置2条内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcgokfnqj209501tmwy.jpg "配置2条内容")
 
 内容解释：
 
@@ -93,7 +93,7 @@ D:\Anaconda2;
 
 
 在 Python 安装完成的情况下，才能进行接下来的操作，因为 ItChat 是基于 Python 环境运行的；为了验证 Python 是否正确安装，可以在命令行中输入 python，如果看到以下内容，就说明 Python 安装成功：
-![验证Python](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzfxmlh41j20n60873zj.jpg "验证Python")
+![验证Python](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzfxmlh41j20n60873zj.jpg "验证Python")
 
 接下来利用 pip 工具（Python 自带的）直接安装 itchat，非常简单，使用命令（如果 pip 命令不可用，请检查 Python 的安装目录是否存在 pip.exe 文件）：
 ````bash
@@ -101,10 +101,10 @@ pip install itchat
 ````
 
 安装 ItChat
-![itchat安装命令](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzfy2t8p5j20be016741.jpg "itchat安装命令")
+![itchat安装命令](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzfy2t8p5j20be016741.jpg "itchat安装命令")
 
 如果看到以下内容，说明 ItChat 安装成功：
-![itchat安装成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzfyl5gcsj20n60a6t9e.jpg "itchat安装成功")
+![itchat安装成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzfyl5gcsj20n60a6t9e.jpg "itchat安装成功")
 
 
 ## 入门代码示例
@@ -152,29 +152,29 @@ itchat.run()
 ````
 
 代码截图如下：
-![代码示例](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzh40wm8uj215v0lp0ve.jpg "代码示例")
+![代码示例](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzh40wm8uj215v0lp0ve.jpg "代码示例")
 
 
 ## 演示
 
 
 登录扫码
-![运行代码扫码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzfzy6tf8j21bm0oq76m.jpg "运行代码扫码")
+![运行代码扫码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzfzy6tf8j21bm0oq76m.jpg "运行代码扫码")
 
 登录成功
-![登录成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzg0nho9pj20cq01sjr6.jpg "登录成功")
+![登录成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzg0nho9pj20cq01sjr6.jpg "登录成功")
 
 群聊自动回复（正则是任意内容，所以总是会自动回复）
-![群聊自动回复](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzg1f8g7nj20u00rp0wd.jpg "群聊自动回复")
+![群聊自动回复](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzg1f8g7nj20u00rp0wd.jpg "群聊自动回复")
 
 退出
-![退出](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzg1qzmewj20n604omy3.jpg "退出")
+![退出](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzg1qzmewj20n604omy3.jpg "退出")
 
 重新登录继续聊天（由于开启了热启动，不需要重新扫码）
-![重新登录](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzg26yztyj20n6084gmn.jpg "重新登录")
+![重新登录](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzg26yztyj20n6084gmn.jpg "重新登录")
 
 继续聊天
-![继续聊天](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzg2p3tnuj20u01mc7co.jpg "继续聊天")
+![继续聊天](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzg2p3tnuj20u01mc7co.jpg "继续聊天")
 
 
 ## 小问题总结
@@ -206,7 +206,7 @@ match = re.search(u'年|春|快乐', message)
 
 3、如果不开启热启动，每次重新登录时都会生成新的二维码，直接在 Wimdows 的命令行中，可能由于窗口太小显示不完整，此时需要拉伸一下命令行的窗口：
 
-![窗口拉伸](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzg62t07ej20n60sctbf.jpg "窗口拉伸")
+![窗口拉伸](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzg62t07ej20n60sctbf.jpg "窗口拉伸")
 
 4、有些人的电脑设置问题，命令行环境背景为白色，生成的二维码的颜色黑白色是相反的，导致扫码时无法识别，此时需要设置代码：
 ````python
@@ -319,12 +319,12 @@ itchat.run()
 ````
 
 代码截图（使用工具渲染了一下）：
-![机器人接入代码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzirq8uejj235s3xgu0x.jpg "机器人接入代码")
+![机器人接入代码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzirq8uejj235s3xgu0x.jpg "机器人接入代码")
 
 ### 接入机器人演示
 
 演示一下，随便聊了几句：
-![图灵机器人聊天](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fzzislea0dj20u01mcgug.jpg "图灵机器人聊天")
+![图灵机器人聊天](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzislea0dj20u01mcgug.jpg "图灵机器人聊天")
 
 
 # 备注

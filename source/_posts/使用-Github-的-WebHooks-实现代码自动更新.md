@@ -49,7 +49,7 @@ tar zxvf php-7.3.3.tar.gz
 ```
 
 遇到报错：**configure: error: no acceptable C compiler found in $PATH**。
-![缺少 c 编译器](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g167nenhspj20jt06tglu.jpg "缺少 c 编译器")
+![缺少 c 编译器](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167nenhspj20jt06tglu.jpg "缺少 c 编译器")
 
 竟然缺少 c 编译器，那就安装吧。
 
@@ -59,12 +59,12 @@ yum install gcc
 ```
 
 安装 gcc 编译器成功
-![安装 gcc 编译器1](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g167o1kn4dj21hc0mrgna.jpg "安装 gcc 编译器1")
+![安装 gcc 编译器1](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167o1kn4dj21hc0mrgna.jpg "安装 gcc 编译器1")
 
-![安装 gcc 编译器2](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g167ol7hilj21hc0mrjsx.jpg "安装 gcc 编译器2")
+![安装 gcc 编译器2](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167ol7hilj21hc0mrjsx.jpg "安装 gcc 编译器2")
 
 安装 gcc 编译器完成后，接着执行配置，又报错：**configure: error: libxml2 not found. Please check your libxml2 installation.**。
-![缺少对应的依赖环境库](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g167p2bqdaj20l20bxq3h.jpg "缺少对应的依赖环境库")
+![缺少对应的依赖环境库](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167p2bqdaj20l20bxq3h.jpg "缺少对应的依赖环境库")
 
 这肯定是缺少对应的依赖环境库，接着安装就行。
 
@@ -75,10 +75,10 @@ yum install libxml2-devel -y
 ```
 
 安装依赖环境库成功
-![安装环境库完成](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g167pq2doqj21hc0mrabc.jpg "安装环境库完成")
+![安装环境库完成](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167pq2doqj21hc0mrabc.jpg "安装环境库完成")
 
 接着就重复上述的配置操作，顺利通过配置。
-![执行配置完成](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g167qgfhy8j21hc0mrta5.jpg "执行配置完成")
+![执行配置完成](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167qgfhy8j21hc0mrta5.jpg "执行配置完成")
 
 3、编译、安装。
 ```
@@ -96,7 +96,7 @@ See <http://bugzilla.redhat.com/bugzilla> for instructions.
 make: *** [ext/fileinfo/libmagic/apprentice.lo] Error 1
 ```
 
-![编译安装内存不够报错](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g167qyojuij20rn0563yp.jpg "编译安装内存不够报错")
+![编译安装内存不够报错](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167qyojuij20rn0563yp.jpg "编译安装内存不够报错")
 
 这是由于服务器内存小于 1G 所导致编译占用资源不足【好吧，我的服务器一共就 512M 的内存，当然不足】。解决办法：在编译参数后面加上一行内容 **--disable-fileinfo**，减少内存的开销。
 
@@ -117,7 +117,7 @@ wget http://php.net/get/php-7.0.0.tar.gz/from/this/mirror -O ./php-7.0.0.tar.gz
 ```
 
 更换了版本后，一切操作都很顺利，就不再考虑开启 swap 了，最终执行编译、安装完成。
-![执行编译安装完成](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g167tfxfarj20iv0mr3zs.jpg "执行编译安装完成")
+![执行编译安装完成](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167tfxfarj20iv0mr3zs.jpg "执行编译安装完成")
 
 ## 真正开始配置
 
@@ -170,10 +170,10 @@ ps aux|grep php-fpm
 ```
 
 配置文件合法性检测
-![配置文件合法性检测](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g167zej3snj20ja02t0sm.jpg "配置文件合法性检测")
+![配置文件合法性检测](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167zej3snj20ja02t0sm.jpg "配置文件合法性检测")
 
 可以看到正常启动了
-![PHP-FPM 启动成功](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g167zqai4zj20nb03zt8s.jpg "PHP-FPM 启动成功")
+![PHP-FPM 启动成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167zqai4zj20nb03zt8s.jpg "PHP-FPM 启动成功")
 
 那怎么关闭以及重启呢，PHP 5.3.3 以后的 PHP-FPM 模块不再支持 PHP-FPM 以前具有的 **./sbin/php-fpm (start|stop|reload)** 等命令，所以不要再看这种古老的命令了，需要使用信号控制：
 - INT，TERM，立刻终止
@@ -186,7 +186,7 @@ ps aux|grep php-fpm
 其中，根据 Unix 基础知识，INT【2】表示中断信号，等价于 Ctrl + C，TERM【15】表示终止信号【清除后正常终止，不同于编号9 KILL 的强制终止而不清除】，QUIT【3】表示退出信号，等价于 Ctrl + \，USR1【10】、USR2【12】这2个表示用户自定义信号。
 
 所以可以使用命令 **kill -INT pid** 来停止 PHP-FPM 模块，pid 的值可以使用 **ps aux|grep php-fpm** 获取。当然，也可以使用 **kill -INT pid 配置文件路径** 来停止 PHP-FPM 模块，pid 配置文件路径 可以在 php-fpm.conf 中查看，**pid 参数**，默认是关闭的。
-![使用信号控制的方式停止 PHP-FPM](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1681vrhobj20om071mxh.jpg "使用信号控制的方式停止 PHP-FPM")
+![使用信号控制的方式停止 PHP-FPM](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1681vrhobj20om071mxh.jpg "使用信号控制的方式停止 PHP-FPM")
 
 为了能使用 **service php-fpm start|stop|restart|reload)** 的方式来进行启动、停止、重启、重载配置，这种方式显得优雅，需要把此模块配置到系统里面。在 PHP 的编译安装目录，复制文件 **sapi/fpm/init.d.php-fpm** ，粘贴到系统指定的目录即可。
 
@@ -200,7 +200,7 @@ chmod +x /etc/init.d/php-fpm
 chkconfig --add php-fpm
 ```
 
-![使用 service 操作 PHP-FPM](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g16828okbij20nq06zaaf.jpg "使用 service 操作 PHP-FPM")
+![使用 service 操作 PHP-FPM](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g16828okbij20nq06zaaf.jpg "使用 service 操作 PHP-FPM")
 
 ### Nginx 的配置文件
 
@@ -253,7 +253,7 @@ vi index.php
 ```
 
 打开浏览器访问，可以看到成功，这就代表着 PHP 与 Nginx 的配置都没有问题，已经能正常提供服务。
-![成功访问 index.php](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1685gzg77j21hk0s6did.jpg "成功访问 index.php")
+![成功访问 index.php](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1685gzg77j21hk0s6did.jpg "成功访问 index.php")
 
 接下来就来测试一下复杂的脚本，可以用来自动拉取 GitHub 的提交。再创建一个 auto_pull.php 文件，内容如下，会自动到执行目录拉取 GitHub 的更新，这样就能实现镜像的自动更新了，还加入了秘钥验证【先不用管功能性是否可用，而是先测试一下复杂的 PHP 脚本能不能正常执行，脚本内容后续还要优化更改】，内容大致如下。
 
@@ -303,32 +303,32 @@ curl -H 'X-Hub-Signature:test'  https://blog.playpi.org/auto_pull.php
 ```
 
 可以看到，访问正常，先不管功能上能不能正常实现，至少保证 PHP 可以正常提供服务，后面会和 GitHub 对接。
-![使用 curl 模拟访问正常](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g168ab7ih9j20r206awep.jpg "使用 curl 模拟访问正常")
+![使用 curl 模拟访问正常](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g168ab7ih9j20r206awep.jpg "使用 curl 模拟访问正常")
 
 
 # 测试 WebHooks 效果
 
 
 在 GitHub 中使用 WebHooks，为了表现出它的效果是什么样，我画了一个流程图，可以直观地看到它优雅的工作方式。
-![WebHooks 效果流程图](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g168bmzii3j20lo0jwwfi.jpg "WebHooks 效果流程图")
+![WebHooks 效果流程图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g168bmzii3j20lo0jwwfi.jpg "WebHooks 效果流程图")
 
 在上一步骤中，自动拉取更新的脚本已经写好，并且使用 curl 测试过模拟访问可用，那接下来就测试功能是否可用，当然，踩坑是避免不了的，优化脚本内容也是必要的。特别要注意用户权限和脚本内容这两方面，用户权限方面我直接使用 nginx 用户，踩坑比较少，脚本内容方面要保证你的服务器支持 **shell_exec()** 这个 PHP 函数，可以在 **index.php** 文件中加一段代码 **echo shell_exec('ls -la');**，测试一下。我的机器经过测试时支持的。
-![测试 shell_exec 函数](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g168e04yz0j21hk0s6gs3.jpg "测试 shell_exec 函数")
+![测试 shell_exec 函数](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g168e04yz0j21hk0s6gs3.jpg "测试 shell_exec 函数")
 
 ## 在 GitHub 设置 WebHooks
 
 在 GitHub 对应项目的设置【Settings】中，找到 **Webhooks** 选项，可以看到已经有一些设置完成的 WebHook，这里面就包括 travis-ci 的自动构建配置。
-![Webhooks 列表](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1691o58jij20ty0en755.jpg "Webhooks 列表")
+![Webhooks 列表](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1691o58jij20ty0en755.jpg "Webhooks 列表")
 
 然后点击新建按钮，创建一个新的 WebHook【这个过程需要重新填写密码确认】，填写必要的参数，url 地址、秘钥、触发的事件，然后确认保存即可。注意，秘钥只是为了测试使用，实际应用时请更改，包括 WebHooks 的秘钥设置和 PHP 脚本里面的秘钥字符串。
-![新建 WebHook](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1692ybibgj20su0qxgn6.jpg "新建 WebHook")
+![新建 WebHook](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1692ybibgj20su0qxgn6.jpg "新建 WebHook")
 
 如果是第一次创建完成，还没有触发请求的历史记录，可以先手动在 master 分支做一次变更提交，然后就会触发一次 WebHooks 事件。我这里已经有触发历史了，拿一个出来看就行了。注意，为了方便测试，只要有一次请求就行了，因为如果后续更改了脚本，不用再手动向 master 分支做一次变更提交，可以直接点击重新发送【redeliver】。
 触发请求的信息，就是 http 请求头和请求体
-![WebHook 触发请求携带的信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1694gk8tdj20pl0pi3zt.jpg "WebHook 触发请求携带的信息")
+![WebHook 触发请求携带的信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1694gk8tdj20pl0pi3zt.jpg "WebHook 触发请求携带的信息")
 
 VPS 的 PHP 后台服务返回的信息，可以看到正常处理了 WebHooks 请求，但是没有做拉取更新的操作，原因可能是秘钥不对或者分支不对。
-![PHP 后台服务返回的信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1694ke4dbj20or0judgk.jpg "PHP 后台服务返回的信息")
+![PHP 后台服务返回的信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1694ke4dbj20or0judgk.jpg "PHP 后台服务返回的信息")
 
 ## 测试功能是否可用
 
@@ -388,22 +388,22 @@ if ($hash === $payloadHash && 'refs/heads/master' === $branch) {
 上面已经测试了访问正常，但是为了保证 PHP 脚本的功能正常执行，接下来要优化 PHP 脚本内容了。我分析一下，根据脚本的内容，只有当秘钥正确并且当前变更的分支是 master 时才会执行拉取更新操作，看返回结果也是这样的。当前没有执行拉取更新的操作，但是我的这一个触发通知里面是表明了 master 分支【根据 ref 参数】，那就是秘钥的问题了，需要详细看一下秘钥计算的那段 PHP 代码。如果怕麻烦，直接把加密这个流程去掉【会导致恶意请求，浪费 CPU 资源】，GitHub 并没有要求一定要填写秘钥，但是我为了安全，仍旧填写。
 
 我看了一下代码，并没有发现问题，于是加日志把后台处理的一些结果返回，看看哪里出问题了。最终发现竟然是分支名字的问题，PHP 代码通过 **$content** 没有获取到任何内容，包括分支名字、项目名字、提交信息等，而秘钥签名的处理是正常的。
-![错误日志返回](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1697xx5vaj20nl0g00tb.jpg "错误日志返回")
+![错误日志返回](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1697xx5vaj20nl0g00tb.jpg "错误日志返回")
 
 思考了一下，然后我就发现，竟然是创建 WebHooks 的时候内容传输类型【Content type】设置错误，不能使用默认的，要设置为 **application/json**，否则后台的 PHP 代码处理不了内容解析，获取的全部是空内容。
-![内容传输类型设置错误](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1699fp81lj20uf0oiwg0.jpg "内容传输类型设置错误")
+![内容传输类型设置错误](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1699fp81lj20uf0oiwg0.jpg "内容传输类型设置错误")
 
 好，一切准备就绪，再来试一次，问题又来了，果然用户权限问题是逃不了的。这个问题我早有防备，本质就是没有设置好 PHP 的用户，导致 PHP 执行脚本的时候，没有权限获取与 Git 有关的信息【执行脚本的用户没有自己的家目录，也没有存储 ssh 认证信息】。
-![PHP 执行权限问题](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g169b32samj20pj0hpwf4.jpg "PHP 执行权限问题")
+![PHP 执行权限问题](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g169b32samj20pj0hpwf4.jpg "PHP 执行权限问题")
 
 接下来就简单了，去设置 PHP 的执行用户，可能还要涉及到 Nginx。先在原先的 **index.php** 脚本中增加内容 **echo shell_exec("id -a");**，用来输出当前用户信息，发现是 nobody，那就和我想的一样了。
-![输出 PHP 的执行用户信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g169d8f9fbj20sa0fsdi8.jpg "输出 PHP 的执行用户信息")
+![输出 PHP 的执行用户信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g169d8f9fbj20sa0fsdi8.jpg "输出 PHP 的执行用户信息")
 
 为了规范起来便于管理，还是改为和 Nginx 同一个用户比较好，还记得 PHP-FPM 模块的配置文件吗 **/site/php/etc/php-fpm.d/www\.conf **，去里面找到用户和组的配置项 **user、group**，把 nobody 改为 nginx。
-![设置 PHP-FPM 的用户名和组](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g169e1crm2j20gl02qwec.jpg "设置 PHP-FPM 的用户名和组")
+![设置 PHP-FPM 的用户名和组](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g169e1crm2j20gl02qwec.jpg "设置 PHP-FPM 的用户名和组")
 
 为什么选择 nginx 用户呢，因为我的 Nginx 服务使用的就是 nginx 用户，这样就不用再创建一个用户了，可以去配置文件 **/etc/nginx/nginx.conf** 里面查看。
-![查看 Nginx 的用户](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g169fau9zzj20c806amx2.jpg "查看 Nginx 的用户")
+![查看 Nginx 的用户](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g169fau9zzj20c806amx2.jpg "查看 Nginx 的用户")
 
 其实，用户的设置是随意的，如果把 PHP-FPM 的用户设置为 root 更方便，但是这样有很大风险，所以不要这么做。如果非要使用 nobody 也是可以的，我只是为了方便管理用户，和 Nginx 服务共同使用一个用户。一切配置完成后别忘记重启 PHP-FPM 模块。
 
@@ -423,7 +423,7 @@ chown nginx:nginx iplaypi.github.io
 ```
 
 好，一切准备就绪，我再来试一次。可以看到，完美执行，热泪盈眶。
-![解决所有问题后成功实现自动拉取](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g169gkpo0cj20s30nfgmm.jpg "解决所有问题后成功实现自动拉取")
+![解决所有问题后成功实现自动拉取](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g169gkpo0cj20s30nfgmm.jpg "解决所有问题后成功实现自动拉取")
 
 为了方便，本来我把这2个 php 文件直接放在项目里面了，放在 source 分支，再更新一下 travis-ci 的配置文件，把它们提交到 master 分支去。但是这样做的风险就是把秘钥暴露出去了，显然不可取，所以折中的办法就是把这2个文件当做模板，把秘钥隐去，放在 source 分支，以后用的时候直接复制就行了。
 

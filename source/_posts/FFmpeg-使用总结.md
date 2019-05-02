@@ -21,17 +21,17 @@ FFmpeg 是一款开源的软件，可以进行多种格式的视频、音频编�
 ## 下载
 
 在 [https://ffmpeg.zeranoe.com/builds](https://ffmpeg.zeranoe.com/builds) 下载页面，选择适合自己操作系统的版本，我这里选择 Windows X64 的 static zip 包，解压后直接使用，无需安装。
-![FFmpeg下载页面](https://ws1.sinaimg.cn/large/b7f2e3a3ly1g1ivhlcgh4j21hc0q9dkh.jpg "FFmpeg下载页面")
+![FFmpeg下载页面](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3ly1g1ivhlcgh4j21hc0q9dkh.jpg "FFmpeg下载页面")
 
 ## 解压配置环境变量
 
 下载到指定的目录【最好放在方便管理的目录，不显得混乱】，直接解压，得到一个文件夹，里面有 bin、doc、presets 这3个子文件夹，其中 bin 里面就包含了主程序：ffmpeg、ffplay、ffprobe，这里不涉及安装的概念，程序可以直接使用。
 
 解压主目录
-![解压主目录](https://ws1.sinaimg.cn/large/b7f2e3a3ly1g1ivi9q552j20o00hgt9m.jpg "解压主目录")
+![解压主目录](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3ly1g1ivi9q552j20o00hgt9m.jpg "解压主目录")
 
 子文件夹 bin
-![子文件夹 bin](https://ws1.sinaimg.cn/large/b7f2e3a3ly1g1ividmkdbj20o00hg753.jpg "子文件夹 bin")
+![子文件夹 bin](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3ly1g1ividmkdbj20o00hg753.jpg "子文件夹 bin")
 
 为了方便使用这3个主程序，需要把 bin 所在目录配置到环境变量 PATH 中【我这里是 D:\Program Files\ffmpeg\bin】，这里就不再赘述，如果不配置，每次使用命令时都要给出完整的目录，我觉得很麻烦。
 
@@ -55,7 +55,7 @@ ffmpeg -i imput.mkv -c:v libx264 output.mp4
 ffmpeg -i input.mkv
 ```
 
-![查看视频文件的流信息](https://ws1.sinaimg.cn/large/b7f2e3a3ly1g1ivijvhopj20l50cpjso.jpg "查看视频文件的流信息")
+![查看视频文件的流信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3ly1g1ivijvhopj20l50cpjso.jpg "查看视频文件的流信息")
 
 3、mkv 文件剪辑，截取片段，指定音轨。
 

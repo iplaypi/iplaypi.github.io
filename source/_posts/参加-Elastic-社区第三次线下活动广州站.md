@@ -19,88 +19,88 @@ keywords: Elastic,线下活动,广州
 
 
 先看一下地图指引
-![地图指引](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf2ls1z3j214q0u0djy.jpg "地图指引")
+![地图指引](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf2ls1z3j214q0u0djy.jpg "地图指引")
 
 到达公交站，上冲南站，天气不错
-![上冲南站](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf2vj7mlj229s29sb2c.jpg "上冲南站")
+![上冲南站](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf2vj7mlj229s29sb2c.jpg "上冲南站")
 
 走路路过特斯拉服务站，听说最近交付的特斯拉电动车有很多问题
-![路过特斯拉服务站](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf33253ij229s29shdt.jpg "路过特斯拉服务站")
+![路过特斯拉服务站](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf33253ij229s29shdt.jpg "路过特斯拉服务站")
 
 # 到达
 
 
 到达的比较早，因为要帮忙安排桌子凳子，一切准备就绪后，一起吃了个午饭。
-![吃了个午饭](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf3jejrej229s29s1ky.jpg "吃了个午饭")
+![吃了个午饭](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf3jejrej229s29s1ky.jpg "吃了个午饭")
 
 13:30开始签到，签到现场
-![签到现场](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf3of8qlj229s29sb2a.jpg "签到现场")
+![签到现场](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf3of8qlj229s29sb2a.jpg "签到现场")
 
 我充当了一会儿签到员，坐着的那个是我
-![坐着的那个是我](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf3sy1ylj20m80cimyt.jpg "坐着的那个是我")
+![坐着的那个是我](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf3sy1ylj20m80cimyt.jpg "坐着的那个是我")
 
 各种各样的 Elasticsearch 贴纸
-![各种各样的 Elasticsearch 贴纸](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf3ydx4cj229s29s4qq.jpg "各种各样的 Elasticsearch 贴纸")
+![各种各样的 Elasticsearch 贴纸](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf3ydx4cj229s29s4qq.jpg "各种各样的 Elasticsearch 贴纸")
 
 这是一种比较特殊的 Elasticsearch 贴纸
-![特殊的 Elasticsearch 贴纸](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf427iykj20qo1hcq74.jpg "特殊的 Elasticsearch 贴纸")
+![特殊的 Elasticsearch 贴纸](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf427iykj20qo1hcq74.jpg "特殊的 Elasticsearch 贴纸")
 
 
 # 静听分享
 
 
 先简单看一下这个分享会的大概流程与分享内容
-![分享内容](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf471eb8j21830o9gnw.jpg "分享内容")
+![分享内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf471eb8j21830o9gnw.jpg "分享内容")
 
 ## 分享一
 
 Elasticsearch 在数说全量库的应用实践
 
 现场场景一
-![场景一](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf5ceaqtj21kw0w0as5.jpg "场景一")
+![场景一](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf5ceaqtj21kw0w0as5.jpg "场景一")
 
 现场场景二
-![场景二](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf58jqs2j20zk0k0ta7.jpg "场景二")
+![场景二](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf58jqs2j20zk0k0ta7.jpg "场景二")
 
 现场场景三
-![场景三](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf54mc76j21hc0u0q84.jpg "场景三")
+![场景三](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf54mc76j21hc0u0q84.jpg "场景三")
 
 ## 分享二
 
 Elasticsearch 在慧算账技术运营中的应用
 
 现场场景
-![现场](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf4yz5k5j20m80ciac7.jpg "现场")
+![现场](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf4yz5k5j20m80ciac7.jpg "现场")
 
 ## 分享三
 
 Elasticsearch 在大数据可视化分析中的应用
 
 现场场景
-![现场](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf4twfafj20m80cit9r.jpg "现场")
+![现场](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf4twfafj20m80cit9r.jpg "现场")
 
 ## 分享四
 
 打造云原生的 Elasticsearch 服务
 
 现场场景
-![现场](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf4p52q6j20m80cit9u.jpg "现场")
+![现场](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf4p52q6j20m80cit9u.jpg "现场")
 
 ## 分享五
 
 Elasticsearch 集群在雷达大数据平台的演进
 
 现场场景
-![现场](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf4kjqsjj20m80ciq4f.jpg "现场")
+![现场](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf4kjqsjj20m80ciq4f.jpg "现场")
 
 
 ## 分享者合影留念
 
 认真的观众
-![认真的观众](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf4c5u0oj21400u00x8.jpg "认真的观众")
+![认真的观众](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf4c5u0oj21400u00x8.jpg "认真的观众")
 
 分享者合影留念
-![分享者合影留念](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g1tf4ftxkrj20m80cizlx.jpg "分享者合影留念")
+![分享者合影留念](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tf4ftxkrj20m80cizlx.jpg "分享者合影留念")
 
 
 # 我的思考以及学到的东西

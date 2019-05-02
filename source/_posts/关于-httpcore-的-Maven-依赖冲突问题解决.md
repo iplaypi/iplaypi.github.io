@@ -66,7 +66,7 @@ java.lang.NoClassDefFoundError: org/apache/http/message/TokenParser
 ```
 
 截图如下：
-![异常日志信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2brjd9bl2j210d0j9q4k.jpg "异常日志信息")
+![异常日志信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2brjd9bl2j210d0j9q4k.jpg "异常日志信息")
 
 看到关键部分：**java.lang.NoClassDefFoundError: org/apache/http/message/TokenParser**，表面看是类未定义，但是真实情况是什么还要继续探索，例如依赖缺失、依赖冲突导致的类不匹配等。
 
@@ -93,12 +93,12 @@ org.apache.httpcomponents:httpclient:jar:4.5.2
 上面是依赖坐标以及版本，看到这里有经验的工程师已经可以发现问题所在了：两个同类型的依赖 jar 包版本差别太大，这里暂且不分析。
 
 接着查看源码：
-![URLEncodedUtils源码](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2brkjzrvrj20v50djt9j.jpg "URLEncodedUtils源码")
+![URLEncodedUtils源码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2brkjzrvrj20v50djt9j.jpg "URLEncodedUtils源码")
 
 好，到这里已经把基本情况分析清楚了，程序异常里面的 **NoClassDefFoundError** 并不是类缺失，所以没有报错 **ClassNotFound**。根本原因是类版本不对，导致 **URLEncodedUtils** 找不到自己需要的特定版本的类，尽管有一个同名的低版本的类存在，但是对于 Java 虚拟机来说这是完全不同的两个类，这也是容易误导人的地方。
 
 再延伸一下话题，如果真的是类不存在，使用 IDEA 查看源码时会显示红色字体提示的，如图：
-![类不存在错误提示](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2brle6hgjj20zc0ieq49.jpg "类不存在错误提示")
+![类不存在错误提示](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2brle6hgjj20zc0ieq49.jpg "类不存在错误提示")
 
 ## 详细分析
 
@@ -124,9 +124,9 @@ org.apache.httpcomponents:httpclient:jar:4.5.2
 特别注意：**httpasyncclient** 里面还有一个4.3.5版本的 **httpclient** 由于版本冲突被忽略了，这也是导致问题的元凶。
 
 依赖树片段截图如下：
-![依赖树片段1](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2brlwy34ij210404e74q.jpg "依赖树片段1")
+![依赖树片段1](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2brlwy34ij210404e74q.jpg "依赖树片段1")
 
-![依赖树片段2](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2brm3rutxj211508h0tr.jpg "依赖树片段2")
+![依赖树片段2](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2brm3rutxj211508h0tr.jpg "依赖树片段2")
 
 到这里已经可以知道问题所在了，**httpclient**、**httpcore** 这两个依赖的版本差距太大，前者4.5.2，后者4.3.2，导致前者的类 URLEncodedUtils 在调用后者的类 TokenParser 时，找不到满足条件的版本，于是抛出异常：NoClassDefFoundError。
 
@@ -137,10 +137,10 @@ org.apache.httpcomponents:httpclient:jar:4.5.2
 我的做法就是移除 **ds-commons3-es-rest** 里面的传递依赖，保持 **httpasyncclient** 里面的传递依赖，这样它们的版本号接近，而且是同一个依赖里面传递的，基本不可能出错。
 
 pom.xml 配置如图：
-![修复后的pom配置](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2brnorbdej211p0amaaq.jpg "修复后的pom配置")
+![修复后的pom配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2brnorbdej211p0amaaq.jpg "修复后的pom配置")
 
 httpclient 的小版本号是可以比 httpcore 高一点的，继续查看依赖树，可以看到 httpclient 的版本为4.3.5，httpcore 的版本为4.3.2。
-![修复后的http依赖版本号](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2brntqakfj20rp021aa1.jpg "修复后的http依赖版本号")
+![修复后的http依赖版本号](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2brntqakfj20rp021aa1.jpg "修复后的http依赖版本号")
 
 ## 引申插件
 

@@ -26,7 +26,7 @@ yarn logs -applicationId application_1542870632001_26426 > ./application.log
 yarn application -status application_1542870632001_26426
 ```
 同时也可以看到队列、任务类型、日志链接等详细信息
-![查看状态](https://ws1.sinaimg.cn/large/b7f2e3a3gy1fxxloh9spej20uo0auaas.jpg "查看状态")
+![查看状态](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxxloh9spej20uo0auaas.jpg "查看状态")
 
 3、kill 掉某个 Spark 任务，有时候是直接在 Driver 端 kill 掉进程，然后 Yarn 的 Spark 任务也会随之失败，但是这种做法是不妥的。其实 kill 掉 Spark 任务有自己的命令：
 ```bash

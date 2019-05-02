@@ -26,14 +26,13 @@ comments: false
 - 主业写代码，会用 Java、Python、Scala、Shell 等，了解 Spark、ElasticSearch、HBase、Java Web 等，打工挣个生活费
 - 副业学习、赚钱、做菜，多投资自己，寻找机会，为了生活与未来
 - 阅读多种杂书，浏览多种信息，了解多种价值观，不断丰富自己的认知
-- 其它
+- 其它不再赘述
 
 ## 开发工具
 
 - 集成开发工具：[IntelliJ IDEA](https://www.jetbrains.com/idea/download)
   - 插件之翻译工具：[Translation](http://yiiguxing.github.io/TranslationPlugin)、[JetBrains官方仓库](https://plugins.jetbrains.com/plugin/8579-translation)
   - 插件之注解工具：[Lombok](https://github.com/mplushnikov/lombok-intellij-plugin)、[JetBrains官方仓库](https://plugins.jetbrains.com/plugin/6317-lombok-plugin)
-  - 未完待续
 - 项目管理工具：[Git]()
   - 使用 Git Windows 版本切记修改显示编码，否则命令行里面都是乱码
 - 依赖管理工具：[Maven]()
@@ -44,7 +43,7 @@ comments: false
   - 插件之修改网站编码工具：[Charset](https://chrome.google.com/webstore/detail/charset/oenllhgkiiljibhfagbfogdbchhdchml?hl=zh-CN)
   - 插件之在线文件格式转换：[Convertio](https://convertio.co)
   - 插件之 IP 信息调查工具：[IP Address and Domain Information](https://dnslytics.com)
-  - 插件之JSON格式化工具：[JSONView](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc?hl=zh-CN)
+  - 插件之 JSON 格式化工具：[JSONView](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc?hl=zh-CN)
   - 插件之浏览器书签搜索：[Neater Bookmarks](https://chrome.google.com/webstore/detail/neater-bookmarks/ofgjggbjanlhbgaemjbkiegeebmccifi?hl=zh-CN)
   - 插件之网络代理工具：[Proxy SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN)
   - 插件之网页下载管理工具（普通 url、百度云等）：[YAAW for Chrome](https://chrome.google.com/webstore/detail/yaaw-for-chrome/dennnbdlpgjgbcjfgaohdahloollfgoc?hl=zh-CN)
@@ -52,11 +51,12 @@ comments: false
   - 插件之 Cookie 管理器：[EditThisCookie](http://www.editthiscookie.com)
   - 插件之浏览器书签搜索：[holmes](https://chrome.google.com/webstore/detail/holmes/gokficnebmomagijbakglkcmhdbchbhn?hl=zh-CN)
   - 插件之录屏工具：[Aperture](https://chrome.google.com/webstore/detail/aperture-simple-screen-vi/jlbnmcnmjhcgdnbkdlgmibahbffjlnpa?utm_source=next.36kr.com)
-  - 插件未完待续
+  - 插件之 Elasticsearch 的 head插件：[head](https://chrome.google.com/webstore/detail/elasticsearch-head/ffmkiejjmecolpfloofpjologoblkegm)
+  - 插件之 Referer Control：[Referer Control](https://chrome.google.com/webstore/detail/referer-control/hnkcfpcejkafcihlgbojoidoihckciin)
+  - 插件之哔哩哔哩助手：[哔哩哔哩助手](https://chrome.google.com/webstore/detail/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E5%8A%A9%E6%89%8B%EF%BC%9Abilibilicom-%E7%BB%BC%E5%90%88%E8%BE%85%E5%8A%A9%E6%89%A9%E5%B1%95/kpbnombpnpcffllnianjibmpadjolanh)
+  - 插件之全能启动器：[全能启动器 Plus](https://chrome.google.com/webstore/detail/steward-plus/dnkhdiodfglfckibnfcjbgddcgjgkacd)
   - 应用之需求设计作图工具（流程图、类图、时序图）：[Gliffy Diagrams](https://chrome.google.com/webstore/detail/gliffy-diagrams/bhmicilclplefnflapjmnngmkkkkpfad?hl=zh-CN)
   - 应用之模拟 Http 请求工具：[Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=zh-CN)
-  - 应用未完待续
-- 其它
 
 ## 辅助工具
 
@@ -89,8 +89,8 @@ comments: false
 - Emoji 字符搜索：[emoji 百科](https://emojipedia.org)
 - 图标库：[https://www.easyicon.net](https://www.easyicon.net)
 - ikonate图标库，开源可商用：[https://www.ikonate.com](https://www.ikonate.com)
-- 图床图片上传工具以及迁移工具：[PicGo](https://github.com/Molunerfinn/PicGo)
-- 其它
+- 图床图片上传工具以及迁移工具，迁移需结合插件：[PicGo](https://github.com/Molunerfinn/PicGo)
+- 图片压缩工具：[Imagine](https://github.com/meowtec/Imagine)
 
 ## 技术列表
 

@@ -37,7 +37,7 @@ keywords: VLOOKUP,Excel
 4、查找引用方面的函数，可以高效地进行搜索替换。
 
 在 Excel 中可以看到常用的函数分类：
-![常用的函数分类](https://wx1.sinaimg.cn/large/b7f2e3a3gy1g2h6xb9ba7j20nf04q0sw.jpg "常用的函数分类")
+![常用的函数分类](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h6xb9ba7j20nf04q0sw.jpg "常用的函数分类")
 
 
 # 函数使用
@@ -52,36 +52,36 @@ keywords: VLOOKUP,Excel
 ```
 
 截图如下：
-![SUM 函数基本使用方式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h6y3b0lhj20d806ft8q.jpg "SUM 函数基本使用方式")
+![SUM 函数基本使用方式](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h6y3b0lhj20d806ft8q.jpg "SUM 函数基本使用方式")
 
 其中，**=SUM()** 是函数名称，表示累加求和，括号里面的 **A2:C2** 是单元格的位置，**:** 表示从 A2 到 C2，总结起来就是把第二行的 A 列到 C 列的值累加求和，得出结果。
 
 按回车键，就会触发计算，得出结果，结果存放在写有函数的那个单元格。如果需要接着计算第三行、第四行、第五行，是不需要重复输入函数以及参数的，直接选中已经有结果的单元格，鼠标的光标放在单元格右下角，光标会变成一个黑色的十字，鼠标左键长按往下拖拽即可。
 
 选中单元格，注意观察单元格右下角的大点
-![选中单元格](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h6yembmpj20dd04vdft.jpg "选中单元格")
+![选中单元格](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h6yembmpj20dd04vdft.jpg "选中单元格")
 
 往下拖拽，自动计算
-![往下拖拽，自动计算](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h6yiz1c5j20de05sweg.jpg "往下拖拽，自动计算")
+![往下拖拽，自动计算](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h6yiz1c5j20de05sweg.jpg "往下拖拽，自动计算")
 
 注意，使用复制下拉功能时，行号参数是会自动变化的，也就是说**每一行**的求和结果都是**当前行**的第一列到第三列的数值之和。可以任意选择一行的结果单元格，查看单元格的内容：
-![函数的行号自动变化](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h6ytxla3j20dj06naa3.jpg "函数的行号自动变化")
+![函数的行号自动变化](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h6ytxla3j20dj06naa3.jpg "函数的行号自动变化")
 
 那这个是怎么做到自动化的呢？其实这是 Excel 自带的功能，术语称为**自动填充**，不知道你有没有看到，在往下拖拽完成后，可以点开右下角的三角下拉列表，看到里面有三种模式选择，默认的就是**复制单元格**【你也可以试玩一下其它的两种模式】。**复制单元格**对于普通的单元格来说，直接复制内容，对于函数单元格来说，还会自动变更里面的参数。
-![函数结果自动填充](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h6z2gx85j20fi07d0sv.jpg "函数结果自动填充")
+![函数结果自动填充](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h6z2gx85j20fi07d0sv.jpg "函数结果自动填充")
 
 结果已经完全出来，可以正常使用。另外再说一个隐藏的注意点，这种通过函数产生的结果，是不能复制粘贴到别的地方使用的，因为复制粘贴过去的内容是函数公式，不是那个计算结果值。因此如果直接复制粘贴到别的地方，它还会用这个函数计算，得到的结果就与单元格数据当前所在的地方有关，结果肯定和以前不一样，或者根本没有结果。
 
 例如我把总成绩和姓名这两列复制粘贴到别的 Excel 文件里面，可以看到得到的结果都是0，这是因为通过函数计算得出的结果就是0，表格的第一列到第三列根本没有值。
-![直接复制函数结果没有值](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h6zexgfmj20dk06taa2.jpg "直接复制函数结果没有值")
+![直接复制函数结果没有值](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h6zexgfmj20dk06taa2.jpg "直接复制函数结果没有值")
 
 那怎么解决这个问题呢，其实方法是有的：复制时还是正常的复制函数，粘贴时不能默认了，要选择**粘贴为数值**，或者**选择性粘贴**。这样，粘贴结果单元格里面就是真实的数值了，函数公式已经不见了。此时的单元格就是普通的单元格，里面是文本内容，可以随意复制粘贴使用。
 
 粘贴为数值
-![粘贴为数值](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h6zp2tlhj20l90fx752.jpg "粘贴为数值")
+![粘贴为数值](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h6zp2tlhj20l90fx752.jpg "粘贴为数值")
 
 选择性粘贴
-![选择性粘贴](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h6zsqu80j20op0dn756.jpg "选择性粘贴")
+![选择性粘贴](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h6zsqu80j20op0dn756.jpg "选择性粘贴")
 
 接下来介绍本文的重点：VLOOKUP 函数。先提前说明，**工作表**就是指 Excel 文件中的 **Sheet** 概念，新建的 Excel 文件一般默认有3个 Sheet。以下内容基于两份数据：学生表、成绩表。
 
@@ -94,7 +94,7 @@ keywords: VLOOKUP,Excel
 ```
 
 截图如下：
-![VLOOKUP 基本使用方式](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h707j1i4j20rg08zmxi.jpg "VLOOKUP 基本使用方式")
+![VLOOKUP 基本使用方式](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h707j1i4j20rg08zmxi.jpg "VLOOKUP 基本使用方式")
 
 其中，**VLOOKUP** 是函数名称，**H2** 表示需要查找的数据列，**A:E** 表示搜索的数据范围【此时不需要指定单元格的行号】，**5** 表示搜索命中的的结果列，5一定是在 A:E 之间，**FALSE** 表示关闭模糊搜索，即精确搜索。这里总结起来就是根据 H2 的值，在 A:E 之间搜索【会搜索所有的行】，如果命中了结果，把 A:E 之间的命中那一行的第5列单元格【也就是 E 列】的值返回，搜索时使用精确匹配。
 
@@ -113,10 +113,10 @@ keywords: VLOOKUP,Excel
 ```
 
 成绩表信息
-![成绩表信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h70cwm2tj20dm0n3t98.jpg "成绩表信息")
+![成绩表信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h70cwm2tj20dm0n3t98.jpg "成绩表信息")
 
 学生表信息
-![学生表信息](https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2h70g4a24j20hn0oodgj.jpg "学生表信息")
+![学生表信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g2h70g4a24j20hn0oodgj.jpg "学生表信息")
 
 这里除了额外指定了参数**成绩表!A:E** 来指定**成绩表**这个 Sheet，其它的参数仍旧与前面一致。
 
