@@ -48,7 +48,7 @@ keywords: weibo,GitHub,image
 
 使用 Java 处理不需要多少代码，大概有不到200行代码，真正的业务逻辑代码更少，当然，关于网络请求的部分还是不够精简，目前我觉得能用就行。代码放在 GitHub 上面，仅供参考：[https://github.com/iplaypi/startcore.git](https://github.com/iplaypi/startcore.git) ，搜索 **MigratePic** 类即可。
 
-代码主体调用
+代码主体调用：
 
 ```
 public static void main(String[] args) {
@@ -81,7 +81,7 @@ public static void main(String[] args) {
 
 需要指定输入、输出目录。
 
-截图如下
+截图如下：
 ![代码主体调用](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190504004133.png "代码主体调用")
 
 其中，**getAllFiles** 方法是获取指定目录的所有文件：
