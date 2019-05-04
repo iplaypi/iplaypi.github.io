@@ -67,6 +67,7 @@ comments: false
 - 又一个 Chrome 插件 crx 文件仓库（不用翻墙）：[crx4chrome](https://www.crx4chrome.com/category/extensions)
 - IntelliJ IDEA 插件官方仓库：[JetBrains 插件官方仓库](https://plugins.jetbrains.com)
 - VPS，我使用 Vultr：[Vultr](https://my.vultr.com)，比较灵活，随时改配置，充值后按照小时扣费，也可以随时销毁
+- VPS，Hostwinds，选择达拉斯数据中心，千兆带宽，百兆网速：[Hostwinds](https://www.hostwinds.com)
 - 梯子客户端：[Shadowsocks](http://shadowsocks.org/en/download/clients.html)
 - 域名与DNS解析：[Godaddy](https://sg.godaddy.com)
 - VPS，搬瓦工，我没使用：[bandwagon](https://bandwagonhost.com)，按年付费，便宜，但是主机不能更改
