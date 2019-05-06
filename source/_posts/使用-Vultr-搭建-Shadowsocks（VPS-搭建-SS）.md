@@ -161,6 +161,8 @@ firewall-cmd --reload
 
 ![开启端口重载](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa3hxmaftj20jd04zmx6.jpg "开启端口重载")
 
+这里需要注意，如果没安装防火墙，或者安装防火墙但是没有开启端口，启动 Shadowsocks 时会报错：**socket.error: [Errno 98] Address already in use**，启动失败，无法提供翻墙服务，而且不要被错误信息误导，不是端口被占用，是端口没有开启。
+
 启动 Shadowsocks：
 
 ```bash
@@ -174,7 +176,37 @@ ssserver -c /etc/shadowsocks.json
 
 ![启动 ss](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa3j16ymwj20hf03eglj.jpg "启动 ss")
 
+在使用 **ssserver -c /etc/shadowsocks.json** 查看启动日志时，发现除了正常的启动信息，还会有错误信息：
 
+```
+INFO: loading config from /etc/shadowsocks.json
+2019-05-06 15:46:11 INFO     loading libcrypto from libcrypto.so.10
+2019-05-06 15:46:11 INFO     starting server at 66.42.105.87:1227
+Traceback (most recent call last):
+  File "/usr/bin/ssserver", line 9, in <module>
+    load_entry_point('shadowsocks==2.8.2', 'console_scripts', 'ssserver')()
+  File "/usr/lib/python2.7/site-packages/shadowsocks/server.py", line 68, in main
+    tcp_servers.append(tcprelay.TCPRelay(a_config, dns_resolver, False))
+  File "/usr/lib/python2.7/site-packages/shadowsocks/tcprelay.py", line 582, in __init__
+    server_socket.bind(sa)
+  File "/usr/lib64/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+```
+
+错误信息截图
+![错误信息截图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190507000812.png "错误信息截图")
+
+根据关键词 **socket.error: [Errno 98] Address already in use** 查阅资料，发现是主机的配置问题，停止的 ss 服务没有及时释放端口，导致启动时报错。但是我发现这种报错信息并没有影响到后台 ss 服务的正常启动，也就是说端口正常提供服务，可以顺利翻墙。同时，我按照其他人的解释说明，在 **/etc/sysctl.conf** 配置文件中增加了 ip 的配置：
+
+```
+net.ipv4.tcp_syncookies = 1 
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_tw_recycle = 1
+net.ipv4.tcp_fin_timeout = 5
+```
+
+然后使用 **/sbin/sysctl -p** 命令让内核参数生效，结果在重启 ss 服务时看到日志里面还会有上面那种错误信息。后续考虑到这种现象并没有影响正常的服务，也就先不放在心上，专心做其它的工作。
 
 
 # 客户端使用
