@@ -7,8 +7,8 @@ comments: false
 
 ## 工作经历
 
-- 2019.04.01 - 至今：广州数说故事信息科技有限公司，全职，大数据工程师（采集、ETL、存储）
-- 2017.05 - 2019.03.31：广州数说故事信息科技有限公司，全职，大数据工程师（ETL、算法）
+- 2019.04.01 - 至今：广州数说故事信息科技有限公司，全职，大数据工程师（存储方向：对接采集、ETL、数据存储）
+- 2017.05 - 2019.03.31：广州数说故事信息科技有限公司，全职，大数据工程师（业务方向：ETL、常用算法）
 - 2016.07 - 2017.04：广州汇智通信技术有限公司，全职，Web 后台（Spring） & 大数据开发（实时计算）
 - 2015.10 - 2016.03：广州汇智通信技术有限公司，实习，大数据开发（实时计算）
 
@@ -55,6 +55,7 @@ comments: false
   - 插件之 Referer Control：[Referer Control](https://chrome.google.com/webstore/detail/referer-control/hnkcfpcejkafcihlgbojoidoihckciin)
   - 插件之哔哩哔哩助手：[哔哩哔哩助手](https://chrome.google.com/webstore/detail/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E5%8A%A9%E6%89%8B%EF%BC%9Abilibilicom-%E7%BB%BC%E5%90%88%E8%BE%85%E5%8A%A9%E6%89%A9%E5%B1%95/kpbnombpnpcffllnianjibmpadjolanh)
   - 插件之全能启动器：[全能启动器 Plus](https://chrome.google.com/webstore/detail/steward-plus/dnkhdiodfglfckibnfcjbgddcgjgkacd)
+  - 插件之解除网页复制限制：[Enable Copy](https://chrome.google.com/webstore/detail/enable-copy/lmnganadkecefnhncokdlaohlkneihio/related?hl=zh-CN)
   - 应用之需求设计作图工具（流程图、类图、时序图）：[Gliffy Diagrams](https://chrome.google.com/webstore/detail/gliffy-diagrams/bhmicilclplefnflapjmnngmkkkkpfad?hl=zh-CN)
   - 应用之模拟 Http 请求工具：[Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=zh-CN)
 
@@ -92,6 +93,7 @@ comments: false
 - ikonate图标库，开源可商用：[https://www.ikonate.com](https://www.ikonate.com)
 - 图床图片上传工具以及迁移工具，迁移需结合插件：[PicGo](https://github.com/Molunerfinn/PicGo)
 - 图片压缩工具：[Imagine](https://github.com/meowtec/Imagine)
+- 在线作图工具，流程图、UML 图、类图等等：[draw.io](https://www.draw.io)
 
 ## 技术列表
 
