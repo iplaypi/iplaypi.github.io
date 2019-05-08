@@ -12,24 +12,100 @@ type: guide
 # 2019
 
 
+- 2019050401，[指南页面的自动收集](https://www.playpi.org/2019050401.html)
 - 2019050201，[使用 Java 代码迁移微博图床到 GitHub 图床](https://www.playpi.org/2019050201.html)
 - 2019042701，[解决微博图床防盗链的问题](https://www.playpi.org/2019042701.html)
+- 2019042401，[mapreduce 错误之 bin bash-line 0-fg-no job control](https://www.playpi.org/2019042401.html)
+- 2019042201，[关于 httpcore 的 Maven 依赖冲突问题解决](https://www.playpi.org/2019042201.html)
+- 2019042101，[Linux 之 kill 命令入门实践](https://www.playpi.org/2019042101.html)
+- 2019041301，[JNI 字段描述符基础知识](https://www.playpi.org/2019041301.html)
+- 2019041001，[预估 Mysql 数据表的数据大小和索引大小](https://www.playpi.org/2019041001.html)
+- 2019040301，[使用 JDK 命令行工具分析内存泄漏或内存溢出问题](https://www.playpi.org/2019040301.html)
+- 2019033101，[青椒炒蛋做法总结](https://www.playpi.org/2019033101.html)
+- 2019033001，[参加 Elastic 社区第三次线下活动广州站](https://www.playpi.org/2019033001.html)
+- 2019032702，[分别 是为了再次相聚](https://www.playpi.org/2019032702.html)
+- 2019032701，[FFmpeg 使用总结](https://www.playpi.org/2019032701.html)
+- 2019032501，[爆炒花甲做法总结](https://www.playpi.org/2019032501.html)
+- 2019032001，[使用 Valine 给 Hexo 博客添加评论系统](https://www.playpi.org/2019032001.html)
+- 2019031901，[Git 客户端设置 Windows 下的字符编码](https://www.playpi.org/2019031901.html)
+- 2019031601，[麻婆豆腐做法总结](https://www.playpi.org/2019031601.html)
+- 2019031101，[青椒肉丝做法总结](https://www.playpi.org/2019031101.html)
+- 2019030901，[腊肠炒饭做法总结](https://www.playpi.org/2019030901.html)
+- 2019030601，[使用 Github 的 WebHooks 实现代码自动更新](https://www.playpi.org/2019030601.html)
+- 2019030501，[Nginx 配置 SSL 证书实现 HTTPS 访问](https://www.playpi.org/2019030501.html)
+- 2019030401，[利用阿里云申请免费的 SSL 证书](https://www.playpi.org/2019030401.html)
+- 2019030101，[那些年关于技术的未解之谜](https://www.playpi.org/2019030101.html)
+- 2019022501，[Hexo 的踩坑经验](https://www.playpi.org/2019022501.html)
+- 2019021001，[鸡蛋饼做法总结](https://www.playpi.org/2019021001.html)
+- 2019020701，[ItChat 系列0-初识 ItChat](https://www.playpi.org/2019020701.html)
+- 2019020101，[微博电影文稿备份2](https://www.playpi.org/2019020101.html)
+- 2019011401，[Spark 异常之 Netty 相关](https://www.playpi.org/2019011401.html)
+- 2019011101，[Maven 插件异常之 socket write error](https://www.playpi.org/2019011101.html)
+- 2019010601，[使用 Gson 将 = 转为 u003d 的问题](https://www.playpi.org/2019010601.html)
+- 2019010501，[GitHub Pages 禁止百度蜘蛛爬取的问题](https://www.playpi.org/2019010501.html)
+- 2019010101，[微博电影文稿备份](https://www.playpi.org/2019010101.html)
 
 
 # 2018
 
 
-- 2018，[xx](xx)
+- 2018122901，[蒸水蛋做法总结](https://www.playpi.org/2018122901.html)
+- 2018122801，[Spark 异常之 java.net.BindException:地址已在使用](https://www.playpi.org/2018122801.html)
+- 2018122702，[HDFS 异常之 READ is not supported in state standby](https://www.playpi.org/2018122702.html)
+- 2018122701，[HDFS 异常之 Filesystem closed](https://www.playpi.org/2018122701.html)
+- 2018122501，[可乐鸡翅做法总结](https://www.playpi.org/2018122501.html)
+- 2018122101，[Spark 错误之 JavaSparkContext not serializable](https://www.playpi.org/2018122101.html)
+- 2018122001，[微博 url m2018122001 相互转换算法实现-Java 版本](https://www.playpi.org/2018122001.html)
+- 2018121901，[JavaScript 中字符串截取方法总结](https://www.playpi.org/2018121901.html)
+- 2018121601，[西红柿疙瘩汤做法总结](https://www.playpi.org/2018121601.html)
+- 2018121401，[常用正则表达式列表](https://www.playpi.org/2018121401.html)
+- 2018121101，[与微博内容分析相关的正则表达式](https://www.playpi.org/2018121101.html)
+- 2018120901，[Win10 默认程序设置无效](https://www.playpi.org/2018120901.html)
+- 2018120702，[Spark on Yarn 查看日志](https://www.playpi.org/2018120702.html)
+- 2018120301，[煮鸡蛋做法总结](https://www.playpi.org/2018120301.html)
+- 2018120201，[一条正则表达式引发的惨案](https://www.playpi.org/2018120201.html)
+- 2018120101，[jackson 包版本低导致 NoSuchMethodError](https://www.playpi.org/2018120101.html)
+- 2018112701，[GitHub 个人站点绑定独立的域名](https://www.playpi.org/2018112701.html)
+- 2018112301，[Win10 输入法简繁体快捷键与IDEA冲突](https://www.playpi.org/2018112301.html)
+- 2018112101，[Hexo博客静态资源压缩优化](https://www.playpi.org/2018112101.html)
+- 2018111901，[Google 账号开启两步验证与应用专用密码](https://www.playpi.org/2018111901.html)
+- 2018111601，[使用 Vultr 搭建 Shadowsocks（VPS 搭建 SS）](https://www.playpi.org/2018111601.html)
+- 2018110902，[Aria2 Web 管理面板使用](https://www.playpi.org/2018110902.html)
+- 2018110901，[使用 Aria2 加速百度网盘下载](https://www.playpi.org/2018110901.html)
+- 2018110301，[WPS 关闭广告推送与自动升级](https://www.playpi.org/2018110301.html)
+- 2018101501，[微博 URL 短网址生成算法-Java 版本](https://www.playpi.org/2018101501.html)
+- 2018101101，[Andro2018101101 逆向系列2--破解第一个 Andro2018101101 程序](https://www.playpi.org/2018101101.html)
+- 2018101001，[Andro2018101001 逆向系列1--编写第一个 Andro2018101001 程序](https://www.playpi.org/2018101001.html)
+- 2018100901，[Andro2018100901 逆向系列0--初识 Andro2018100901 以及逆向工程](https://www.playpi.org/2018100901.html)
+- 2018100801，[Spark Kryo 异常](https://www.playpi.org/2018100801.html)
+- 2018100701，[依赖包缺失导致 Spark 任务无法启动](https://www.playpi.org/2018100701.html)
+- 2018100601，[地锅鸡做法总结（皖北、苏北地区）](https://www.playpi.org/2018100601.html)
+- 2018090701，[Win10 取消 Skype for Business 自动登录](https://www.playpi.org/2018090701.html)
+- 2018090601，[踩坑特殊字符之硬空格](https://www.playpi.org/2018090601.html)
+- 2018090501，[归来](https://www.playpi.org/2018090501.html)
+- 2018082501，[Maven 使用中遇到的证书问题以及 JDK8 问题](https://www.playpi.org/2018082501.html)
+- 2018071601，[武功山两天徒步登山总结](https://www.playpi.org/2018071601.html)
+- 2018063001，[辣椒炒肉做法总结](https://www.playpi.org/2018063001.html)
+- 2018060301，[红烧肉做法总结](https://www.playpi.org/2018060301.html)
+- 2018053001，[玉米胡萝卜排骨汤做法总结](https://www.playpi.org/2018053001.html)
+- 2018020101，[注册 Facebook Twitter Tumblr 遇到的问题](https://www.playpi.org/2018020101.html)
 
 
 # 2017
 
 
-- 2017，[xx](xx)
+- 2017102901，[Hello World](https://www.playpi.org/2017102901.html)
+- 2017051401，[VLOOKUP 函数跨工作表跨文件使用方式](https://www.playpi.org/2017051401.html)
+- 2017050701，[Hexo 框架 Next 主题添加自定义 Page](https://www.playpi.org/2017050701.html)
+- 2017050401，[Linux 输出重定向的问题](https://www.playpi.org/2017050401.html)
+- 2017043001，[关于 Spark 或者 mapreduce 的累加器](https://www.playpi.org/2017043001.html)
+- 2017042601，[Elasticsearch 中的429错误 es_rejected_execution_exception](https://www.playpi.org/2017042601.html)
+- 2017042201，[解决 IDEA 无法创建子包的问题](https://www.playpi.org/2017042201.html)
+- 2017040101，[Hadoop 入门系列0--初识 Hadoop](https://www.playpi.org/2017040101.html)
 
 
 # 2016
 
 
-- 2016，[xx](xx)
+- 2016123105，[待定](待定)
 
