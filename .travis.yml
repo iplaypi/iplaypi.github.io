@@ -1,40 +1,41 @@
-# 使用语言
+# 使用语言为 Node.js
 language: node_js
-# node版本,node 11.0.0版本yarn install 会报错不支持
+# Node.js 版本,Node 11.0.0版本 yarn install 会报错不支持
 # node_js: stable
 node_js: 10.10.0
 # 设置只监听哪个分支
 branches:
   only:
   - source
-# 缓存,可以节省集成的时间,这里用了yarn,如果不用可以删除
+# 缓存,可以节省集成的时间,这里用了 yarn,如果不用可以删除
 cache:
   apt: true
   yarn: true
   directories:
     - node_modules
     - CNAME
-# 全局变量
+# env
+# 全局变量,为了安全,不要在这里设置,我这里设置只是示例,其实没有用到
 env:
  global:
-   - GITHUB_URL: github.com/iplaypi/iplaypi.github.io.git
-# tarvis生命周期执行顺序详见官网文档
+   - GITHUB_XXX_URL: github.com/iplaypi/iplaypi.github.io.git
+# tarvis 生命周期执行顺序详见官网文档
 before_install:
 # 更改时区
 - export TZ='Asia/Shanghai'
-- git config --global user.name "iplaypi"
-- git config --global user.email "1305098770@qq.com"
-# 由于使用了yarn,所以需要下载,不用yarn这两行可以删除
+- git config --global user.name ${USER_NAME}
+- git config --global user.email ${USER_EMAIL}
+# 由于使用了 yarn,所以需要下载,不用 yarn 这两行可以删除
 - curl -o- -L https://yarnpkg.com/install.sh | bash
 - export PATH=$HOME/.yarn/bin:$PATH
 # hexo 基础工具
 - npm install -g hexo-cli
-# 初始化所需模块,在package.json中配置的有,这样node_modules就不用提交到github了
-# 下次如果换电脑,安装完nodejs,全局(-g参数)安装完hexo-cli,直接在项目根目录初始化即可(在package.json配置的都会自动下载)
+# 初始化所需模块,在 package.json 中配置的有,这样 node_modules 就不用提交到 GitHub 了
+# 下次如果换电脑,安装完 Node.js,全局(-g参数)安装完 hexo-cli,直接在项目根目录初始化即可(在 package.json 配置的都会自动下载)
 - npm install
 # 本地搜索需要工具
 - npm install hexo-generator-searchdb --save
-# 字数统计,时长统计需要工具,Node版本7.6.0之前,请安装2.x版本,npm install hexo-wordcount@2 --save
+# 字数统计,时长统计需要工具,Node 版本 7.6.0 之前,请安装 2.x 版本,npm install hexo-wordcount@2 --save
 - npm install hexo-wordcount --save
 # 站点地图,seo优化使用
 - npm install hexo-generator-sitemap --save
@@ -51,43 +52,41 @@ before_install:
 # 压缩文件
 - npm install hexo-neat --save
 install:
-# 不用yarn的话这里改成 npm i 即可
+# 不用 yarn 的话这里改成 npm i 即可
 - yarn
+# script
+# 以后把主题发布到 GitHub 中,先从官方 Fork 再更新自定义的,这里还需要更新子模块内容,示例:git submodule init,git submodule update
+# 新建.gitmodules文件,内容
+# [submodule "themes/next"]
+#    path = themes/next
+#    url = git://github.com/xin053/MyHexo_NexT_Theme
+# 此外,还有那个评论系统的升级,Valine,思考怎么做
 script:
 - hexo clean
 - hexo generate
+# 成功之后才会提交,如果失败就会跳过并发送失败邮件通知
 after_success:
-# - cd ./public
-# 复制必须的配置文件
-# - cp ../_config.yml ../README.md ../.gitignore ../CNAME ./
-# - git init
-# - git add --all
-# - git commit -m "Travis CI Auto Builder"
-# 这里的 REPO_TOKEN 即之前在 travis 项目的环境变量里添加的
-# - git push --quiet --force https://$REPO_TOKEN@github.com/iplaypi/iplaypi.github.io.git
-#  master
-
-# 获取master分支内容
+# 获取 master 分支内容
 - git clone https://${GITHUB_URL} .deploy_git
 - cd .deploy_git
 - git checkout master
 - cp -rf ../public/* ./
 # 必要配置文件
 - cp -rf ../README.md ../.gitignore ../CNAME ../index.php ./
-# 更改.gitignore内容,与source分支的不一样,直接置空,目前没有需要过滤的
+# 更改 .gitignore 内容,与 source 分支的不一样,直接置空,目前没有需要过滤的
 - echo "" > ./.gitignore
 - git add .
-# 提交记录包含时间 跟上面更改时区配合
+# 提交记录包含时间,跟上面更改时区配合
 - git commit -m "Travis CI Auto Builder at `date +"%Y-%m-%d %H:%M"`"
 # 推送到主分支
 - git push --force --quiet "https://${REPO_TOKEN}@${GITHUB_URL}" master:master
 
-# 邮件通知机制
+# 邮件通知机制,我在这里设置了成功/失败都会通知
 # configure notifications (email, IRC, campfire etc)
 # please update this section to your needs!
 # https://docs.travis-ci.com/user/notifications/
 notifications:
   email:
-    - 1305098770@qq.com
+    - ${USER_EMAIL}}
   on_success: always
   on_failure: always

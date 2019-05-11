@@ -94,6 +94,7 @@ comments: false
 - 图床图片上传工具以及迁移工具，迁移需结合插件：[PicGo](https://github.com/Molunerfinn/PicGo)
 - 图片压缩工具：[Imagine](https://github.com/meowtec/Imagine)
 - 在线作图工具，流程图、UML 图、类图等等：[draw.io](https://www.draw.io)
+- 人工智能品牌 Logo 自动生成工具：[Brandmark](https://app.brandmark.io/v2)
 
 ## 技术列表
 
