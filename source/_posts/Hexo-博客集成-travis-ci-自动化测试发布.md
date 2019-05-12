@@ -145,7 +145,7 @@ travis-ci 是一种持续集成的工具，持续集成【Continuous Integration
 
 在 GitHub 项目的 source 分支的根目录下，添加一个 **.travis.yml** 文件，这是 travis-ci 官方要求的，里面填写构建流程。
 
-构建脚本内容的格式需要符合 travis-ci 的方言规范，里面也会用到上面设置的环境变量，获取环境变量的值使用 **${环境变量名称}** 格式，与使用 Linux 平台的环境变量格式一致，完整内容如下：
+构建脚本内容的格式需要符合 travis-ci 的方言规范，里面也会用到上面设置的环境变量【只有具有脚本属性的内容才可以使用环境变量，其它不可以，例如邮件通知里面就不能使用环境变量】，获取环境变量的值使用 **${环境变量名称}** 格式，与使用 Linux 平台的环境变量格式一致，完整内容如下：
 
 ```
 # 使用语言为 Node.js
@@ -231,13 +231,13 @@ after_success:
 # 推送到主分支
 - git push --force --quiet "https://${REPO_TOKEN}@${GITHUB_URL}" master:master
 
-# 邮件通知机制,我在这里设置了成功/失败都会通知
+# 邮件通知机制,我在这里设置了成功/失败都会通知,这里不能使用环境变量
 # configure notifications (email, IRC, campfire etc)
 # please update this section to your needs!
 # https://docs.travis-ci.com/user/notifications/
 notifications:
   email:
-    - ${USER_EMAIL}
+    - playpi@qq.com
   on_success: always
   on_failure: always
 
