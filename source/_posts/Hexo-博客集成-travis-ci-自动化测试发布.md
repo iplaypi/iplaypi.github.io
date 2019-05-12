@@ -237,7 +237,7 @@ after_success:
 # https://docs.travis-ci.com/user/notifications/
 notifications:
   email:
-    - ${USER_EMAIL}}
+    - ${USER_EMAIL}
   on_success: always
   on_failure: always
 
