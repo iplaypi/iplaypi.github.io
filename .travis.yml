@@ -88,5 +88,6 @@ after_success:
 notifications:
   email:
     - ${USER_EMAIL}
+    - 1305098770@qq.com
   on_success: always
   on_failure: always
