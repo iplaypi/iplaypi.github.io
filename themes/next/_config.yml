@@ -172,7 +172,7 @@ toc:
 # Creative Commons 4.0 International License.
 # http://creativecommons.org/
 # Available: by | by-nc | by-nc-nd | by-nc-sa | by-nd | by-sa | zero
-#creative_commons: by-nc-sa
+creative_commons: by-nc-sa
 #creative_commons:
 
 # 侧边栏展示,只有点击图标的时候才打开
@@ -271,8 +271,8 @@ post_copyright:
 # Misc Theme Settings
 # ---------------------------------------------------------------
 
-# Reduce padding / margin indents on devices with narrow width.
-mobile_layout_economy: false
+# Reduce padding / margin indents on devices with narrow width.移动端优化
+mobile_layout_economy: true
 
 # Android Chrome header panel color ($black-deep).
 android_chrome_color: "#222"
