@@ -95,8 +95,99 @@ category_map:
 tag_map:
 # 避免中英文的误跳转,同时存在中英文的情况下中文翻译加上后缀-chn
 # 例如'数据库'和'database',配置'数据库'的时候使用'database-chn'
-  建站: building
+# 以后的标签轻易不要使用难以翻译的中文,技术类的尽量使用英文
+  建站: building-chn
   数据库: database-chn
+  Google 账号: Google-account-chn
+  Spark序列化: Spark-Serializable-chn
+  SSL证书: SSL-certificate-chn
+  阿里云: Aliyun-chn
+  百度网盘: pan-baidu-chn
+  百度云下载: download-baiduyun-chn
+  百度云限速: limit-baiduyun-chn
+  百度蜘蛛: Baidu-Spider-chn
+  绑定域名: bind-domain-chn
+  爆炒花甲: fried-huajia-hard-chn
+  不换行空格: no-crlf-space-chn
+  炒饭: fried-rice-chn
+  炒花甲: fried-huajia-chn
+  炒肉丝: fried-pork-chn
+  川菜: Sichuan-cuisine-chn
+  代码压缩: code-compression-chn
+  蛋炒饭: Egg-fried-rice-chn
+  等号编码转换: equal-sign-encode-chn
+  地锅鸡: local-chicken-chn
+  豆腐: tofu-chn
+  非确定型有穷自动机: NFA-chn
+  疙瘩汤: flour-soup-chn
+  个人站点: personal-site-chn
+  钩子: webhook-chn
+  关闭广告推送: close-advertising-push-chn
+  关闭自动升级: close-auto-update-chn
+  广州: Guangzhou-chn
+  红烧肉: braised-pork-chn
+  鸡蛋饼: egg-cake-chn
+  鸡蛋炒饭: fried-rice-with-egg-chn
+  鸡蛋葱饼: egg-onion-cake-chn
+  鸡蛋煎饼: egg-pancakes-chn
+  聚会: get-together-chn
+  可乐鸡翅: cola-chicken-wings-chn
+  快捷键冲突: shortcut-conflict-chn
+  腊肠炒饭: sausage-fried-rice-can
+  辣椒炒饭: fried-rice-with-chili-chn
+  辣椒炒蛋: fried-egg-with-chili-chn
+  辣椒炒肉: fried-pork-with-pepper-chn
+  利辛一中: Lixin-Yizhong-chn
+  两步验证: two-step-verification-chn
+  麻辣豆腐: spicy-tofu-chn
+  麻婆豆腐: Mapo-tofu-chn
+  麻辣花甲: spicy-huajia-chn
+  默认程序设置: default-program-settings-chn
+  内存泄漏: memory-leak-chn
+  内存溢出: memory-overflow-chn
+  逆向工程: reverse-engineering-chn
+  排骨汤: pork-ribs-soup-chn
+  评论系统: comment-system-chn
+  青红椒: green-and-red-pepper-chn
+  青椒炒蛋: green-pepper-scrambled-eggs-chn
+  青椒肉丝: green-pepper-shredded=pork-chn
+  日志查看: log-view-chn
+  视频剪辑: video-clip-chn
+  视频转码: video-transcoding-chn
+  输入法: input-language-chn
+  水蛋: water-egg-chn
+  徒步: on-foot-chn
+  微博mid: Weibo-mid-chn
+  微博url: Weibo-url-chn
+  微博URL短网址: Weibo-URL-short-URL-chn
+  微博电影: Weibo-movie-chn
+  微博内容: Weibo-content-chn
+  微信机器人: WeChat-robot-chn
+  微信接口: WeChat-interface-chn
+  文稿备份: Document-backup-chn
+  武功山: Wugong-mountain-chn
+  西红柿疙瘩汤: tomato-flour-soup-chn
+  线下活动: offline-activity-chn
+  湘菜: Hunan-cuisine-chn
+  序列化: Serializable-chn
+  依赖问题: dependency-problem-chn
+  音频剪辑: audio-clip-chn
+  影梭: shadowsocks-chn
+  硬空格: hard-space-chn
+  玉米排骨汤: corn-ribs-soup-chn
+  蒸水蛋: steamed-water-eggs-chn
+  蒸鸡蛋: steamed-eggs-chn
+  正则表达式: regular-expression-chn
+  正则无限回溯: regular-infinite-retrospective-chn
+  证书: certificate-chn
+  中文乱码: chinese-garbled-chn
+  煮鸡蛋: boiled-eggs-chn
+  自定义接口: custom-interface-chn
+  自动登录: auto-login-chn
+  自动更新: auto-update-chn
+  自动回复: auto-reply-chn
+  字段描述符: JNI-chn
+  字符串截取: string-sub-chn
   其它: others
 
 # Date / Time format
