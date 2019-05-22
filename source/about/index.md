@@ -122,6 +122,7 @@ comments: false
 - Android 逆向系列
 - ItChat 系列
 - 踩坑系列
+- 大数据技术知识
 - 其它
 
 ## 成长建议
