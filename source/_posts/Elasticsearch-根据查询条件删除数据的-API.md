@@ -95,12 +95,10 @@ POST 主机地址/用户的索引名/用户的索引type/_delete_by_query
 
 这里的客户端接口就是官方或者社区开发的适配各个编程语言的接口，它和 RESTful 接口相匹配，但是必须写代码实现查询或者取数的操作，例如：Java、Python、Go 等。这种接口的优点是不用担心使用出错【例如在 HTTP 中，参数构造错误导致请求失败】，只要按照接口写代码，请求的构造过程按照官方提供的接口来就行，而且，请求的数据结果是被封装为实体的，不需要额外解析数据结构，直接使用即可。但是，有时候优点也是缺点，由于接口过于死板，导致多版本之间不兼容，例如 1.x 和 2.x 之间的 TransportClient 生成方式就不兼容，导致一份代码只能请求一个版本的 Elasticsearch 集群，此时对于多版本 Elasticsearch 集群之间的请求则无能为力。
 
-好，直接进入正题，给出删除数据的示例，直接使用 5.x 版本的示例，其它的请参考文末的官方文档【此外还可以根据 client 指定 id 进行单条删除，不属于根据查询条件删除的范畴，不再赘述】，这个操作如果耗时很长，还会有异步的问题，也可以参考官方文档。
+好，直接进入正题，给出删除数据的示例，直接使用 5.1.1 版本的示例，其它的请参考文末的官方文档【此外还可以根据 client 指定 id 进行单条删除，不属于根据查询条件删除的范畴，不再赘述】，这个操作如果耗时很长，还会有异步的问题，也可以参考官方文档。此处需要特别注意 5.1、5.6之间的使用方式也略有不同，具体以官方文档为准，我就被坑了。
 
 ```
-TransportClient client = new PreBuiltTransportClient(Settings.EMPTY)
-                .addTransportAddresses(transportAddresses);
-BulkByScrollResponse response =
+BulkIndexByScrollResponse response =
                 DeleteByQueryAction.INSTANCE.newRequestBuilder(client)
                         .filter(QueryBuilders.matchQuery("uid", "uid1"))
                         .filter(QueryBuilders.typeQuery("需要删除的索引类型"))
@@ -122,7 +120,7 @@ long deleted = response.getDeleted();
 
 上面的删除代码示例中用到了 client 变量，其实就是 TransportClient 的实例，下面再给出不同版本 Elasticsearch 的 TransportClient 初始化方式【需要注意，访问不同版本的 Elasticsearch 集群，需要依赖不同版本的 org.elasticsearch 官方包，而且特别要注意 5.x 版本的还需要额外的 transport 依赖包】。
 
-1、1.x 版本，需要集群名字、主机名、tcp 端口等信息。
+1、1.7.5 版本，需要集群名字、主机名、tcp 端口等信息。
 
 ```
 Settings settings = ImmutableSettings.settingsBuilder()
@@ -146,7 +144,7 @@ for (int i = 0; i < hostArr.length; i++) {
 client = client.addTransportAddresses(transportAddresses);
 ```
 
-2、2.x 版本，需要集群名字、主机名、tcp 端口等信息，生成方式与 1.x 版本的略有不同。
+2、2.3.2 版本，需要集群名字、主机名、tcp 端口等信息，生成方式与 1.7.5 版本的略有不同。
 
 ```
 Settings settings = Settings.settingsBuilder()
@@ -171,7 +169,7 @@ TransportClient client = TransportClient.builder()
                 .addTransportAddresses(transportAddresses);
 ```
 
-3、5.x 版本，需要集群名字、主机名、tcp 端口等信息，生成方式与 2.x 版本的略有不同，特别要注意 5.x 版本的还需要额外的 transport 依赖包，否则找不到 PreBuiltTransportClient 类。
+3、5.1.1 版本，需要集群名字、主机名、tcp 端口等信息，生成方式与 2.3.2 版本的略有不同，特别要注意 5.1.1 版本的还需要额外的 transport 依赖包，否则找不到 PreBuiltTransportClient 类。
 
 额外的依赖包信息：
 
@@ -179,12 +177,12 @@ TransportClient client = TransportClient.builder()
 <dependency>
     <groupId>org.elasticsearch</groupId>
     <artifactId>elasticsearch</artifactId>
-    <version>5.6.8</version>
+    <version>5.1.1</version>
 </dependency>
 <dependency>
     <groupId>org.elasticsearch.client</groupId>
     <artifactId>transport</artifactId>
-    <version>5.6.8</version>
+    <version>5.1.1</version>
 </dependency>
 ```
 
@@ -207,7 +205,7 @@ for (int i = 0; i < hostArr.length; i++) {
 	catch (UnknownHostException e) {
 	}
 }
-TransportClient client = new PreBuiltTransportClient(Settings.EMPTY)
+TransportClient client = new PreBuiltTransportClient(settings)
                 .addTransportAddresses(transportAddresses);
 ```
 
