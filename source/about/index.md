@@ -95,6 +95,8 @@ comments: false
 - 图片压缩工具：[Imagine](https://github.com/meowtec/Imagine)
 - 在线作图工具，流程图、UML 图、类图等等：[draw.io](https://www.draw.io)
 - 人工智能品牌 Logo 自动生成工具：[Brandmark](https://app.brandmark.io/v2)
+- 变量命名神器：[Codelf](https://unbug.github.io/codelf)
+- 下载工具，基于 Aria2：[Motrix](https://motrix.app)
 
 ## 技术列表
 
