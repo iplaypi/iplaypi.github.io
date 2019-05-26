@@ -33,9 +33,10 @@ comments: false
 - 集成开发工具：[IntelliJ IDEA](https://www.jetbrains.com/idea/download)
   - 插件之翻译工具：[Translation](http://yiiguxing.github.io/TranslationPlugin)、[JetBrains官方仓库](https://plugins.jetbrains.com/plugin/8579-translation)
   - 插件之注解工具：[Lombok](https://github.com/mplushnikov/lombok-intellij-plugin)、[JetBrains官方仓库](https://plugins.jetbrains.com/plugin/6317-lombok-plugin)
-- 项目管理工具：[Git]()
+- 项目管理工具：[Git](https://git-scm.com)
   - 使用 Git Windows 版本切记修改显示编码，否则命令行里面都是乱码
-- 依赖管理工具：[Maven]()
+- 依赖管理工具：[Maven](https://maven.apache.org)
+- JDK 下载：[Java 网站](https://www.java.com) 、[Oracle 网站](https://www.oracle.com)
 - Chrome 浏览器（下载使用需要翻墙，插件可以去官方商店直接安装，或者有各种第三方镜像库，下载 crx 文件再安装）：[Chrome 浏览器](https://www.google.com/chrome)
   - 插件之去除广告：[Adblock Plus](https://adblockplus.org)
   - 插件之油猴工具（Android 平台也能使用）：[Tampermonkey](https://tampermonkey.net)
@@ -97,6 +98,7 @@ comments: false
 - 人工智能品牌 Logo 自动生成工具：[Brandmark](https://app.brandmark.io/v2)
 - 变量命名神器：[Codelf](https://unbug.github.io/codelf)
 - 下载工具，基于 Aria2：[Motrix](https://motrix.app)
+- 文件比较工具：[UltraCompare](https://www.ultraedit.com/products/ultracompare)，官方网站还有其它产品，例如：[UltraEdit](https://www.ultraedit.com)
 
 ## 技术列表
 
