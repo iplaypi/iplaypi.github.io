@@ -84,7 +84,7 @@ comments: false
 - 俄罗斯一款搜索引擎：[yandex](https://www.yandex.com)
 - Google 翻译：[translate](https://translate.google.com)
 - 图标库：[fontawesome](https://fontawesome.com)
-- 下载工具：[IDM](https://www.internetdownloadmanager.com)
+- 下载工具，收费，安装后重启浏览器作为 Chrome 插件使用：[IDM](https://www.internetdownloadmanager.com)
 - 下载工具：[FDM](https://www.freedownloadmanager.org)
 - Java 系列学习站点：[jenkov](http://tutorials.jenkov.com)
 - 代码在线生成图片：[carbon](https://carbon.now.sh)
