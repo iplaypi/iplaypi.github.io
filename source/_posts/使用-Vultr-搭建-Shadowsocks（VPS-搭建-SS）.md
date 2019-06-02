@@ -170,6 +170,8 @@ firewall-cmd --reload
 ssserver -c /etc/shadowsocks.json -d start
 # 调试时使用下面命令，实时查看日志
 ssserver -c /etc/shadowsocks.json
+# 停止运行    
+ssserver -c /etc/shadowsocks.json -d stop
 ```
 
 过程如图：

@@ -41,11 +41,11 @@ wget http://php.net/get/php-7.3.3.tar.gz/from/this/mirror -O ./php-7.3.3.tar.gz
 tar zxvf php-7.3.3.tar.gz
 ```
 
-2、configure【配置】，指定 PHP 安装目录【默认是 /usr/local/php，使用**--prefix**参数】和 PHP 配置目录【默认和 PHP 安装目录一致，使用**--with-config-file-path**参数】，我这里特意指定各自的目录，更方便管理。
+2、configure【配置】，指定 PHP 安装目录【默认是 /usr/local/php，使用**\-\-prefix**参数】和 PHP 配置目录【默认和 PHP 安装目录一致，使用**\-\-with-config-file-path**参数】，我这里特意指定各自的目录，更方便管理。
 
 ```
 -- 配置,并且开启 PHP-FPM 模块[使用 --enable-fpm 参数]
-./configure --prefix=/site/php/ --with-config-file-path=/site/php/conf/ --enable-fpm
+./configure --prefix=/site/php/  --with-config-file-path=/site/php/conf/  --enable-fpm
 ```
 
 遇到报错：**configure: error: no acceptable C compiler found in $PATH**。
@@ -98,9 +98,9 @@ make: *** [ext/fileinfo/libmagic/apprentice.lo] Error 1
 
 ![编译安装内存不够报错](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g167qyojuij20rn0563yp.jpg "编译安装内存不够报错")
 
-这是由于服务器内存小于 1G 所导致编译占用资源不足【好吧，我的服务器一共就 512M 的内存，当然不足】。解决办法：在编译参数后面加上一行内容 **--disable-fileinfo**，减少内存的开销。
+这是由于服务器内存小于 1G 所导致编译占用资源不足【好吧，我的服务器一共就 512M 的内存，当然不足】。解决办法：在配置【configure】参数后面加上一行内容 **\-\-disable-fileinfo**，减少内存的开销。
 
-接着执行编译又报错：
+接着执行编译安装又报错：
 
 ```
 cc: internal compiler error: Killed (program cc1)
@@ -188,7 +188,7 @@ ps aux|grep php-fpm
 所以可以使用命令 **kill -INT pid** 来停止 PHP-FPM 模块，pid 的值可以使用 **ps aux|grep php-fpm** 获取。当然，也可以使用 **kill -INT pid 配置文件路径** 来停止 PHP-FPM 模块，pid 配置文件路径 可以在 php-fpm.conf 中查看，**pid 参数**，默认是关闭的。
 ![使用信号控制的方式停止 PHP-FPM](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1681vrhobj20om071mxh.jpg "使用信号控制的方式停止 PHP-FPM")
 
-为了能使用 **service php-fpm start|stop|restart|reload)** 的方式来进行启动、停止、重启、重载配置，这种方式显得优雅，需要把此模块配置到系统里面。在 PHP 的编译安装目录，复制文件 **sapi/fpm/init.d.php-fpm** ，粘贴到系统指定的目录即可。
+为了能使用 **service php-fpm start|stop|restart|reload** 的方式来进行启动、停止、重启、重载配置，这种方式显得优雅，需要把此模块配置到系统里面。在 PHP 的编译安装目录，复制文件 **sapi/fpm/init.d.php-fpm** ，粘贴到系统指定的目录即可。
 
 ```
 cd /site/php-7.0.0
@@ -426,4 +426,6 @@ chown nginx:nginx iplaypi.github.io
 ![解决所有问题后成功实现自动拉取](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g169gkpo0cj20s30nfgmm.jpg "解决所有问题后成功实现自动拉取")
 
 为了方便，本来我把这2个 php 文件直接放在项目里面了，放在 source 分支，再更新一下 travis-ci 的配置文件，把它们提交到 master 分支去。但是这样做的风险就是把秘钥暴露出去了，显然不可取，所以折中的办法就是把这2个文件当做模板，把秘钥隐去，放在 source 分支，以后用的时候直接复制就行了。
+
+我想了一下，这个秘钥哪怕暴露出去看起来也没有什么大的危害，除了能伪造请求，产生多余的 pull 操作，浪费机器资源。
 
