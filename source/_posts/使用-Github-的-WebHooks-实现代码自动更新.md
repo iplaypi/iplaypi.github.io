@@ -429,3 +429,5 @@ chown nginx:nginx iplaypi.github.io
 
 我想了一下，这个秘钥哪怕暴露出去看起来也没有什么大的危害，除了能伪造请求，产生多余的 pull 操作，浪费机器资源。
 
+这里面还有一点需要注意，请确保 iplaypi.github.io 目录里面的文件特别是 auto_pull.php 文件的所属用户都是 nginx，主要是因为 php 脚本里面有 pull 操作，如果有文件所属用户不是 nginx，会导致 pull 时因为文件覆盖的权限问题而失败。而且，失败了也没有错误信息【不像前面的 Permission denied 有提示】，也就是说在 GitHub 里面的 WebHook 查看返回日志是看不到错误信息的，一片空白，说明没有成功 pull。我就遇到了这个问题，找不到原因折腾了很久，最后发现是文件权限的问题。
+
