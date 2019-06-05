@@ -82,6 +82,7 @@ type: guide
 - 2018100801，[Spark Kryo 异常](https://www.playpi.org/2018100801.html)
 - 2018100701，[依赖包缺失导致 Spark 任务无法启动](https://www.playpi.org/2018100701.html)
 - 2018100601，[地锅鸡做法总结（皖北、苏北地区）](https://www.playpi.org/2018100601.html)
+- 2018100201，[Hexo 博客集成 travis-ci 自动化测试发布](https://www.playpi.org/2018100201.html)
 - 2018090701，[Win10 取消 Skype for Business 自动登录](https://www.playpi.org/2018090701.html)
 - 2018090601，[踩坑特殊字符之硬空格](https://www.playpi.org/2018090601.html)
 - 2018090501，[归来](https://www.playpi.org/2018090501.html)
@@ -90,6 +91,7 @@ type: guide
 - 2018063001，[辣椒炒肉做法总结](https://www.playpi.org/2018063001.html)
 - 2018060301，[红烧肉做法总结](https://www.playpi.org/2018060301.html)
 - 2018053001，[玉米胡萝卜排骨汤做法总结](https://www.playpi.org/2018053001.html)
+- 2018022401，[Elasticsearch 根据查询条件删除数据的 API](https://www.playpi.org/2018022401.html)
 - 2018020101，[注册 Facebook Twitter Tumblr 遇到的问题](https://www.playpi.org/2018020101.html)
 
 
