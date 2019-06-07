@@ -89,6 +89,16 @@ Stream mapping:
 
 此外，FFmpeg 不支持 rmvb 格式的文件，只能转码为 mp4 的格式再使用，这里的不支持不是指不能处理，而是不能直接输出 rmvb 格式的文件，处理输入是可以的。
 
+5、多个 mp4 文件拼接，先转为同样的编码格式的 ts 流，再拼接 ts 流接着转换为 mp4 格式的输出。
+
+```
+ffmpeg -i 1.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 1.ts
+ffmpeg -i 2.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 2.ts
+ffmpeg -i "concat:1.ts|2.ts" -acodec copy -vcodec copy -absf aac_adtstoasc output.mp4
+```
+
+简单高效，而且视频质量没有损失。
+
 
 # 其它
 
