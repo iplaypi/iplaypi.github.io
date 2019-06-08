@@ -63,8 +63,10 @@ comments: false
   - 插件之哔哩哔哩助手：[哔哩哔哩助手](https://chrome.google.com/webstore/detail/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E5%8A%A9%E6%89%8B%EF%BC%9Abilibilicom-%E7%BB%BC%E5%90%88%E8%BE%85%E5%8A%A9%E6%89%A9%E5%B1%95/kpbnombpnpcffllnianjibmpadjolanh)
   - 插件之全能启动器：[全能启动器 Plus](https://chrome.google.com/webstore/detail/steward-plus/dnkhdiodfglfckibnfcjbgddcgjgkacd)
   - 插件之解除网页复制限制：[Enable Copy](https://chrome.google.com/webstore/detail/enable-copy/lmnganadkecefnhncokdlaohlkneihio/related?hl=zh-CN)
+  - 插件之 IDEA 调试工具：[JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji)
   - 应用之需求设计作图工具（流程图、类图、时序图）：[Gliffy Diagrams](https://chrome.google.com/webstore/detail/gliffy-diagrams/bhmicilclplefnflapjmnngmkkkkpfad?hl=zh-CN)
   - 应用之模拟 Http 请求工具：[Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=zh-CN)
+- 加速热部署工具：[JRebel](https://jrebel.com)
 
 ## 辅助工具
 

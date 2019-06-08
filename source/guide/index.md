@@ -14,6 +14,7 @@ type: guide
 # 2019
 
 
+- 2019051501，[Linux 让进程在后台运行的几种方法](https://www.playpi.org/2019051501.html)
 - 2019050401，[指南页面的自动收集](https://www.playpi.org/2019050401.html)
 - 2019050201，[使用 Java 代码迁移微博图床到 GitHub 图床](https://www.playpi.org/2019050201.html)
 - 2019042701，[解决微博图床防盗链的问题](https://www.playpi.org/2019042701.html)
@@ -98,6 +99,7 @@ type: guide
 # 2017
 
 
+- 2017123101，[Markdown 语法手册](https://www.playpi.org/2017123101.html)
 - 2017102901，[Hello World](https://www.playpi.org/2017102901.html)
 - 2017051401，[VLOOKUP 函数跨工作表跨文件使用方式](https://www.playpi.org/2017051401.html)
 - 2017050701，[Hexo 框架 Next 主题添加自定义 Page](https://www.playpi.org/2017050701.html)
@@ -106,10 +108,11 @@ type: guide
 - 2017042601，[Elasticsearch 中的429错误 es_rejected_execution_exception](https://www.playpi.org/2017042601.html)
 - 2017042201，[解决 IDEA 无法创建子包的问题](https://www.playpi.org/2017042201.html)
 - 2017040101，[Hadoop 入门系列0--初识 Hadoop](https://www.playpi.org/2017040101.html)
+- 2017030301，[Redis Desktop Manager 的安装及使用](https://www.playpi.org/2017030301.html)
 
 
 # 2016
 
 
-- 2016123105，[待定](待定)
+- 2016120801，[IDEA 热部署配置方法总结](https://www.playpi.org/2016120801.html)
 
