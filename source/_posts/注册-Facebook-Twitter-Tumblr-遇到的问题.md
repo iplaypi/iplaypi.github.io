@@ -15,6 +15,8 @@ keywords: Facebook,Twitter,Tumblr,Twitter绑定手机号,Twitter冻结,Twitter�
 # Facebook
 
 
+待整理。
+
 
 # Twitter
 
@@ -27,19 +29,27 @@ keywords: Facebook,Twitter,Tumblr,Twitter绑定手机号,Twitter冻结,Twitter�
 由于我选择的是 Google 邮箱注册，注册完成之后正常登录，但是进入不到主页面，就被绑定手机号页面拦截了，一直提示需要添加一个手机号，要不然就在当前页面，什么也做不了，除非退出。
 ![Add a phone number](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxerje8k7wj20p00exglz.jpg "Add a phone number")
 
-但是呢，诡异的是我使用自己的手机号进行绑定时，提示错误：由于技术问题，无法完成当前的请求，请重试（Due to a technical issue, we couldn't complete this request. Please try again.），我怀疑是因为中国的手机号无法进行绑定。上网搜索了一下资料，果然是这个原因，大家都建议一开始直接使用手机号注册，不要使用邮箱注册，就不会有这个问题了。接下来没有办法了，只能尝试寻找可行的办法，毕竟邮箱已经注册过了，不想浪费。
+但是呢，诡异的是我使用自己的手机号进行绑定时，提示错误：由于技术问题，无法完成当前的请求，请重试【Due to a technical issue, we couldn't complete this request. Please try again.】，我怀疑是因为中国的手机号无法进行绑定。上网搜索了一下资料，果然是这个原因，大家都建议一开始直接使用手机号注册，不要使用邮箱注册，就不会有这个问题了。接下来没有办法了，只能尝试寻找可行的办法，毕竟邮箱已经注册过了，不想浪费。
 
 ## 绑定手机号解决方案尝试
 
-官方说当前帐号疑似是机器人（不是一个真实的人类），所以被冻结了，必须添加一个可用的手机号，用来接收验证码，才能证明当前帐号是人为注册的，才能进行接下来的操作。
+官方说当前帐号疑似是机器人【不是一个真实的人类】，所以被冻结了，必须添加一个可用的手机号，用来接收验证码，才能证明当前帐号是人为注册的，才能进行接下来的操作。
 
-1、利用 Chrome 浏览器的开发者工具更改下拉列表的值，把日本的编号81改为86，应用在页面上，实际操作发现不行，Twitter 验证的时候还会重新刷新下拉列表。在 Chrome 浏览器的对应页面，按下键盘的 F12 按键，就可以打开调试工具（或者点击鼠标的右键，选择检查），在 “Elements” 选项中可以看到源代码，更改表单里面的下拉列表的值，即可。
+### 利用浏览器调试工具
+
+利用 Chrome 浏览器的开发者工具更改下拉列表的值，把日本的编号81改为86，应用在页面上，**实际操作发现不行，所以大家不要使用这种方式，没有用，请使用第二种邮件申诉的方式，亲测可以使用，并且已经帮助好几个人成功注册激活**，没有用的原因在于 Twitter 验证的时候还是会重新刷新下拉列表。
+
+具体操作为：在 Chrome 浏览器的对应页面，按下键盘的 F12 按键，就可以打开调试工具（或者点击鼠标的右键，选择检查），在 `Elements` 选项中可以看到源代码，更改表单里面的下拉列表的值，即可。
 ![更改下拉列表内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxertxa23qj21260p6myi.jpg "更改下拉列表内容")
 
-2、去帮助中心，找客服，发送申诉邮件，说明你是一个真实的人，现在注册帐号被冻结了，[Twitter 帮助中心](https://help.twitter.com/en)。在帮助中心选择“Contact us”，进一步选择“View all support topics”。
+### 邮件申诉
+
+首先声明，推荐大家使用这种方式来解封、激活帐号，我自己使用有效，而且已经帮助过好几个人解决了问题。
+
+去帮助中心，找客服，发送申诉邮件，说明你是一个真实的人，现在注册帐号被冻结了，[Twitter 帮助中心](https://help.twitter.com/en)。在帮助中心选择 `Contact us`，进一步选择 `View all support topics`。
 ![Contact us](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxes1ihmuqj21hc0p6q49.jpg "Contact us")
 
-进入选择页面后，进一步选择"Suspended or locked account"，对冻结或者锁定的帐号进行申诉处理。
+进入选择页面后，进一步选择 `Suspended or locked account`，对冻结或者锁定的帐号进行申诉处理。
 ![Suspended or locked account](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxes4iubaqj212y0p6jsx.jpg "Suspended or locked account")
 
 最终进入的页面就是这样的：[申诉信息填写](https://help.twitter.com/forms/general?subtopic=suspended)。
@@ -52,7 +62,7 @@ keywords: Facebook,Twitter,Tumblr,Twitter绑定手机号,Twitter冻结,Twitter�
 Account suspended.Could not unsuspend it through phone number.Pls help to unsuspend the account.Thanks.
 ```
 
-提交后会收到一封由 Twitter 官方技术支持（Twitter Support <support@twitter.com>）发送的邮件，告诉你应该怎么做，邮件内容如下。
+提交后会收到一封由 Twitter 官方技术支持【Twitter Support <support@twitter.com>】发送的邮件，告诉你应该怎么做，邮件内容如下。
 ![Twitter 技术支持邮件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxesj53y9zj215s0llgn7.jpg "Twitter 技术支持邮件")
 
 但是看内容也看不出来什么，只是说疑似机器人帐号，需要绑定手机号码，列出一系列步骤。其实我也是想做这一步，但是奈何中国的手机号码不支持。仔细看最后一句话，如果还有问题，可以直接回复此邮件并说明问题详细。
@@ -68,24 +78,25 @@ Hello,
 
 接下来就是等待官方的回复了（希望晚上睡一觉后明天有好消息）。
 
-在等待了一夜后，又过了半天时间（总共大概17个小时），收到了 Twitter 官方的回复，说我的帐号已经解冻，并解释了原因。这次回复等待了这么长时间，不像上次申诉回复那么快，说明很大可能是人工审核的，然后解冻了你的帐号，再回复这封通知邮件给我。不管怎样，帐号可以使用了。
+在等待了一夜后，又过了半天时间【总共大概17个小时】，收到了 Twitter 官方的回复，说我的帐号已经解冻，并解释了原因。这次回复等待了这么长时间，不像上次申诉回复那么快，说明很大可能是人工审核的，然后解冻了你的帐号，再回复这封通知邮件给我。不管怎样，帐号可以使用了。
 ![官方解冻邮件回复](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxfnvviw2gj21dk0n7mzb.jpg "官方解冻邮件回复")
 
-接下来为了保证不被封号，最好重新设置一下昵称，并且填写一些必要的信息：用户名（id）、头像、生日、国家、描述等，也可以关注一些其他推主。
+接下来为了保证不被封号，最好重新设置一下昵称，并且填写一些必要的信息：用户名【id】、头像、生日、国家、描述等，也可以关注一些其他推主。
 
-更改用户名在“Settings and Privacy”里面，由于用户名是唯一的（和 GitHub 的策略一样），所以常用的都被别人注册过了，自己要注意寻找，否则更改不了，显示被占用。
+更改用户名在“Settings and Privacy”里面，由于用户名是唯一的【和 GitHub 的策略一样】，所以常用的都被别人注册过了，自己要注意寻找，否则更改不了，显示被占用。
 ![更改用户名](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxfp8312wuj216i0p6gnu.jpg "更改用户名")
 
-更改昵称、头像、背景墙、描述等在“Profile”里面。
+更改昵称、头像、背景墙、描述等在 `Profile` 里面。
 ![更改基本信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxfpeugi9zj218p0p6wi6.jpg "更改基本信息")
 
 流程总结：
 1、只针对使用 Google 邮箱注册的情况，注册后帐号被冻结，什么也做不了，绑定手机号又说不支持，只能通过申诉来解决；
 2、申诉的目的是为了解冻帐号，但是官方是自动回复，让绑定手机号，又回到了原地；
-3、在步骤2的基础上可以直接回复邮件（邮件中有提示），说明遇到的问题，等待将近一天就行了；（如果没有步骤2，直接给官方技术支持发邮件，不知道行不行）
-4、步骤3官方回复的邮件中，提示说不要回复此邮件。（回复了应该也没人理）
+3、在步骤2的基础上可以直接回复邮件【邮件中有提示】，说明遇到的问题，等待将近一天就行了；【如果没有步骤2，直接给官方技术支持发邮件，不知道行不行】
+4、步骤3官方回复的邮件中，提示说不要回复此邮件。【回复了应该也没人理】
 
 # Tumblr
 
 
+待整理。
 
