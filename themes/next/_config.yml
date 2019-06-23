@@ -403,7 +403,7 @@ valine:
   # 文本框占位文字
   placeholder: 没有问题吗？
   # 需要填写的信息字段
-  meta: ['nick','mail']
+  meta: ['nick','mail','link']
   # 默认头像
   avatar: wavatar
   # 每页显示的评论数
