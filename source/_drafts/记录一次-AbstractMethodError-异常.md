@@ -138,7 +138,11 @@ Stack trace: ExitCodeException exitCode=10:
 再全局搜索一下项目中的类【在 Windows 下使用 Eclipse 的快捷键 `Ctrl + Shift + t`】，异常信息对应的那个类：`ReferenceCountUtil`，可以看到存在两个同名的类：类名称一致【都是 ReferenceCountUtil】，包名称一致【都是 io.netty.util】，只不过对应的 jar 包依赖不一致，一个是 `io.netty:netty-common:4.1.13.Final.jar`，另一个是 `io.netty:netty-all:4.0.29.Final.jar`，这两个类肯定会冲突的。
 ![搜索 ReferenceCountUtil 类](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190704232137.png "搜索 ReferenceCountUtil 类")
 
-解决办法很简单，直接去除多余的依赖即可，但是要注意去除后会不会引发其它的依赖缺失问题。
+解决办法很简单，直接去除多余的依赖即可，但是要注意去除后会不会引发其它的依赖缺失问题。我在我的项目里面移除了所有的 `io.netty:netty-all` 依赖。
+
+如果项目本身的依赖非常混乱，并且有大量的重复，可能去除一个还有一个，会造成大量重复的工作，所以在查看依赖树时可以使用 `-Dverbose` 参数，完整的命令：`mvn dependency:tree -Dverbose > tree.txt`，把原始的所有传递依赖全部列出来，这样就可以对症操作，一次性把所有依赖移除。
+
+当然，会有人觉得这样操作也是很麻烦，能不能来个插件，直接配置一下即可，至于去除的操作过程我也不关心，只要能帮我去除就行。当然，这对于想偷懒的技术人员来说值必备的，这个东西就是插件 `maven-shade-plugin`，描述配置方法。
 
 
 # 问题总结
