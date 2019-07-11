@@ -112,3 +112,15 @@ valine:
 
 这个插件我现在先不使用，因为还不知道评论数据会怎么样呢，等以后如果确实有需要再考虑增加，参考项目：[https://github.com/zhaojun1998/Valine-Admin](https://github.com/zhaojun1998/Valine-Admin) 。
 
+
+# 后记
+
+
+还记得我上面提到的 Valine 版本过低，导致评论的时候总会强制检验邮箱和 url 的规范性这个现象。经过一段时间的观察，以及 2019-06-21 爆发的 leanCloud 域名误被封禁事件，导致彻底无法评论，我终于找到了升级 Valine 版本的方法，只要直接更改主题的 swig 脚本文件，具体路径在 `themes/next/layout/_third-party/comments/valine.swig`，把里面的旧版本的 js 引用移除【有2个文件引用】，改为新版本的 js 引用。
+
+注意，作者特意在官网说明最新版本的 Valine 只需要引用一个 `unpkg` 库的 `Valine.min.js` 文件即可，其它的不再需要【我升级到当时最新的版本 v1.3.7】。
+![升级新版本 Valine 配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190712012449.png "升级新版本 Valine 配置")
+
+升级完成后，再去评论区看看，不会再强制验证邮箱和 url，而且会收集显示评论用户的操作系统、浏览器信息，同时右下角也新增了 Valine 的版本信息，可以更为清晰地看到版本。
+![升级 Valine 后查看最新的评论区](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190712012457.png "升级 Valine 后查看最新的评论区")
+
