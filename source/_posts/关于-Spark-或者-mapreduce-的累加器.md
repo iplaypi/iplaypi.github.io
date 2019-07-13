@@ -37,6 +37,8 @@ keywords: Spark,MapReduce,Accumulator,Java,Hadoop
 
 首先说明一下，注意不同版本的影响，使用方式会不一致，我下面列出的例子都是基于 `Spark` v1.6.2，例如在 `Spark` v2.x 的版本中，初始化累加器的方式就改变了一些，在此不再赘述。
 
+`Spark` 提供的 `Accumulator`，主要用于多个节点【Excutor】对同一个变量进行共享性的操作。`Accumulator` 只提供了累加的功能【调用 add() 方法】，给我们提供了多个 `Task` 对一个变量并行操作的功能。但是 `Task` 只能对 `Accumulator` 进行累加操作，不能读取它的值，只有 `Driver` 端的程序可以读取 `Accumulator` 的值【调用 value() 方法】。
+
 ### 代码接口
 
 为了使用累加器，首先要有上下文对象，对于 `Java` 的接口来说就是 `JavaSparkContext`，然后利用上下文对象创建累加器。下面列出几个简单的示例：
