@@ -1,11 +1,11 @@
 ---
 title: 使用 Java 获取 HBase 中多版本数据的方法
-id: 2019-07-11 23:35:05
+id: 2019071101
 date: 2019-07-11 23:35:05
 updated: 2019-07-11 23:35:05
 categories: 大数据技术知识
 tags: [Java,HBase,version]
-keywords: [Java,HBase,version
+keywords: Java,HBase,version
 ---
 
 

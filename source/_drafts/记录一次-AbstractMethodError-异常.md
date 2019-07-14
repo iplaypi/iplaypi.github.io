@@ -1,6 +1,6 @@
 ---
 title: 记录一次 AbstractMethodError 异常
-id: 2019-07-04 23:19:13
+id: 2019070401
 date: 2019-07-04 23:19:13
 updated: 2019-07-04 23:19:13
 categories: 踩坑记录
