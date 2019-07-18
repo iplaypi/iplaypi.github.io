@@ -128,21 +128,43 @@ Stack trace: ExitCodeException exitCode=10:
 	at java.lang.Thread.run(Thread.java:748)
 ```
 
-从上文的日志信息来看，程序的 Driver 端已经提交了 Spark 任务到 Yarn 集群，然后 Yarn 集群分配了资源，但是在后续的通信过程中，不知道哪里出问题了，导致通信中断，进而导致 Spark 任务失败。
+从上文的日志信息来看，程序的 `Driver` 端已经提交了 `Spark` 任务到 `Yarn` 集群，然后 `Yarn` 集群分配了资源，但是在后续的通信过程中，不知道哪里出问题了，导致通信中断，进而导致 `Spark` 任务失败。
 
 结合上面我猜测的和 `netty` 依赖有关，那就从这里入手吧，先把项目的依赖树梳理出来，使用 `mvn dependency:tree > tree.txt`，把依赖树的信息保存在文件 `tree.txt` 中，然后在依赖树信息中搜索 `netty`。
 ![搜索 netty 关键字](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190704232242.png "搜索 netty 关键字")
 
 可以看到关于 `netty` 依赖的信息。
 
-再全局搜索一下项目中的类【在 Windows 下使用 Eclipse 的快捷键 `Ctrl + Shift + t`】，异常信息对应的那个类：`ReferenceCountUtil`，可以看到存在两个同名的类：类名称一致【都是 ReferenceCountUtil】，包名称一致【都是 io.netty.util】，只不过对应的 jar 包依赖不一致，一个是 `io.netty:netty-common:4.1.13.Final.jar`，另一个是 `io.netty:netty-all:4.0.29.Final.jar`，这两个类肯定会冲突的。
+再全局搜索一下项目中的类【在 Windows 下使用 Eclipse 的快捷键 `Ctrl + Shift + t`】，异常信息对应的那个类：`ReferenceCountUtil`，可以看到存在两个同名的类：类名称一致【都是 ReferenceCountUtil】，包名称一致【都是 io.netty.util】，只不过对应的 jar 包依赖不一致，一个是 `io.netty:netty-common:4.1.13.Final.jar`【这个是我的 org.elasticsearch.client:transport:5.6.8 传递依赖过来的】，另一个是 `io.netty:netty-all:4.0.29.Final.jar`【这个是 Spark 自带的，只不过我重新指定了版本】，这两个类肯定会冲突的。
 ![搜索 ReferenceCountUtil 类](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190704232137.png "搜索 ReferenceCountUtil 类")
 
-解决办法很简单，直接去除多余的依赖即可，但是要注意去除后会不会引发其它的依赖缺失问题。我在我的项目里面移除了所有的 `io.netty:netty-all` 依赖。
+解决办法很简单，直接去除多余的依赖即可，但是要注意去除后会不会引发其它的依赖缺失问题。我在我的项目里面移除了所有的 `io.netty:netty-*` 依赖，这些依赖也是传递过来的，版本都为 `v4.1.13`，如下图：
 
-如果项目本身的依赖非常混乱，并且有大量的重复，可能去除一个还有一个，会造成大量重复的工作，所以在查看依赖树时可以使用 `-Dverbose` 参数，完整的命令：`mvn dependency:tree -Dverbose > tree.txt`，把原始的所有传递依赖全部列出来，这样就可以对症操作，一次性把所有依赖移除。
+如果不全部移除而是选择只移除 `netty-common`，还会有问题，因为这些依赖之间也互相依赖，看 `common` 这个命名就知道了，这就是：**一荣俱荣，一损俱损**。
 
-当然，会有人觉得这样操作也是很麻烦，能不能来个插件，直接配置一下即可，至于去除的操作过程我也不关心，只要能帮我去除就行。当然，这对于想偷懒的技术人员来说值必备的，这个东西就是插件 `maven-shade-plugin`，描述配置方法。
+![移除所有的 netty 传递依赖](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190718231720.png "移除所有的 netty 传递依赖")
+
+我把这些依赖移除后，`netty` 相关的依赖冲突就没有问题了，但是又遇到了一个小问题：
+
+```
+java.lang.ClassNotFoundException: org.elasticsearch.spark.rdd.EsPartition
+```
+
+Spark 任务正常启动后，运行过程中出现了上述错误，导致 `Spark` 任务失败，乍一看是类缺失。但是如果在项目中搜索的话，也能搜索到这个类，是不是觉得很奇怪。
+
+![搜索缺失的 ESPartition 类](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190718233540.png "搜索缺失的 ESPartition 类")
+
+其实不要多想，这个是典型的 `Yarn` 集群环境问题，项目中使用的 jar 包【特定版本的，我这里是：org.elasticsearch.client:transport:jar:5.5.0】在集群环境中没有，如果切换一个集群环境中存在版本就可以了【例如 v5.6.8】。或者一定要使用这个版本的话，就把这个 jar 包复制到 `Yarn` 集群环境每台机器的 `lib` 库中去。但是一般情况下，公司的环境是统一的，会避免使用多版本的依赖，以免引起一连串的未知冲突问题，浪费大家的时间。
+
+在实际生产环境中，可能还会遇到一个更加糟糕的问题，即项目本身的依赖非常混乱，并且有大量的重复，可能去除一个还有一个，会造成大量重复的工作，所以在查看依赖树时可以使用 `-Dverbose` 参数，完整的命令：`mvn dependency:tree -Dverbose > tree.txt`，把原始的所有传递依赖全部列出来，这样就可以对症操作，一次性把所有依赖移除。
+
+当然，会有人觉得这样操作也是很麻烦，能不能来个插件，直接配置一下即可，至于去除的操作过程我也不关心，只要能帮我去除就行。当然，这对于想偷懒的技术人员来说值必备的，这个东西就是插件 `maven-shade-plugin`。
+
+在 `configuration` 里面配置 `artifactSet -> excludes -> exclude -> jar 包坐标` 即可。
+
+但是要注意，插件要使用高版本的：`v3.1.0`，我一开始使用的是 `v2.4.3`，怎么配置都无效，搞了半天发现低版本不支持。此外，还要注意 JDK 的版本也要 `v1.8+`，这样才能保证使用其它的特性，例如打包压缩：`<minimizeJar>true</minimizeJar>`。使用这个参数可以自动把无用的依赖 jar 排除掉，给代码瘦身，同时也节约打包时间，非常好用。我的 jar 在使用打包压缩参数后，由原本的 313MB被压缩到了191MB，压缩率超过30%，我觉得非常好用。
+
+此外，`maven-shade-plugin` 插件是一款非常优秀的插件，最常用的莫过于**影子别名**功能，对于复杂的依赖冲突解决有奇效。例如对于上面的依赖冲突问题，可以不用找原因一点一点解决，直接使用**影子别名**功能把传递依赖的 `netty` jar 包改个名字即可，这样它们就可以共存了，简单粗暴却有奇效。推荐大家使用，这里不再赘述。
 
 
 # 问题总结
@@ -151,4 +173,6 @@ Stack trace: ExitCodeException exitCode=10:
 总结一下问题，就是同名的类存在了不同版本的 jar 包中，等到运行的时候，虚拟机发现异常，便抛出异常信息，停止运行程序。
 
 此外，在没有十足的把握或者时间人力不充足的情况下，千万不要想着重构代码，后果你不一定能承担，带来的好处可能大于带来的灾难，这也叫好心办坏事。
+
+再回顾一下，我这个问题是 `Spark` 任务运行在 `Yarn` 集群上面才发现的，如果使用 `local` 模式运行 `Spark` 任务是不会有问题的。所以当时出问题后我也是疑惑，反复测试了好几次才敢确认，主要是因为使用 `Yarn` 模式时，同时也会使用集群中提供的 jar 包依赖，如果项目本身打包时又打进了相同的 jar 包，就极有可能引发冲突【版本不一致，而且 `netty` 包的冲突本身就是一个大坑】。
 
