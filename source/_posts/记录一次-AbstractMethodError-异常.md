@@ -4,7 +4,7 @@ id: 2019070401
 date: 2019-07-04 23:19:13
 updated: 2019-07-04 23:19:13
 categories: 踩坑记录
-tags: [AbstractMethodError,Java,Spark,netty]
+tags: AbstractMethodError,Java,Spark, netty
 keywords: AbstractMethodError,Java,Spark,netty
 ---
 
@@ -154,7 +154,7 @@ Spark 任务正常启动后，运行过程中出现了上述错误，导致 `Spa
 
 ![搜索缺失的 ESPartition 类](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190718233540.png "搜索缺失的 ESPartition 类")
 
-其实不要多想，这个是典型的 `Yarn` 集群环境问题，项目中使用的 jar 包【特定版本的，我这里是：org.elasticsearch.client:transport:jar:5.5.0】在集群环境中没有，如果切换一个集群环境中存在版本就可以了【例如 v5.6.8】。或者一定要使用这个版本的话，就把这个 jar 包复制到 `Yarn` 集群环境每台机器的 `lib` 库中去。但是一般情况下，公司的环境是统一的，会避免使用多版本的依赖，以免引起一连串的未知冲突问题，浪费大家的时间。
+其实不要多想，这个是典型的 `Yarn/Spark` 集群环境问题，项目中使用的 jar 包【特定版本的，我这里是：org.elasticsearch.client:transport:jar:5.5.0】在集群环境中没有，如果切换一个集群环境中存在版本就可以了【例如 v5.6.8】。或者一定要使用这个版本的话，就把这个 jar 包复制到 `Yarn/Spark` 集群环境每台机器的 `lib` 库中去。但是一般情况下，公司的环境是统一的，会避免使用多版本的依赖，以免引起一连串的未知冲突问题，浪费大家的时间。
 
 在实际生产环境中，可能还会遇到一个更加糟糕的问题，即项目本身的依赖非常混乱，并且有大量的重复，可能去除一个还有一个，会造成大量重复的工作，所以在查看依赖树时可以使用 `-Dverbose` 参数，完整的命令：`mvn dependency:tree -Dverbose > tree.txt`，把原始的所有传递依赖全部列出来，这样就可以对症操作，一次性把所有依赖移除。
 
