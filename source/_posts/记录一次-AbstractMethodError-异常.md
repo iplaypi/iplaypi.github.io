@@ -3,8 +3,8 @@ title: 记录一次 AbstractMethodError 异常
 id: 2019070401
 date: 2019-07-04 23:19:13
 updated: 2019-07-04 23:19:13
-categories: 踩坑记录
-tags: AbstractMethodError,Java,Spark, netty
+categories: 踩坑系列
+tags: [AbstractMethodError,Java,Spark,netty]
 keywords: AbstractMethodError,Java,Spark,netty
 ---
 
@@ -24,13 +24,13 @@ keywords: AbstractMethodError,Java,Spark,netty
 # 问题出现
 
 
-异常突然出现，我差点就蒙了，昨天还好好的，今天怎么就这样了，程序又不是女朋女，不可能说变就变。此时，我又想起了一个段子，程序员：运行失败了，这 TM 怎么可能会失败呢？运行成功了，这 TM 怎么就成功了呢？
+异常突然出现，我差点就懵了，昨天还好好的，今天怎么就这样了，程序又不是女朋女，不可能说变就变。此时，我又想起了一个段子，程序员的一般心里活动：运行失败了，这 TM 怎么可能会失败呢？运行成功了，这 TM 怎么就成功了呢？
 
-作为一名资深的工程师，我还是决定试试，看看能不能走个狗屎运，于是我分别在本机、测试环境、正式环境分别做了测试，发现都是报一样的错误，接着我就意识到问题的严重行，不能心存侥幸，要拿我真实的技术来说话了。
+作为一名资深的工程师，我还是决定试试，看看能不能走个狗屎运，于是我在本机、测试环境、正式环境分别做了测试，发现都是报一样的错误，接着我就意识到问题的严重性，不能再心存侥幸，要拿出我真实的技术来说话了。
 
 前面的处理方式就像重启系统一样，只不过是碰运气的方式，我连报错信息都没有仔细看，接下来就要认真处理了。
 
-既然报错了，那就耐心查看，办法总比困难多。下面列出完整的错误信息：
+既然报错了，那就耐心查看，**办法总比困难多**。下面列出完整的错误信息：
 
 ```
 2019-07-04_20:05:26 [main] INFO yarn.Client:58: Application report for application_1561431414509_0020 (state: ACCEPTED)
@@ -77,9 +77,9 @@ java.lang.AbstractMethodError
 
 > Thrown when an application tries to call an abstract method. Normally, this error is caught by the compiler; this error can only occur at run time if the definition of some class has incompatibly changed since the currently executing method was last compiled.
 
-大概意思就是说在运行时发现方法的定义与编译时的不一致，也就是冲突了，至于为何造成冲突，还需要进一步检查。
+大概意思就是说 Java 程序在**运行时**发现**方法的定义**与**编译时**的不一致，怎么会有这种现象呢，最大的可能也就是依赖冲突了，至于为何造成冲突，还需要进一步检查。
 
-我又回过头去仔细看一下这个功能的前后逻辑，很简单，只是使用 Spark 处理 HDFS 里面的数据，然后把处理结果再写回到 HDFS，实际运行时处理的数据量也不大，看起来不会有功能性的问题。而且，前不久这个功能还运行地好好的，只在我更改后才起不来的，原因基本可以定位在依赖方面：冲突、缺失。
+我又回过头去仔细看一下这个功能的前后逻辑，很简单，只是使用 `Spark` 处理 `HDFS` 里面的数据，然后把处理结果再写回到 `HDFS`，实际运行时处理的数据量也不大，看起来不会有功能性的问题。而且，前不久这个功能还运行的好好的，只在我重构更改后才起不来的，原因基本可以定位在依赖方面：冲突、缺失。
 
 
 # 问题解决
@@ -87,7 +87,7 @@ java.lang.AbstractMethodError
 
 顺着依赖冲突这个突破点看下去，可能是因为我在清理依赖时把某个依赖清除掉了，然后又自己添加一个不同版本的，导致与原先的依赖版本不匹配。而且看到异常信息里面都是和 `netty` 有关的，可以猜测可能是 `netty` 的相关依赖出问题了。
 
-接着再多看一点点异常信息，还有一些额外的有效信息：
+接着再多看一点点异常信息，还发现有一些额外的有效信息：
 
 ```
 2019-07-04_20:05:23 [main] INFO spark.SecurityManager:58: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(Administrator, dota); users with modify permissions: Set(Administrator, dota)
@@ -135,7 +135,7 @@ Stack trace: ExitCodeException exitCode=10:
 
 可以看到关于 `netty` 依赖的信息。
 
-再全局搜索一下项目中的类【在 Windows 下使用 Eclipse 的快捷键 `Ctrl + Shift + t`】，异常信息对应的那个类：`ReferenceCountUtil`，可以看到存在两个同名的类：类名称一致【都是 ReferenceCountUtil】，包名称一致【都是 io.netty.util】，只不过对应的 jar 包依赖不一致，一个是 `io.netty:netty-common:4.1.13.Final.jar`【这个是我的 org.elasticsearch.client:transport:5.6.8 传递依赖过来的】，另一个是 `io.netty:netty-all:4.0.29.Final.jar`【这个是 Spark 自带的，只不过我重新指定了版本】，这两个类肯定会冲突的。
+再全局搜索一下项目中的类【在 Windows 下使用 Eclipse 模式的快捷键 `Ctrl + Shift + t`】，异常信息对应的那个类：`ReferenceCountUtil`，可以看到存在两个同名的类：类名称一致【都是 ReferenceCountUtil】，包名称一致【都是 io.netty.util】，只不过对应的 jar 包依赖不一致，一个是 `io.netty:netty-common:4.1.13.Final.jar`【这个是我的 org.elasticsearch.client:transport:5.5.0 传递依赖过来的】，另一个是 `io.netty:netty-all:4.0.29.Final.jar`【这个是 Spark 自带的，只不过我重新指定了版本】，这两个类肯定会冲突的。
 ![搜索 ReferenceCountUtil 类](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190704232137.png "搜索 ReferenceCountUtil 类")
 
 解决办法很简单，直接去除多余的依赖即可，但是要注意去除后会不会引发其它的依赖缺失问题。我在我的项目里面移除了所有的 `io.netty:netty-*` 依赖，这些依赖也是传递过来的，版本都为 `v4.1.13`，如下图：
@@ -150,7 +150,7 @@ Stack trace: ExitCodeException exitCode=10:
 java.lang.ClassNotFoundException: org.elasticsearch.spark.rdd.EsPartition
 ```
 
-Spark 任务正常启动后，运行过程中出现了上述错误，导致 `Spark` 任务失败，乍一看是类缺失。但是如果在项目中搜索的话，也能搜索到这个类，是不是觉得很奇怪。
+`Spark` 任务正常启动后，运行过程中出现了上述错误，导致 `Spark` 任务失败，乍一看是类缺失。但是如果在项目中搜索的话，也能搜索到这个类，是不是觉得很奇怪。
 
 ![搜索缺失的 ESPartition 类](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190718233540.png "搜索缺失的 ESPartition 类")
 
@@ -158,7 +158,7 @@ Spark 任务正常启动后，运行过程中出现了上述错误，导致 `Spa
 
 在实际生产环境中，可能还会遇到一个更加糟糕的问题，即项目本身的依赖非常混乱，并且有大量的重复，可能去除一个还有一个，会造成大量重复的工作，所以在查看依赖树时可以使用 `-Dverbose` 参数，完整的命令：`mvn dependency:tree -Dverbose > tree.txt`，把原始的所有传递依赖全部列出来，这样就可以对症操作，一次性把所有依赖移除。
 
-当然，会有人觉得这样操作也是很麻烦，能不能来个插件，直接配置一下即可，至于去除的操作过程我也不关心，只要能帮我去除就行。当然，这对于想偷懒的技术人员来说值必备的，这个东西就是插件 `maven-shade-plugin`。
+当然，会有人觉得这样操作也是很麻烦，能不能来个插件，直接配置一下即可，至于去除的操作过程我也不关心，只要能帮我去除就行。当然，这对于想偷懒并提高效率的技术人员来说是必备的，这个东西就是插件 `maven-shade-plugin`。
 
 在 `configuration` 里面配置 `artifactSet -> excludes -> exclude -> jar 包坐标` 即可。
 
@@ -170,9 +170,9 @@ Spark 任务正常启动后，运行过程中出现了上述错误，导致 `Spa
 # 问题总结
 
 
-总结一下问题，就是同名的类存在了不同版本的 jar 包中，等到运行的时候，虚拟机发现异常，便抛出异常信息，停止运行程序。
+总结一下问题，就是同名的类存在了不同版本的 jar 包中，等到运行的时候，Java 虚拟机发现异常，便抛出异常信息，停止运行程序。
 
-此外，在没有十足的把握或者时间人力不充足的情况下，千万不要想着重构代码，后果你不一定能承担，带来的好处可能大于带来的灾难，这也叫好心办坏事。
+此外，在没有十足的把握或者时间人力不充足的情况下，千万不要想着重构代码，后果你不一定能承担，带来的好处可能大于带来的灾难，这也叫**好心办坏事**。
 
 再回顾一下，我这个问题是 `Spark` 任务运行在 `Yarn` 集群上面才发现的，如果使用 `local` 模式运行 `Spark` 任务是不会有问题的。所以当时出问题后我也是疑惑，反复测试了好几次才敢确认，主要是因为使用 `Yarn` 模式时，同时也会使用集群中提供的 jar 包依赖，如果项目本身打包时又打进了相同的 jar 包，就极有可能引发冲突【版本不一致，而且 `netty` 包的冲突本身就是一个大坑】。
 
