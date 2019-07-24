@@ -81,7 +81,7 @@ creative_commons: by-nc-sa
 配置完成后，在侧边栏的站点概览中，可以看到版权协议的图标，如果点击图标会自动跳转到版权协议的官方网站。
 ![站点概览的版权声明信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190610210920.png "站点概览的版权声明信息")
 
-## 搜索优化
+## 搜索引擎优化
 
 关于在百度、Google 的站长工具中管理站点的方法，参考我的博客内容：[博客待整理](yy) 。
 
@@ -106,6 +106,20 @@ creative_commons: by-nc-sa
 一开始我经过多天的调研，最终选择的是微博图床，理由有：免费、自动压缩、SSL 协议、CDN 加速，使用了很长时间，效果很好。但是后来发生了黑产攻击微博图床的事件【时间点大概在2019-04-24】，给微博图床带去了安全风险，于是微博图床开启了防盗链，所有正常的访问均被拒绝，进而导致博客文章里面的图片全部打不开。
 
 后来经过反复思考，又在网上看到很多别人的经验，最终我决定直接使用 GitHub 作为图床工具，安全可靠，参考我的博客内容：[解决微博图床防盗链的问题](https://www.playpi.org/2019042701.html) 、[使用 Java 代码迁移微博图床到 GitHub 图床](https://www.playpi.org/2019050201.html) 。
+
+## 站内搜索
+
+我使用的站内搜索是 `Hexo` 提供的解决方案，只要在配置文件 `_config.yml` 中配置是否开启本地搜索功能即可，很简洁，不必关心其它，如图：
+
+![站内搜索相关配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190724223206.png "站内搜索相关配置")
+
+它的背后其实使用了一个叫 `hexo-generator-search` 的插件，详情见：
+[https://github.com/wzpan/hexo-generator-search](https://github.com/wzpan/hexo-generator-search) ，原理也很容易理解，就是把网站的关键词全部收集起来，存在一个文件中：`search.xml`，搜索时直接根据关键词从文件中查找。
+
+`Hexo` 内置了这个插件，所以我只需要在配置文件中配置几行信息，就可以开启站内搜索功能，如果是比较老旧的 `Hexo` 的版本，可能还没有内置这个站内搜索插件，可以升级 `Hexo` 或者自行安装这个插件：`npm install --save hexo-generator-search`。
+
+当然，如果内容过多，查找速度会变慢，例如我的博客有十几万字，我已经觉得很慢了。另外，在 `Hexo` 的插件仓库也可以找到这个插件的介绍，`Hexo` 插件仓库地址：
+[https://hexo.io/plugins](https://hexo.io/plugins) 。
 
 
 # 参考资料

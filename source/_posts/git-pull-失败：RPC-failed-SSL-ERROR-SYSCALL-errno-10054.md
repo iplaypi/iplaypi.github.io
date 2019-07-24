@@ -1,7 +1,7 @@
 ---
 title: git pull 失败：RPC failed;SSL_ERROR_SYSCALL errno 10054
 id: 2019072301
-date: 2019-07-24 01:06:33
+date: 2019-07-23 23:06:33
 updated: 2019-07-24 01:06:33
 categories: 基础技术知识
 tags: [Git,PRC,SSL]
