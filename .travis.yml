@@ -25,7 +25,8 @@ before_install:
 - export TZ='Asia/Shanghai'
 # 主动推送 urls 到百度站长
 - echo 'start push urls to baidu'
-- curl -H 'Content-Type:text/plain' --data-binary @${URLS_FILE} "http://data.zz.baidu.com/urls?site=https://www.playpi.org&token=${BAIDU_TOKEN}"
+- echo $(curl -H 'Content-Type:text/plain' --data-binary @${URLS_FILE} "http://data.zz.baidu.com/urls?site=https://www.playpi.org&token=${BAIDU_TOKEN}")
+- echo 'finish push urls to baidu'
 - git config --global user.name ${USER_NAME}
 - git config --global user.email ${USER_EMAIL}
 # 由于使用了 yarn,所以需要下载,不用 yarn 这两行可以删除
