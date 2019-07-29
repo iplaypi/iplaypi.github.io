@@ -11,7 +11,7 @@ keywords: Kafka,OffsetOutOfRangeException,Spark,SparkStreaming,Zookeeper
 
 在使用 `Kafka` 的过程中，某一天项目中莫名其妙出现了一个异常信息：
 `kafka.common.OffsetOutOfRangeException`
-项目的业务场景是使用 `SparkStreaming` 消费 `Kafka` 数据，进一步进行 **ETL 处理**，没有复杂的逻辑。平时一切正常运行，某一天我想在测试环境测试一下更新的逻辑代码，就出现了这个问题，导致整个进程任务失败。本文记录分析问题、解决问题的过程，运行环境基于 `Kafka v0.7.x`，`Spark v1.6.x`，其它版本的内容会与这个版本部分不一致，我会特殊注明。
+项目的业务场景是使用 `SparkStreaming` 消费 `Kafka` 数据，进一步进行 **ETL 处理**，没有复杂的逻辑。平时一切正常运行，某一天我想在测试环境测试一下更新的逻辑代码，就出现了这个问题，导致整个进程任务失败。本文记录分析问题、解决问题的过程，运行环境基于 `Kafka v0.8.2.1`，`Spark v1.6.2`、`spark-streaming v2.10`，其它版本的内容会与这个版本存在部分不一致的地方，我会特殊说明。
 
 
 <!-- more -->
@@ -69,9 +69,9 @@ Caused by: kafka.common.OffsetOutOfRangeException
 
 以上注解1、注解2：
 
-[^1]: 注意，`Kafka v0.9.0.x` 以及之后的版本不再是这个策略，不再使用 `Zookeeper`，改成存储到 `kafka` 的 `broker` 节点上面，更方便管理。
+[^1]: 注意，`Kafka v0.9.0.x` 以及之后的版本不再是这个策略，不再使用 `Zookeeper` 存储，改成存储到 `kafka` 的 `broker` 节点上面，更方便管理。
 
-[^2]: 注意，这里的消费策略是通过参数 `autooffset.reset` 设置的，从上一次中断的位置继续消费数据只是消费策略选择之一，取值 `smallest`。另外，`Kafka v0.8.0` 以及之后的版本这个参数已经更名为：`auto.offset.reset`，参数取值在 `v.0.9.0.x` 以及之后的版本也更名为：`earliest`、`latest`。
+[^2]: 注意，这里的消费策略是通过参数 `auto.offset.reset` 设置的，从上一次中断的位置继续消费数据只是消费策略选择之一，取值 `smallest`。另外，`Kafka v0.7.x` 以及之前的版本这个参数曾经的名称为：`autooffset.reset`。这个参数的取值在 `v.0.9.0.x` 以及之后的版本也更名为：`earliest`、`latest`、`none`。
 
 接着回到正题，如果发生**下标越界**现象，说明 `Zookeeper` 中保存**消费者**的 `offset` 的值小于 `topic` 中存在的最早的 `message` 的 `offset` 值，即 `zookeeper_offset < 最早_offset`。
 
@@ -141,7 +141,8 @@ Caused by: kafka.common.OffsetOutOfRangeException
 
 ![查看消费分区偏移量](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190728181432.png "查看消费分区偏移量")
 
-可以看到当前取值是0，接着重置消费者的**偏移量**，使用命令：`set /consumers/consumer_group_name/offsets/topic_name/0 10044740` 。
+可以看到当前取值是0，接着重置消费者的**偏移量**，使用命令：
+`set /consumers/consumer_group_name/offsets/topic_name/0 10044740` 。
 
 ![重置消费分区偏移量](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190728181441.png "重置消费分区偏移量")
 
@@ -153,10 +154,32 @@ Caused by: kafka.common.OffsetOutOfRangeException
 # 总结备注
 
 
-1、本文是基于低版本的 `Kafka` 进行分析问题的：`v0.7.x`，关于里面的参数信息可以参考官网：
+## 不同版本之间的参数差异
+
+本文是基于低版本的 `Kafka` 进行分析问题的：`v0.8.2.1`，关于里面的参数信息可以参考官网：
+[Kafka-v0.8.2-configuration](https://kafka.apache.org/082/documentation.html#consumerconfigs) 。
+
+其中，`auto.offset.reset` 这个参数【`v0.7.x` 之前参数名称为 `autooffset.reset`】的解释说明如图。
+
+![低版本 auto.offset.reset 参数说明](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190729204654.png "低版本 auto.offset.reset 参数说明")
+
+原文如下：
+
+> What to do when there is no initial offset in ZooKeeper or if an offset is out of range:
+> - `smallest` : automatically reset the offset to the smallest offset
+> - `largest` : automatically reset the offset to the largest offset
+> - `anything else`: throw exception to the consumer
+
+参数含义的总结归纳：
+
+- `smallest`：当各分区下有已提交的 `offset` 时，从提交的 `offset` 开始消费；无提交的 `offset` 时，从头开始消费
+- `largest`：当各分区下有已提交的 `offset` 时，从提交的 `offset` 开始消费；无提交的 `offset` 时，从该分区下新产生的数据开始消费
+- `anything else`：`topic` 各分区都存在已提交的 `offset` 时，从 `offset` 后开始消费；只要有一个分区不存在已提交的 `offset`，则抛出异常信息
+
+关于 `v0.7.x` 版本的参数信息参考官网：
 [Kafka-v0.7.x-configuration](https://kafka.apache.org/07/documentation/#configuration) 。
 
-其中，`autooffset.reset` 这个参数【`v0.8.x` 之后参数更名为 `auto.offset.reset`】的解释说明如图。
+其中，`autooffset.reset` 这个参数名称和以后的都不一样，解释说明如图。
 
 ![低版本 autooffset.reset 参数说明](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190728181607.png "低版本 autooffset.reset 参数说明")
 
@@ -165,12 +188,6 @@ Caused by: kafka.common.OffsetOutOfRangeException
 > - `smallest`: automatically reset the offset to the smallest offset available on the broker.
 > - `largest` : automatically reset the offset to the largest offset available on the broker.
 > - `anything else`: throw an exception to the consumer.
-
-参数含义的总结归纳【使用低版本】：
-
-- `smallest`：当各分区下有已提交的 `offset` 时，从提交的 `offset` 开始消费；无提交的 `offset` 时，从头开始消费
-- `largest`：当各分区下有已提交的 `offset` 时，从提交的 `offset` 开始消费；无提交的 `offset` 时，从该分区下新产生的数据开始消费
-- `anything else`：`topic` 各分区都存在已提交的 `offset` 时，从 `offset` 后开始消费；只要有一个分区不存在已提交的 `offset`，则抛出异常信息
 
 至于高版本的配置信息，也可以参考官网：
 [Kafka-v0.9.0.x-configuration](https://kafka.apache.org/090/documentation.html#consumerconfigs) 。
@@ -187,7 +204,11 @@ Caused by: kafka.common.OffsetOutOfRangeException
 > - `none`: throw exception to the consumer if no previous offset is found for the consumer's group.
 > - `anything else`: throw exception to the consumer.
 
-2、**消费者**信息存储位置的问题，新版本【v0.9.x 以及之后】不存储在 `Zookeeper` 了，转而存到 `Kafka` 的 `broker` 节点。如果有**消费者**启动，那么这个**消费者**的组名和它要消费的那个 `topic` 的 `offset` 信息就会被记录在 `broker` 节点上。
+## 消费者信息存储位置
 
-3、关于偏移量 `offset` 的问题，还有一个常见异常：`numRecords must not be negative`，它主要是由删除 `Kafka topic` 后又新建同名的 `topic` 引起的。根本原因在于删除 `topic` 后没有把 `Zookeeper` 中的**消费者**的信息也一同删除，导致遗留的**消费者**的信息在新建同名后 `topic` 被作为当前 `topic` 的**消费者**的信息，如果此时启动一个消费程序，在计算 `numRecords` 的时候会出现负数的情况【0减去old_offset】，接着就会抛出这个异常。
+**消费者**信息存储位置的问题，新版本【v0.9.x 以及之后】不存储在 `Zookeeper` 了，转而存到 `Kafka` 的 `broker` 节点。如果有**消费者**启动，那么这个**消费者**的组名和它要消费的那个 `topic` 的 `offset` 信息就会被记录在 `broker` 节点上。
+
+## 关于偏移量的另一个常见异常
+
+关于偏移量 `offset` 的问题，还有一个常见异常：`numRecords must not be negative`，它主要是由删除 `Kafka topic` 后又新建同名的 `topic` 引起的。根本原因在于删除 `topic` 后没有把 `Zookeeper` 中的**消费者**的信息也一同删除，导致遗留的**消费者**的信息在新建同名后 `topic` 被作为当前 `topic` 的**消费者**的信息，如果此时启动一个消费程序，在计算 `numRecords` 的时候会出现负数的情况【0减去old_offset】，接着就会抛出这个异常。
 
