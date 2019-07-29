@@ -23,6 +23,9 @@ env:
 before_install:
 # 更改时区
 - export TZ='Asia/Shanghai'
+# 主动推送 urls 到百度站长
+- echo 'start push urls to baidu'
+- curl -H 'Content-Type:text/plain' --data-binary @${URLS_FILE} "http://data.zz.baidu.com/urls?site=https://www.playpi.org&token=${BAIDU_TOKEN}"
 - git config --global user.name ${USER_NAME}
 - git config --global user.email ${USER_EMAIL}
 # 由于使用了 yarn,所以需要下载,不用 yarn 这两行可以删除

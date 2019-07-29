@@ -16,6 +16,11 @@ type: guide
 # 2019
 
 
+- 2019072301，[git pull 失败：RPC failed;SSL_ERROR_SYSCALL errno 10054](https://www.playpi.org/2019072301.html)
+- 2019070401，[记录一次 AbstractMethodError 异常](https://www.playpi.org/2019070401.html)
+- 2019062301，[郴州东江湖之行](https://www.playpi.org/2019062301.html)
+- 2019061701，[记一次愚蠢的 HBase 错误](https://www.playpi.org/2019061701.html)
+- 2019061301，[一个诡异的 ES-Hadoop 问题](https://www.playpi.org/2019061301.html)
 - 2019051501，[Linux 让进程在后台运行的几种方法](https://www.playpi.org/2019051501.html)
 - 2019050401，[指南页面的自动收集](https://www.playpi.org/2019050401.html)
 - 2019050201，[使用 Java 代码迁移微博图床到 GitHub 图床](https://www.playpi.org/2019050201.html)
@@ -103,6 +108,8 @@ type: guide
 
 - 2017123101，[Markdown 语法手册](https://www.playpi.org/2017123101.html)
 - 2017102901，[Hello World](https://www.playpi.org/2017102901.html)
+- 2017093001，[使用 Hexo、GitHub 搭建个人博客教程](https://www.playpi.org/2017093001.html)
+- 2017060101，[记录一个 Kafka 错误：OffsetOutOfRangeException](https://www.playpi.org/2017060101.html)
 - 2017051401，[VLOOKUP 函数跨工作表跨文件使用方式](https://www.playpi.org/2017051401.html)
 - 2017050701，[Hexo 框架 Next 主题添加自定义 Page](https://www.playpi.org/2017050701.html)
 - 2017050401，[Linux 输出重定向的问题](https://www.playpi.org/2017050401.html)
