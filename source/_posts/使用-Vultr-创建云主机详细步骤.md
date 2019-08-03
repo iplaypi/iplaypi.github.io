@@ -133,7 +133,7 @@ keywords: Vultr,VPS,vps,Shadowsocks,Affiliate,cloud
 
 在创建的过程中，可以在 `Products` 模块中的 `Snapshots` 标签页中查看系统快照的生成状态，这个过程一般需要很长时间，根据系统的复杂度而定。当然，如果系统中没有安装任何软件，创建起来还是很快的，几分钟就行。
 
-![查看系统快照的生成状态](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190804024111.png "查看系统快照的生成状态")
+![查看系统快照的生成状态](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190804033858.png "查看系统快照的生成状态")
 
 等系统快照创建完成，使用系统快照就简单得多了，在创建云主机的过程中，不需要选择那么多的参数，选择机房位置后，在 `Server Type` 中点击 `Snapshot` 标签页，可以看到系统快照列表，从中选择一个自己需要的系统快照，直接生成即可。
 
