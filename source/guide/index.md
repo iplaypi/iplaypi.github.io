@@ -16,6 +16,7 @@ type: guide
 # 2019
 
 
+- 2019072801，[使用 Vultr 创建云主机详细步骤](https://www.playpi.org/2019072801.html)
 - 2019072301，[git pull 失败：RPC failed;SSL_ERROR_SYSCALL errno 10054](https://www.playpi.org/2019072301.html)
 - 2019070401，[记录一次 AbstractMethodError 异常](https://www.playpi.org/2019070401.html)
 - 2019062301，[郴州东江湖之行](https://www.playpi.org/2019062301.html)
