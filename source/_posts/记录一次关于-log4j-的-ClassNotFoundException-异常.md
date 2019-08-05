@@ -10,7 +10,7 @@ keywords: log4j,slf4j,ClassNotFoundException,DailyRollingFileAppender,Spark,mave
 
 
 本来一个正常的 `Java` 项目，某一次运行的时候发现了一个异常：
-`java.lang.ClassNotFoundException: org.apache.log4j.DailyRollingFileAppender`
+`java.lang.ClassNotFoundException: org.apache.log4j.DailyRollingFileAppender`，
 我觉得很奇怪，这种常用的类怎么可能会缺失。但是，**代码之多，无奇不有**，遇到这种奇怪的问题也是检验我技术高低的良机，看我怎么步步排查，找到问题所在。本文开发环境基于 `Java v1.8+`、`Spark v1.6.x`、`Maven v3.5.x` 。
 
 
@@ -57,7 +57,7 @@ java.lang.ClassNotFoundException: org.apache.log4j.DailyRollingFileAppender
 
 查了很多网上的相同问题，都说是依赖包缺失，但是我觉得不太可能，因为这个 `Java` 项目中的其它模块都能正常使用【使用多个 `Maven` 模块管理整个 `Java` 项目，它们的环境一致】，于是想办法验证一下。
 
-先在 `Java` 项目中搜索类，可以看到能搜索到，说明不会缺失【不考虑打包过程中移除的情况】。
+先在 `Java` 项目中搜索类，可以看到能搜索到，说明不会缺失【此处不考虑打包过程中移除的情况】。
 
 ![全局搜索类](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190804183506.png "全局搜索类")
 
@@ -81,9 +81,9 @@ java.lang.ClassNotFoundException: org.apache.log4j.DailyRollingFileAppender
 # 问题分析解决
 
 
-我努力回想改动了什么代码或者配置才会导致这个问题，使用 `Git` 查一下，通过查看提交历史记录，发现了一处微小的改动，在 `Maven` 模块的 `pom.xml` 文件中。这也是造成这个问题的罪魁祸首，下面详细说明。
+我努力回想改动了什么代码或者配置才会导致这个问题，使用 `Git` 查一下，通过查看提交历史记录，发现了一处微小的改动，在 `Maven` 子模块的 `pom.xml` 文件中。这也是造成这个问题的罪魁祸首，下面详细说明。
 
-其实，此时需要考虑一个问题，本机查看的项目代码和打包后的可能不一样，比如冲突问题导致的版本选择，或者插件造成的部分无效依赖被移除。
+其实，此时需要考虑一个问题，本机查看的项目代码和打包后的可能不一样，比如冲突问题导致的版本选择，或者插件造成的部分无效依赖被移除等原因会造成前后差异。
 
 我也一直在回想我改动了什么代码或者配置，才触发了这个问题，果然，通过 `Git` 的提交记录找到了蛛丝马迹。
 
@@ -138,7 +138,7 @@ java.lang.ClassNotFoundException: org.apache.log4j.DailyRollingFileAppender
 </plugin>
 ```
 
-其中，`<minimizeJar>true</minimizeJar>` 这个配置影响了打包的依赖保留还是移除，我把它配置为 `true`，打包时会自动帮我移除无用的依赖包，其中包括 `log4j`、`slf4j`，也就导致了本文开头的问题。
+其中，`<minimizeJar>true</minimizeJar>` 这个配置决定了打包的依赖保留还是移除，我把它配置为 `true`，打包时会自动帮我移除无用的依赖包，其中包括 `log4j`、`slf4j`，也就导致了本文开头的问题。
 
 看来，`maven-shade-plugin` 插件的依赖瘦身功能，还是要慎用，像今天这种情况就很是莫名其妙，只能靠细心、靠经验来发现问题、解决问题，如果是别人的代码还真难发现。
 
