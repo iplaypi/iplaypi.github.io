@@ -64,6 +64,7 @@ comments: false
   - 插件之全能启动器：[全能启动器 Plus](https://chrome.google.com/webstore/detail/steward-plus/dnkhdiodfglfckibnfcjbgddcgjgkacd)
   - 插件之解除网页复制限制：[Enable Copy](https://chrome.google.com/webstore/detail/enable-copy/lmnganadkecefnhncokdlaohlkneihio/related?hl=zh-CN)
   - 插件之 IDEA 调试工具：[JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji)
+  - 插件之 GitHub 代码查看神器：[Octotree](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) ，官方网站：[octotree.io](https://www.octotree.io)
   - 应用之需求设计作图工具（流程图、类图、时序图）：[Gliffy Diagrams](https://chrome.google.com/webstore/detail/gliffy-diagrams/bhmicilclplefnflapjmnngmkkkkpfad?hl=zh-CN)
   - 应用之模拟 Http 请求工具：[Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=zh-CN)
 - 加速热部署工具：[JRebel](https://jrebel.com)
