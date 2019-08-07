@@ -107,6 +107,8 @@ comments: false
 - 变量命名神器：[Codelf](https://unbug.github.io/codelf)
 - 下载工具，基于 Aria2：[Motrix](https://motrix.app)
 - 文件比较工具：[UltraCompare](https://www.ultraedit.com/products/ultracompare)，官方网站还有其它产品，例如：[UltraEdit](https://www.ultraedit.com)
+- 世界名画博物馆，收集所有名画：[gallerix](https://gallerix.asia)
+- 源代码转换图片工具，类似carbon：[codeimg](https://codeimg.io)
 
 ## 技术列表
 
@@ -114,11 +116,14 @@ comments: false
 - Python
 - Scala
 - Spark
+- Shell
 - Elasticsearch
 - Hadoop（HDFS、MapReduce）
 - HBase
 - Git
 - Maven
+- Spring Boot
+- Spring Cloud
 - 其它
 
 ## 归档分类
