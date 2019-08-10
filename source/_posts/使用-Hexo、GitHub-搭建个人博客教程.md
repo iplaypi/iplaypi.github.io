@@ -121,6 +121,14 @@ creative_commons: by-nc-sa
 当然，如果内容过多，查找速度会变慢，例如我的博客有十几万字，我已经觉得很慢了。另外，在 `Hexo` 的插件仓库也可以找到这个插件的介绍，`Hexo` 插件仓库地址：
 [https://hexo.io/plugins](https://hexo.io/plugins) 。
 
+## 添加开源协议
+
+我使用 `MIT` 协议，增加 `LICENSE` 文件，使用模板即可，必须放在 `master` 分支才会生效。
+
+## 添加徽标
+
+除了构建结果图标使用的是 `travis`，其它徽标使用的是 `GitHub` 的官方徽标库：[shields.io](https://shields.io)，增加了 `Issue` 的打开关闭数量、使用的语言【自定义的徽标】、开源协议。
+
 
 # 参考资料
 
