@@ -68,6 +68,8 @@ comments: false
   - 应用之需求设计作图工具（流程图、类图、时序图）：[Gliffy Diagrams](https://chrome.google.com/webstore/detail/gliffy-diagrams/bhmicilclplefnflapjmnngmkkkkpfad?hl=zh-CN)
   - 应用之模拟 Http 请求工具：[Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=zh-CN)
 - 加速热部署工具：[JRebel](https://jrebel.com)
+- Git 可视化管理工具：[gitkraken](https://www.gitkraken.com)
+- Git 在线可视化学习网站：[learngitbranching](https://learngitbranching.js.org)
 
 ## 辅助工具
 
@@ -110,6 +112,11 @@ comments: false
 - 文件比较工具：[UltraCompare](https://www.ultraedit.com/products/ultracompare)，官方网站还有其它产品，例如：[UltraEdit](https://www.ultraedit.com)
 - 世界名画博物馆，收集所有名画：[gallerix](https://gallerix.asia)
 - 源代码转换图片工具，类似carbon：[codeimg](https://codeimg.io)
+- 在线短信接收网站，一千多个手机号：[pdflibr](https://www.pdflibr.com)
+- 国家知识产权局商标局：[中国商标网](http://wsjs.saic.gov.cn)
+- 工信部投诉：[工业和信息化部电信用户申诉受理中心](https://dxss.miit.gov.cn)
+- 投诉快递：[国家邮政局申诉网站](http://sswz.spb.gov.cn)
+- 投诉骚扰电话、垃圾短信：[12321网络不良与垃圾信息举报受理中心](https://www.12321.cn)
 
 ## 技术列表
 
@@ -143,6 +150,11 @@ comments: false
 - 大数据技术知识
 - 随笔
 - 其它
+
+## 博客模板
+
+- 菜谱总结类：1、食材准备；2、制作步骤；3、注意事项
+- 问题异常类：1、问题出现；2、问题解决；3、问题总结
 
 ## 成长建议
 
