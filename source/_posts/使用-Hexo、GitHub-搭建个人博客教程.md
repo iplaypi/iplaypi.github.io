@@ -123,11 +123,31 @@ creative_commons: by-nc-sa
 
 ## 添加开源协议
 
-我使用 `MIT` 协议，增加 `LICENSE` 文件，使用模板即可，必须放在 `master` 分支才会生效。
+我使用 `MIT` 开源协议，增加 `LICENSE` 文件，使用模板即可，必须放在 `master` 分支才会生效。
 
-## 添加徽标
+在项目中选择 `Create new file`，创建一个新文件，命名为：`LICENSE`，然后在右侧可以看到会有开源协议列表给你选择，选择需要的开源协议，其它内容会自动生成。创建成功后，就可以在项目的属性中看到开源协议信息，例如：`MIT`。
 
-除了构建结果图标使用的是 `travis`，其它徽标使用的是 `GitHub` 的官方徽标库：[shields.io](https://shields.io)，增加了 `Issue` 的打开关闭数量、使用的语言【自定义的徽标】、开源协议。
+开源协议生效后在项目中的效果如下图。
+
+![开源协议效果图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190814202201.png "开源协议效果图")
+
+## 添加徽章
+
+除了构建结果徽章使用的是 `travis`，其它徽章使用的是 `GitHub` 的官方徽章库：[shields.io](https://shields.io)，增加了 `Issue` 的打开关闭数量、使用的语言【自定义的徽章】、开源协议。
+
+`README` 文件中的文本内容如下：
+
+```
+[![Build Status](https://travis-ci.org/iplaypi/iplaypi.github.io.svg?branch=source)](https://travis-ci.org/iplaypi/iplaypi.github.io)
+![GitHub issues](https://img.shields.io/github/issues/iplaypi/iplaypi.github.io?color=blue&style=flat)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/iplaypi/iplaypi.github.io?color=red&style=flat)
+![](https://img.shields.io/badge/language-markdown-orange.svg)
+![GitHub](https://img.shields.io/github/license/iplaypi/iplaypi.github.io?color=green)
+```
+
+徽标可视化效果展示如下图。
+
+![徽标可视化展示效果](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190814201843.png "徽标可视化展示效果")
 
 
 # 参考资料
