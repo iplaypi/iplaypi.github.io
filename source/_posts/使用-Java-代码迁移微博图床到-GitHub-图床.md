@@ -20,7 +20,7 @@ keywords: weibo,GitHub,image
 
 为了减少代码量，精简代码，需要引入几个第三方 jar 包，当然不引入也行，如果不引入有一些繁琐而又简单的业务逻辑需要自己实现，有点浪费时间了。
 
-主要要依赖几个 jar 包：处理文件的 io 包、处理网络请求的 httpclient 包、处理 git 的 jgit 包，pom.xml 配置文件内容如下：
+主要要依赖几个 `jar` 包：处理文件的 `io` 包、处理网络请求的 `httpclient` 包、处理 `git` 的 `jgit` 包，`pom.xml` 配置文件内容如下：
 
 ```
 <dependency>
@@ -44,9 +44,9 @@ keywords: weibo,GitHub,image
 # 代码结构
 
 
-写代码也比较简单，主要有四个步骤：读取 markdown 文件内容并利用正则抽取微博图床的图片链接、下载所有图片并上传至 GitHub、替换内容中抽取出的所有图片链接为 GitHub 的图片链接、内容写回新文件。
+写代码也比较简单，主要有四个步骤：读取 `Markdown` 文件内容并利用正则抽取微博图床的图片链接、下载所有图片并上传至 `GitHub`、替换内容中抽取出的所有图片链接为 `GitHub` 的图片链接、内容写回新文件。
 
-使用 Java 处理不需要多少代码，大概有不到200行代码，真正的业务逻辑代码更少，当然，关于网络请求的部分还是不够精简，目前我觉得能用就行。代码放在 GitHub 上面，仅供参考：[https://github.com/iplaypi/startcore.git](https://github.com/iplaypi/startcore.git) ，搜索 **MigratePic** 类即可。
+使用 `Java` 处理不需要多少代码，大概有不到200行代码，真正的业务逻辑代码更少，当然，关于网络请求的部分还是不够精简，目前我觉得能用就行。代码放在 `GitHub` 上面，仅供参考：[MigratePic.java](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/main/java/org/playpi/study/migratepic) ，搜索 **MigratePic** 类即可。
 
 代码主体调用：
 
@@ -103,13 +103,13 @@ private static Set<File> getAllFiles(String dir) {
 }
 ```
 
-在代码的细节中，可以看到我是每个文件单独处理的，比较耗时间的就是下载图片、上传到 GitHub 这两个过程，而且由于我是文件分开处理，所以总的时间更长了。如果想节约点时间，可以一次性把所有的图片全部下载完成，最后一次提交到 GitHub 即可，这样就节约了多次频繁地与 GitHub 建立连接、断开连接所消耗的时间，如果是几次提交无所谓，但是几十次提交就多消耗很多时间了。例如按照我这个量，78个文件，500-600张图片，运行程序消耗了十几分钟，但是我估计如果一次性处理完成，时间应该在5分钟以内。
+在代码的细节中，可以看到我是每个文件单独处理的，比较耗时间的就是下载图片、上传到 `GitHub` 这两个过程，而且由于我是文件分开处理，所以总的时间更长了。如果想节约点时间，可以一次性把所有的图片全部下载完成，最后一次提交到 `GitHub` 即可，这样就节约了多次频繁地与 `GitHub` 建立连接、断开连接所消耗的时间，如果是几次提交无所谓，但是几十次提交就多消耗很多时间了。例如按照我这个量，78个文件，500-600张图片，运行程序消耗了十几分钟，但是我估计如果一次性处理完成，时间应该在5分钟以内。
 
 接下来分别描述四个步骤。
 
 ## 读取文件抽取图片链接
 
-markdown 文件其实也就是普通的文本文件，没有特殊的格式，这就给程序处理带来了极大方便，直接使用工具包读取就行。此外，抽取微博图床的图片链接需要使用正则表达式，代码内容如下：
+`Markdown` 文件其实也就是普通的文本文件，没有特殊的格式，这就给程序处理带来了极大方便，直接使用工具包读取就行。此外，抽取微博图床的图片链接需要使用正则表达式，代码内容如下：
 
 ```
 private static Pattern PATTERN = Pattern.compile("https://[0-9a-zA-Z]{3}\.sinaimg\.cn/large/[0-9a-zA-Z]{8,50}\.jpg");
@@ -139,11 +139,11 @@ https://ws1.sinaimg.cn/large/b7f2e3a3gy1g2hlkwnfm9j214a0hr75v.jpg 。
 
 ## 下载图片并上传新图床
 
-这是一个很重要的步骤，需要把上一个步骤完成后获取到的图片下载下来，并且提交到 GitHub 上面去【提交可以不使用代码，直接手动提交也行】，然后获取新图片链接。
+这是一个很重要的步骤，需要把上一个步骤完成后获取到的图片下载下来，并且提交到 `GitHub` 上面去【提交可以不使用代码，直接手动提交也行】，然后获取新图片链接。
 
-为了完成这个步骤，需要先在 GitHub 上面新建一个项目，专门用来存放图片，然后把这个项目 clone 到本地，用来存放下载的图片，最后直接提交即可。
+为了完成这个步骤，需要先在 `GitHub` 上面新建一个项目，专门用来存放图片，然后把这个项目 `clone` 到本地，用来存放下载的图片，最后直接提交即可。
 
-下载图片并提交到 GitHub：
+下载图片并提交到 `GitHub`：
 
 ```
 private static String githubUrl = "https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/";
@@ -175,10 +175,10 @@ private static Map<String, String> uploadGithub(Map<String, String> imgMap) {
     }
 ```
 
-注意下载图片需要指定本地项目的路径，方便提交到 GitHub，例如我这里是 **E:\img\img-playpi\img\old\\**，拼接 GitHub 的图片链接时需要指定固定的域名部分、用户名、分支名、子目录，例如我这里是：
+注意下载图片需要指定本地项目的路径，方便提交到 `GitHub`，例如我这里是 **E:\img\img-playpi\img\old\\**，拼接 `GitHub` 的图片链接时需要指定固定的域名部分、用户名、分支名、子目录，例如我这里是：
 **https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/ **。
 
-这里列举一个 GitHub 图片链接的例子：
+这里列举一个 `GitHub` 图片链接的例子：
 https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/20190502183444.png 。
 
 下载图片的详细逻辑：
@@ -261,7 +261,7 @@ private static Boolean savePicToDisk(InputStream in, String dirPath, String file
 }
 ```
 
-提交图片到 GitHub 的代码：
+提交图片到 `GitHub` 的代码：
 
 ```
     /**
@@ -293,7 +293,7 @@ private static Boolean savePicToDisk(InputStream in, String dirPath, String file
 
 ## 使用新链接替换旧链接
 
-如果前面的步骤完成，就说明图片已经被成功迁移到 GitHub 上面，并且获取到了新的图片链接，接着直接替换掉旧链接即可。
+如果前面的步骤完成，就说明图片已经被成功迁移到 `GitHub` 上面，并且获取到了新的图片链接，接着直接替换掉旧链接即可。
 
 代码逻辑如下：
 
@@ -317,7 +317,7 @@ private static Boolean savePicToDisk(InputStream in, String dirPath, String file
 
 ## 替换后内容写回新文件
 
-写入新文件是很简单的，直接调用 io 包即可完成，但是为了安全起见，文件放在新的目录中，不要直接替换掉原来的文件，否则程序出现意外就麻烦了。
+写入新文件是很简单的，直接调用 `io` 包即可完成，但是为了安全起见，文件放在新的目录中，不要直接替换掉原来的文件，否则程序出现意外就麻烦了。
 
 
 # 迁移结果
@@ -329,8 +329,8 @@ private static Boolean savePicToDisk(InputStream in, String dirPath, String file
 在本地仓库查看，图片已经全部下载。
 ![在本地仓库查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190504004224.png "在本地仓库查看")
 
-在 GitHub 的仓库中查看，图片全部推送。
+在 `GitHub` 的仓库中查看，图片全部推送。
 ![在 GitHub 的仓库中查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190504004216.png "在 GitHub 的仓库中查看")
 
-任意打开一篇博客，里面的图片已经可以全部正常显示，只不过有一些太大的图片【超过1MB的】加载速度有点慢，还可以接受。
+任意打开一篇博客，里面的图片已经可以全部正常显示，只不过有一些太大的图片【超过 1MB 的】加载速度有点慢，还可以接受。
 

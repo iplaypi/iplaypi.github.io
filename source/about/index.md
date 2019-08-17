@@ -65,6 +65,7 @@ comments: false
   - 插件之解除网页复制限制：[Enable Copy](https://chrome.google.com/webstore/detail/enable-copy/lmnganadkecefnhncokdlaohlkneihio/related?hl=zh-CN)
   - 插件之 IDEA 调试工具：[JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji)
   - 插件之 GitHub 代码查看神器：[Octotree](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) ，官方网站：[octotree.io](https://www.octotree.io)
+  - 插件之 PDF 转换工具：[smallpdf](https://chrome.google.com/webstore/detail/smallpdf-edit-compress-an/ohfgljdgelakfkefopgklcohadegdpjf)
   - 应用之需求设计作图工具（流程图、类图、时序图）：[Gliffy Diagrams](https://chrome.google.com/webstore/detail/gliffy-diagrams/bhmicilclplefnflapjmnngmkkkkpfad?hl=zh-CN)
   - 应用之模拟 Http 请求工具：[Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=zh-CN)
 - 加速热部署工具：[JRebel](https://jrebel.com)
@@ -117,6 +118,11 @@ comments: false
 - 工信部投诉：[工业和信息化部电信用户申诉受理中心](https://dxss.miit.gov.cn)
 - 投诉快递：[国家邮政局申诉网站](http://sswz.spb.gov.cn)
 - 投诉骚扰电话、垃圾短信：[12321网络不良与垃圾信息举报受理中心](https://www.12321.cn)
+- 视频原创片头网站：[panzoid](https://panzoid.com)
+- 在线抠图网站：[remove.bg](https://www.remove.bg)
+- 字体授权网站：[字体家](https://www.zitijia.com)
+- PDF 转换工具：[smallpdf](https://smallpdf.com)
+- 图片壁纸分享网站：[pexels](https://www.pexels.com)
 
 ## 技术列表
 
