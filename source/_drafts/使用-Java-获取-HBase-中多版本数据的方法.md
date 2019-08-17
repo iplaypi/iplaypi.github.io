@@ -51,7 +51,9 @@ keywords: Java,HBase,version
 # 备注
 
 
-1、在使用 `Java API` 时注意低版本、高版本之间的差异，必要时及时升级，就像上文代码中的 `getRow()`、`getValue()` 这两个方法。
+1、在使用 `Java API` 时注意低版本、高版本之间的差异，必要时及时升级，就像上文代码中的 `Result.getColumn`、`KeyValue.getValue()`、`Cell.getValue()` 这几个方法。
 
 2、`Phoenix` 是一款基于 `HBase` 的工具，在 `HBase` 之上提供了 `OLTP` 相关的功能，例如完全的 `ACID` 支持、`SQL`、二级索引等，此外 `Phoenix` 还提供了标准的 `JDBC` 的 `API`。在使用 `Phoenix` 时，可以很方便地像操作 `SQL` 那样操作 `HBase`。
+
+3、本示例的代码放在 `GirHub`，详见：[TestHBase.java](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-hbase/src/main/java/org/playpi/study/test) ，搜索类名 `TestHBase` 即可。参考 `GitHub` 的代码时，注意在 `iplaypistudy-common-config` 模块中增加自己的配置文件，如果开发环境的版本不匹配，也要升级版本，在 `pom.xml` 更改即可。
 
