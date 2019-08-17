@@ -125,7 +125,17 @@ creative_commons: by-nc-sa
 
 我使用 `MIT` 开源协议，增加 `LICENSE` 文件，使用模板即可，必须放在 `master` 分支才会生效。
 
-在项目中选择 `Create new file`，创建一个新文件，命名为：`LICENSE`，然后在右侧可以看到会有开源协议列表给你选择，选择需要的开源协议，其它内容会自动生成。创建成功后，就可以在项目的属性中看到开源协议信息，例如：`MIT`。
+在项目中选择 `Create new file`，创建一个新文件，命名为：`LICENSE`，然后在右侧可以看到会有开源协议列表给你选择，选择需要的开源协议，其它内容会自动生成。
+
+新建文件时选择开源协议模板
+
+![选择开源协议模板](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190818033915.png "选择开源协议模板")
+
+根据模板生成开源协议内容
+
+![生成开源协议内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190818033908.png "生成开源协议内容")
+
+创建成功后，就可以在项目的属性中看到开源协议信息，例如：`MIT`。
 
 开源协议生效后在项目中的效果如下图。
 
