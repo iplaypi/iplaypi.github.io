@@ -374,11 +374,13 @@ public void testGet() {
 
 使用 `Phoenix` 创建表、查询数据示例如图。
 
-创建表，使用：`CREATE TABLE IF NOT EXISTS TB_HBASE_STUDENT ("pk" varchar primary key, "cf"."name" varchar,"cf"."age" varchar);`
+创建表，使用：
+`CREATE TABLE IF NOT EXISTS TB_HBASE_STUDENT ("pk" varchar primary key, "cf"."name" varchar,"cf"."age" varchar);`
 
 ![使用 Phoenix 创建表](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190818192546.png "使用 Phoenix 创建表")
 
-查询示例，使用：`select * from "TB_HBASE_STUDENT" limit 5;`
+查询示例，使用：
+`select * from "TB_HBASE_STUDENT" limit 5;`
 
 ![使用 Phoenix 查询](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190818192540.png "使用 Phoenix 查询")
 
