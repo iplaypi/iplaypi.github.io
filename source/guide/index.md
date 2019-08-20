@@ -18,7 +18,9 @@ type: guide
 
 - 2019073001，[记录一次关于 log4j 的 ClassNotFoundException 异常](https://www.playpi.org/2019073001.html)
 - 2019072801，[使用 Vultr 创建云主机详细步骤](https://www.playpi.org/2019072801.html)
+- 2019072701，[番茄鸡蛋面做法总结-酸汤口味](https://www.playpi.org/2019072701.html)
 - 2019072301，[git pull 失败：RPC failed;SSL_ERROR_SYSCALL errno 10054](https://www.playpi.org/2019072301.html)
+- 2019071101，[使用 Java 获取 HBase 中多版本数据的方法](https://www.playpi.org/2019071101.html)
 - 2019070401，[记录一次 AbstractMethodError 异常](https://www.playpi.org/2019070401.html)
 - 2019062301，[郴州东江湖之行](https://www.playpi.org/2019062301.html)
 - 2019061701，[记一次愚蠢的 HBase 错误](https://www.playpi.org/2019061701.html)
