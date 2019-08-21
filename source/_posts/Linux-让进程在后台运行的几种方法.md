@@ -32,6 +32,15 @@ keywords: Linux,nohup,setsid,disown,screen,daemon
 
 那么我不禁思考，有没有什么办法可以让任务在提交后不受网络中断、会话退出的影响呢，可以一直保持在后台稳定运行，直到结束。肯定是有的，读者在工作中一定也见过周围的大神同事操作，下面列举一些常用的方式，读者可以参考，选择自己喜欢的方式使用。
 
+内容中涉及到的 `SIGHUP` 信号，先来了解一下它的由来：
+
+> 在 `Unix` 的早期版本中，每个终端都会通过 `modem` 和系统通讯，当用户 `logout` 时，`modem` 就会挂断（hang up）电话。同理，当 `modem` 断开连接时，就会给终端发送 `hangup` 信号来通知其关闭所有子进程。这里的子进程包含前台子进程、后台子进程，前台子进程是被直接关闭的，后台子进程要根据操作系统的 `huponexit` 设置而定，不一定会被关闭。其中，这里的后台子进程包括正在运行的子进程（使用 jobs 工具查看 处于 running 状态）、暂停的子进程（使用 jobs 工具查看 处于 stopped 状态）。
+
+再看一下维基百科给它的定义：
+
+> **nohup** is a POSIX command to ignore the HUP (hangup) signal. The HUP signal is, by convention, the way a terminal warns dependent processes of logout.
+> Output that would normally go to the terminal goes to a file called nohup.out if it has not already been redirected.
+
 
 # 直接忽略挂起信号
 
@@ -67,7 +76,7 @@ keywords: Linux,nohup,setsid,disown,screen,daemon
 使用 `Ctrl + z` 命令，把正在前台运行的进程暂停，并放在后台，程序并没有被杀死。其实这个组合快捷键是一种控制信号，编号为`19`，标识为 `SIGSTOP`，读者可以参考我的另外一篇博文：[Linux 之 kill 命令入门实践](https://playpi.org/2019042101.html) 。当然，如果使用终端工具，再开一个会话窗口，使用 `ps` 命令查询这个进程的 `pid` 编号，然后使用 `kill -19 pid` 命令发送一个 `SIGSTOP` 信号给进程也可以达到把程序暂停并放在后台的效果。
 
 
-# 批量管理
+# 批量管理进程
 
 
 前面的描述都是单个进程或者几个进程，管理起来也挺方便，但是如果遇到大量的进程需要管理，例如运维人员日常需要手动管理大量的进程，几百个几千个都是有可能的，那么怎么办呢。为了简化管理，并且保证进程能在后台稳定运行，此时就需要通过 `screen` 工具来操作，这是一个利器。
