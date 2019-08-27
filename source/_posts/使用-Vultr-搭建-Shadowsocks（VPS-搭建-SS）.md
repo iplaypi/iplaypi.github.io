@@ -39,9 +39,9 @@ keywords: Vultr,Shadowsocks,SS,VPS,搭梯子,梯子搭建,翻墙工具,影梭
 
 # Shadowsocks服务安装
 
-云主机选择 `CentOS 7 x64` 版本，全程操作使用 `Linux` 命令（注意，如果选择其它系统命令会不一致，请自己查询，例如：`Debian/Ubuntu` 系统的安装命令更简洁，先 `apt-get install python-pip`，再 `pip install shadowsocks` 即可）。
+云主机选择 `CentOS 7 x64` 版本，全程操作使用 `Linux` 命令【注意，如果选择其它系统命令会不一致，请自己查询，例如：`Debian/Ubuntu` 系统的安装命令更简洁，先 `apt-get install python-pip`，再 `pip install shadowsocks` 即可】。
 
-注意如果安装了防火墙（更安全），需要的端口一定要开启，否则启动 `Shandowsocks` 会失败。
+注意如果安装了防火墙【更安全】，需要的端口一定要开启，否则启动 `Shandowsocks` 会失败。
 
 安装组件：
 
@@ -79,7 +79,7 @@ vi  /etc/shadowsocks.json
 | method | 加密方法，默认：“aes-256-cfb” |
 | fast_open | 开启或关闭 [TCP_FASTOPEN](https://github.com/shadowsocks/shadowsocks/wiki/TCP-Fast-Open)，填 true / false，需要服务端支持 |
 
-配置多端口信息（多个帐号，多人也可用）：
+配置多端口信息【多个帐号，多人也可用】：
 
 ```json
 {
@@ -97,7 +97,7 @@ vi  /etc/shadowsocks.json
 }
 ```
 
-配置多端口信息（纯净版本，更改 `ip`、端口等信息直接复制使用）：
+配置多端口信息【纯净版本，更改 `ip`、端口等信息直接复制使用】：
 
 ```json
 {
@@ -115,7 +115,7 @@ vi  /etc/shadowsocks.json
 }
 ```
 
-配置一个端口信息（只有一个帐号，多人也可用）：
+配置一个端口信息【只有一个帐号，多人也可用】：
 
 ```json
 {
@@ -130,7 +130,7 @@ vi  /etc/shadowsocks.json
 }
 ```
 
-配置一个端口信息（纯净版本，更改 `ip`、端口等信息直接复制使用）：
+配置一个端口信息【纯净版本，更改 `ip`、端口等信息直接复制使用】：
 
 ```json
 {
@@ -228,19 +228,19 @@ net.ipv4.tcp_fin_timeout = 5
 
 下载 `Windows` 平台的客户端，下载地址：[shadowsocks-windows GitHub](https://github.com/shadowsocks/shadowsocks-windows)，[shadowsocks 官网](http://shadowsocks.org/en/download/clients.html)，直接解压放入文件夹即可使用，不需要安装。
 
-但是注意配置内容（端口、密码、加密协议等等），另外注意有些 `Windows` 系统缺失 `Shadowsocks` 必要的组件（`.NET Framework`），需要安装，官网也有说明。
+但是注意配置内容【端口、密码、加密协议等等】，另外注意有些 `Windows` 系统缺失 `Shadowsocks` 必要的组件【`.NET Framework`】，需要安装，官网也有说明。
 
 配置示例：
 
 ![ss 配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa3pjtymuj20g60dp75k.jpg "ss 配置")
 
-实际上下载程序后，无需安装，直接解压即可，解压后只有一个 `exe` 文件，双击即可运行（最好放入指定文件夹中，便于程序管理和升级）。第一次启动，需要设置参数，如上图所示，至少配置一台机器，另外还可以设置开机启动，以后不用重新打开。此外，如果有更新版本的程序，会放在 `ss_win_temp` 文件夹下，直接解压后复制替换掉当前的 `exe` 文件即可；如果文件夹中有 `gui-config.json`、`statistics-config.json` 这2个文本文件，它们是程序的配置以及前面设置的翻墙配置，不能删掉；如果使用系统代理的 `PAC` 模式（推荐使用），会生成 `pac.txt` 文本文件，存放从 `GFWList` 获取的被墙的网址，必要时才会通过翻墙代理访问，其它正常的网址则直接访问，这样可以节约流量。
+实际上下载程序后，无需安装，直接解压即可，解压后只有一个 `exe` 文件，双击即可运行【最好放入指定文件夹中，便于程序管理和升级】。第一次启动，需要设置参数，如上图所示，至少配置一台机器，另外还可以设置开机启动，以后不用重新打开。此外，如果有更新版本的程序，会放在 `ss_win_temp` 文件夹下，直接解压后复制替换掉当前的 `exe` 文件即可；如果文件夹中有 `gui-config.json`、`statistics-config.json` 这2个文本文件，它们是程序的配置以及前面设置的翻墙配置，不能删掉；如果使用系统代理的 `PAC` 模式（推荐使用），会生成 `pac.txt` 文本文件，存放从 `GFWList` 获取的被墙的网址，必要时才会通过翻墙代理访问，其它正常的网址则直接访问，这样可以节约流量。
 
 ![ss 文件夹](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3ly1fxbhx6e12jj20h004qgln.jpg "ss 文件夹")
 
 如果有切换代理的需求，搭配浏览器的插件来完成，例如 [Proxy SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN) 就可以。
 
-关于启动系统代理并使用 `PAC` 模式（根据条件过滤，不满足的直连），如果是入门级别使用，直接设置完就可以用了，不用再管其它设置，切记要定时更新 `GFWList` 列表，因为如果某些网站最近刚刚被屏蔽，不在以前的 `HFWList` 列表里面，就会导致无法连接，只有及时更新才能正常连接。但是还有一种极端情况，就是某些网站 `GFWList` 迟迟没有收录，怎么更新都不会起作用，别着急，此时可以使用用户自定义规则，模仿 `GFWList` 填写自己的过滤规则，即可实现灵活的切换，使用用户自定义规则后会在安装文件夹中生成 `user-rule.txt` 文本文件。
+关于启动系统代理并使用 `PAC` 模式【根据条件过滤，不满足的直连】，如果是入门级别使用，直接设置完就可以用了，不用再管其它设置，切记要定时更新 `GFWList` 列表，因为如果某些网站最近刚刚被屏蔽，不在以前的 `HFWList` 列表里面，就会导致无法连接，只有及时更新才能正常连接。但是还有一种极端情况，就是某些网站 `GFWList` 迟迟没有收录，怎么更新都不会起作用，别着急，此时可以使用用户自定义规则，模仿 `GFWList` 填写自己的过滤规则，即可实现灵活的切换，使用用户自定义规则后会在安装文件夹中生成 `user-rule.txt` 文本文件。
 
 ![开启系统代理并使用PAC模式](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbo5moanxj20cj0a5dga.jpg "开启系统代理并使用 PAC 模式")
 
@@ -248,7 +248,9 @@ net.ipv4.tcp_fin_timeout = 5
 
 ![PAC 模式下自定义过滤规则](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbo7ifow9j20j80apt9k.jpg "PAC 模式下自定义过滤规则")
 
-其实，`PAC` 模式的原理就是根据公共的过滤规则（收集被屏蔽的网站列表），自动生成了一个脚本文件，把脚本文件绑定到浏览器的代理设置中，使浏览器访问网站前都会运行这个脚本，根据脚本的结果决定是直接访问还是通过本地代理访问，脚本在 `Shadowsocks` 的 `PAC` 设置中可以看到，浏览器的设置信息可以在代理设置中看到（浏览器在 `Shadowsocks` 开启系统代理的时候会自动设置代理，无需人工干预）。由此可以得知，通过本机访问网络，决定是直接连接还是通过 `Shadowsocks` 代理连接的是 `PAC` 脚本，并不是 `Shadowsocks` 本身，所以如果使用系统的 `Ping` 命令访问 www.google.com 仍然是不能访问的，因为直接 `Ping` 没有经过 `PAC` 脚本，还是直接连接了，不可能访问成功。除了浏览器之外，如果其它程序也想访问被屏蔽的网站（例如 `Git`、`Maven` 仓库），只能通过程序自己的代理设置进行配置，完成访问的目的。（如果放弃 `PAC` 模式，直接使用全局模式，则不需要配置任何信息，本机所有的网络请求会全部经过翻墙代理，当然这样做会导致流量消耗过大，并且国内的正常网站访问速度也会很慢）
+其实，`PAC` 模式的原理就是根据公共的过滤规则【收集被屏蔽的网站列表】，自动生成了一个脚本文件，把脚本文件绑定到浏览器的代理设置中，使浏览器访问网站前都会运行这个脚本，根据脚本的结果决定是直接访问还是通过本地代理访问，脚本在 `Shadowsocks` 的 `PAC` 设置中可以看到，浏览器的设置信息可以在代理设置中看到【浏览器在 `Shadowsocks` 开启系统代理的时候会自动设置代理，无需人工干预】。
+
+由此可以得知，通过本机访问网络，决定是直接连接还是通过 `Shadowsocks` 代理连接的是 `PAC` 脚本，并不是 `Shadowsocks` 本身，所以如果使用系统的 `Ping` 命令访问 www.google.com 仍然是不能访问的，因为直接 `Ping` 没有经过 `PAC` 脚本，还是直接连接了，不可能访问成功。除了浏览器之外，如果其它程序也想访问被屏蔽的网站【例如 `Git`、`Maven` 仓库】，只能通过程序自己的代理设置进行配置，完成访问的目的。【如果放弃 `PAC` 模式，直接使用全局模式，则不需要配置任何信息，本机所有的网络请求会全部经过翻墙代理，当然这样做会导致流量消耗过大，并且国内的正常网站访问速度也会很慢】
 
 ![获取 PAC 的脚本地址](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbof33m9dj20ij0aa0tl.jpg "获取 PAC 的脚本地址")
 
@@ -257,12 +259,12 @@ http://127.0.0.1:1080/pac?t=20181118030355597&secret=qZKsW49fDFezR4jJQtRDhUVPRqn
 
 ![浏览器代理配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxboiacqtbj20se0kojse.jpg "浏览器代理配置")
 
-以上是查看 `Chrome` 浏览器和 `IE` 浏览器的代理设置信息，对于 `Microsoft Edge`（`Windows 10` 自带）浏览器来说，界面有点不一样，在设置->高级->代理设置里面。
+以上是查看 `Chrome` 浏览器和 `IE` 浏览器的代理设置信息，对于 `Microsoft Edge`【`Windows 10` 自带的】浏览器来说，界面有点不一样，在**设置** -> **高级** -> **代理设置**里面。
 
 ![Edge 浏览器设置代理脚本](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbooa2ikvj20xc0pwq93.jpg "Edge浏览器设置代理脚本")
 
-此外，如果在浏览器中有更灵活的需求应用， 例如在设置多个代理的情况下，针对公司内网是一套，针对指定的几个网站是一套，针对被屏蔽的网站是一套，剩余的直接连接。在这种情况下仅仅使用代理脚本就不能完成需求了，显得场景很单一，当然也可以把脚本写的复杂一点，但是成本太高，而且不方便维护更新。这个时候就需要浏览器的插件出场了，例如在 `Chrome` 下我选择了 [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN) 这个插件，可以设置多种情景模式，根据实际情况自由切换，非常方便。我设置了三种情景模式：`hdpProxy`（公司内网）、`shadowSocks`（翻墙代理）、`auto switch`（根据条件自动切换），前面两种情景模式直接设置完成即可，最后的 `auto switch` 需要配置得复杂一点，根据正则表达式或者通配符指定某些网站的访问方式必须使用 `hdpProxy` 代理，另外其它的根据规则列表
-（https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt ，和 `Shadowsocks` 的` GFWList` 列表类似）必须通过翻墙代理，剩余的才是直接连接。当然，此时就不需要把 `Shadowsocks` 设置为系统代理了，保持 `Shadowsocks` 后台运行就可以了。
+此外，如果在浏览器中有更灵活的需求应用， 例如在设置多个代理的情况下，针对公司内网是一套，针对指定的几个网站是一套，针对被屏蔽的网站是一套，剩余的直接连接。在这种情况下仅仅使用代理脚本就不能完成需求了，显得场景很单一，当然也可以把脚本写的复杂一点，但是成本太高，而且不方便维护更新。这个时候就需要浏览器的插件出场了，例如在 `Chrome` 下我选择了 [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN) 这个插件，可以设置多种情景模式，根据实际情况自由切换，非常方便。我设置了三种情景模式：`hdpProxy`【公司内网】、`shadowSocks`【翻墙代理】、`auto switch`【根据条件自动切换】，前面两种情景模式直接设置完成即可，最后的 `auto switch` 需要配置得复杂一点，根据正则表达式或者通配符指定某些网站的访问方式必须使用 `hdpProxy` 代理，另外其它的根据规则列表
+【https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt ，和 `Shadowsocks` 的` GFWList` 列表类似】必须通过翻墙代理，剩余的才是直接连接。当然，此时就不需要把 `Shadowsocks` 设置为系统代理了，保持 `Shadowsocks` 后台运行就可以了。
 
 ![SwitchyOmega 插件配置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxbp79ywuej21hc0q20v7.jpg "SwitchyOmega 插件配置")
 
@@ -274,7 +276,7 @@ http://127.0.0.1:1080/pac?t=20181118030355597&secret=qZKsW49fDFezR4jJQtRDhUVPRqn
 
 下载 `Android` 平台的客户端，一般我们都称之为**影梭**，在应用商城是找不到的，因为通不过审核，所以只能去官网下载，下载地址：[shadowsocks 官网](http://shadowsocks.org/en/download/clients.html)。切记，千万不要去第三方网站下载，因为下载的安装包可能带有其它的应用，导致给你的手机安装了一堆软件。当然，如果你连官网都不信，可以自己下载源代码，自己打包 `apk` 文件，也是可以的，懂一点点 `Android` 开发就行了，源代码全部是开源的，放在了 `GitHub` 上面：https://github.com/Jigsaw-Code/outline-client/ 。
 
-下载完 `apk` 文件，安装也就是和安装普通的应用一样，需要注意的是有些 `Android` 手机会禁止外部来源的 `app`（不是从应用商店下载安装的）安装，所以需要同意一下，也就是**信任此应用**，才能顺利完成安装。
+下载完 `apk` 文件，安装也就是和安装普通的应用一样，需要注意的是有些 `Android` 手机会禁止外部来源的 `app`【不是从应用商店下载安装的】安装，所以需要同意一下，也就是**信任此应用**，才能顺利完成安装。
 
 ### 配置
 
@@ -283,7 +285,7 @@ http://127.0.0.1:1080/pac?t=20181118030355597&secret=qZKsW49fDFezR4jJQtRDhUVPRqn
 
 ### 启动
 
-启动只要点击右上角的灰色圆形按钮，里面有一个小飞机，大概等待几秒钟，就会变绿，表示已经连接上 `VPN` 了，此时手机就可以连接被屏蔽的网站了。唯一的缺点就是，不支持设置类似于 `PAC` 规则的站点切换（**路由**默认设置的是绕过中国大陆地址），因为只要一连上 `VPN`，手机上所有的国外连接都是走 `VPN`，会导致连某些正常的国外的网站也会慢一点，还浪费 `VPS` 的流量。当然，如果是在 `WIFI` 的环境下，通过 `Android` 系统的网络代理设置也可以设置一些类似于 `PAC` 的规则，就不细说了。启动后，还可以看到流量发送接收统计信息。
+启动只要点击右上角的灰色圆形按钮，里面有一个小飞机，大概等待几秒钟，就会变绿，表示已经连接上 `VPN` 了，此时手机就可以连接被屏蔽的网站了。唯一的缺点就是，不支持设置类似于 `PAC` 规则的站点切换【**路由**默认设置的是绕过中国大陆地址】，因为只要一连上 `VPN`，手机上所有的国外连接都是走 `VPN`，会导致连某些正常的国外的网站也会慢一点，还浪费 `VPS` 的流量。当然，如果是在 `WIFI` 的环境下，通过 `Android` 系统的网络代理设置也可以设置一些类似于 `PAC` 的规则，就不细说了。启动后，还可以看到流量发送接收统计信息。
 ![启动成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0pzebvxr7j20u01mcae9.jpg "启动成功")
 
 在手机的设置里面也可以看到 `VPN` 的开启
@@ -298,12 +300,16 @@ http://127.0.0.1:1080/pac?t=20181118030355597&secret=qZKsW49fDFezR4jJQtRDhUVPRqn
 
 ![Avast 截图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fxa0mkrws7j20pc0nkglz.jpg)
 
-3、参考：[梯子搭建](https://github.com/sirzdy/shadowsocks)
+3、参考：[梯子搭建](https://github.com/sirzdy/shadowsocks) 。
 
-4、本来以为 `Shadowsocks` 的系统代理中的 `PAC` 模式会在接收到网络请求的基础上进行过滤，即 `Shadowsocks` 能控制所有的网络请求进行过滤判断，然后该翻墙的翻墙，该直连的直连，后来发现不是的，浏览器插件 `SwitchyOmega` 设置代理规则后，`PAC` 脚本就不会生效了，全部使用 `Shadowsocks` 代理的网站都直接翻墙，不会有任何判断了，导致优酷视频消耗了大量的流量，而且速度还很慢。另外，为了保证国内的网站不是经过翻墙代理，能直接连接，就不能使用全局模式。
+4、本来以为 `Shadowsocks` 的**启用系统代理**中的 `PAC` 模式会在接收到网络请求的基础上进行过滤，即 `Shadowsocks` 能控制所有的网络请求进行过滤判断，然后该翻墙的翻墙，该直连的直连。如果浏览器没有使用任何代理插件，类似于 `SwitchyOmega`这种，还是可以自动根据 `PAC` 列表进行过滤的的，但是后来发现浏览器如果被代理插件给代理了，那么浏览器插件 `SwitchyOmega` 设置代理规则后，`PAC` 脚本就不会生效了，通过 `SwitchyOmega` 插件使用 `Shadowsocks` 代理的网站都直接翻墙，不会有任何关于 `PAC` 列表的判断。如果想拥有类似于 `PAC` 列表的判断，应该在 `Shadowsocks` 代理插件中好好配置，不应该交给 `Shadowsocks`。这也导致优酷视频消耗了大量的流量，而且速度还很慢。
+
+这里面的根本原因就是 `PAC` 列表与 `SwitchyOmega` 代理插件的作用是类似的，都是为了区分网络请求，二者不可共存。如果谷歌浏览器安装了 `SwitchyOmega` 代理插件，但是 `IE` 浏览器没有安装，那么谷歌浏览器被 `SwitchyOmega` 代理，`IE` 浏览器还是按照 `PAC` 的规则来，都可以根据各自的网站规则进行访问。
+
+另外，为了保证国内的网站不是经过翻墙代理，能直接连接，就不能使用 `Shadowsocks` 设置**系统代理模式**中的**全局模式**。
 
 5、使用插件 `SwitchyOmega` 的过程中，一开始是自己整理一些规则，而没有使用
 https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt 列表规则，导致配置信息很多，而且自己看着头都大，不好维护与查看，后来就发现了列表规则，解放了劳动力。
 
-6、解决了 `Chrome` 浏览器的收藏跨平台自动更新同步的问题，以前在三台电脑之间添加取消收藏，总是不能更新同步，需要手动开启系统代理设置全局模式（`Chrome` 浏览器的收藏同步功能被屏蔽了，我又不知道 `url` 是什么），等一会更新同步之后再关闭（防止其它场景也翻墙了）。目前使用规则列表，收藏可以自动更新同步了，不需要手动来回切换了，也不用担忘记同步的情况了。
+6、解决了 `Chrome` 浏览器的收藏跨平台自动更新同步的问题，以前在三台电脑之间添加取消收藏，总是不能更新同步，需要手动开启系统代理设置全局模式【`Chrome` 浏览器的收藏同步功能被屏蔽了，我又不知道 `url` 是什么】，等一会更新同步之后再关闭【防止其它场景也翻墙了】。目前使用规则列表，收藏可以自动更新同步了，不需要手动来回切换了，也不用担忘记同步的情况了。
 
