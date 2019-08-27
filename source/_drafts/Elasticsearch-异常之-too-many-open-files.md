@@ -25,6 +25,7 @@ java.net.SocketException: Too many open files
   sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java 984)
   sun.net.www.protocol.http.HttpURLConnection.getOutputStream0(HttpURLConnection.java 1334)
   sun.net.www.protocol.http.HttpURLConnection.getOutputStream(HttpURLConnection.java 1309)
+  ...(省略更多业务代码)
 ```
 
 看异常信息里面的重点：`java.net.SocketException: Too many open files`，有时候在中文环境下会显示：`打开的文件过多`，其实是一个意思。本文介绍遇到此问题、分析解决的方法，开发环境基于 `Elasticsearch v1.7`【这是一个古老的版本】、`JDK v1.8`，其它的版本的报错详细信息可能会大同小异，但是主要异常信息是一致的。
