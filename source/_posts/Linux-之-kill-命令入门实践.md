@@ -240,7 +240,7 @@ int main(int argc, char** argv) {
 
 上面的错误： **段错误 (core dumped)**，我猜测可能是和信号 **SIGSEGV** 有关，下面就以 `c` 语言为基础写一个简单的例子，在代码中特意非法操作内存，让内核主动发送 **SIGSEGV** 信号给进程。
 
-代码示例如下【脚本文件名：`signal_error.c`】，已经写好注释：
+代码示例如下【脚本文件名：`seg_error.c`】，已经写好注释：
 
 ```c
 #include <stdio.h>
