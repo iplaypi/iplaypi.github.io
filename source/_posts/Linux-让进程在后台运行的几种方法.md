@@ -119,7 +119,7 @@ If  standard  output is a terminal, append output to ‘nohup.out’ if possible
 ```
 
 - 使用方式：在执行的任务命令前面加上 `nohup` 即可。
-- 作用：可以让执行的进程忽略 `SIGHUP` 信号。
+- 作用：可以让执行的进程忽略 `SIGHUP` 信号。也会关闭标准输入，该进程不能接收任何输入，即使运行在前台。
 - 输出：在终端执行的进程，输出信息会重定向到 `nohup.out` 文件。
 
 可见，`nohup` 的使用是十分简单方便的，标准输出和标准错误默认会被重定向到 `nohup.out` 文件中，此文件会自动生成于执行命令的当前目录。
