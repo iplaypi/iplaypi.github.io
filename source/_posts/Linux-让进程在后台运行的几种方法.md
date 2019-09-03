@@ -164,9 +164,92 @@ pengfei  245058 201491  0 01:36 pts/0    00:00:00 tail -f xx.log
 
 ## setsid 方式
 
-`nohup` 的秘密是什么，显而易见是通过忽略 `SIGHUP` 信号，使用户的进程避免被中断。这好像是具有很高权限的系统对进程说：你可以去死了，然而进程却不听，并捂住耳朵摇头：我不听！我不听！这种公然违抗系统指令的行为，使进程继续活下来，并可以自由自在地运行。
+`nohup` 的秘密是什么，显而易见是通过忽略 `SIGHUP` 信号，使用户的进程避免被中断。这好像是具有很高权限的系统对进程说：你可以去死了，然而进程却不听，并捂住耳朵摇头：我不听！我不听！这种公然违抗系统指令的行为，使进程继续活下去，并可以自由自在地运行。
 
-那其实不妨换一个角度思考，
+那其实不妨换一个角度思考，有没有可能不让系统发送 `SIGHUP` 信号，注意这里的含义是系统不会发送 `SIGHUP` 信号给进程，进程本身并没有忽略 `SIGHUP` 信号。
+
+略加思考，我基本有了方案：让进程独立运行，不再属于当前会话的子进程，这样会话在关闭时不会再给这个进程发送 `SIGHUP` 信号【因为独立运行的进程不属于当前会话的子进程了，与当前会话无关】。
+
+好，有一个工具可以帮到我，那就是 `setsid`，先来看一下它的帮助信息，使用 `man setsid` 查看：
+
+```
+SETSID(1)                  Linux Programmer’s Manual                 SETSID(1)
+
+NAME
+       setsid - run a program in a new session
+
+SYNOPSIS
+       setsid program [arg...]
+
+DESCRIPTION
+       setsid runs a program in a new session.
+
+SEE ALSO
+       setsid(2)
+
+AUTHOR
+       Rick Sladkey <jrs@world.std.com>
+
+AVAILABILITY
+       The setsid command is part of the util-linux-ng package and is available from ftp://ftp.kernel.org/pub/linux/utils/util-linux-ng/.
+
+Linux 0.99                     20 November 1993                      SETSID(1)
+```
+
+![setsid 帮助信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190904010120.png "setsid 帮助信息")
+
+可见，`setsid` 的作用就是在一个新的会话中启动进程，这样就可以保证启动的进程与当前会话无关。而且使用方法也很简单，只需要在命令前面加 `setsid` 即可，格式如：`setsid command` 。
+
+执行示例：
+
+```
+1、setsid tail -f xx.log &> tail.log，提交进程，默认在后台运行
+2、ps -ef |grep 'tail -f' |grep -v grep，查看进程的状态
+3、退出当前会话
+4、重新登录再查看进程的状态：ps -ef |grep 'tail -f' |grep -v grep
+```
+
+依次执行上述步骤，输出信息如下：
+
+```
+[pengfei@dev2 ~]$ setsid tail -f xx.log &> tail.log
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ ps -ef |grep 'tail -f' |grep -v grep
+pengfei   53334      1  0 00:49 ?        00:00:00 tail -f xx.log
+[pengfei@dev2 ~]$
+...重新登录
+[pengfei@dev2 ~]$ ps -ef |grep 'tail -f' |grep -v grep
+pengfei   53334      1  0 00:49 ?        00:00:00 tail -f xx.log
+[pengfei@dev2 ~]$
+```
+
+![setsid 示例演示](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190904010155.png "setsid 示例演示")
+
+可以看到，进程一直在运行，退出会话并没有影响到它。值得注意的是，这个进程的编号为53334，但是它的父进程编号却为1【即 `init` 进程】，并不是当前会话对应进程的编号，读者可以和上述的 `nohup` 作比较，可见 `setsid` 的作用就在此。
+
+此时这个进程虽然在正常运行，退出当前会话也不会影响到它，但是它并没有忽略 `SIGHUP` 信号，所以还会受到 `SIGHUP` 信号的影响。不妨手动发送一个 `SIGHUP` 信号给它，再查看一下进程的状态。
+
+```
+kill -SIGHUP 53334，手动使用 kill 发送信号
+ps -ef |grep 'tail -f' |grep -v grep，再查看进程的状态
+```
+
+依次执行上述步骤，输出信息如下：
+
+```
+[pengfei@dev2 ~]$ ps -ef |grep 'tail -f' |grep -v grep
+pengfei   53334      1  0 00:49 ?        00:00:00 tail -f xx.log
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ kill -SIGHUP 53334
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ ps -ef |grep 'tail -f' |grep -v grep
+[pengfei@dev2 ~]$
+```
+
+![手动 kill 测试](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190904010219.png "手动 kill 测试")
+
+可见进程已经被杀死了，不复存在。
 
 ## & 方式
 
@@ -225,7 +308,7 @@ xx
 
 - 添加 `&` 方式，可以非常简单地把前台任务变为后台任务
 - 针对后台任务，可以使用 `fg num` 调取出来，变为前台任务
-- 使用 `setsid`，把任务变为另一个进程的子进程，并且放在后台运行
+- 使用 `setsid`，把任务变为另一个会话进程的子进程，并且放在后台运行
 - 对于正在运行的前台任务，贸然地使用 `ctrl + c` 会导致任务终止，此时可以使用 `ctrl + z` 暂停任务【任务状态被置为 `stopped`】，然后使用 `bg num` 把任务放在后台运行【任务状态被置为 `running`】‘
 - 
 
