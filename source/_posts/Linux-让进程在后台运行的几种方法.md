@@ -375,21 +375,131 @@ pengfei   20742 205689  0 17:35 pts/2    00:00:00 grep tail -f
 # 忽略挂起的后悔药
 
 
-如果系统的 `Shell` 参数 `huponexit` 设置为 `on`，就需要注意由此引发的问题。
+通过前面的内容，读者已经知道，如果提交任务时，在命令前加上 `nohup` 或者 `setsid` 就可以避免 `SIGHUP` 信号的影响。但是如果我们未加任何处理就提交了命令，该如何补救才能让它避免 `SIGHUP` 信号的影响呢？
 
-有时候直接运行任务后，才发现没有手动设置忽略挂起，可能已经运行了一段时间，又不想停掉任务重新启动【如果参数 `huponexit` 设置为 `on`，会话进程在退出时就会给后台子进程发送 `SIGHUP` 信号】，那么有没有可以事后弥补的方案呢？有，当然有。
+或者说，系统的 `Shell` 参数 `huponexit` 被设置为 `on`，此时会不会由此引发什么问题，需要我们注意呢？
 
-后台运行的例子，使用 `disown` 也可以达到效果。
+以上这些考虑都是基于意外的情况，当然有时候读者可能也会遇到，下面给出解决的方法。
 
-。。。
+## 正常启动后台任务
+
+有时候直接运行任务后，才发现没有手动设置忽略挂起【没有使用 `nohup`】，或者也没有使用 `setsid` 工具新建会话。已经运行了一段时间后，又不想停掉任务重新启动【如果参数 `huponexit` 设置为 `on`，会话进程在退出时就会给后台子进程发送 `SIGHUP` 信号，导致进程终止】，那么有没有可以事后弥补的方案呢？有，当然有。
+
+以上情况重点在于忘记使用 `nohup`、`setsid` 等命令，由于这些命令与 `Shell` 无关【所以才需要在提交任务的命令前使用】，所以在提交任务后不可能再弥补，除非杀死进程重新启动。但是，我这里还有别的方案，这个工具就是 `bash` 的内置命令，它只能在 `bash` 下使用，它就是 `disown` 命令。
+
+所以，此时可以通过 `disown` 工具来操作后台进程，先来看一下帮助文档，使用 `man disown` 命令查看：
+
+```
+disown [-ar] [-h] [jobspec ...]
+              Without options, each jobspec is removed from the table of active jobs.  
+              If jobspec is not present, and neither -a nor -r is supplied, the shell’s notion of the current job is used.  
+              If the -h option is given, each jobspec is not removed  from  the table, but is marked so that SIGHUP is not sent to the job if the shell receives a SIGHUP.  
+              If no jobspec is present, and neither the -a nor the -r option is supplied, the current job is used.  
+              If no jobspec is supplied, the -a option means to remove or mark all jobs; the -r option without a jobspec argument restricts operation to running jobs. 
+              The return value is 0 unless a jobspec does not specify a valid job.
+```
+
+![disown 帮助文档](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190908220734.png "disown 帮助文档")
+
+可以看出，我们可以用如下方式来达成我们的目的：
+
+- 用 `disown -h jobspec` 将某个作业从 `jobs` 列表中移除
+- 用 `disown -ah` 将所有的作业从 `jobs` 列表中移除
+- 用 `disown -rh` 将正在运行的作业从 `jobs` 列表中移除
+
+这样，当退出会话时，会话进程并不会将 `SIGHUP` 信号发送给被移除的进程【被移除的进程已经不在后台作业列表中】，因此这个被移除的进程可以一直在后台运行下去。
+
+需要注意的是，当使用过 `disown` 之后，将把目标作业从 `jobs` 列表中移除，读者将不能再使用 `jobs` 命令来查看它，但是依然能够使用 `ps -ef` 查找到它。
+
+然而，还要注意流的影响，使用 `disown` 并不会切断进程与会话终端的关联关系，这样当会话终端被关闭后，若进程尝试从 `stdin` 中读取或输出信息到 `stdout`、`stderr` 中，会导致异常退出，这点读者需要注意。
+
+下面简单演示一下  `disown` 的使用，输入以及输出内容如下：
+
+```
+[pengfei@dev2 ~]$ tail -f xx.log &
+[1] 141302
+[pengfei@dev2 ~]$ 100
+
+[pengfei@dev2 ~]$ jobs
+[1]+  Running                 tail -f xx.log &
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ disown %1
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ jobs
+[pengfei@dev2 ~]$
+```
+
+![disown 简单验证](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190908221314.png "disown 简单验证")
+
+可以看到，先启动一个后台任务，使用 `jobs` 还可以看到，接着使用 `disown` 将它移除，再使用 `jobs` 就看不到进程了。
+
+如果退出会话，读者可能怀疑此时进程被杀死了吗，还是仍在运行，使用 `ps -ef |grep 'tail -f'` 查看便知，为了对比观察，在退出会话前后各查看一次。
+
+```
+退出会话前
+[pengfei@dev2 ~]$ ps -ef |grep 'tail -f'
+pengfei  141302 205689  0 22:11 pts/2    00:00:00 tail -f xx.log
+pengfei  146581 205689  0 22:14 pts/2    00:00:00 grep tail -f
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ exit
+logout
+Connection closing...Socket close.
+
+Connection closed by foreign host.
+
+重新登录
+[pengfei@dev2 ~]$ ps -ef |grep 'tail -f'
+pengfei  141302      1  0 22:11 ?        00:00:00 tail -f xx.log
+pengfei  153383 198673  0 22:17 pts/1    00:00:00 grep tail -f
+[pengfei@dev2 ~]$
+```
+
+![退出会话前查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190908222344.png "退出会话前查看")
+
+![退出会话后查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190908222353.png "退出会话后查看")
+
+从上图可以看到，进程141302无论是在退出会话前还是在退出会话后，一直在运行，说明退出会话对进程没有影响，唯一的影响就是父进程变化了，退出会话后父进程由 `init` 进程接管。
+
+## 直接启动前台任务
 
 还有一种场景，如果在启动进程时没有使用 `&` 将进程放在后台运行，占用着当前的会话窗口，一不小心就会导致进程终止，那怎么办？其实也很简单。
 
-使用 `Ctrl + z` 命令，把正在前台运行的进程暂停，并放在后台，程序并没有被杀死。其实这个组合快捷键是一种控制信号，编号为`19`，标识为 `SIGSTOP`，读者可以参考我的另外一篇博文：[Linux 之 kill 命令入门实践](https://playpi.org/2019042101.html) 。当然，如果使用终端工具，再开一个会话窗口，使用 `ps` 命令查询这个进程的 `pid` 编号，然后使用 `kill -19 pid` 命令发送一个 `SIGSTOP` 信号给进程也可以达到把程序暂停并放在后台的效果。
+使用 `Ctrl + z` 命令，把正在前台运行的进程暂停，并放在后台，程序并没有被杀死。其实这个组合快捷键是一种控制信号，编号为`19`，标识为 `SIGSTOP`，读者可以参考我的另外一篇博文：[Linux 之 kill 命令入门实践](https://playpi.org/2019042101.html) 。当然，如果使用终端工具，再开一个会话窗口，使用 `ps` 命令查询这个进程的 `pid` 编号，然后使用 `kill -19 pid` 命令发送一个 `SIGSTOP` 信号给进程也可以达到把程序暂停并放在后台的效果【不过肯定没有快捷键方便了】。
 
-紧接着使用 `bg job_num` 就可以把这个进程放在后台运行了【`running` 状态】。
+然后读者就可以使用 `jobs` 命令来查询它的作业编号，紧接着使用 `bg job_num` 就可以把这个进程放在后台运行了【由 `stopped` 状态变为 `running` 状态】。
 
 但是需要注意的是，如果暂停进程会影响当前进程的运行结果，所以慎用此方法。
+
+只要放在了后台运行，就可以继续使用 `disown` 命令将它从作业列表中移除了，下面简单演示一下，以下为输入与输出信息：
+
+```
+[pengfei@dev2 ~]$ tail -f xx.log
+100
+^Z
+[1]+  Stopped                 tail -f xx.log
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ jobs
+[1]+  Stopped                 tail -f xx.log
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ bg 1
+[1]+ tail -f xx.log &
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ jobs
+[1]+  Running                 tail -f xx.log &
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ disown %1
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ jobs
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ ps -ef |grep 'tail -f'
+pengfei   29540 198673  0 23:20 pts/1    00:00:00 tail -f xx.log
+pengfei   30418 198673  0 23:20 pts/1    00:00:00 grep tail -f
+[pengfei@dev2 ~]$
+```
+
+![前台任务到后台任务演示](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190908232405.png "前台任务到后台任务演示")
+
+可见，启动进程时没有把它放在后台运行，先使用 `ctrl + z` 快捷键将它放在后台【处于 `stopped` 状态】，再使用 `bg` 使它运行【处于 `running` 状态】，紧接着就可以正常使用 `disown` 将它从 `jobs` 列表移除了。
 
 
 # 批量管理进程
@@ -404,6 +514,12 @@ xx
 ```
 
 图。。
+
+
+# 简单总结
+
+
+以上内容把几种方法已经介绍完毕，读者可以根据不同的场景来选择不同的方案。`nohup`、`setsid`、`&` 无疑是临时需要时最方便的方法，`disown` 能帮助我们来事后补救已经在运行的作业，而 `screen` 则是在大批量操作时不二的选择。
 
 
 # 前台任务与后台任务
