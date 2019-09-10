@@ -505,15 +505,33 @@ pengfei   30418 198673  0 23:20 pts/1    00:00:00 grep tail -f
 # 批量管理进程
 
 
-前面的描述都是单个进程或者几个进程，管理起来也挺方便，但是如果遇到大量的进程需要管理，例如运维人员日常需要手动管理大量的进程，几百个几千个都是有可能的，那么怎么办呢。为了简化管理，并且保证进程能在后台稳定运行，此时就需要通过 `screen` 工具来操作，这是一个利器。
+前面的描述都是单个进程或者几个进程，管理起来也挺方便，但是如果遇到大量的进程需要管理，例如运维人员日常需要手动管理大量的进程，几百个几千个都是有可能的，那么怎么办呢，如果每次都需要这么操作【使用 `nohup`、`setsid`等等】很麻烦。为了简化管理，并且保证进程能在后台稳定运行，此时就需要通过 `screen` 工具来操作，对于进程的后台运行，以及会话的模拟，这是一个利器。
+
+简单概括来说，`screen` 提供了 `ANSI/VT100` 的终端模拟器，使它能够在一个真实终端下运行多个全屏的伪终端。`screen` 的参数很多，具有很强大的功能，我在此仅介绍其常用的功能以及简要分析一下为什么使用 `screen` 能够避免 `SIGHUP` 信号的影响。
 
 首先我们来看一下帮助文档信息，使用 `man screen` 命令输出：
 
 ```
-xx
+SCREEN(1)                                                            SCREEN(1)
+
+NAME
+       screen - screen manager with VT100/ANSI terminal emulation
+
+SYNOPSIS
+       screen [ -options ] [ cmd [ args ] ]
+       screen -r [[pid.]tty[.host]]
+       screen -r sessionowner/[[pid.]tty[.host]]
+
+DESCRIPTION
+       Screen  is  a full-screen window manager that multiplexes a physical terminal between several processes (typically interactive shells).
+       Each vir-tual terminal provides the functions of a DEC VT100 terminal and, in addition, several control functions from the ISO 6429 (ECMA 48,  ANSI  X3.64)
+and  ISO  2022 standards (e.g. insert/delete line and support for multiple character sets).
+There is a scrollback history buffer for each virtual terminal and a copy-and-paste mechanism that allows moving text regions between windows.
 ```
 
-图。。
+![screen 帮助文档](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190911011009.png "screen 帮助文档")
+
+由于信息比较多，只截取一部分。
 
 
 # 简单总结
