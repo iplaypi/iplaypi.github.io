@@ -509,7 +509,11 @@ pengfei   30418 198673  0 23:20 pts/1    00:00:00 grep tail -f
 
 ## 功能使用
 
-简单概括来说，`screen` 提供了 `ANSI/VT100` 的终端模拟器，使它能够在一个真实终端下运行多个全屏的伪终端。`screen` 的参数很多，具有很强大的功能，我在此仅介绍其常用的功能以及简要分析一下为什么使用 `screen` 能够避免 `SIGHUP` 信号的影响。
+简单概括来说，`screen` 提供了 `ANSI/VT100` 的终端模拟器，使它能够在一个真实终端下运行多个全屏的伪终端【它的思路就是终端复用器，即 `terminal multiplexer`】。
+
+它可以在当前 `session` 里面，新建另外一个 `session`，这样的话，当前 `session` 一旦结束，并不影响其它 `session`。而且，以后重新登录，还可以再连上早先新建的 `session`。
+
+`screen` 的参数很多，具有很强大的功能，我在此仅介绍其常用的功能以及简要分析一下为什么使用 `screen` 能够避免 `SIGHUP` 信号的影响。
 
 首先我们来看一下帮助文档信息，使用 `man screen` 命令输出：
 
@@ -533,7 +537,79 @@ There is a scrollback history buffer for each virtual terminal and a copy-and-pa
 
 ![screen 帮助文档](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190911011009.png "screen 帮助文档")
 
-由于信息比较多，只截取一部分。
+由于信息比较多，只截取了其中一部分。总之，使用 `screen` 很方便，有以下几个常用选项：
+
+- screen，建立一个会话，并登录【在此会话下可以不使用 nohup、setsid 等工具，退出会话后不影响进程的运行】
+- screen -dm，建立一个处于断开模式下的会话【detached mode】
+- screen -dmS session_name，建立一个处于断开模式下的会话【参数 S 用来指定其会话名】
+- screen -list，列出所有的会话【或者参数也可以是 -ls，一样的效果】
+- screen -r session_name，重新连接指定会话【指定会话名字，如果有重名的会话，需要同时带上pid_number前缀】
+- screen -r pid_number，重新连接指定会话【指定会话编号】
+- 快捷键 ctrl + a、ctrl + d，暂时退出当前会话【不影响会话的状态，会话并没有关闭，还可以重新登录】
+- 快捷键 ctrl + c、ctrl + d，终止当前会话【会话不存在，里面的进程也就不存在了】
+
+上面列出了一些常用的功能，下面就开始简单演示一下。
+
+先新建一个名字为 `s1` 的会话，然后列出所有的会话，按照如下命令操作：
+
+```
+[pengfei@dev2 ~]$ screen -dmS s1
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ screen -ls
+There is a screen on:
+	17651.s1	(Detached)
+1 Socket in /tmp/uscreens/S-pengfei.
+[pengfei@dev2 ~]$
+```
+
+![screen 新建会话](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190914023446.png "screen 新建会话")
+
+可以看到，我新建了一个处于断开模式的会话 `s1`，如果我用 `-r` 参数连接到 `screen` 创建的 `s1` 会话后，我就可以在这个伪终端里面放心大胆地启动进程，再也不用担心 `SIGHUP` 信号会对我的进程造成影响，也不用给每个命令前都加上 `nohup` 或者 `setsid` 了。这是为什么呢？来看一下下面两个对比的例子吧。
+
+1、在 `s1` 会话里面启动一个后台进程，并查看进程树，按照如下命令操作：
+
+```
+[pengfei@dev2 ~]$ screen -r s1
+[pengfei@dev2 ~]$ tail -f xx.log &
+[1] 45061
+[pengfei@dev2 ~]$ 100
+
+[pengfei@dev2 ~]$ pstree -H 45061 |grep 'tail\|screen\|init'
+init-+-abrt-dump-oops
+     |-screen-+-bash-+-grep
+     |        |      `-tail
+     |      |-sshd---sshd---bash---screen
+[pengfei@dev2 ~]$
+```
+
+![使用 screen 会话启动进程](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190914023453.png "使用 screen 会话启动进程")
+
+可以看到，使用了 `screen` 后进程树有一些特殊，此时 `bash` 是 `screen` 的子进程，而 `screen` 是 `init`【进程号为1】的子进程。那么，当 `ssh` 断开会话连接时，`SIGHUP` 信号自然不会影响到 `screen` 下面的子进程。
+
+2、在当前登录的会话里面启动一个后台进程，并查看进程树，按照如下命令操作：
+
+```
+[pengfei@dev2 ~]$ tail -f xx.log &
+[1] 61916
+[pengfei@dev2 ~]$ 100
+
+[pengfei@dev2 ~]$ 
+[pengfei@dev2 ~]$ pstree -H 61916 |grep 'tail\|screen\|init\|bash'
+init-+-abrt-dump-oops
+     |-bash---java---186*[{java}]
+     |-sshd-+-sshd---sshd---bash
+     |      |-sshd---sshd---bash-+-grep
+     |      |                    `-tail
+     |      `-sshd---sshd-+-2*[bash]
+     |                    `-bash---java---37*[{java}]
+[pengfei@dev2 ~]$
+```
+
+![在当前登录会话启动进程](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190914023457.png "在当前登录会话启动进程")
+
+可以看到，未使用 `screen` 而是直接在当前会话启动进程时，我所处的 `bash` 是 `sshd` 的子进程，当 `ssh` 断开连接时，`sshd` 进程关闭，`SIGHUP` 信号自然会影响到它下面的所有子进程【当然也包括我新建立的 `tail` 进程】。
+
+通过对比这两种启动进程方式，读者可以发现，`screen` 的作用就在于新建会话，在 `screen` 会话中启动的进程与**当前登录会话**无关，这样无论什么时候，都不会影响 `screen` 会话中的进程，除非手动终止 `screen` 会话。而且，无论什么时候登录，还可以继续连接 `screen` 会话，并管理里面的进程，很方便。
 
 ## 关于安装
 
