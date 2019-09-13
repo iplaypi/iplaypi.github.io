@@ -507,6 +507,8 @@ pengfei   30418 198673  0 23:20 pts/1    00:00:00 grep tail -f
 
 前面的描述都是单个进程或者几个进程，管理起来也挺方便，但是如果遇到大量的进程需要管理，例如运维人员日常需要手动管理大量的进程，几百个几千个都是有可能的，那么怎么办呢，如果每次都需要这么操作【使用 `nohup`、`setsid`等等】很麻烦。为了简化管理，并且保证进程能在后台稳定运行，此时就需要通过 `screen` 工具来操作，对于进程的后台运行，以及会话的模拟，这是一个利器。
 
+## 功能使用
+
 简单概括来说，`screen` 提供了 `ANSI/VT100` 的终端模拟器，使它能够在一个真实终端下运行多个全屏的伪终端。`screen` 的参数很多，具有很强大的功能，我在此仅介绍其常用的功能以及简要分析一下为什么使用 `screen` 能够避免 `SIGHUP` 信号的影响。
 
 首先我们来看一下帮助文档信息，使用 `man screen` 命令输出：
@@ -532,6 +534,94 @@ There is a scrollback history buffer for each virtual terminal and a copy-and-pa
 ![screen 帮助文档](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190911011009.png "screen 帮助文档")
 
 由于信息比较多，只截取一部分。
+
+## 关于安装
+
+`screen` 的安装比较简单，如果是 `root` 用户，直接使用 `yum install screen` 即可一键安装完成【不同的操作系统类型使用的命令会不一样】，安装过程在此不需要赘述。但是如果是非 `root` 用户或者在网络无连接的情况下，则不能直接一键安装，需要使用源码编译安装的方式进行安装，过程比较繁琐，而且也容易出现各种各样的错误，主要是依赖环境不完整的问题。
+
+下面列举常规的安装步骤：
+
+1、下载 `screen` 源码包，地址在这里：[screen 源码包](http://ftp.gnu.org/gnu/screen) ，选择最新的版本。
+
+2、解压、配置、编译、安装流程。
+
+```
+# 解压
+tar -zxvf screen-4.6.2.tar.gz
+# 配置,如果是非root用户需要自定义安装目录,即prefix参数
+./configure --prefix=/home/pengfei/soft/screen
+# 编译
+make
+# 安装
+make install
+```
+
+注意在 `configure` 阶段可能会出错：`no tgetent - no screen`，错误原因就是缺少 `ncurses` 依赖环境，需要再次单独安装。
+
+```
+# 错误信息
+configure: checking libncurses...
+configure: checking libtinfo...
+configure: error: !!! no tgetent - no screen
+```
+
+3、安装 `ncurses`，先去下载源码包，地址在这里：[ncurses 源码包](http://ftp.gnu.org/gnu/ncurses) ，选择最新的版本。
+
+4、解压、配置、编译、安装流程。
+
+```
+# 解压
+tar -zxvf ncurses-6.1.tar.gz
+# 配置,如果是非root用户需要自定义安装目录,即prefix参数
+# 指定安装目录时注意结尾不要带文件分隔符/,否则ncurses在创建文件目录时会创建一个错误的目录
+# 例如bin目录:/home/pengfei/soft/ncurses//bin,它会自动在指定的目录后面追加/bin,从而导致/出现两次
+# 这点在配置完成之后的日志输出中也可以看到
+# 如果在输出日志中看到Include-directory is not in a standard location,这并不是一个错误,可以添加--enable-overwrite参数避免
+./configure --prefix=/home/pengfei/soft/ncurses
+# 编译
+make
+# 安装
+# 安装如果出错,可以在配置时指定多个参数
+# ./configure --prefix=/home/pengfei/soft/ncurses --with-shared --without-debug --without-ada --enable-overwrite
+make install
+```
+
+5、回到 `screen` 解压目录，继续安装，这里需要注意设置两个全局变量。
+
+```
+# 编译器选项
+# 链接相关选项,如果你有自定义的函数库(lib dir),即可以用-L<lib dir>指定
+export LDFLAGS=-L/home/pengfei/soft/ncurses/lib
+# 预编译器选项
+# C/C++预处理器选项,如果你自定义的头文件,可以用-I<include dir>
+export CPPFLAGS=-I/home/pengfei/soft/ncurses/include
+```
+
+6、安装完成后配置环境变量，全局可用，在家目录的 `.bashrc` 文件里设置 `screen` 执行路径：
+
+```
+export PATH=/home/pengfei/soft/screen/bin:$PATH
+```
+
+紧接着执行 `source ~/.bashrc` 更新 `PATH` 路径，以后在终端输入 `screen` 就能进入 `screen` 界面了。
+
+6、我的安装总结，我在三台服务器上面尝试使用编译源码的方式安装，都出现各种各样的诡异错误，我也不是搞服务器端应用开发的，有些问题实在解决不了，折腾了一天最终放弃了，还是直接使用 `root` 用户一键安装比较快捷。
+
+错误一，`screen` 配置过程报错，通过安装 `ncurces` 解决。
+
+![screen 配置过程报错](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190913221335.png "screen 配置过程报错")
+
+错误二，`ncurses` 安装过程报错，通过添加配置的参数重新来过解决。
+
+![ncurses 安装过程报错](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190913221441.png "ncurses 安装过程报错")
+
+错误三，`screen` 配置过程继续报错，已经和 `ncurces` 无关，找不到问题原因。
+
+![screen 配置过程继续报错](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190913221345.png "screen 配置过程继续报错")
+
+错误四，`screen` 安装过程报错，找不到问题原因。
+
+![screen 安装过程报错](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190913221433.png "screen 安装过程报错")
 
 
 # 简单总结
