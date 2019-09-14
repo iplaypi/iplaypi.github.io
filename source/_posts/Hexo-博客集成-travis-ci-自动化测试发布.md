@@ -31,6 +31,7 @@ keywords: Hexo,travis-ci,GitHub
 总结一下，对于 `GitHub` 中的项目，命名最好遵循 **username.github.io** 这样的格式，方便 `GitHub Pages` 分配独立的子域名，设置两个分支：`master`、`source`。其中，`master` 分支用来给 `travis-ci` 提交编译生成的 `HTML` 文件，可以通过 `GitHub Pages` 访问；`source` 分支用来本地提交写博客内容的 `Markdown` 文件，同时也给 `travis-ci` 监控，用来获取最新的博客并生成 `HTML` 文件提交到 `master` 分支。
 
 为了直观起见，下面画一个流程图，清晰地表现出 `GitHub` 项目的设置：
+
 ![画一个流程图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001757.png "画一个流程图")
 
 ## 子模块管理
@@ -89,17 +90,20 @@ keywords: Hexo,travis-ci,GitHub
 
 在 `Settings`、`Repositories` 中可以看到自己在 `GitHub` 上面的项目列表，但是 `travis-ci` 默认是不会管理任何一个项目的，需要手动开启。由于只需要监控我的博客项目，所以只是开启这一个，然后在开启按钮的右边点击设置按钮，进行下一步的设置。
 
-开启管理权限
+开启管理权限。
+
 ![开启管理权限](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001740.png "开启管理权限")
 
 进入到具体项目的设置页面，在这里，需要勾选 **General** 下面的 **Build pushed branches**、**Build pushed pull requests**，这两个选项的意思是当 `GitHub` 的项目有 **push** 操作时，则 `travis-ci` 会执行配置的流程。
 
-设置 `General`
+设置 `General`。
+
 ![设置 General](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001733.png "设置 General")
 
 再看下面的 **Auto Cancellation**，需要勾选 **Auto cacel branch builds**、**Auto cancel pull request builds**，这两个选项的意思是自动取消构建过程，主要用于当有连续多个 `push`、`push pull request` 发生时，可能先后间隔很短时间内触发了多次构建操作，这样显然浪费资源，没必要构建中间的 `push`，所以构建排队队列中的任务会自动取消，只保留最新的 `push` 触发的构建作业。当然，前提是必须等待正在运行的构建作业完成。
 
-设置 `Auto Cancellation`
+设置 `Auto Cancellation`。
+
 ![设置 Auto Cancellation](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001725.png "设置 Auto Cancellation")
 
 ## 按需设置环境变量
@@ -112,7 +116,8 @@ keywords: Hexo,travis-ci,GitHub
 
 我在这里设置了四个全局变量：`REPO_TOKEN`、`GITHUB_URL`、`USER_EMAIL`、`USER_NAME`，其中 `REPO_TOKEN` 是在 `GitHub` 中生成的访问验证信息，下面会讲怎么生成。
 
-设置 `Environment Variables`
+设置 `Environment Variables`。
+
 ![设置 Environment Variables](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001706.png "设置 Environment Variables")
 
 切记，不要勾选 **Display value in build log**，否则这些信息还是会在 `travis-ci` 的构建日志中显示出来，也就是暴露了。
@@ -131,14 +136,16 @@ keywords: Hexo,travis-ci,GitHub
 
 在 `GitHub` 的个人设置中【不是单个项目的设置】，依次找到 **Settings**、**Developer settings**、**Personal access tokens**，这里面的内容就是开发者设置信息，可以生成一些隐私信息给开发者使用，方便程序直接调用接口，我也需要给 `travis-ci` 生成一个。
 
-设置 `Personal access tokens`
+设置 `Personal access tokens`。
+
 ![设置 Personal access tokens](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001642.png "设置 Personal access tokens")
 
 选择 **Generate new token** 按钮，为了安全，`GitHub` 还会要求验证一次密码，接着就进入到配置页面。在配置页面填写名称、权限即可，我这里只选择了 **repo** 权限，其它的目前没有必要。
 
 注意，生成的 `TOKEN` 信息是一串字符串，`GitHub` 只会显示一次，所以要及时复制，刷新页面或者后续再回来查看是看不到的，只能重新申请。把这里生成的 `TOKEN` 作为设置环境变量步骤中的 **REPO_TOKEN** 的值即可，这样，在 `travis-ci` 构建脚本中就能访问 `GitHub` 从而进行 `push` 代码更新了。
 
-生成 `token` 填写信息
+生成 `token` 填写信息。
+
 ![生成 token 填写信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001556.png "生成 token 填写信息")
 
 ## 写自动构建脚本
@@ -263,6 +270,7 @@ notifications:
 这种做法我在另外一篇博客中也有实战经验，为了体验一下 `VPS` 上面的博客自动更新，也折腾了好几天，使用 `PHP` 自己搭建的服务脚本，有 `GitHub` 通知时自动拉取更新到本地指定的目录，有兴趣的可以参考一下：[使用 Github 的 WebHooks 实现代码自动更新](https://www.playpi.org/2019030601.html) 。
 
 可以去项目的设置中【不是用户设置】，找到 **Settings**、**Webhooks**，可以看到有一条名称为 **https://notify.travis-ci.org **的 `Webhooks` 记录，它就是 `GitHub` 用来通知 `travis-ci` 的接口。
+
 ![Webhooks](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512003256.png "Webhooks")
 
 
@@ -294,25 +302,31 @@ notifications:
 在本地更新 `source` 分支的文本内容，提交到 `GitHub` 上面，然后去看 `travis-ci` 的构建结果。
 
 构建基础信息，包含构建消耗时间、项目 `Commit` 的 `id` 值、分支名、构建流程消耗时间等等。
+
 ![构建基础信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001610.png "构建基础信息")
 
 接着往下看，有构建日志、构建脚本内容。
+
 ![构建日志](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001421.png "构建日志")
 
 查看一下构建历史列表，可以看到所有的构建信息，每一个都会有编号，从1开始增加。成功的构建是绿色的，失败的是红色的。
+
 ![构建历史列表](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001344.png "构建历史列表")
 
 ## 给项目添加构建图标
 
 在 `travis-ci` 的项目名称右边，可以看到有一个图标，点击，在弹出的对话框中选择分支与格式，我选择 `source` 分支，`Markdown` 格式，然后在下面的文本框中就会生成一个链接，直接复制粘贴到 `GitHub` 项目中的 `README` 文件中即可。
 
-构建图标链接生成
+构建图标链接生成。
+
 ![构建图标链接生成](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001324.png "构建图标链接生成")
 
-`GitHub` 项目的 `README` 文件填写
+`GitHub` 项目的 `README` 文件填写。
+
 ![GitHub 项目的 README 文件填写](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001333.png "GitHub 项目的 README 文件填写")
 
-`GitHub` 项目的构建图标查看
+`GitHub` 项目的构建图标查看。
+
 ![GitHub 项目的构建图标查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190512001033.png "GitHub 项目的构建图标查看")
 
 点击这个图标，是可以直接跳转到 `travis-ci` 的构建页面，可以查看构建日志、历史记录、项目配置等信息。
