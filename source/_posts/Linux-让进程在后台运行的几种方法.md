@@ -334,7 +334,7 @@ pengfei  205689 205681  0 15:10 pts/2    00:00:00 -bash
 
 ![通过 setsid 运行结果](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190908172048.png "通过 setsid 运行结果")
 
-对比这两个输出信息，读者会发现，`setsid` 新建了一个全新的会话，会话首进程是198498，而且其父进程变成了 `init` 进程【进程编号为1】。由于会话和父进程都与 `Shell` 无关，也就达到了不会接收到 `SIGHUP` 信号的目的。
+对比这两个输出信息，读者会发现，`setsid` 新建了一个全新的会话，会话首进程是198498，而且其父进程变成了 `init` 进程【进程编号为1】。由于会话和父进程都与 `Shell` 无关，也就达到了不会接收到会话进程发送的 `SIGHUP` 信号的目的【当然，手动发送 SIGHUP 信号给进程，进程仍会正常接收】。
 
 上文中涉及的 `c` 脚本已经被我上传至 `GitHub`，读者可以下载查看：[setsid_test](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/bin/20190515) ，脚本命名与上文中描述一致。
 
