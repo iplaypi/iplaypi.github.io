@@ -919,7 +919,9 @@ pengfei   20331      1  0 01:45 ?        00:00:00 tail -f xx.log
 
 ![使用 ps 查看进程](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190902001703.png "使用 ps 查看进程")
 
-使用上述步骤依次操作，可以发现 `nohup tail -f yy.log` 对应的进程已经不在了，尽管我手动给它设置了 `nohup`，也无济于事。而对于 `tail -f xx.log &> tail.log &` 对应的进程，我并没有手动设置 `nohup`，进程仍旧在运行，这里可以认定是，操作系统的设置导致会话关闭时不会给后台子进程发送 `SIGHUP` 信号，当前父进程已经是 `init`，这个可以理解。
+使用上述步骤依次操作，可以发现 `nohup tail -f yy.log` 对应的进程已经不在了，尽管我手动给它设置了 `nohup`，也无济于事。而对于 `tail -f xx.log &> tail.log &` 对应的进程，我并没有手动设置 `nohup`，进程仍旧在运行。
+
+这里可以认定的是，操作系统的设置导致会话关闭时不会给运行的【`running` 状态】后台子进程发送 `SIGHUP` 信号，会话关闭后，当前进程的父进程已经是 `init`，这个托管过程读者应该可以理解，在此不再赘述。
 
 ## 继续探索其它高效的工具
 
