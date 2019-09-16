@@ -512,3 +512,5 @@ curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/
 
 ![网络请求流程图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ptlseegej20p00howf6.jpg "网络请求流程图")
 
+以上流程图的原始文件已经被我上传至 `GitHub`，读者可以下载使用：[网络请求流程图.gliffy](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/resource/20190105) 。
+
