@@ -252,7 +252,9 @@ yum install nginx -y
 vi /etc/nginx/nginx.conf
 ```
 
-填写配置内容
+以下配置内容的模板已经被我上传至 `GitHub`，读者可以下载查看：[nginx_conf_http.template](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/resource/20190105) 。
+
+填写配置内容：
 
 ```
 user  nginx;
@@ -340,7 +342,7 @@ service nginx start
 openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -keyout /site/ssl-nginx.key -out /site/ssl-nginx.crt
 ```
 
-在生成的过程中还需要填写一些参数信息：国家、城市、机构名称、机构单位名称、域名、邮箱等，这里特别注意我为了能让多个子域名公用一个证书，采用了泛域名的方式【星号的模糊匹配：`*.playpi.org`】。这种生成证书的方式只是为了测试使用，最终的证书肯定是不可信的，浏览器会提示此证书不受信任，所以还是通过其它方式获取证书比较好【后续我会通过阿里云或者 `letsencrypt` 获取免费的证书，具体博客参考可以使用相关关键词在站内搜索】。
+在生成的过程中还需要填写一些参数信息：国家、城市、机构名称、机构单位名称、域名、邮箱等，这里特别注意我为了能让多个子域名公用一个证书，采用了泛域名的方式【星号的模糊匹配：`*.playpi.org`】。这种生成证书的方式只是为了测试使用，最终的证书肯定是不可信的，浏览器会提示此证书不受信任，所以还是通过其它方式获取证书比较好【后续我会通过阿里云或者 `letsencrypt` 获取免费的证书，具体博客参考可以使用相关关键词在站内搜索**证书**，或者直接查看：[利用阿里云申请免费的 SSL 证书](https://www.playpi.org/2019030401.html)】。
 
 ![证书参数](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0prhfu9p8j20p40chwf7.jpg "证书参数")
 
@@ -372,7 +374,10 @@ Email Address []:playpi@qq.com
 
 重新配置 `http` 与 `https` 的参数【只列出 `server` 的主要部分，`blog` 二级域名主要是为了测试使用的，`blog` 的流量全部导入我的 `VPS` 中】，特别注意 `rewrite` 的正则表达式，只替换域名部分，链接部分不能替换，否则都跳转到主页去了。
 
+以下配置内容的模板已经被我上传至 `GitHub`，读者可以下载查看：[nginx_conf_https.template](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/resource/20190105) 。
+
 ```
+# 这里只是列出了server节点的部分,需要配合nginx_conf_http.template文件查看
 server {
     listen       80;
     server_name  www.playpi.org;
