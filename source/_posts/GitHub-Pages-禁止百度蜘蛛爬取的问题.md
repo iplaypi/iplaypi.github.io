@@ -117,7 +117,7 @@ curl https://www.playpi.org/baidusitemap.xml
 
 ![成功发送邮件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0ojtr12gxj21hc0q9755.jpg "成功发送邮件")
 
-内容全文如下，仅供参考：
+邮件内容已经被我上传至 `GitHub`，读者可以提前下载查看：[feedback_to_GitHub.txt](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/resource/20190105) ，内容全文如下，仅供参考：
 
 ```
 A doubt with GitHub Pages
@@ -143,7 +143,7 @@ Perry
 
 ![GitHub邮件回复](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g0oju7wg4tj21ar0npjtb.jpg "GitHub邮件回复")
 
-回复的重点内容如下：
+邮件回复的部分内容已经被我上传至 `GitHub`，读者可以下载查看：[GitHub_reply_to_me.txt](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/resource/20190105) ，回复的重点内容如下：
 
 ```
 I've confirmed that we are currently blocking the Baidu user agent from crawling GitHub Pages sites. We took this action in response to this user agent being responsible for an excessive amount of requests, which was causing availability issues for other GitHub customers. This is unlikely to change any time soon, so if you need the Baidu user agent to be able to crawl your site you will need to host it elsewhere.
