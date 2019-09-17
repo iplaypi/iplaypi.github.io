@@ -40,12 +40,13 @@ keywords: HBase,RegionServer,RowCounter
 19/09/17 18:23:09 INFO RpcRetryingCaller: Call exception, tries=11, retries=35, started=88446 ms ago, cancelled=false, msg=row 'YOUR_TABLE_NAME,14df3e2b1626e6e02fc1d772eb34f8ad,99999999999999' on table 'hbase:meta' at region=hbase:meta,,1.1588230740, hostname=dev6,16020,1565930591664, seqNum=0
 19/09/17 18:23:29 INFO RpcRetryingCaller: Call exception, tries=12, retries=35, started=108564 ms ago, cancelled=false, msg=row 'YOUR_TABLE_NAME,14df3e2b1626e6e02fc1d772eb34f8ad,99999999999999' on table 'hbase:meta' at region=hbase:meta,,1.1588230740, hostname=dev6,16020,1565930591664, seqNum=0
 19/09/17 18:23:49 INFO RpcRetryingCaller: Call exception, tries=13, retries=35, started=128578 ms ago, cancelled=false, msg=row 'YOUR_TABLE_NAME,14df3e2b1626e6e02fc1d772eb34f8ad,99999999999999' on table 'hbase:meta' at region=hbase:meta,,1.1588230740, hostname=dev6,16020,1565930591664, seqNum=0
-19/09/17 18:24:09 INFO RpcRetryingCaller: Call exception, tries=14, retries=35, started=148657 ms ago, cancelled=false, msg=row
+19/09/17 18:24:09 INFO RpcRetryingCaller: Call exception, tries=14, retries=35, started=148657 ms ago, cancelled=false, msg=row 'YOUR_TABLE_NAME,14df3e2b1626e6e02fc1d772eb34f8ad,99999999999999' on table 'hbase:meta' at region=hbase:meta,,1.1588230740, hostname=dev6,16020,1565930591664, seqNum=0
 ```
 
 ![Spark 报错信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190917203619.png "Spark 报错信息")
 
-接着我想使用 `HBase` 自带的 `RowCounter` 执行 `MapReduce` 任务扫描数据，测试一下，使用命令：`hbase org.apache.hadoop.hbase.mapreduce.RowCounter 'YOUR_TABLE_NAME'`。
+接着我想使用 `HBase` 自带的 `RowCounter` 执行 `MapReduce` 任务扫描数据，测试一下，使用命令：
+`hbase org.apache.hadoop.hbase.mapreduce.RowCounter 'YOUR_TABLE_NAME'`。
 
 结果也是超时报错，报错信息如下：
 
