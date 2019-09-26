@@ -16,8 +16,10 @@ type: guide
 # 2019
 
 
+- 2019092201，[爬山徒步：竹海丛林-广州第二峰鸡枕山](https://www.playpi.org/2019092201.html)
 - 2019091701，[HBase 异常：RpcRetryingCaller-Call exception](https://www.playpi.org/2019091701.html)
 - 2019082101，[使用 http 接口删除 Elasticsearch 集群的索引](https://www.playpi.org/2019082101.html)
+- 2019080701，[Git 常用命令总结](https://www.playpi.org/2019080701.html)
 - 2019073001，[记录一次关于 log4j 的 ClassNotFoundException 异常](https://www.playpi.org/2019073001.html)
 - 2019072801，[使用 Vultr 创建云主机详细步骤](https://www.playpi.org/2019072801.html)
 - 2019072701，[番茄鸡蛋面做法总结-酸汤口味](https://www.playpi.org/2019072701.html)

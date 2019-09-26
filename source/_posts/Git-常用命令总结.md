@@ -1,24 +1,36 @@
 ---
 title: Git 常用命令总结
-id: 2019-08-07 23:39:06
+id: 2019080701
 date: 2019-08-07 23:39:06
 updated: 2019-08-07 23:39:06
-categories:
-tags:
-keywords:
+categories: 基础技术知识
+tags: [Git,pull,push,commit]
+keywords: Git,pull,push,commit
 ---
+
+
 在软件工程师的工具列表中，`Git` 肯定是少不了的，作为分布式版本控制系统，`Git` 在目前非常流行，可以说，掌握 `Git` 的使用是工程师的基本功。而且，`Git` 也会为我们带来诸多的便利，根本离不开它。本文会记录一些常用的 `Git` 命令，不仅可以自查，也可以帮助读者。
 
 另外，说明一下，关于远程仓库的选择，目前有多种多样，例如：`GitHub`、`GitLab`、`Gitee`【码云】、`coding` 等等，读者自行选择。其中，最流行的莫过于 `GitHub`，在全球非常受欢迎，被微软收购后也没有大家想象的那么可怕，反而更加开源了，现在都可以免费使用3个私有仓库了，可见微软还是愿意拥抱开源世界的。
 
-本文中的远程仓库地址格式会以 `GitHub` 的 `HTTPS`  协议为准，即：`https://github.com/your_user_name/your_project_name.git`，需要用户输入用户名、密码。
+本文中的远程仓库地址格式会以 `GitHub` 的 `HTTPS`  协议为准，即：
 
-当然，还有一种格式是 `SSH` 协议的，即：`git@github.com:your_user_name/your_project_name.git` ，需要用户在本地生成秘钥，读者使用时可以自行选择。
+```
+https://github.com/your_user_name/your_project_name.git
+```
+
+需要用户输入用户名、密码。
+
+当然，还有一种格式是 `SSH` 协议的，即：
+
+```
+git@github.com:your_user_name/your_project_name.git
+```
+
+需要用户在本地生成秘钥，读者使用时可以自行选择。
+
 
 <!-- more -->
-2019080701
-基础技术知识
-Git,pull,push,commit
 
 
 # 下载安装
@@ -217,11 +229,23 @@ git log
 # 一些建议
 
 
-待整理。
+在使用 `Git` 的时候，会有一些隐藏的小功能，可以增加使用体验，下面列出几个：
+
+- 自带的图形化工具，使用 `gitk` 命令即可
+- 设置彩色的内容输出，使用 `git config color.ui true` 设置
+- 查看历史记录时，只显示一行注释信息，使用 `git config format.pretty oneline` 设置
+- 添加文件时，如果想使用询问交互的模式，使用 `git add -i`，其实就是加了一个 `-i` 参数
 
 
 # 资源推荐
 
 
-待整理。
+下面列出一些常见的资源、网站、工具等信息，可能对读者有帮助：
+
+- `git-tower` 工具，可视化管理，官网：[git-tower](https://www.git-tower.com)
+- `sourcetree` 工具，可视化管理，官网：[sourcetreeapp](https://www.sourcetreeapp.com)
+- `GitHub desktop` 工具，可视化管理，官网：[desktop](https://desktop.github.com)
+- `Git` 社区参考书：[book.git-scm](https://book.git-scm.com)
+- `GitHub` 帮助文档：[help.github](https://help.github.com)
+- 像 `Git` 一样思考：[think-like-a-git](http://think-like-a-git.net)
 
