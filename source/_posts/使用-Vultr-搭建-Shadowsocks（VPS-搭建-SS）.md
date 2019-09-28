@@ -39,6 +39,13 @@ keywords: Vultr,Shadowsocks,SS,VPS,搭梯子,梯子搭建,翻墙工具,影梭
 
 # Shadowsocks服务安装
 
+
+下文中涉及的 `shadowsocks` 配置文件模板已经被我上传至 `GitHub`，读者可以提前下载参考：[shadowsocks_conf](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/resource/20181116) ，有两份，一份是单用户的【只开一个端口】，一份是多用户的【开多个端口】。
+
+再说明一下，如果有技术零基础的读者不想折腾，就不用往下看了，可以直接参考我的另外一篇博客：[CentOS7 自动安装 Shadowsocks 脚本](https://www.playpi.org/2019082101.html) ，只要下载对应的自动安装脚本，就可以一键运行、自动安装，不需要考虑是否有技术基础，边等边喝水，几分钟就会安装完成。
+
+下面开始进入正题，详细描述 `shadowsocks` 服务的手动安装过程。
+
 云主机选择 `CentOS 7 x64` 版本，全程操作使用 `Linux` 命令【注意，如果选择其它系统命令会不一致，请自己查询，例如：`Debian/Ubuntu` 系统的安装命令更简洁，先 `apt-get install python-pip`，再 `pip install shadowsocks` 即可】。
 
 注意如果安装了防火墙【更安全】，需要的端口一定要开启，否则启动 `Shandowsocks` 会失败。
@@ -224,6 +231,7 @@ net.ipv4.tcp_fin_timeout = 5
 
 # 客户端使用
 
+
 ## Windows平台使用
 
 下载 `Windows` 平台的客户端，下载地址：[shadowsocks-windows GitHub](https://github.com/shadowsocks/shadowsocks-windows)，[shadowsocks 官网](http://shadowsocks.org/en/download/clients.html)，直接解压放入文件夹即可使用，不需要安装。
@@ -293,6 +301,7 @@ http://127.0.0.1:1080/pac?t=20181118030355597&secret=qZKsW49fDFezR4jJQtRDhUVPRqn
 
 
 # 踩坑记录
+
 
 1、在云主机安装服务端后，又安装了防火墙，但是没有开启 `Shadowsocks` 需要的端口，导致启动 `Shadowsocks` 总是失败，但是报错信息又是 `Python` 和 `Linux` 的，看不懂，搜索资料也搜不到，后来重装，并且想清楚每一步骤是干什么的，会造成什么影响，通过排除法找到了根本原因。
 
