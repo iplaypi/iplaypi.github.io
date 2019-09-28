@@ -42,7 +42,7 @@ keywords: Vultr,Shadowsocks,SS,VPS,搭梯子,梯子搭建,翻墙工具,影梭
 
 下文中涉及的 `shadowsocks` 配置文件模板已经被我上传至 `GitHub`，读者可以提前下载参考：[shadowsocks_conf](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/resource/20181116) ，有两份，一份是单用户的【只开一个端口】，一份是多用户的【开多个端口】。
 
-再说明一下，如果有技术零基础的读者不想折腾，就不用往下看了，可以直接参考我的另外一篇博客：[CentOS7 自动安装 Shadowsocks 脚本](https://www.playpi.org/2019082101.html) ，只要下载对应的自动安装脚本，就可以一键运行、自动安装，不需要考虑是否有技术基础，边等边喝水，几分钟就会安装完成。
+再说明一下，如果有技术零基础的读者不想折腾，就不用往下看了，可以直接参考我的另外一篇博客：[CentOS7 自动安装 Shadowsocks 脚本](https://www.playpi.org/2019082801.html) ，只要下载对应的自动安装脚本，就可以一键运行、自动安装，不需要考虑是否有技术基础，边等边喝水，几分钟就会安装完成。
 
 下面开始进入正题，详细描述 `shadowsocks` 服务的手动安装过程。
 
