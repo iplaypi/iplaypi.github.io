@@ -271,6 +271,8 @@ wget https://github.com/iplaypi/iplaypistudy/blob/master/iplaypistudy-normal/src
 
 下载下来后接着直接运行即可，使用 `sh auto_monitor_shadowsocks.sh` 。
 
+当然，这个监控脚本是要放在常用的主机上面运行，或者是在自己的电脑后台运行，但是为了确保一直后台运行，还是放在远程服务器上比较好，例如公司的公共服务器、阿里云主机等，这样就可以一直运行并监控。
+
 下面简单描述自动化脚本的思路：
 
 ```
