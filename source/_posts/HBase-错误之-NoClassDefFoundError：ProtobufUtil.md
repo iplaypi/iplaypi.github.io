@@ -1,19 +1,15 @@
 ---
 title: HBase 错误之 NoClassDefFoundError：ProtobufUtil
-id: 2019-09-30 20:34:04
+id: 2019093001
 date: 2019-09-30 20:34:04
-updated: 2019-09-30 20:34:04
-categories:
-tags:
-keywords:
+updated: 2019-10-01 20:34:04
+categories: 大数据技术知识
+tags: [HBase,Zookeeper,Hadoop,dubbo]
+keywords: HBase,Zookeeper,Hadoop,dubbo
 ---
 
-HBase 错误之 NoClassDefFoundError：ProtobufUtil
-2019093001
-HBase,Zookeeper,Hadoop
 
-
-背景说明：通过 `dubbo` 部署一个服务，服务中的业务逻辑会查询 `HBase` 表的数据，但是 `dubbo` 服务在注册时，`HBase` 初始化的过程中会报错：
+背景说明：通过 `dubbo` 部署一个服务，服务中的业务逻辑会查询 `HBase` 表的数据，但是 `dubbo` 服务在初始化注册时，`HBase` 初始化的过程中会报错：
 
 ```
 java.lang.NoClassDefFoundError: Could not initialize class org.apache.hadoop.hbase.protobuf.ProtobufUtil
@@ -28,7 +24,7 @@ java.lang.NoClassDefFoundError: Could not initialize class org.apache.hadoop.hba
 # 问题出现
 
 
-通过 `k8s` 多节点发布服务，但是只有在某一台机器上面出现错误，发布后 `dubbo` 服务注册时出现的错误如下：
+通过 `k8s` 多节点发布服务，但是只有在某一台机器上面出现错误【其它节点日志显示正常，也可以提供正常的服务】，发布后 `dubbo` 服务注册初始化时出现的错误如下：
 
 ```
 2019-09-19_18:03:49 [http-nio-28956-exec-2-SendThread(192.168.20.101:2181)] INFO zookeeper.ClientCnxn:852: Socket connection established to 192.168.20.101/192.168.20.101:2181, initiating session
@@ -119,17 +115,16 @@ java.lang.NoClassDefFoundError: Could not initialize class org.apache.hadoop.hba
 	at java.lang.Thread.run(Thread.java:748)
 ```
 
-注意查看重点内容：
+注意查看重点的内容：
 
 ```
 2019-09-19_18:03:50 [http-nio-28956-exec-2] WARN hdfs.DFSUtil:689: Namenode for hdfs-cluster remains unresolved for ID nn1.  Check your hdfs-site.xml file to ensure namenodes are configured properly.
 java.lang.NoClassDefFoundError: Could not initialize class org.apache.hadoop.hbase.protobuf.ProtobufUtil
-
 ```
 
-第一行是 `hdfs` 无法解析 `HA` 的域名，应该是系统环境问题；第二行是 `HBase` 初始化环境失败，看起来像是缺失依赖包或者依赖包冲突。
+第一行是 `hdfs` 无法解析 `HA` 的域名，应该是系统环境问题；第二行是 `HBase` 初始化环境失败，看起来像是缺失依赖包或者依赖包冲突导致的 `NoClassDefFoundError`。
 
-同时还出现了未知主机名错误：
+同时还出现了未知主机名异常：
 
 ```
 com.yyy.zzz.exception.es.EsConnException: java.net.UnknownHostException: host40: Temporary failure in name resolution
@@ -227,18 +222,18 @@ Caused by: java.io.IOException: java.lang.reflect.InvocationTargetException
 通过排查代码，这个异常是在业务逻辑代码连接 `HBase` 表取数时出现的：
 
 ```
-
 hTableInterface.get(List<Get>)
-
 ```
+
+每一次连接 `HBase` 取数，都会有这个异常出现。
 
 
 # 问题排查
 
 
-首先怀疑的是 `protobuf` 版本冲突问题，但是通过对比，只有一个 `jar` 包，而且其它节点没有问题，否定了这个猜测。
+首先怀疑的是 `protobuf` 版本冲突问题，但是通过对比，发现只有一个确定版本的 `jar` 包，而且对比其它节点，并没有这个问题出现，最终否定了这个猜测。
 
-接着发送多次请求，查看日志，以下错误不再出现：
+接着尝试发送多次请求，查看日志，以下错误不再出现【也很合理，这些异常是在服务注册初始化时只出现一次】：
 
 ```
 java.lang.NoClassDefFoundError: Could not initialize class org.apache.hadoop.hbase.protobuf.ProtobufUtil
@@ -261,7 +256,7 @@ Caused by: java.io.IOException: java.lang.reflect.InvocationTargetException
 
 更神奇的是，只在一台节点上面有问题，其它相同功能的节点没问题。
 
-通过运维排查，从 `NoClassDefFoundError` 以及 `UnknownHostException` 发现了异常原因：在某个时间点发布了服务，恰好此时机器负载过高，导致 `DNS` 解析异常，于是 `dubbo` 服务在注册时无法获取 `hdfs` 信息。而 `HBase` 在初始化时需要依赖 `hdfs` 上面的某个 `hbase.version` 文件【用来确定 `HBase` 的版本】，导致 `HBase` 在初始化时无法找到这个文件，也就无法确定版本，最终没有加载 `ProtobufUtil` 类文件。
+最终，通过运维排查，从 `NoClassDefFoundError` 以及 `UnknownHostException` 发现了异常原因：在某个时间点发布服务时，恰好此时机器负载过高，导致 `DNS` 解析异常，于是 `dubbo` 服务在注册时无法获取 `hdfs` 信息。而 `HBase` 在初始化时需要依赖 `hdfs` 上面的某个 `hbase.version` 文件【用来确定 `HBase` 的版本】，导致 `HBase` 在初始化时无法找到这个文件，也就无法确定版本，最终没有加载 `ProtobufUtil` 类文件。
 
 `hdfs-site.xml` 配置文件中的重要内容如下，`nn1` 节点无法被识别：
 
@@ -272,7 +267,7 @@ Caused by: java.io.IOException: java.lang.reflect.InvocationTargetException
 </property>
 ```
 
-`hbase-site.xml` 配置文件中的重要内容如下，对于 `HBase` 来说，这个 `hdfs` 路径里面存放着重要的信息：
+`hbase-site.xml` 配置文件中的重要内容如下，对于 `HBase` 来说，这个 `hdfs` 路径里面存放着重要的信息，如果无法读取它也就无法成功初始化 `HBase` 环境：
 
 ```
 <property>
@@ -285,11 +280,11 @@ Caused by: java.io.IOException: java.lang.reflect.InvocationTargetException
 
 这里会进一步引发一个严重的问题，由于 `dubbo` 服务在注册时出现问题没有退出，仍旧提供服务，但是这个服务是有问题的，每次需要连接 `HBase` 取数时都会出现异常，由于没有处理好异常，导致大量的 `Zookeeper` 连接没有关闭。
 
-进一步导致当前机器的 `Zookeeper` 连接数接近10000个，严重影响了其它业务连接 `Zookeeper`，一律时超时重试。
+进一步导致当前机器的 `Zookeeper` 连接数接近1000个，严重影响了其它业务连接 `Zookeeper`，一律是等待、超时重试。
 
 
 # 问题解决
 
 
-找到问题，就很容易解决了，重启对应的服务，观察初始化日志，一切正常。
+找到问题原因，就很容易解决了，重启对应的服务，观察初始化日志，一切正常。
 

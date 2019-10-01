@@ -1,13 +1,15 @@
 ---
 title: HBase 错误之 ConnectionLoss for hbase-unsecure
-id: 2019-09-30 21:11:53
-date: 2019-09-30 21:11:53
+id: 2019092901
+date: 2019-09-29 21:11:53
 updated: 2019-09-30 21:11:53
-categories:
-tags:
-keywords:
+categories: 大数据技术知识
+tags: [HBase,Zookeeper,Hadoop]
+keywords: HBase,Zookeeper,Hadoop
 ---
-在当前的业务中，需要连接 `HBase` 获取数据，但是最近在某一台节点上面的进程总是出现连接异常：
+
+
+在当前的业务中，需要连接 `HBase` 获取数据，但是最近在某一台节点上面的进程总是出现连接异常，类似下面：
 
 ```
 2019-09-20_18:54:44 [http-nio-28956-exec-5] WARN zookeeper.ZKUtil:629: hconnection-0x8a9f6680x0, quorum=host1:2181,host10:2181,host11:2181,host61:2181,host62:2181, baseZNode=/hbase-unsecure Unable to get data of znode /hbase-unsecure/meta-region-server
@@ -15,19 +17,16 @@ org.apache.zookeeper.KeeperException$ConnectionLossException: KeeperErrorCode = 
 	at org.apache.zookeeper.KeeperException.create(KeeperException.java:99)
 ```
 
-看起来是连接超时，然后重试，持续了多次。本文开发环境基于 `HBase v1.1.2`、`Zookeeper v3.4.6`、`Hadoop v2.7.1`。
+看起来是连接超时，然后重试，日志中持续了多次。本文开发环境基于 `HBase v1.1.2`、`Zookeeper v3.4.6`、`Hadoop v2.7.1`。
 
 
 <!-- more -->
-
-2019092901
-HBase,Zookeeper,Hadoop
 
 
 # 问题出现
 
 
-一个正常的连接 `HBase` 取数的服务，在某个节点上出现大量的异常日志，无法连接到 `HBase`，一直在重试。同时观察到在其它节点则正常。
+一个正常的连接 `HBase` 取数的服务，在某个节点上出现大量的异常日志，无法连接到 `HBase`，一直在重试，同时观察到在其它节点上相同的服务却是正常的。
 
 ```
 2019-09-20_18:54:44 [http-nio-28956-exec-5] ERROR zookeeper.RecoverableZooKeeper:277: ZooKeeper getData failed after 4 attempts
@@ -244,7 +243,7 @@ org.apache.zookeeper.KeeperException$ConnectionLossException: KeeperErrorCode = 
 
 看起来是当前节点网络有问题，或者 `Zookeeper` 连接资源紧张。
 
-与此同时，还有大量下面这种连接重试：
+与此同时，还有大量类似下面这种连接重试出现：
 
 ```
 2019-09-30_00:24:56 [http-nio-28956-exec-8-SendThread(alps61:2181)] INFO zookeeper.ClientCnxn:1098: Unable to read additional data from server sessionid 0x16af866e055f894, likely server has closed socket, closing socket connection and 
@@ -271,23 +270,23 @@ attempting reconnect
 
 由于没有 `root` 权限，只能请运维帮忙排查，通过排查，发现当前主机创建的 `Zookeeper` 连接数过多，超过了设置的最大值。
 
-使用 `netstat -antp | grep 2181 | wc -l` 命令，注意需要 `root` 用户的权限。这个命令统计的是所有连接，包含等待的和正在通信的，如果查看正在通信的，加上一个 `grep ESTABLISHED` 过滤即可。
+使用 `netstat -antp | grep 2181 | wc -l` 命令，注意需要 `root` 用户的权限。这个命令统计的是所有 `Zookeeper` 连接【通过使用2181端口过滤】，包含等待的和正在通信的，如果查看正在通信的，加上一个 `grep ESTABLISHED` 过滤即可。
 
 局部截图如下：
 
 ![zk 连接进程查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190930214400.png "zk 连接进程查看")
 
-直接发现了问题，所以也不用进一步查看 `Zookeeper` 的日志了。
+由于直接发现了问题，所以也不用进一步查看 `Zookeeper` 的日志了。
 
-至于为什么 `Zookeeper` 的连接数会这么多，罪魁祸首请读者参考另外一篇博客：[HBase 错误之 NoClassDefFoundError：ProtobufUtil](https://www.playpi.org/2019093001.html) 。
+至于为什么 `Zookeeper` 的连接数会这么多，罪魁祸首请读者参考我的另外一篇博客：[HBase 错误之 NoClassDefFoundError：ProtobufUtil](https://www.playpi.org/2019093001.html) 。
 
-由于当前节点创建的 `Zookeeper` 连接数过多，所以再创建新连接时无法顺利连接通信，一直等待。
+由于当前节点创建的 `Zookeeper` 连接数过多，所以再创建新连接时无法顺利连接通信，一直等待重试。
 
 
 # 问题解决
 
 
-问题排查出来，解决就简单了，直接找到问题程序，修复资源泄漏问题，然后重启，保证合理的 `Zookeeper` 连接数量，不要影响到其它业务。
+问题排查出来，解决就简单了，直接找到问题程序，修复资源泄漏问题，然后重启，保证合理的 `Zookeeper` 连接数量，不要因为某一个程序的失误而影响到其它业务。
 
-另外需要特别留意 `Zookeeper` 查看日志的方法，日志文件时不能被直接打开的，需要工具转换为文本日志。
+另外如果有必要查看 `Zookeeper` 日志，需要特别留意 `Zookeeper` 查看日志的方法，日志文件是不能被直接打开的，需要工具转换为文本日志，然后才能查看分析。
 
