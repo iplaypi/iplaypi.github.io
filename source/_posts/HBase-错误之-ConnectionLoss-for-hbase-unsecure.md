@@ -278,7 +278,8 @@ attempting reconnect
 
 由于直接发现了问题，所以也不用进一步查看 `Zookeeper` 的日志了。
 
-至于为什么 `Zookeeper` 的连接数会这么多，罪魁祸首请读者参考我的另外一篇博客：[HBase 错误之 NoClassDefFoundError：ProtobufUtil](https://www.playpi.org/2019093001.html) 。
+至于为什么 `Zookeeper` 的连接数会这么多，罪魁祸首请读者参考我的另外一篇博客：
+[HBase 错误之 NoClassDefFoundError：ProtobufUtil](https://www.playpi.org/2019093001.html) 。
 
 由于当前节点创建的 `Zookeeper` 连接数过多，所以再创建新连接时无法顺利连接通信，一直等待重试。
 
