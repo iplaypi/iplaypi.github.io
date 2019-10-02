@@ -28,7 +28,7 @@ keywords: Shell,shadowsocks,firewalld,Shadowsocks,CentOS
 下载 `GitHub` 上面的脚本时，如果有类似 `Shell` 的环境，就不用浏览器下载了，在 `Shell` 中可以直接使用 `wget` 命令下载，使用如下命令：
 
 ```
-wget https://github.com/iplaypi/iplaypistudy/blob/master/iplaypistudy-normal/src/bin/20190828/auto_deploy_shadowsocks.sh
+wget https://raw.githubusercontent.com/iplaypi/iplaypistudy/master/iplaypistudy-normal/src/bin/20190828/auto_deploy_shadowsocks.sh
 ```
 
 下载下来后接着直接运行即可，使用 `sh auto_deploy_shadowsocks.sh` 。
@@ -214,12 +214,12 @@ METHOD:aes-256-cfb
 
 在使用 `Shadowsocks` 的时候，有时候会遇到一个问题，端口被封了【`ip` 被封另外说，只能销毁主机新建】，特别是国家严厉管控非法 `VPN` 的时候，当然我这是属于误封，因为我只是用来学习、测试接口，这时候解决办法也简单，尝试更换一个端口即可。
 
-步骤其实很简单，停止服务、更改配置文件、开启新端口、重启服务，但是作为一个追求效率的人，我还是想把操作简化一下，最好敲下一行命令等着就行。
+步骤其实很简单，停止服务、更改配置文件、开启新端口、重启服务，但是作为一个追求效率的人，我还是想把操作简化一下，最好敲下一行命令等着就行【执行脚本的前提是 `Shadowsocks` 以及相关工具已经安装完成】。
 
 其实把前面的步骤稍微整理一下，就变成了一个简单的脚本，直接执行即可。脚本已经被我上传至 `GitHub`，在 `Shell` 中可以直接使用 `wget` 命令下载，使用如下命令：
 
 ```
-wget https://github.com/iplaypi/iplaypistudy/blob/master/iplaypistudy-normal/src/bin/20190828/auto_restart_shadowsocks.sh
+wget https://raw.githubusercontent.com/iplaypi/iplaypistudy/master/iplaypistudy-normal/src/bin/20190828/auto_restart_shadowsocks.sh
 ```
 
 下载下来后接着直接运行即可，使用 `sh auto_restart_shadowsocks.sh` 。
@@ -229,9 +229,9 @@ wget https://github.com/iplaypi/iplaypistudy/blob/master/iplaypistudy-normal/src
 ```
 1、提示用户输入端口号、密码，并读取输入，没有输入则使用默认值
 2、利用端口号、密码，生成 /etc/shadowsocks.json 配置文件
-3、安装 shadowsocks 以及其它组件：m2crypto、pip、firewalld
-4、启动防火墙，开启必要的端口
-5、检测当前是否有运行的 shadowsocks 服务，有则杀死
+3、启动防火墙，开启必要的端口（`Shadowsocks` 以及相关工具无需再安装）
+4、使用 stop 停止 shadowsocks 服务
+5、再次检测当前是否有运行的 shadowsocks 服务，有则杀死
 6、后台启动 shadowsocks 服务
 7、输出部署成功的信息，如果部署失败，需要进一步查看日志文件
 8、处理 server 酱通知
@@ -240,20 +240,145 @@ wget https://github.com/iplaypi/iplaypistudy/blob/master/iplaypistudy-normal/src
 脚本内容整理如下，重要的地方已经注释清楚【这里要特别注意脚本中的换行符号，一律使用 `\\n` 的形式，否则会引起错误】：
 
 ```
-yy
+#!/bin/bash
+# 注意本脚本中的换行符号,一律使用\n的形式,否则会引起错误
+# 日志路径,如果安装失败需要查看日志,是否有异常/报错信息
+export log_path=/etc/auto_restart_shadowsocks.log
+# 设置端口号,从键盘接收参数输入,默认为2018,-e参数转义开启高亮显示
+echo -n -e '\033[36mPlease enter PORT[2018 default]:\033[0m'
+read port
+if [ ! -n "$port" ];then
+    echo "port will be set to 2018"
+    port=2018
+else
+    echo "port will be set to $port"
+fi
+# 设置密码,从键盘接收参数输入,默认为pengfeivpn,-e参数转义开启高亮显示
+echo -n -e '\033[36mPlease enter PASSWORD[pengfeivpn default]:\033[0m'
+read pwd
+if [ ! -n "$pwd" ];then
+    echo "password will be set to pengfeivpn"
+    pwd=pengfeivpn
+else
+    echo "password will be set to $pwd"
+fi
+# 创建shadowsocks.json配置文件,只开一个端口,server可以是0.0.0.0
+echo "****************start generate /etc/shadowsocks.json"
+cat>/etc/shadowsocks.json<<EOF
+{
+    "server":"0.0.0.0",
+    "server_port":$port,
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "password":"$pwd",
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false
+}
+EOF
+echo "****************start open port"
+# 开启端口
+ret=`firewall-cmd --permanent --zone=public --add-port=$port/tcp >> ${log_path} 2>&1`
+ret=`firewall-cmd --reload >> ${log_path} 2>&1`
+# 正常停掉 shadowsocks 服务
+echo "****************start stop shadowsocks"
+/usr/bin/ssserver -c /etc/shadowsocks.json -d stop
+echo "****************start check shadowsocks"
+# 如果有相同功能的进程则先杀死,$?表示上个命令的退出状态,或者函数的返回值
+ps -ef | grep ssserver | grep shadowsocks | grep -v grep
+if [ $? -eq 0 ];then
+    ps -ef | grep ssserver | grep shadowsocks | awk '{ print $2 }' | xargs kill -9
+fi
+# 后台启动,-d 表示守护进程
+/usr/bin/ssserver -c /etc/shadowsocks.json -d start
+# 启动成功
+if [ $? -eq 0 ];then
+# 获取本机ip地址
+ip=`ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1 -d '/'`
+clear
+cat<<EOF
+***************Congratulation!*****************
+shadowsocks restart successfully!
+
+IP:$ip
+PORT:$port
+PASSWORD:$pwd
+METHOD:aes-256-cfb
+
+*****************JUST ENJOY IT!****************
+EOF
+# 建议开启server酱自动通知,推送到微信,就可以直接复制信息转发给别人了
+# 不开启请把以下内容注释掉,注释内容持续到'server酱通知完成'
+# 关于server酱的使用请参考:https://sc.ftqq.com
+# 注意server_key不要泄露,泄漏后可以去官网重置
+echo "**************开始处理server酱通知"
+server_key=SCU60861T303e1c479df6cea9e95fc54d210232565d7dbbf075750
+# 传输2个参数:text/desp,desp使用markdown语法(注意换行符要使用2个换行)
+cat>./shadowsocks_msg.txt<<EOF
+text=shadowsocks服务更换端口重新启动完成
+&desp=
+- IP地址：$ip
+
+- 端口号：$port
+
+- 密码：$pwd
+
+- 加密方式：aes-256-cfb
+EOF
+curl -X POST --data-binary @./shadowsocks_msg.txt  https://sc.ftqq.com/$server_key.send
+echo ""
+echo "**************server酱通知处理完成"
+# 失败
+else
+clear
+cat<<EOF
+**************Failed,retry please!*************
+
+cat /etc/ss.log to get something you need.
+
+**************Failed,retry please!*************
+EOF
+fi
+
 ```
 
 执行脚本的输出信息如下【需要手动设置新的端口号，我设置为2020，密码仍旧使用默认值】，表示重启完成：
 
 ```
-zz
+[root@playpi ~]# sh auto_restart_shadowsocks.sh 
+Please enter PORT[2018 default]:2020
+port will be set to 2020
+Please enter PASSWORD[pengfeivpn default]:
+password will be set to pengfeivpn
+****************start generate /etc/shadowsocks.json
+****************start open port
+****************start stop shadowsocks
+INFO: loading config from /etc/shadowsocks.json
+stopped
+****************start check shadowsocks
+INFO: loading config from /etc/shadowsocks.json
+2019-10-02 10:53:17 INFO     loading libcrypto from libcrypto.so.10
+started
+***************Congratulation!*****************
+shadowsocks restart successfully!
+
+IP:45.32.79.20
+PORT:2020
+PASSWORD:pengfeivpn
+METHOD:aes-256-cfb
+
+*****************JUST ENJOY IT!****************
+**************开始处理server酱通知
+{"errno":0,"errmsg":"success","dataset":"done"}
+**************server酱通知处理完成
+[root@playpi ~]#
 ```
 
-图。。
+![重启成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20191002185742.png "重启成功")
 
 同时，`server` 酱也接收到通知，可以很方便地直接转发给需要的人了。
 
-图。。
+![server 酱的通知](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20191002185749.png "server 酱的通知")
 
 
 # 监控服务
@@ -261,54 +386,128 @@ zz
 
 鉴于国家管控越来越严格，有时候会误伤到我们的 `VPS`，毕竟我只是用来学习技术、测试接口，没有做什么违法的事，有时候突然挂掉了我也不知道，直到需要用到的时候才发现已经挂掉了，这时候还要去折腾，重启甚至更换 `ip`，影响心情，也影响做事的效率。
 
-那么有没有可能做一个简单的监控服务，每隔一段时间检测一下服务是否正常，如果不正常则发送通知。如果连续多次不正常，则自动更换端口重启，重启成功后发送通知；如果是 `ip` 被封，此时重启没有用了，应该发送通知，提醒重新更换主机。
+那么有没有可能做一个简单的监控服务，每隔一段时间检测一下服务是否正常，如果不正常则发送通知。如果连续多次不正常，则发送通知提醒更换端口重启；如果是 `ip` 被封，此时重启没有用了，应该发送通知，提醒重新更换主机。
 
 使用 `Shell` 可以做一个简化的版本，脚本已经被我上传至 `GitHub`，在 `Shell` 中可以直接使用 `wget` 命令下载，使用如下命令：
 
 ```
-wget https://github.com/iplaypi/iplaypistudy/blob/master/iplaypistudy-normal/src/bin/20190828/auto_monitor_shadowsocks.sh
+wget https://raw.githubusercontent.com/iplaypi/iplaypistudy/master/iplaypistudy-normal/src/bin/20190828/auto_monitor_shadowsocks.sh
 ```
 
 下载下来后接着直接运行即可，使用 `sh auto_monitor_shadowsocks.sh` 。
 
-当然，这个监控脚本是要放在常用的主机上面运行，或者是在自己的电脑后台运行，但是为了确保一直后台运行，还是放在远程服务器上比较好，例如公司的公共服务器、阿里云主机等，这样就可以一直运行并监控。
+当然，这个监控脚本是要放在常用的主机上面运行，或者是在自己的电脑后台运行，但是为了确保一直后台运行，还是放在远程服务器上比较好，例如公司的公共服务器、阿里云主机等，这样就可以一直运行并监控【确保运行在家庭的网络环境中或者公司的网络环境中，否则监控结果没有意义】。
 
 下面简单描述自动化脚本的思路：
 
 ```
-1、提示用户输入端口号、密码，并读取输入，没有输入则使用默认值
-2、利用端口号、密码，生成 /etc/shadowsocks.json 配置文件
-3、安装 shadowsocks 以及其它组件：m2crypto、pip、firewalld
-4、启动防火墙，开启必要的端口
-5、检测当前是否有运行的 shadowsocks 服务，有则杀死
-6、后台启动 shadowsocks 服务
-7、输出部署成功的信息，如果部署失败，需要进一步查看日志文件
-8、处理 server 酱通知
+1、执行脚本时输入 ip、端口号、周期，然后每隔指定时间按照如下流程检测一次
+2、使用 ping 检测ip是否可用
+3、如果ip不可用，通过 server 酱通知；如果ip可用，进一步检测端口是否可用
+4、如果端口不可用，记录并通过 server 酱通知；如果端口可用，不做操作
+5、步骤4中如果端口不可用连续超过3次，才发送通知
+6、如果更换了ip或者端口，此监控脚本需要重启，从头重新开始检测
 ```
 
 脚本内容整理如下，重要的地方已经注释清楚【这里要特别注意脚本中的换行符号，一律使用 `\\n` 的形式，否则会引起错误】：
 
 ```
-yy
+#!/bin/bash
+# 脚本接收3个参数:ip/port/执行周期(默认10分钟),切记放在后台运行
+# 注意本脚本中的换行符号,一律使用\n的形式,否则会引起错误
+# 日志路径,如果安装失败需要查看日志,是否有异常/报错信息
+# 最少2个参数,否则直接退出
+if [ 2 -gt $# ];then
+  echo "must enter ip and port"
+  exit 1
+fi
+ip=$1
+port=$2
+log_path=/etc/auto_monitor_shadowsocks.log
+# 设置执行周期,默认10分钟,如果参数有指定则使用
+circle_time=10m
+if [ -n $3 ];then
+  circle_time=$3
+fi
+echo "ip will be set to [$ip],port will be set to [$port],circle_time will be set to [$circle_time]"
+# 变量,标记是否通知以及通知内容
+notice=0
+notice_msg=""
+# 变量,标记ip/端口的失败次数
+ip_fail_num=0
+port_fail_num=0
+# while循环
+while :
+do
+  # 查看ip是否正常
+  ping=`ping -c 1 $ip |grep loss |awk '{print $6}' |awk -F "%" '{print $1}'`
+  # ip不可用
+  if [ $ping -eq 100 ];then
+    ip_fail_num=`expr $ip_fail_num + 1`
+    echo ping [$ip] at $(date +%Y-%m-%d%t%X) fail >> $log_path
+    notice=1
+    notice_msg=`echo ping [$ip] at $(date +%Y-%m-%d%t%X) 失败，累计次数：[$ip_fail_num]，请更换主机`
+    #ip可用
+  else
+    echo ping [$ip] at $(date +%Y-%m-%d%t%X) ok >> $log_path
+    ip_fail_num=0
+    # 接着判断端口是否可用,使用nc工具,超时时间为20秒
+    `nc -v -z -w 20 $ip $port`
+    # 端口不可用
+    if [ 0 -ne $? ];then
+      port_fail_num=`expr $port_fail_num + 1`
+      echo nc [$ip:$port] at $(date +%Y-%m-%d%t%X) fail >> $log_path
+      if [ $port_fail_num -gt 3 ];then
+        notice=1
+        notice_msg=`echo nc [$ip:$port] at $(date +%Y-%m-%d%t%X) 失败，累计次数：[$port_fail_num]，请更换端口`
+      fi
+    # 端口可用
+    else
+      echo nc [$ip:$port] at $(date +%Y-%m-%d%t%X) ok >> $log_path
+      port_fail_num=0
+    fi
+  fi
+# 建议开启server酱自动通知,推送到微信
+# 不开启请把以下内容注释掉,注释内容持续到'server酱通知完成'
+# 关于server酱的使用请参考:https://sc.ftqq.com
+# 注意server_key不要泄露,泄漏后可以去官网重置
+if [ 1 -eq $notice ];then
+  echo "**************开始处理server酱通知" >> $log_path
+  server_key=SCU60861T303e1c479df6cea9e95fc54d210232565d7dbbf075750
+  # 传输2个参数:text/desp,desp使用markdown语法(注意换行符要使用2个换行)
+cat>./shadowsocks_msg.txt<<EOF
+text=shadowsocks定时监控服务消息
+&desp=
+$notice_msg
+EOF
+  curl -X POST --data-binary @./shadowsocks_msg.txt https://sc.ftqq.com/$server_key.send >> $log_path
+  echo "" >> $log_path
+  echo "**************server酱通知处理完成" >> $log_path
+  notice=0
+  notice_msg=""
+fi
+sleep $circle_time
+done
+
 ```
 
-执行脚本后，每隔30分钟检测一下 `ip` 或者端口是否可以正常访问。如果正常什么都不做；如果端口不正常则简单通知；如果端口连续不正常则发送故障报告，并自动重启，重启后通知结果；如果 `ip` 不正常则简单通知；如果 `ip` 连续不正常则发送故障报告，此时可以考虑更换主机了。
+执行脚本后，每隔10分钟检测一下 `ip` 或者端口是否可以正常访问。如果正常什么都不做；如果端口不正常则记录，如果端口连续3次不正常则发送故障报告，提醒更换端口；如果 `ip` 不正常则发送故障报告，提醒更换主机。
 
 下面列举一些 `server` 酱的通知示例。
 
-端口不正常。
+端口连续不可用。
 
-图。。
+![端口连续不可用](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20191003005805.png "端口连续不可用")
 
-端口连续不正常。
+`ip` 不可用。
 
-图。。
+![ip 不可用](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20191003005759.png "ip 不可用")
 
-`ip` 不正常。
 
-图。。
+# 备注
 
-`ip` 连续不正常。
 
-图。。
+1、Server 酱的使用有限制，每天限制1000条信息，所以千万不能写个死循环狂发信息，会被拉黑的。
+
+2、使用 `wget` 下载文件时，如果本地文件已经存在，会自动新建一个文件，文件很多，有时候会显得很乱，如果想覆盖下载，可以使用 `-N` 参数，或者使用 `-O your_file_name` 参数指定本地文件名。
 
