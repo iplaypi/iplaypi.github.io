@@ -16,6 +16,7 @@ type: guide
 # 2019
 
 
+- 2019100801，[Git 异常之 Unlink of file](https://www.playpi.org/2019100801.html)
 - 2019093001，[HBase 错误之 NoClassDefFoundError：ProtobufUtil](https://www.playpi.org/2019093001.html)
 - 2019092901，[HBase 错误之 ConnectionLoss for hbase-unsecure](https://www.playpi.org/2019092901.html)
 - 2019092201，[爬山徒步：竹海丛林-广州第二峰鸡枕山](https://www.playpi.org/2019092201.html)
