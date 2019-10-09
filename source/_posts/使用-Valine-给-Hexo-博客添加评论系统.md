@@ -151,3 +151,10 @@ valine:
 
 此外，还要注意一点，导出数据只能在**中午12点之前**操作，会发送到邮箱一个压缩包。
 
+如果使用了国际版后，遇到评论无法显示的问题，报错：
+`Code : undefined [410 GET https://avoscloud.com/1.1/classes/Comment]`，这是 `Valine` 的 `bug`，需要升级至 `v1.3.10` 解决，参考 `GitHub` 讨论的 `issue`：[194](https://github.com/xCss/Valine/issues/194) 。
+
+![显示异常](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20191010020925.png "显示异常")
+
+这个 `bug` 的核心就是 `Valine` 没有考虑到 `LeanCloud` 的多个域名，华北、华东、国际站点的域名都不一样，而 `Valine` 统一默认是 `avoscloud.com`，这就导致不能支持某些地区的站点。
+
