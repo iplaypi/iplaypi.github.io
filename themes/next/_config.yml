@@ -394,9 +394,11 @@ changyan:
 valine:
   # 开启Valine评论
   enable: true
-  # 设置应用id和key
-  appid: FC5Jijeg1meo2K2OzPYWK327-gzGzoHsz
-  appkey: 6A1ReY8tjhPutK00F01YbJSq
+  # 设置应用id和key,20191002切换为国际版
+  # appid: FC5Jijeg1meo2K2OzPYWK327-gzGzoHsz
+  appid: aHz5SjPzGN20Vr6MlpJQ8cS5-MdYXbMMI
+  # appkey: 6A1ReY8tjhPutK00F01YbJSq
+  appkey: j0UH1wFWqqPgDuv7d6bqBBCU
   # mail notifier , https://github.com/xCss/Valine/wiki
   # 关闭提醒与验证
   notify: false
