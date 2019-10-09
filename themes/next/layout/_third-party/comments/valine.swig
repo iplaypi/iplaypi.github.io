@@ -3,7 +3,7 @@
   {# <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> #}
   {# <script src="//cdn.jsdelivr.net/gh/xcss/valine@v1.1.7-rc3/dist/Valine.min.js"></script> #}
 
-  <script src="//unpkg.com/valine@1.3.10/dist/Valine.min.js"></script>
+  <script src="//unpkg.com/valine@1.3.7/dist/Valine.min.js"></script>
   <script type="text/javascript">
     new Valine({
         av: AV,
