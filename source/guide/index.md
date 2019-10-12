@@ -16,6 +16,7 @@ type: guide
 # 2019
 
 
+- 2019101201，[HBase 错误：NotServingRegionException](https://www.playpi.org/2019101201.html)
 - 2019100801，[Git 异常之 Unlink of file](https://www.playpi.org/2019100801.html)
 - 2019093001，[HBase 错误之 NoClassDefFoundError：ProtobufUtil](https://www.playpi.org/2019093001.html)
 - 2019092901，[HBase 错误之 ConnectionLoss for hbase-unsecure](https://www.playpi.org/2019092901.html)
