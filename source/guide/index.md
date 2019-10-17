@@ -123,6 +123,7 @@ type: guide
 - 2017102901，[Hello World](https://www.playpi.org/2017102901.html)
 - 2017093001，[使用 Hexo、GitHub 搭建个人博客教程](https://www.playpi.org/2017093001.html)
 - 2017060101，[记录一个 Kafka 错误：OffsetOutOfRangeException](https://www.playpi.org/2017060101.html)
+- 2017052101，[在 Windows 平台遇到 Hadoop 异常：UnsatisfiedLinkError](https://www.playpi.org/2017052101.html)
 - 2017051401，[VLOOKUP 函数跨工作表跨文件使用方式](https://www.playpi.org/2017051401.html)
 - 2017050701，[Hexo 框架 Next 主题添加自定义 Page](https://www.playpi.org/2017050701.html)
 - 2017050401，[Linux 输出重定向的问题](https://www.playpi.org/2017050401.html)
