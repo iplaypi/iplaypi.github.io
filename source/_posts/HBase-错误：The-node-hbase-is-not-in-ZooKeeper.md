@@ -144,6 +144,8 @@ Caused by: java.io.IOException: Can't get master address from ZooKeeper; znode d
 java.lang.RuntimeException: java.lang.ClassNotFoundException: Class org.apache.hadoop.hdfs.DistributedFileSystem not found
 ```
 
+最后一点需要注意，上传的 `csv` 文件内容列数要确保和 `HBase` 表的列数一致，并且不需要表头，否则无法成功导入【表头也会被当做内容】，日志也会报错提醒的。当然，字段也是有顺序的，`csv` 文件中字段的顺序要和 `HBase` 表中定义的一致。
+
 
 # 备注
 
