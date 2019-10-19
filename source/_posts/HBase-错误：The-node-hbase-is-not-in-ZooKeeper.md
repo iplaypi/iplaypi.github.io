@@ -134,9 +134,15 @@ Caused by: java.io.IOException: Can't get master address from ZooKeeper; znode d
 
 可以看到，里面有 `Can't get master address from ZooKeeper` 字样，也就是无法从 `Zookeeper` 指定的目录中获取关于 `HBase` 的主节点信息，可见，单纯在 `Zookeeper` 中创建一个 `/hbase` 目录是没用的。因此，源头应该在于 `phoenix` 为什么不去 `/hbase-unsecure` 目录中获取 `HBase` 集群信息【这才是 `HBase` 集群的信息所在地】，是哪里的配置出了问题。
 
-经过排查，`phoenix` 脚本在加载 `hbase_conf_dir` 参数的时候，目录错误，因此没有获取到 `HBase` 相的配置文件，最终导致没有去 `Zookeeper` 的 `/hbase-unsecure` 目录读取数据。
+经过排查，`phoenix` 脚本在加载 `hbase_conf_dir` 参数的时候，目录错误，因此没有获取到 `HBase` 相的配置文件，最终导致没有去 `Zookeeper` 的 `/hbase-unsecure` 目录读取数据。这里排查的是 `psql.py`、`phoenix_utils.py` 这两个文件，里面有关于加载 `HBase`、`Hadoop` 集群的配置目录的参数，如果赋值错误就会导致上述现象。
 
 把 `hbase_conf_dir` 参数的加载过程梳理清楚，确保可以加载到 `HBASE_HOME/conf` 目录，接着就可以顺利导入数据了。
+
+同时当然也需要 `HADOOP_HOME/conf`，但是我这里已经是正确的了，如果读者没有配置好，可能会遇到找不到 `hdfs` 的相关类，例如：
+
+```
+java.lang.RuntimeException: java.lang.ClassNotFoundException: Class org.apache.hadoop.hdfs.DistributedFileSystem not found
+```
 
 
 # 备注
