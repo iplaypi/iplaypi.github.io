@@ -130,6 +130,7 @@ comments: false
 - 专为家庭装修开发的3D设计工具，免费开源：[sweethome3d](http://www.sweethome3d.com)
 - 高效的产品设计协作平台，蓝湖：[lanhuapp](https://lanhuapp.com)
 - 中华人民共和国应急管理部，公开 -> 事故查处里面有专业的调查报告：[中华人民共和国应急管理部](https://www.mem.gov.cn)
+- 谷歌应用商店的 apk 文件下载：[apkcombo](https://apkcombo.com)
 
 ## 技术列表
 
