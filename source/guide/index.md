@@ -16,6 +16,7 @@ type: guide
 # 2019
 
 
+- 2019101901，[HBase 错误：The node hbase is not in ZooKeeper](https://www.playpi.org/2019101901.html)
 - 2019101201，[HBase 错误：NotServingRegionException](https://www.playpi.org/2019101201.html)
 - 2019100801，[Git 异常之 Unlink of file](https://www.playpi.org/2019100801.html)
 - 2019093001，[HBase 错误之 NoClassDefFoundError：ProtobufUtil](https://www.playpi.org/2019093001.html)

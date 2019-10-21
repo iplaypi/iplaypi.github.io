@@ -146,6 +146,10 @@ java.lang.RuntimeException: java.lang.ClassNotFoundException: Class org.apache.h
 
 最后一点需要注意，上传的 `csv` 文件内容列数要确保和 `HBase` 表的列数一致，并且不需要表头，否则无法成功导入【表头也会被当做内容】，日志也会报错提醒的。当然，字段也是有顺序的，`csv` 文件中字段的顺序要和 `HBase` 表中定义的一致。
 
+顺利导入数据，导入成功，耗时12秒，导入12000条数据，从输出日志中可以看到详情。
+
+![数据导入成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20191021215944.png "数据导入成功")
+
 
 # 备注
 
