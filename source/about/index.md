@@ -42,6 +42,7 @@ comments: false
 - 项目管理工具：[Git](https://git-scm.com)
   - 使用 Git Windows 版本切记修改显示编码，否则命令行里面都是乱码
 - 依赖管理工具：[Maven](https://maven.apache.org)
+- Python官网：[Python](https://www.python.org)
 - JDK 下载：[Java 网站](https://www.java.com) 、[Oracle 网站](https://www.oracle.com)
 - Chrome 浏览器（下载使用需要翻墙，插件可以去官方商店直接安装，或者有各种第三方镜像库，下载 crx 文件再安装）：[Chrome 浏览器](https://www.google.com/chrome)
   - 插件之去除广告：[Adblock Plus](https://adblockplus.org)
