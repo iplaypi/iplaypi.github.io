@@ -66,6 +66,7 @@ comments: false
   - 插件之 IDEA 调试工具：[JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji)
   - 插件之 GitHub 代码查看神器：[Octotree](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) ，官方网站：[octotree.io](https://www.octotree.io)
   - 插件之 PDF 转换工具：[smallpdf](https://chrome.google.com/webstore/detail/smallpdf-edit-compress-an/ohfgljdgelakfkefopgklcohadegdpjf)
+  - 插件之微博共享黑名单：[微博共享黑名单](https://chrome.google.com/webstore/detail/%E5%BE%AE%E5%8D%9A%E5%85%B1%E4%BA%AB%E9%BB%91%E5%90%8D%E5%8D%95/adghfiaopngpgcaefcniojmeigmnogkm)
   - 插件之交互设计、原型设计工具：[Axure RP](https://chrome.google.com/webstore/detail/axure-rp-extension-for-ch/dogkpdfcklifaemcdfbildhcofnopogp) ，官网：[axure](https://www.axure.com)
   - 应用之需求设计作图工具（流程图、类图、时序图）：[Gliffy Diagrams](https://chrome.google.com/webstore/detail/gliffy-diagrams/bhmicilclplefnflapjmnngmkkkkpfad?hl=zh-CN)
   - 应用之模拟 Http 请求工具：[Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=zh-CN)
