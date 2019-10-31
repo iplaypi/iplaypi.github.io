@@ -2,72 +2,79 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.playpi.org/tags/index.html</loc>
+    <loc>https://www.playpi.org/live2d_models/hijiki/hijiki.pose.json</loc>
     
-    <lastmod>2019-10-30T17:06:45.241Z</lastmod>
+    <lastmod>2019-10-31T13:57:04.409Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.playpi.org/live2d_models/hijiki/hijiki.pose.json</loc>
+    <loc>https://www.playpi.org/tags/index.html</loc>
     
-    <lastmod>2019-10-30T17:06:45.237Z</lastmod>
+    <lastmod>2019-10-31T13:57:04.409Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/live2d_models/hijiki/hijiki.model.json</loc>
     
-    <lastmod>2019-10-30T17:06:45.237Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/guide/index.html</loc>
-    
-    <lastmod>2019-10-30T17:06:45.229Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/books/index.html</loc>
-    
-    <lastmod>2019-10-30T17:06:45.229Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/about/index.html</loc>
-    
-    <lastmod>2019-10-30T17:06:45.229Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/categories/index.html</loc>
-    
-    <lastmod>2019-10-30T17:06:45.229Z</lastmod>
+    <lastmod>2019-10-31T13:57:04.409Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/archives/index.html</loc>
     
-    <lastmod>2019-10-30T17:06:45.229Z</lastmod>
+    <lastmod>2019-10-31T13:57:04.397Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/2018090501.html</loc>
     
-    <lastmod>2019-10-30T17:06:45.225Z</lastmod>
+    <lastmod>2019-10-31T13:57:04.397Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/books/index.html</loc>
+    
+    <lastmod>2019-10-31T13:57:04.397Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/about/index.html</loc>
+    
+    <lastmod>2019-10-31T13:57:04.397Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/categories/index.html</loc>
+    
+    <lastmod>2019-10-31T13:57:04.397Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/guide/index.html</loc>
+    
+    <lastmod>2019-10-31T13:57:04.397Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/2017102901.html</loc>
     
-    <lastmod>2019-10-30T17:06:45.221Z</lastmod>
+    <lastmod>2019-10-31T13:57:04.393Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/2019100101.html</loc>
+    
+    <lastmod>2019-10-23T14:57:58.000Z</lastmod>
     
   </url>
   
