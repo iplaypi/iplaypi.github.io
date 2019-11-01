@@ -19,6 +19,7 @@ type: guide
 - 2019101901，[HBase 错误：The node hbase is not in ZooKeeper](https://www.playpi.org/2019101901.html)
 - 2019101201，[HBase 错误：NotServingRegionException](https://www.playpi.org/2019101201.html)
 - 2019100801，[Git 异常之 Unlink of file](https://www.playpi.org/2019100801.html)
+- 2019100101，[使用海龟绘图绘制一面五星红旗](https://www.playpi.org/2019100101.html)
 - 2019093001，[HBase 错误之 NoClassDefFoundError：ProtobufUtil](https://www.playpi.org/2019093001.html)
 - 2019092901，[HBase 错误之 ConnectionLoss for hbase-unsecure](https://www.playpi.org/2019092901.html)
 - 2019092201，[爬山徒步：竹海丛林-广州第二峰鸡枕山](https://www.playpi.org/2019092201.html)
