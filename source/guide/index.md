@@ -46,6 +46,7 @@ type: guide
 - 2019041301，[JNI 字段描述符基础知识](https://www.playpi.org/2019041301.html)
 - 2019041001，[预估 Mysql 数据表的数据大小和索引大小](https://www.playpi.org/2019041001.html)
 - 2019040301，[使用 JDK 命令行工具分析内存泄漏或内存溢出问题](https://www.playpi.org/2019040301.html)
+- 2019040201，[使用 IDEA 调试程序命令过长](https://www.playpi.org/2019040201.html)
 - 2019033101，[青椒炒蛋做法总结](https://www.playpi.org/2019033101.html)
 - 2019033001，[参加 Elastic 社区第三次线下活动广州站](https://www.playpi.org/2019033001.html)
 - 2019032702，[分别 是为了再次相聚](https://www.playpi.org/2019032702.html)
