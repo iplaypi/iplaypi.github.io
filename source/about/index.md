@@ -136,6 +136,7 @@ comments: false
 - 中华人民共和国应急管理部，公开 -> 事故查处里面有专业的调查报告：[中华人民共和国应急管理部](https://www.mem.gov.cn)
 - 谷歌应用商店的 apk 文件下载：[apkcombo](https://apkcombo.com)
 - crontab 表达式在线可视化：[crontab.guru](https://crontab.guru)
+- 基于机器学习的信息抽取和检索系统：[magi](https://magi.com)
 
 ## 技术列表
 
