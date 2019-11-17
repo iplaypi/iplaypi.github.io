@@ -158,7 +158,7 @@ for (int i = 0; i < hostArr.length; i++) {
 	String[] parts = hostArr[i].split(":");
 	try {
 		InetAddress inetAddress = InetAddress.getByName(parts[0]);
-		transportAddresses[i] = new InetSocketTransportAddress(inetAddress, Integer.parseint(parts[1]));
+		transportAddresses[i] = new InetSocketTransportAddress(inetAddress, Integer.parseInt(parts[1]));
 	}
 	catch (UnknownHostException e) {
 	}
