@@ -91,3 +91,5 @@ at org.apache.spark.broadcast.TorrentBroadcast$.unBlockifyObject(TorrentBroadcas
 
 有时候在本机环境使用 `local` 模式可以正常运行任务，但是提交到 `yarn` 集群就不行了，此时只能采用 `maven-shade-plugin` 插件重定义别名了，比慢慢排除冲突 `jar` 包方便快捷。哪怕你对依赖的冲突也不是很懂，只需要**一顿操作猛如虎**，必能解决依赖冲突、缺失问题。
 
+这种更为复杂的情况，读者可以参考我以后整理的一篇博文，最后也是使用 `maven-shade-plugin` 插件才解决问题：[Spark 项目依赖冲突问题总结](https://www.playpi.org/2019112901.html) 。
+

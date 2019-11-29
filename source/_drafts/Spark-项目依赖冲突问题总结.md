@@ -14,3 +14,9 @@ Spark,Maven,shade
 
 
 
+
+
+
+
+我在一年前也遇到过一种简单的场景：[Spark Kryo 异常](https://www.playpi.org/2018100801.html)，直接通过排除依赖就解决问题了，但是这次的场景太复杂，只能启用 `maven-shade-plugin` 插件了。
+
