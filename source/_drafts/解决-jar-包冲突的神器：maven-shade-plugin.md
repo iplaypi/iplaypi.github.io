@@ -12,3 +12,9 @@ keywords:
 2019120101
 踩坑记录
 Java,Maven,shade
+
+
+https://www.cnblogs.com/ilinuxer/p/6819560.html
+
+https://blog.csdn.net/taiyangdao/article/details/78324723
+

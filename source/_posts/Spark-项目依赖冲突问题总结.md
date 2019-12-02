@@ -1,16 +1,12 @@
 ---
 title: Spark 项目依赖冲突问题总结
-id: 2019-11-29 20:05:46
+id: 2019112901
 date: 2019-11-29 20:05:46
 updated: 2019-11-29 20:05:46
-categories:
-tags:
-keywords:
+categories: 踩坑系列
+tags: [Spark,Maven,shade]
+keywords: Spark,Maven,shade
 ---
-
-2019112901
-踩坑记录
-Spark,Maven,shade
 
 
 今天遇到一个常见的依赖冲突问题，在一个 `Spark` 项目中，引用了多个其它项目的公共包【例如公共 `elt` 模块、算法模块】，在提交运行 `Spark` 任务时，由于依赖冲突而失败，高低版本无法兼容。
@@ -217,24 +213,24 @@ Exception in thread "main" java.lang.NoSuchMethodError: org.apache.curator.frame
 <configuration>
     <relocations>
         <relocation>
-            <pattern>com.google.guava</pattern>
-            <shadedPattern>thanos.com.google.guava</shadedPattern>
+            <pattern>com.google</pattern>
+            <shadedPattern>com.google.iplaypi</shadedPattern>
         </relocation>
         <relocation>
             <pattern>io.netty</pattern>
-            <shadedPattern>thanos.io.netty</shadedPattern>
+            <shadedPattern>io.netty.iplaypi</shadedPattern>
         </relocation>
         <relocation>
             <pattern>org.apache.curator</pattern>
-            <shadedPattern>thanos.org.apache.curator</shadedPattern>
+            <shadedPattern>org.apache.curator.iplaypi</shadedPattern>
         </relocation>
         <relocation>
             <pattern>com.esotericsoftware</pattern>
-            <shadedPattern>thanos.com.esotericsoftware</shadedPattern>
+            <shadedPattern>com.esotericsoftware.iplaypi</shadedPattern>
         </relocation>
         <relocation>
             <pattern>de.javakaffee</pattern>
-            <shadedPattern>thanos.de.javakaffee</shadedPattern>
+            <shadedPattern>de.javakaffee.iplaypi</shadedPattern>
         </relocation>
     </relocations>
 </configuration>
@@ -263,12 +259,6 @@ Exception in thread "main" java.lang.NoSuchMethodError: org.apache.curator.frame
 这样就可以非常优雅地解决问题，但是会导致打包的 `jar` 比以前大一点。如果 `Maven` 项目本身没有那么多模块，只有一个大模块，建议拆分，至少把有冲突的部分单独拆出来构建影子模块。
 
 这个方案的详细说明以及代码演示读者可以参考我的另外一篇博文：[解决 jar 包冲突的神器：maven-shade-plugin](https://www.playpi.org/2019120101.html) 。
-
-https://www.cnblogs.com/ilinuxer/p/6819560.html
-
-https://blog.csdn.net/taiyangdao/article/details/78324723
-
-https://zhuanlan.zhihu.com/p/62796806
 
 
 # 问题总结
