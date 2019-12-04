@@ -76,7 +76,7 @@ git remote add origin https://github.com/your_user_name/your_project_name.git
 git push -u origin master
 ```
 
-需要注意，如果远程仓库已经初始化【例如在 `GitHub` 上面新建一个包含 `README` 文件的项目】，本地仓库也已经初始化【执行 `init`】，此时关联后进行提交或者拉取更新会失败。`git pull` 返回错误 `fatal: refusing to merge unrelated histories`，提示仓库混乱，不能拉取；而 `git push` 则返回 `error: failed to push some refs to xx`，也不能提交。
+需要注意，如果远程仓库已经初始化【例如在 `GitHub` 上面新建一个包含 `README` 文件的项目】，本地仓库也已经初始化【执行 `init`】，此时关联后进行提交或者拉取更新会失败。`git pull` 返回错误 `fatal: refusing to merge unrelated histories`，提示仓库混乱【本地、远程是两个不同的仓库】，不能拉取；而 `git push` 则返回 `error: failed to push some refs to xx`，也不能提交。
 
 此时不用担心，可以使用参数 `git pull origin master --allow-unrelated-histories` 来拉取远程仓库的内容，并合并所有内容，紧接着就可以提交本地的变更了。
 
