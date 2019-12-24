@@ -143,6 +143,7 @@ comments: false
 - 互联网安全媒体、学习平台：[FreeBuf](https://www.freebuf.com)
 - Windows 平台强力卸载工具：[uninstall-tool](https://www.crystalidea.com/uninstall-tool)
 - 黑猫投诉，消费者维权：[黑猫投诉](https://tousu.sina.com.cn)
+- 百度取证，保障司法效力，在线申请，简单快捷：[百度取证](http://quzheng.baidu.com)
 
 ## 技术列表
 
