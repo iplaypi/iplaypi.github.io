@@ -144,6 +144,7 @@ comments: false
 - Windows 平台强力卸载工具：[uninstall-tool](https://www.crystalidea.com/uninstall-tool)
 - 黑猫投诉，消费者维权：[黑猫投诉](https://tousu.sina.com.cn)
 - 百度取证，保障司法效力，在线申请，简单快捷：[百度取证](http://quzheng.baidu.com)
+- 视频编码转换工具，类似于 `ffmpeg`，支持中文显示，有进度条：[qwinff](http://qwinff.github.io/downloads.html)
 
 ## 技术列表
 
