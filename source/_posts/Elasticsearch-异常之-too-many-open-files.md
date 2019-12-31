@@ -28,6 +28,8 @@ java.net.SocketException: Too many open files
   sun.net.www.protocol.http.HttpURLConnection.getOutputStream0(HttpURLConnection.java 1334)
   sun.net.www.protocol.http.HttpURLConnection.getOutputStream(HttpURLConnection.java 1309)
   ...(省略更多业务代码)
+  
+  备注：以上异常信息实际是因为创建HTTP链接过多，超过了操作系统设置的最大值，这个异常与创建TransportClient过多类似，所以拿它举例，实际排查思路还是以TransportClient为准。
 ```
 
 查看异常信息里面的重点内容：`java.net.SocketException: Too many open files`，有时候在中文运行系统环境中会显示：`打开的文件过多`，其实是一个意思。
@@ -62,7 +64,11 @@ java.net.SocketException: Too many open files
   sun.net.www.protocol.http.HttpURLConnection.getOutputStream0(HttpURLConnection.java 1334)
   sun.net.www.protocol.http.HttpURLConnection.getOutputStream(HttpURLConnection.java 1309)
   ...(省略更多业务代码)
+  
+  备注：以上异常信息实际是因为创建HTTP链接过多，超过了操作系统设置的最大值，这个异常与创建TransportClient过多类似，所以拿它举例，实际排查思路还是以TransportClient为准。
 ```
+
+**备注**：以上异常信息实际是因为创建 `HTTP` 链接过多，超过了操作系统设置的最大值，这个异常与创建 `TransportClient` 过多类似，所以拿它举例，实际排查思路还是以 `TransportClient` 为准。
 
 ![异常日志](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2018/20191117154740.png "异常日志")
 
@@ -164,6 +170,8 @@ public static TransportClient initTransportClient(String[] hostArr, String clust
 
 # 备注
 
+
+以上排查思路以客户端连接数为切入点，因为一开始查到 `Elasticsearch` 集群的 `max_file_descriptors` 参数设置的足够大，所以不太可能是 `Elasticsearch` 集群的问题，转而把关注点放到客户端的使用上。其实，无论是使用 `HTTP` 连接还是官方的 `TransportClient` 连接，如果连接数超过了操作系统的设置，就会出现 `Too many open files` 这个异常。
 
 关于文件描述符的官网介绍：[file-descriptors](https://www.elastic.co/guide/en/elasticsearch/reference/5.6/file-descriptors.html) 。
 
