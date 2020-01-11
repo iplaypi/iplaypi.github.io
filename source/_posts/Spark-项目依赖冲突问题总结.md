@@ -197,7 +197,7 @@ Exception in thread "main" java.lang.NoSuchMethodError: org.apache.curator.frame
 
 诚然，这种方式针对单线程或者本地 `local` 模式运行的程序是可以生效的，但是对于集群模式的【`standalone`、`yarn` 等】`Spark` 任务，就无能为力了，很难恰好找到匹配的版本，毕竟公共包本身使用的依赖不是你能控制的，也不会为了你而做兼容【公共包面向大众发布，一般都会使用最新版本的依赖】。
 
-接着详细来解释一下我这个典型场景，`Spark` 使用了一个低版本的 `kryo`，而算法模块使用了另外高版本的 `kyro`，但是诡异的是它们的依赖坐标不一致【算法模块是 `com.esotericsoftware:kryo`、`Spark` 是 `com.esotericsoftware.kryo:kryo`】，而实际类名却是一致的【都是 `com.esotericsoftware.kryo`】，这就导致类冲突无法兼容【在人们的经验中，`jar` 包坐标不同，类的包名也应该不同才对】。当然，`kryo` 高低版本之间的类不同也是无法兼容的原因之一。
+接着详细来解释一下我这个典型场景，`Spark` 使用了一个低版本的 `kryo`，而算法模块使用了另外高版本的 `kyro`，但是诡异的是它们的依赖坐标不一致【算法模块是 `com.esotericsoftware:kryo`、`Spark` 是 `com.esotericsoftware.kryo:kryo`】，而实际类的包名却是一致的【都是 `com.esotericsoftware.kryo`】，这就导致类冲突无法兼容【在人们的经验中，`jar` 包坐标不同，类的包名也应该不同才对】。当然，`kryo` 高低版本之间的类不同也是无法兼容的原因之一。
 
 如果选择移除算法模块的 `kryo`，调用算法接口时会报找不到类异常，如果移除 `Spark` 的 `kryo`，提交 `Spark` 任务时会报无法反序列化异常。
 
@@ -214,23 +214,23 @@ Exception in thread "main" java.lang.NoSuchMethodError: org.apache.curator.frame
     <relocations>
         <relocation>
             <pattern>com.google</pattern>
-            <shadedPattern>com.google.iplaypi</shadedPattern>
+            <shadedPattern>iplaypi.com.google</shadedPattern>
         </relocation>
         <relocation>
             <pattern>io.netty</pattern>
-            <shadedPattern>io.netty.iplaypi</shadedPattern>
+            <shadedPattern>iplaypi.io.netty</shadedPattern>
         </relocation>
         <relocation>
             <pattern>org.apache.curator</pattern>
-            <shadedPattern>org.apache.curator.iplaypi</shadedPattern>
+            <shadedPattern>iplaypi.org.apache.curator</shadedPattern>
         </relocation>
         <relocation>
             <pattern>com.esotericsoftware</pattern>
-            <shadedPattern>com.esotericsoftware.iplaypi</shadedPattern>
+            <shadedPattern>iplaypi.com.esotericsoftware</shadedPattern>
         </relocation>
         <relocation>
             <pattern>de.javakaffee</pattern>
-            <shadedPattern>de.javakaffee.iplaypi</shadedPattern>
+            <shadedPattern>iplaypi.de.javakaffee</shadedPattern>
         </relocation>
     </relocations>
 </configuration>
@@ -242,7 +242,7 @@ Exception in thread "main" java.lang.NoSuchMethodError: org.apache.curator.frame
 
 下面就用模型简化一下我遇到的这类场景，使用 `guava` 包冲突做示例。
 
-`Maven` 项目中有 `a`、`b`、`c` 三个模块【分散为三个模块读者更容易理解，解决问题思路也更清晰】，`a` 同时依赖了 `b`、`c`，`b` 依赖了低版本 `guava` 并调用了一个低版本独有的方法，`c` 依赖了高版本 `guava` 并调用了高版本独有的方法【当然引用特有的类也行】。
+`Maven` 项目中有 `a`、`b`、`c` 三个模块【分散为三个模块读者更容易理解，解决问题思路也更清晰】，`a` 同时依赖了 `b`、`c`。其中，`b` 依赖了低版本 `guava` 并调用了一个低版本独有的方法，`c` 依赖了高版本 `guava` 并调用了高版本独有的方法【当然引用特有的类也行】。
 
 它们之间的关系如下图：
 
