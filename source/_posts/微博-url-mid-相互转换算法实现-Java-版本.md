@@ -173,17 +173,48 @@ public static String mid2id(String mid) {
 
 本站点一开始使用的图床工具就是微博图床，很好用，免费，速度快，可以上传高清图片，后来听说被黑产人员恶意使用，已经开启了防盗链，只留下了几个接口用来钓鱼。有兴趣的读者可以参考我的另外几篇博客：[解决微博图床防盗链的问题](https://www.playpi.org/2019042701.html) 、[使用 Java 代码迁移微博图床到 GitHub 图床](https://www.playpi.org/2019050201.html) 。
 
-从微博图床链接里面也可以提取用户的 `uid`，进一步就能找到这个用户。
+图片上传微博图床后，得到一个图片链接，根据这个微博图床链接，也可以提取用户的 `uid`，进一步就能找到这个用户。
 
-我这里有一份 `JavaScript` 示例代码，内容如下：
+提取的逻辑是：使用链接中文件名的前8个字符，将16进制转为10进制的数值，得到的数字就是 `uid`【当然，现在也有例外，应该是8位16进制存满了，所以出现了005、006、007等以00数字开头的文件名，那也不用着急，它们其实是62进制的字符，也同样转为10进制的数值即可】。
+
+我这里有一份 `JavaScript` 示例代码，代码已经被我上传至 `GitHub`：[extractUid.js](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/bin/20181220) ，读者可以查看，内容如下：
 
 ```
-代码示例
+function idx(c) {
+    c = c.charCodeAt();
+    if (c >= 48 && c <= 57) return c - 48;
+    if (c >= 97 && c <= 122) return c - 97 + 10;
+    return c - 56 + 36;
+}
+
+function extractUid(url) {
+    url = url.replace(/\.\w+$/g, '');
+    // 提取文件名
+    var hash = url.match(/[0-9a-zA-Z]{32}$/);
+    if (hash === null) return '';
+    // 截取前8位
+    hash = hash[0].slice(0, 8);
+    var uid = 0;
+    // 16进制或者62进制
+    if (hash[0] == '0' && hash[1] == '0') k = 62;
+    else k = 16;
+    // 每一个数字都转为10进制
+    for (i = 0; i < 8; i++) uid = uid * k + idx(hash[i]);
+    return uid;
+}
 ```
 
-例如我这里上传一张图片到微博图床，链接：`x`，然后使用上述转换代码可以获取上传图片对应的 `uid`，进而就可以找到这个微博用户。
+例如我这里上传一张图片到微博图床，链接：
 
-运行结果是：`11`，那么这个微博用户的微博首页就是：`xx`。
+```
+https://wx3.sinaimg.cn/mw1024/b7f2e3a3gy1gakhzzxtmtj20fu0l4dku.jpg
+```
+
+然后使用上述转换代码可以获取上传图片对应的 `uid`，进而就可以找到这个微博用户。运行结果是：`3086148515`，那么这个微博用户的微博首页就是：`https://weibo.com/u/3086148515`。
+
+![微博图床链接抽取 uid](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2018/20200112193012.png "微博图床链接抽取 uid")
+
+简单分析一下，文件名是：`b7f2e3a3gy1gakhzzxtmtj20fu0l4dku.jpg`，前8个字符是：`b7f2e3a3`，把它由16进制转为10进制，得到：`3086148515`，与上面的结果一致。
 
 ## 微博短链接
 
