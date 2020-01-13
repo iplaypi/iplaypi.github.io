@@ -13,7 +13,7 @@ keywords:
 基础技术知识
 Java,DateTimeFormatter,LocalDate,LocalDateTime
 
-在 `Java 7` 以及以前的版本，实现日期格式化都是使用 `SimpleDateFormat` 类，但是这个类有多线程的问题，具体可以参考我以前的一篇博文：[多线程问题](xx.yy.zz)。而且，这个 `SimpleDateFormat` 类不好用，有很多接口都没有，还需要自己实现，很麻烦，这时候也可以使用第三方类库 `joda`，里面关于时间、日期的工具类很好用。
+在 `Java 7` 以及以前的版本，实现日期格式化都是使用 `SimpleDateFormat` 类，但是这个类有多线程的问题，具体可以参考我以前的一篇博文：[别再使用 SimpleDateFormat](https://www.playpi.org/2019022801.html)。而且，这个 `SimpleDateFormat` 类不好用，有很多接口都没有，还需要自己实现，很麻烦，这时候也可以使用第三方类库 `joda`，里面关于时间、日期的工具类很好用。
 
 当然，如果升级到 `Java 8` 以及以上版本，就可以使用全新的 `Java` 官方类库：`java.time`，里面关于时间、日期的类很好用，类似于 `joda`，其实官方真的是邀请 `joda` 共同开发的。、
 
@@ -29,6 +29,15 @@ Java,DateTimeFormatter,LocalDate,LocalDateTime
 
 
 出现转换异常。
+
+```
+DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+Instant instant = Instant.ofEpochMilli(Long.parseLong(publishDateStr));
+LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(dateTimeFormatter);
+```
+
+`Instant` 是携带时区信息的。
+
 
 
 # 问题解决

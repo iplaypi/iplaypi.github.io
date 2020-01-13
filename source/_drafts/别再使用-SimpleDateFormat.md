@@ -52,3 +52,5 @@ SimpleDateFormat,Java,DateTimeFormatter,Thread
 
 抓紧使用 `Java 8` 的 `DateTimeFormatter`，不仅适合多线程，并且增加了很多接口，很好用。
 
+关于 `DateTimeFormatter` 的简单使用，读者可以参考我的另外一篇博客：[DateTimeFormatter 简单使用示例](https://www.playpi.org/20200103.html) 。
+
