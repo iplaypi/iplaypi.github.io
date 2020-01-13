@@ -147,6 +147,7 @@ comments: false
 - 视频编码转换工具，类似于 `ffmpeg`，支持中文显示，有进度条：[qwinff](http://qwinff.github.io/downloads.html)
 - 中国人民银行征信中心：[ipcrs.pbccrc](https://ipcrs.pbccrc.org.cn)
 - 广州市住房和城乡建设局：[广州市住房和城乡建设局](http://zfcj.gz.gov.cn)
+- 在线制作动图，例如制作表情包：[soogif](https://www.soogif.com)
 
 ## 技术列表
 
