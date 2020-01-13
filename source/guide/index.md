@@ -114,6 +114,7 @@ type: guide
 - 2018090601，[踩坑特殊字符之硬空格](https://www.playpi.org/2018090601.html)
 - 2018090501，[归来](https://www.playpi.org/2018090501.html)
 - 2018082501，[Maven 使用中遇到的证书问题以及 JDK8 问题](https://www.playpi.org/2018082501.html)
+- 2018071801，[微博 id mid 相互转换算法实现-Python 版本](https://www.playpi.org/2018071801.html)
 - 2018071601，[武功山两天徒步登山总结](https://www.playpi.org/2018071601.html)
 - 2018070901，[Elasticsearch 异常之 too many open files](https://www.playpi.org/2018070901.html)
 - 2018063001，[辣椒炒肉做法总结](https://www.playpi.org/2018063001.html)

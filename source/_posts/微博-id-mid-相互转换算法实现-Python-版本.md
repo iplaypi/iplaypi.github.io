@@ -41,6 +41,8 @@ keywords: Python,weibo,mid,id
 
 在此提前说明，下文中涉及的代码已经被我上传至 `GitHub`：[weibo_util.py](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/bin/20180718) ，读者可以提前下载查看。
 
+注意，涉及到的 62 进制表示从 0 到 9、从 a 到 z、从 A 到 Z 一共 62 个字符。
+
 1、`id` 转为 `mid` 的思路，例如：`I1IGF4Ud1`，有9个字符，从后开始以4个字符为单位进行拆分，拆分为：`I`、`1IGF`、`4Ud1`，然后再分别把它们转为62进制对应的10进制数值，得到：`44`、`0410109`【不足7位在前面补0】、`1169383`。紧接着再拼接所有的结果，得到最终的 `mid`：`4404101091169383`。
 
 `Python` 代码逻辑很简洁，主要 `Python` 代码逻辑如下：
