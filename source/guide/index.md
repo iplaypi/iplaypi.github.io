@@ -13,6 +13,12 @@ type: guide
 谨记：**每日有思考，每周有产出。**
 
 
+# 2020
+
+
+- 2020010301，[DateTimeFormatter 简单使用示例](https://www.playpi.org/2020010301.html)
+
+
 # 2019
 
 
@@ -120,6 +126,7 @@ type: guide
 - 2018063001，[辣椒炒肉做法总结](https://www.playpi.org/2018063001.html)
 - 2018060301，[红烧肉做法总结](https://www.playpi.org/2018060301.html)
 - 2018053001，[玉米胡萝卜排骨汤做法总结](https://www.playpi.org/2018053001.html)
+- 2018041301，[Elasticsearch 错误：None of the configured nodes are available](https://www.playpi.org/2018041301.html)
 - 2018022401，[Elasticsearch 根据查询条件删除数据的 API](https://www.playpi.org/2018022401.html)
 - 2018020101，[注册 Facebook Twitter Tumblr 遇到的问题](https://www.playpi.org/2018020101.html)
 

@@ -9,7 +9,7 @@ keywords: Elasticsearch,TransportClient,SearchRequestBuilder
 ---
 
 
-在使用 `Elasticsearch` 的 `TransportClient` 的时候，遇到异常：`None of the configured nodes are available`，后来发现是 `Elasticsearch` 集群不稳定，通过增加重试次数的方式解决。本文涉及的开发环境：`Elasticsearch v1.7.5`。
+在使用 `Elasticsearch` 的 `TransportClient` 的时候，遇到异常：`None of the configured nodes are available`，后来发现是 `Elasticsearch` 集群网络不稳定，通过增加请求重试次数的方式解决。本文涉及的开发环境：`Elasticsearch v1.7.5`。
 
 
 <!-- more -->
@@ -18,7 +18,7 @@ keywords: Elasticsearch,TransportClient,SearchRequestBuilder
 # 问题出现
 
 
-本文中提及的 `Elasticsearch` 版本为 `v1.7.5`，是一个比较陈旧的版本，读者在阅读时可能会发现某些方法与高版本不一样，不用理会。
+本文中提及的 `Elasticsearch` 版本为 `v1.7.5`，是一个比较陈旧的版本，读者在阅读时可能会发现某些方法与高版本不一样，可以不用理会。
 
 涉及到的业务场景很简单，就是使用 `TransportClient` 方式去连接 `Elasticsearch` 集群，然后发送请求、获取结果，解析结果后得到需要的数值。
 
@@ -43,9 +43,9 @@ org.elasticsearch.client.transport.NoNodeAvailableException: None of the configu
 # 问题分析解决
 
 
-如果上面的主机 `ip` 配置正确，就没问题，通过查看配置正确，而且并不是开始运行就失败抛出异常，而是运行一段时间后才抛出异常，说明网络环境，或者 `Elasticsearch` 集群有问题。
+如果上面的主机 `ip` 配置正确，就没问题，接着查看配置，是正确的。而且进一步考虑，并不是一开始运行就失败抛出异常，而是运行一段时间后才抛出异常，这可以说明网络环境，或者 `Elasticsearch` 集群偶然性有问题。
 
-其中，生成 `TransportClient` 的代码如下，需要指定 `ip`、集群名称、其它参数：
+其中，生成 `TransportClient` 的代码如下，需要指定 `ip`、集群名称、其它多个参数：
 
 ```
 /**
@@ -80,7 +80,7 @@ public static TransportClient getEsClient(String clusterName, String hosts) {
 searchRequestBuilder.execute().actionGet(new TimeValue(timeOutMinute * 60 * 1000))
 ```
 
-`searchRequestBuilder` 来自于 `TransportClient` 对象，代码如下：
+其中，`searchRequestBuilder` 是请求构造器，包含索引名称、查询条件等信息，来自于 `TransportClient` 对象，代码如下：
 
 ```
 // boolQueryBuilder 是查询条件对象
@@ -91,11 +91,11 @@ SearchRequestBuilder searchRequestBuilder = client.prepareSearch(indexName)
                 .setSize(size);
 ```
 
-理清代码逻辑后，观察 `Elasticsearch` 集群多次，没发现异常，那就可能是网络问题了，准备加上重试机制。
+以上，理清代码逻辑后，观察 `Elasticsearch` 集群的状态多次，没有发现异常，那就可能是网络问题了，准备在代码中加上请求重试机制。
 
-在 `searchRequestBuilder.execute()` 抛出异常后等待5秒再次重试，最大重试5次。
+在 `searchRequestBuilder.execute()` 抛出异常后等待5秒再次重试，最多重试5次。
 
-再次运行程序，观察后仍旧有部分请求会失败，但是由于有等待重试的逻辑，不会影响到业务结果。
+再次运行程序，观察日志后，发现仍旧有部分请求会失败，但是由于有等待重试的逻辑，不会影响到业务结果。
 
-这种偶尔的网络问题只能反馈给运维人员排查了。
+这种偶尔的网络问题只能反馈给运维人员继续排查了。
 
