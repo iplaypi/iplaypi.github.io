@@ -32,7 +32,7 @@ SimpleDateFormat,Java,DateTimeFormatter,Thread
 
 怀疑是多线程；
 
-在处理美妆库字段缺失问题时，在Spark算子中获取时间（正常），转换获取年份，得到的有大量的错误时间；
+在处理美妆库字段缺失问题时，在Spark算子中获取时间戳（正常），转换获取年份，得到的有大量的错误时间；
 
 获取日期字符串，yyyy-MM-dd；
 
