@@ -54,3 +54,8 @@ SimpleDateFormat,Java,DateTimeFormatter,Thread
 
 关于 `DateTimeFormatter` 的简单使用，读者可以参考我的另外一篇博客：[DateTimeFormatter 简单使用示例](https://www.playpi.org/20200103.html) 。
 
+
+注意，如果把一个不匹配的日期字符串进行格式化，并不会报错，反而会得到奇怪的结果。
+
+图。。
+
