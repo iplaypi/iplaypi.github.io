@@ -20,7 +20,22 @@ Elasticsearch,HTTP
 <!-- more -->
 
 
+# 常用方式
+
+
+## 迁移数据
+
+
 目标索引如果不设置 `mapping`，则会使用默认的，对一些特殊的字段不会处理，则会引发字段类型错误的结果。
+
+
+千万不要用错 `size` 参数的位置，一个是表示 `scroll size` 的大小，一个是表示随机抽取多少条。
+
+我就把 `size` 设置错误，误把 `scroll size` 设置为10，导致 `reindex` 速度非常慢，30分钟才20万数据量。后来发现了，把任务取消，重新提交 `reindex` 任务，把 `scroll size` 设置为2000，速度达到了30分钟500万。
+
+
+# 备注
+
 
 参考官网：[docs-reindex](https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-reindex.html) 。
 
