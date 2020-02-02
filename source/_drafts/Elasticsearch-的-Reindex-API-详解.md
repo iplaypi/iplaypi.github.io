@@ -31,7 +31,21 @@ Elasticsearch,HTTP
 
 ## 迁移数据
 
+涉及到 `_reindex` 关键字，示例如下：
 
+```
+POST _reindex
+{
+  "source": {
+    "index": "index_old"
+  },
+  "dest": {
+    "index": "index_new"
+  }
+}
+```
+
+如果索引只有一个 `type`，则可以省略 `type` 的声明，即不需要指定，如果涉及到多个 `type` 的数据迁移，肯定是要指定的【例如把多个 `type` 的数据迁移到同一个 `type` 中】。
 
 
 
