@@ -16,6 +16,7 @@ type: guide
 # 2020
 
 
+- 2020012201，[Spark 警告：Not enough space to cache rdd in memory](https://www.playpi.org/2020012201.html)
 - 2020010301，[DateTimeFormatter 简单使用示例](https://www.playpi.org/2020010301.html)
 
 
@@ -153,4 +154,5 @@ type: guide
 
 
 - 2016120801，[IDEA 热部署配置方法总结](https://www.playpi.org/2016120801.html)
+- 2016092001，[Java 中数值精度损失导致的 bug 现象](https://www.playpi.org/2016092001.html)
 
