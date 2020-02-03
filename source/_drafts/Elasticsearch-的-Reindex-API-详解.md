@@ -139,6 +139,34 @@ POST _reindex
 
 ## 返回体
 
+正常情况下，返回的结果格式如下：
+
+```
+{
+  "took": 9675,
+  "timed_out": false,
+  "total": 12505,
+  "updated": 12505,
+  "created": 0,
+  "deleted": 0,
+  "batches": 13,
+  "version_conflicts": 0,
+  "noops": 0,
+  "retries": {
+    "bulk": 0,
+    "search": 0
+  },
+  "throttled_millis": 0,
+  "requests_per_second": -1,
+  "throttled_until_millis": 0,
+  "failures": []
+}
+```
+
+图。。
+
+这里需要注意的是 `failures` 信息，如果里面的信息不为空，则表示本次 `_reindex` 是失败的，是被中途 `abort`，一般都是因为发生了 `conflicts`。前面已经描述过如何合理设置【场景可接受的方式】，可以确保在发生 `conflict` 的时候还能继续运行。
+
 ## 查看任务进度已经取消任务
 
 
