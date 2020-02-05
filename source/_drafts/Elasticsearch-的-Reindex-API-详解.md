@@ -110,7 +110,7 @@ POST _reindex
 }
 ```
 
-如果把 `version_type` 设置为 `external`，则 `Elasticsearch` 会从 `source` 读取 `version` 字段，当遇到具有相同类型和 `id` 的 `document` 时，只会保留 `newer verion`，即最新的 `version` 对应的数据。
+如果把 `version_type` 设置为 `external`，则 `Elasticsearch` 会从 `source` 读取 `version` 字段，当遇到具有相同类型和 `id` 的 `document` 时，只会保留 `newer verion`，即最新的 `version` 对应的数据。此时可能会有冲突产生【例如把 `op_type` 设置为 `create`】，对于产生的冲突现象，返回体中的 `failures` 会携带冲突的数据信息【类似详细的日志可以查看】。
 
 ```
 POST _reindex
@@ -127,13 +127,13 @@ POST _reindex
 
 上面的说法看起来似乎有点不好理解，再简单直观点来说，就是在 `redinex` 的时候，我们的 `dest index` 可以不是一个新创建的不包含数据的 `index`，而是已经包含有数据的。如果我们的 `source index` 和 `dest index` 里面有相同类型和 `id` 的 `document`【一模一样的数据】，对于使用 `internal` 来说，就是直接覆盖，而使用 `external` 的话，只有当 `source index` 的数据的 `version` 比 `dest index` 数据的 `version` 更加新的时候，才会去更新【即保留最新的 `version` 对应的数据】。
 
-再说明一下，`internal` 可以理解为使用内部版本号，即 `Elasticsearch` 不会单独比较版本号，对于 `dest index` 来说，无论是索引数据还是更新数据，写入时都按部就班把版本号累加，所以也就不会有冲突问题【从 `source index` 出来的数据是不携带版本信息的】。
+再说明一下，`internal` 可以理解为使用内部版本号，即 `Elasticsearch` 不会单独比较版本号，对于 `dest index` 来说，无论是索引数据还是更新数据，写入时都按部就班把版本号累加，所以也就不会有冲突问题【从 `source index` 出来的数据是不携带版本信息的】，但是有可能会出现版本号不合法的问题，参考后面的**使用脚本配置**小节【使用脚本人为变更版本号】。
 
 另一方面，`external` 表示外部版本号，即 `Elasticsearch` 会单独比较版本号再决定写入的流程，对于 `dest index` 来说，无论是索引数据还是更新数据，写入时会先比较版本号，只保留版本号最大的数据【如果是来自不同索引的数据，版本号会不一致；如果是来自不同集群的数据，版本号规则可能也不一致】。
 
 ## op_type 参数
 
-`op_type` 参数控制着写入数据的冲突处理方式，如果把 `op_type` 设置为 `create`，在 `_reindex API` 中，表示写入时只在 `dest index` 中添加不存在的 `doucment`，如果相同的 `document` 已经存在，则会报 `version confilct` 的错误，那么索引操作就会失败。【这种方式与使用 `_create API` 时效果一致】
+`op_type` 参数控制着写入数据的冲突处理方式，如果把 `op_type` 设置为 `create`【默认值】，在 `_reindex API` 中，表示写入时只在 `dest index` 中添加不存在的 `doucment`，如果相同的 `document` 已经存在，则会报 `version confilct` 的错误，那么索引操作就会失败。【这种方式与使用 `_create API` 时效果一致】
 
 ```
 POST _reindex
@@ -148,7 +148,11 @@ POST _reindex
 }
 ```
 
-如果这样设置了，也就不存在更新数据的场景了【冲突数据无法写入】，则 `version_type` 参数的设置也就无所谓了。
+如果这样设置了，也就不存在更新数据的场景了【冲突数据无法写入】，则 `version_type` 参数的设置也就无所谓了【但是返回体的 `failures` 中还是会携带冲突信息】。
+
+另外也可以把 `op_type` 设置为 `index`，表示所有的数据全部重新索引创建。
+
+再总结一下，如果把 `version_type` 设置为 `external`，无论 `op_type` 怎么设置，都有可能产生冲突【会比较版本】；如果把 `version_type` 设置为 `internal`，则在 `op_type` 为 `index` 的时候不会产生冲突，在 `op_type` 为 `create` 的时候可能有冲突。
 
 ## conflicts 配置
 
@@ -350,15 +354,147 @@ POST _reindex
 
 ## 指定字段配置
 
-指定字段。
+如果迁移数据时只需要特定的字段，可以使用 `_source` 参数指定字段，字段少了迁移速度也可以提升。下面的示例指定了3个字段：
 
-还有一点需要注意，如果 `Elasticsearch` 的索引设置中，使用 `_source、excludes` 排除了部分字段的存储【为了节省磁盘空间】，则不可以直接迁移，会丢失这些字段。
+```
+POST _reindex
+{
+  "source": {
+    "index": "my-index-user",
+    "_source": [
+      "id",
+      "city_level",
+      "task_ids"
+    ]
+  },
+  "dest": {
+    "index": "my-index-user-v2"
+  }
+}
+```
+
+![返回结果](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200205235937.png "返回结果")
+
+可以看到，迁移12505条数据，耗时3611毫秒，比前面的简单示例快了不少。
+
+查看目标数据，可以看到只有3个字段【注意，`_id` 字段是 `document` 的主键，会自动携带】。
+
+![有3个字段的数据示例](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200206001202.png "有3个字段的数据示例")
+
+但是有一点需要注意，如果 `Elasticsearch` 的索引设置中，使用 `_source、excludes` 排除了部分字段的存储【为了节省磁盘空间】，实际上没有存储字段，只是做了索引，则不可以直接迁移，会丢失这些字段。
 
 ## 使用脚本配置
 
+如果集群开启了允许使用 `script` 的功能【在配置文件 `elasticsearch.yml` 中使用 `script.inline: true` 开启】，就可以使用 `script` 做一些简单的数据转换。
+
+例如把满足条件的数据做一个 `_version` 增加，并且移除指定的字段，在写入目标索引时，利用 `version_type` 参数保留最新版本的数据。
+
+以下示例为了方便查看结果，只获取3个字段，脚本逻辑：对于`city_level` 等于1的数据【`city` 为北京、上海、广州、深圳】，做一个版本自增，并且把 `city_level` 字段移除。
+
+```
+POST _reindex
+{
+  "source": {
+    "index": "my-index-user",
+    "_source": [
+      "id",
+      "city",
+      "city_level"
+    ]
+  },
+  "dest": {
+    "index": "my-index-user-v2",
+    "version_type": "external"
+  },
+  "script": {
+    "source": "if (ctx._source.city_level == '1') {ctx._version++; ctx._source.remove('city_level')}",
+    "lang": "painless"
+  },
+  "size": 100
+}
+```
+
+![数据结果查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200206012210.png "数据结果查看")
+
+数据结果中可以看到数据的 `city_level` 字段已经消失了，只剩下2个字段。
+
+再执行一次，如果数据相同，会有冲突问题，因为设置了 `version_type` 为 `external`，会比较版本。
+
+```
+{
+         "index": "my-index-user-v2",
+         "type": "user",
+         "id": "AW3zlTvZa9C6UomAXwqT",
+         "cause": {
+            "type": "version_conflict_engine_exception",
+            "reason": "[user][AW3zlTvZa9C6UomAXwqT]: version conflict, current version [3] is higher or equal to the one provided [1]",
+            "index_uuid": "tJienWj1T_udvoJQTcDzyg",
+            "shard": "1",
+            "index": "my-index-user-v2"
+         },
+         "status": 409
+      }
+```
+
+![冲突现象](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200206012415.png "冲突现象")
+
+如果把 `version_type` 设置为 `internal`，同时指定 `op_type` 为 `index`【默认是 `create`】，则会出现版本号不合法的异常。因为在脚本中手动自增了版本号，不符合按照 `index` 方式索引数据的要求。
+
+```
+action_request_validation_exception
+Validation Failed: 1: illegal version value [0] for version type [INTERNAL];
+```
+
+![版本号不合法](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200206012755.png "版本号不合法")
+
+在此引申一下脚本的内容，`Elasticsearch` 提供了脚本的支持，可以通过 `Groovy` 外置脚本【已经过时，不建议使用】、内置 `painless` 脚本实现各种复杂的操作【类似于写逻辑代码，对数据进行 `ETL` 操作】，如上面的示例。
+
+`painless` 有轻便之意，使用时直接在语法中调用即可，无需外置，也就是不支持通过外部文件存储 `painless` 脚本来调用。
+
+当然，对于常用的脚本，可以通过 `_scripts/calculate-score` 接口创建后缓存起来【也需要集群的配置：`script.store: true`】，会生成一个唯一 `id`，下次可以直接使用【就像声明了一个方法】，还支持参数传递。
+
 ## 使用 Ingest Node 配置
 
+`Ingest` 其实就是定义了一些预处理的规则，可以预处理数据，提升性能，主要依靠 `Pipeline`、`Processors`。当然前提还是需要集群支持，可以通过配置 `elasticsearch.xml` 文件中的 `node.ingest: true` 来开启 `Ingest` 节点。
+
+这个功能应该说是最好用的了，当你的 `source` 因为不合理的结构，需要重新结构化所有的数据时，通过 `ingest node`，可以很方便地在新的 `index` 中获得不一样的 `mapping` 和` value`。
+
+使用方式也很简单【需要提前创建 `pipeline`】：
+
+```
+POST _reindex
+{
+  "source": {
+    "index": "my-index-user"
+  },
+  "dest": {
+    "index": "my-index-user-v2",
+    "pipeline": "some_ingest_pipeline"
+  },
+  "size": 100
+}
+```
+
+如果没有创建 `pipeline`，会报错，在返回体的 `failures` 中：
+
+```
+"type": "illegal_argument_exception",
+"reason": "pipeline with id [some_ingest_pipeline] does not exist"
+```
+
+![报错信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200206014248.png "报错信息")
+
 ## 迁移远程集群数据到当前环境
+
+有时候需要跨集群迁移数据，例如把 `A` 集群的数据复制到 `B` 集群中，只要 `A` 集群的节点开放了 `ip`、端口，就可以使用 `remote` 参数。
+
+使用示例【如果需要认证则需要带上用户名、密码信息】：
+
+```
+xxx
+```
+
+这里需要注意，
 
 ## 返回体
 
