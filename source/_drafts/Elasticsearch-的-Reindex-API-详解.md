@@ -488,13 +488,48 @@ POST _reindex
 
 有时候需要跨集群迁移数据，例如把 `A` 集群的数据复制到 `B` 集群中，只要 `A` 集群的节点开放了 `ip`、端口，就可以使用 `remote` 参数。
 
+在本集群中也需要设置白名单，在 `elasticsearch.xml` 文件中配置 `reindex.remote.whitelist: otherhost:9200` 参数即可，多个使用英文逗号隔开。
+
 使用示例【如果需要认证则需要带上用户名、密码信息】：
 
 ```
-xxx
+POST _reindex
+{
+  "source": {
+    "index": "my-index-user",
+    "remote": {
+      "host": "http://otherhost:9200",
+      "username": "username",
+      "password": "password"
+    }
+  },
+  "dest": {
+    "index": "my-index-user-v2"
+  }
+}
 ```
 
-这里需要注意，
+这里需要注意，对于在其他集群上的 `index`，就不存在本地镜像复制的便利，需要从网络上下载数据再写到本地，默认的，`buffer` 的 `size` 是 `100M`。在 `scroll size` 是1000的情况下，如果单个 `document` 的平均大小超过 `100Kb`，则有可能会报错。
+
+因此在在遇到非常大的 `document` 时，需要减小 `batch` 的 `size`，使用 `size` 参数：
+
+```
+POST _reindex
+{
+  "source": {
+    "index": "my-index-user",
+    "remote": {
+      "host": "http://otherhost:9200",
+      "username": "username",
+      "password": "password"
+    },
+    "size": 100
+  },
+  "dest": {
+    "index": "my-index-user-v2"
+  }
+}
+```
 
 ## 返回体
 
@@ -522,7 +557,18 @@ xxx
 }
 ```
 
-图。。
+![返回信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200206015432.png "返回信息")
+
+下面挑选几个指标说明一下：
+
+- took，整个操作从开始到结束的毫秒数
+- total，已成功处理的文档数
+- updated，已成功更新的文档数
+- deleted，已成功删除的文档数
+- batches，由查询更新拉回的滚动响应数，与 scroll size 有关
+- version_conflicts，按查询更新的版本冲突数
+- retries，逐个更新尝试的重试次数，bulk 是重试的批量操作的数量，search 是重试的搜索操作的数量
+- failures，如果在此过程中存在任何不可恢复的错误，则会出现故障信息数组【内容可能会比较多】
 
 这里需要注意的是 `failures` 信息，如果里面的信息不为空，则表示本次 `_reindex` 是失败的，是被中途 `abort`，一般都是因为发生了 `conflicts`。前面已经描述过如何合理设置【场景可接受的方式，例如把 `conflicts` 设置为 `proceed`】，可以确保在发生 `conflict` 的时候还能继续运行。但是，这样设置后任务不会被 `abort`，可以正常执行完成，则最终也就不会返回 `failures` 信息了。
 
