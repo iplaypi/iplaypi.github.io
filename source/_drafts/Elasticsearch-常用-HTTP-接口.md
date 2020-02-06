@@ -35,7 +35,25 @@ Elasticsearch,HTTP,RESTful
 
 查询数据
 
-删除数据
+
+
+## 删除数据
+
+根据查询条件删除数据：
+
+```
+POST my-index-user/user/_delete_by_query/
+{
+  "query": {
+    "terms": {
+      "id": [
+        "1",
+        "2"
+      ]
+    }
+  }
+}
+```
 
 打开索引、关闭索引
 

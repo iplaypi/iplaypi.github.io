@@ -1,16 +1,13 @@
 ---
 title: Elasticsearch 的 Reindex API 详解
-id: 2020-01-16 20:15:12
+id: 2020011601
 date: 2020-01-16 20:15:12
 updated: 2020-01-16 20:15:12
-categories:
-tags:
-keywords:
+categories: 大数据技术知识
+tags: [Elasticsearch,HTTP]
+keywords: Elasticsearch,HTTP
 ---
 
-2020011601
-Elasticsearch,HTTP
-大数据技术知识
 
 在业务中只要有使用到 `Elasticsearch` 的场景，那么有时候会遇到需要重构索引的情况，例如 `mapping` 被污染了、某个字段需要变更类型等。如果对 `reindex API` 不熟悉，那么在遇到重构的时候，必然事倍功半，效率低下。但是如果熟悉了，就可以方便地进行索引重构，省时省力。
 
@@ -23,15 +20,15 @@ Elasticsearch,HTTP
 # 常用方式
 
 
-提前声明，在开始演示具体的 `API` 的时候，有一点读者必须知道，`reindex` 不会尝试自动设置目标索引，它也不会复制源索引的设置。读者应该在运行 `reindex` 操作之前设置好目标索引的参数，包括映射、分片数、副本数等等。目标索引如果不设置 `mapping`，则会使用默认的配置，例如对一些特殊的字段不会处理，则会引发字段类型错误的结果。
+提前声明，在开始演示具体的 `API` 的时候，有一点读者必须知道，`reindex` 不会尝试自动设置目标索引，它也不会复制源索引的设置。读者应该在运行 `reindex` 操作之前设置好目标索引的参数，包括映射、分片数、副本数等等。目标索引如果不设置 `mapping`，则会使用默认的配置，默认配置不会自动处理一些有特殊要求的字段【例如分词字段、数值类型字段】，则会引发字段类型错误的结果。
 
 当然，关于设置索引，最常见的做法不是手动设置索引信息，而是使用索引模版【使用动态模版：`dynamic_templates`】，只要索引模版的匹配形式可以匹配上源索引和目标索引，我们不需要去考虑索引配置的问题，模版会为我们解决对应的问题。当然，关于的索引的分片数、副本数，还是需要考虑的。
 
-最后，关于版本的说明，以下内容只针对 `v5.x` 以及之后的版本，更多的版本使用方式读者可以参考文末的备注信息。
+最后，关于版本的说明，以下内容只针对 `v5.x` 以及之后的版本，更多版本的使用方式读者可以参考文末的备注信息。
 
 ## 迁移数据简单示例
 
-涉及到 `_reindex` 关键字，示例如下：
+涉及到 `_reindex` 关键字，简单示例如下：
 
 ```
 POST _reindex
@@ -44,6 +41,8 @@ POST _reindex
   }
 }
 ```
+
+执行返回结果：
 
 ```
 {
@@ -71,9 +70,9 @@ POST _reindex
 
 演示结果迁移了12505条数据，耗时9991毫秒。
 
-以上只是一个非常基础的示例，还有一些可以优化的参数没有指定，全部使用的是默认值，例如看到 `batches`、`total` 对应的数值，就可以算出一批的数据大小默认为1000，12505条数据需要13批次才能迁移完成。再看到 `updated` 的数值，就可以猜测是更新了目标索引的数据，而不是创建数据，说明目标索引本来就有数据，被重新覆盖了。而这些内容在后续的演示中都会逐一解释，并再次演示。
+以上只是一个非常基础的示例，还有一些可以优化的参数没有指定，全部使用的是默认值，例如看到 `batches`、`total` 对应的数值，就可以算出一批的数据大小默认为1000，12505条数据需要13批次才能迁移完成。再看到 `updated` 的数值，就可以猜测是更新了目标索引的数据，而不是创建数据，说明目标索引本来就有数据，被重新覆盖了。而这些内容在后续的小节中都会逐一解释，并再次演示。
 
-注意一点，如果 `Elasticsearch` 是 `v6.x` 以及以下的版本，会涉及到索引的 `type`，如果源索引只有一个 `type`，则可以省略 `type` 这个参数，即不需要指定【数据会迁移到目标索引的同名 `type` 里面】。但是，如果涉及到多个 `type` 的数据迁移，肯定是要指定的【例如把多个 `type` 的数据迁移到同一个 `type` 中，或者把某个 `type` 的数据迁移到另外一个 `type` 中】。因此，为了准确无误，最好还是指定 `type`【当然再高的版本就没有 `type` 的概念了，无需指定】。
+注意一点，如果 `Elasticsearch` 是 `v6.x` 以及以下的版本，会涉及到索引的 `type`，如果源索引只有一个 `type`，则可以省略 `type` 这个参数，即不需要指定【数据会迁移到目标索引的同名 `type` 里面】。但是，如果涉及到多个 `type` 的数据迁移，肯定是要指定的【例如把多个 `type` 的数据迁移到同一个 `type` 中，或者仅仅把某个 `type` 的数据迁移到另外一个 `type` 中】。因此，为了准确无误，最好还是指定 `type`【当然再高的版本就没有 `type` 的概念了，无需指定】。
 
 如果根据上面的示例，再添加 `type` 参数：
 
@@ -127,7 +126,7 @@ POST _reindex
 
 上面的说法看起来似乎有点不好理解，再简单直观点来说，就是在 `redinex` 的时候，我们的 `dest index` 可以不是一个新创建的不包含数据的 `index`，而是已经包含有数据的。如果我们的 `source index` 和 `dest index` 里面有相同类型和 `id` 的 `document`【一模一样的数据】，对于使用 `internal` 来说，就是直接覆盖，而使用 `external` 的话，只有当 `source index` 的数据的 `version` 比 `dest index` 数据的 `version` 更加新的时候，才会去更新【即保留最新的 `version` 对应的数据】。
 
-再说明一下，`internal` 可以理解为使用内部版本号，即 `Elasticsearch` 不会单独比较版本号，对于 `dest index` 来说，无论是索引数据还是更新数据，写入时都按部就班把版本号累加，所以也就不会有冲突问题【从 `source index` 出来的数据是不携带版本信息的】，但是有可能会出现版本号不合法的问题，参考后面的**使用脚本配置**小节【使用脚本人为变更版本号】。
+再说明一下，`internal` 可以理解为使用内部版本号，即 `Elasticsearch` 不会单独比较版本号，对于 `dest index` 来说，无论是索引数据还是更新数据，写入时都按部就班把版本号累加，所以也就不会有冲突问题【从 `source index` 出来的数据是不携带版本信息的】，但是有可能会出现版本号不合法的问题，参考后面的**使用脚本配置**小节【使用脚本时人为变更版本号】。
 
 另一方面，`external` 表示外部版本号，即 `Elasticsearch` 会单独比较版本号再决定写入的流程，对于 `dest index` 来说，无论是索引数据还是更新数据，写入时会先比较版本号，只保留版本号最大的数据【如果是来自不同索引的数据，版本号会不一致；如果是来自不同集群的数据，版本号规则可能也不一致】。
 
@@ -158,7 +157,7 @@ POST _reindex
 
 默认情况下，当发生 `version conflict` 的时候，`_reindex` 会被 `abort`，任务终止【此时数据还没有 `reindex` 完成】，在返回体中的 `failures` 指标中会包含冲突的数据【有时候数据会非常多】，除非把 `conflicts` 设置为 `proceed`。
 
-关于 `abort` 的说明，如果产生了 `abort`，已经执行的数据【例如更新写入的】仍然存在于目标索引，此时任务终止，还会有数据没有被执行，也就是漏数了。换句话说，该执行过程不会回滚，只会终止。如果设置了 `proceed`，任务在检测到数据冲突的情况下，不会终止，会跳过冲突数据继续执行，直到所有数据执行完成，此时不会漏掉正常的数据，只漏掉有冲突的数据。
+关于 `abort` 的说明，如果产生了 `abort`，已经执行的数据【例如更新写入的】仍然存在于目标索引，此时任务终止，还会有数据没有被执行，也就是漏数了。换句话说，该执行过程不会回滚，只会终止。如果设置了 `proceed`，任务在检测到数据冲突的情况下，不会终止，会跳过冲突数据继续执行，直到所有数据执行完成，此时不会漏掉正常的数据，只会漏掉有冲突的数据。
 
 ```
 POST _reindex
@@ -175,6 +174,8 @@ POST _reindex
 ```
 
 故意把 `op_type` 设置为 `create`，人为制造数据冲突的场景，测试时更容易观察到冲突现象。
+
+如果把 `conflicts` 设置为 `proceed`，在返回体结果中不会再出现 `failures` 的信息，但是通过 `version_conflicts` 指标可以看到具体的数量。
 
 ## query 配置
 
@@ -243,7 +244,7 @@ POST _reindex
 
 ![返回结果](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200205001736.png "返回结果")
 
-根据返回结果可以看到，实际迁移12505条数据，`batches` 为126【可以算出每次 `batch` 为1000条数据】，耗时为31868毫秒，是前面简单示例耗时的3倍【前面简单示例的耗时是10秒左右】。
+根据返回结果可以看到，实际迁移12505条数据，`batches` 为126【可以算出每次 `batch` 为100条数据】，耗时为31868毫秒，是前面简单示例耗时的3倍【前面简单示例的耗时是10秒左右】。
 
 注意，千万不要用错 `size` 参数的位置，可以继续参考下面的**随机 size 配置**小节。
 
@@ -414,11 +415,13 @@ POST _reindex
 }
 ```
 
+数据结果查看：
+
 ![数据结果查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200206012210.png "数据结果查看")
 
 数据结果中可以看到数据的 `city_level` 字段已经消失了，只剩下2个字段。
 
-再执行一次，如果数据相同，会有冲突问题，因为设置了 `version_type` 为 `external`，会比较版本。
+再执行一次，如果数据相同，会有冲突问题，因为设置了 `version_type` 为 `external`，会比较版本【数据的版本不够新从而无法写入】。
 
 ```
 {
@@ -455,9 +458,9 @@ Validation Failed: 1: illegal version value [0] for version type [INTERNAL];
 
 ## 使用 Ingest Node 配置
 
-`Ingest` 其实就是定义了一些预处理的规则，可以预处理数据，提升性能，主要依靠 `Pipeline`、`Processors`。当然前提还是需要集群支持，可以通过配置 `elasticsearch.xml` 文件中的 `node.ingest: true` 来开启 `Ingest` 节点。
+`Ingest` 其实就是定义了一些预处理的规则，可以预处理数据，提升性能，主要依靠 `Pipeline`、`Processors`。当然前提还是需要集群支持，定义一些 `Ingest` 节点、预处理流程，可以通过配置 `elasticsearch.xml` 文件中的 `node.ingest: true` 来开启 `Ingest` 节点。
 
-这个功能应该说是最好用的了，当你的 `source` 因为不合理的结构，需要重新结构化所有的数据时，通过 `ingest node`，可以很方便地在新的 `index` 中获得不一样的 `mapping` 和` value`。
+这个功能应该说是最好用的了，当你的 `source` 因为不合理的结构，需要重新结构化所有的数据时，通过 `Ingest Node`，可以很方便地在新的 `index` 中获得不一样的 `mapping` 和` value`【例如把数值类型转为字符串类型，或者把值替换掉】。
 
 使用方式也很简单【需要提前创建 `pipeline`】：
 
@@ -488,9 +491,9 @@ POST _reindex
 
 有时候需要跨集群迁移数据，例如把 `A` 集群的数据复制到 `B` 集群中，只要 `A` 集群的节点开放了 `ip`、端口，就可以使用 `remote` 参数。
 
-在本集群中也需要设置白名单，在 `elasticsearch.xml` 文件中配置 `reindex.remote.whitelist: otherhost:9200` 参数即可，多个使用英文逗号隔开。
+在 `B` 集群中也需要设置白名单，在 `elasticsearch.xml` 文件中配置 `reindex.remote.whitelist: otherhost:9200` 参数即可，多个使用英文逗号隔开。
 
-使用示例【如果需要认证则需要带上用户名、密码信息】：
+使用示例【如果有认证机制则还需要带上用户名、密码信息】：
 
 ```
 POST _reindex
@@ -509,9 +512,9 @@ POST _reindex
 }
 ```
 
-这里需要注意，对于在其他集群上的 `index`，就不存在本地镜像复制的便利，需要从网络上下载数据再写到本地，默认的，`buffer` 的 `size` 是 `100M`。在 `scroll size` 是1000的情况下，如果单个 `document` 的平均大小超过 `100Kb`，则有可能会报错。
+这里需要注意，对于复制在其他集群上的 `index` 数据来说，就不存在直接从本地镜像复制的便利【速度快】，需要从网络上下载数据再写到本地。默认的设置，`buffer` 的 `size` 是 `100Mb`，在 `scroll size` 是1000的情况下【默认值】，如果单个 `document` 的平均大小超过 `100Kb`，则会报错，数据过大。
 
-因此在在遇到非常大的 `document` 时，需要减小 `batch` 的 `size`，使用 `size` 参数：
+因此在遇到非常大的 `document` 时，需要减小 `batch` 的 `size`【尽管会导致 `batch` 变多，迁移速度变慢，但是安全】，使用 `size` 参数【参考前面的**批次大小配置**小节】：
 
 ```
 POST _reindex
@@ -533,7 +536,7 @@ POST _reindex
 
 ## 返回体
 
-正常情况下，返回的结果格式如下：
+在提交迁移数据任务后，如果耐心等待，会有执行的结果返回，正常情况下，返回的结果格式如下：
 
 ```
 {
@@ -559,22 +562,92 @@ POST _reindex
 
 ![返回信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200206015432.png "返回信息")
 
-下面挑选几个指标说明一下：
+下面挑选几个指标解释说明一下：
 
-- took，整个操作从开始到结束的毫秒数
-- total，已成功处理的文档数
-- updated，已成功更新的文档数
-- deleted，已成功删除的文档数
-- batches，由查询更新拉回的滚动响应数，与 scroll size 有关
-- version_conflicts，按查询更新的版本冲突数
-- retries，逐个更新尝试的重试次数，bulk 是重试的批量操作的数量，search 是重试的搜索操作的数量
-- failures，如果在此过程中存在任何不可恢复的错误，则会出现故障信息数组【内容可能会比较多】
+- `took`，整个操作从开始到结束的毫秒数
+- `total`，已成功处理的文档数
+- `updated`，已成功更新的文档数
+- `deleted`，已成功删除的文档数
+- `batches`，由查询更新拉回的滚动响应数【结合 `total` 可以算出 `scroll size`】，与 `scroll size` 有关
+- `version_conflicts`，按查询更新的版本冲突数【涉及到版本的比较判断】
+- `retries`，逐个更新尝试的重试次数，`bulk` 是批量操作的重试次数，`search` 是搜索操作的重试次数
+- `failures`，如果在此过程中存在任何不可恢复的错误，发生 `abort`，则会返回故障信息数组【内容可能会比较多】
 
-这里需要注意的是 `failures` 信息，如果里面的信息不为空，则表示本次 `_reindex` 是失败的，是被中途 `abort`，一般都是因为发生了 `conflicts`。前面已经描述过如何合理设置【场景可接受的方式，例如把 `conflicts` 设置为 `proceed`】，可以确保在发生 `conflict` 的时候还能继续运行。但是，这样设置后任务不会被 `abort`，可以正常执行完成，则最终也就不会返回 `failures` 信息了。
+这里需要注意的是 `failures` 信息，如果里面的信息不为空，则表示本次 `_reindex` 是失败的，是被中途 `abort`，一般都是因为发生了 `conflicts`。前面已经描述过如何合理设置【业务场景可接受的方式，例如把 `conflicts` 设置为 `proceed`】，可以确保在发生 `conflict` 的时候还能继续运行。但是，这样设置后任务不会被 `abort`，可以正常执行完成，则最终也就不会返回 `failures` 信息了，但是通过 `version_conflicts` 指标可以看到具体的数量。
 
-## 查看任务进度已经取消任务
+## 查看任务进度以及取消任务
 
+一般来说，如果我们的 `source index` 很大【比如几百万数据量】，则可能需要比较长的时间来完成 `_reindex` 的工作，可能需要几十分钟。而在此期间不可能一直等待结果返回，可以去做其它事情，如果中途需要查看进度，可以通过 `_tasks API` 进行查看。
 
+```
+GET _tasks?detailed=true&actions=*reindex
+```
+
+返回结果：
+
+```
+{
+  "nodes": {
+    "ietwyYpJRo-gz_C1tCbpgQ": {
+      "name": "dev4_xx",
+      "transport_address": "xx.xx.xx.204:9308",
+      "host": "xx.xx.xx.204",
+      "ip": "xx.xx.xx.204:9308",
+      "roles": [
+        "master",
+        "data",
+        "ingest"
+      ],
+      "tasks": {
+        "ietwyYpJRo-gz_C1tCbpgQ:420711": {
+          "node": "ietwyYpJRo-gz_C1tCbpgQ",
+          "id": 420711,
+          "type": "transport",
+          "action": "indices:data/write/reindex",
+          "status": {
+            "total": 12505,
+            "updated": 0,
+            "created": 0,
+            "deleted": 0,
+            "batches": 5,
+            "version_conflicts": 4000,
+            "noops": 0,
+            "retries": {
+              "bulk": 0,
+              "search": 0
+            },
+            "throttled_millis": 0,
+            "requests_per_second": -1,
+            "throttled_until_millis": 0
+          },
+          "description": "reindex from [my-index-user] to [my-index-user-v2]",
+          "start_time_in_millis": 1580958992770,
+          "running_time_in_nanos": 1441736539,
+          "cancellable": true
+        }
+      }
+    }
+  }
+}
+```
+
+![查看任务状态](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200206113250.png "查看任务状态")
+
+根据任务的各项指标，就可以预估完成进度，从而预估完成时间，做到心中有数。
+
+注意观察里面的几个重要指标，例如从 `description` 中可以看到任务描述，从 `tasks` 中可以找到任务的 `id`【例如 `ietwyYpJRo-gz_C1tCbpgQ:420711`】，从 `cancellable` 可以判断任务是否支持取消操作。
+
+这个 `API` 其实就是模糊匹配，同理也可以查询其它类型的任务信息，例如使用 `GET _tasks?detailed=true&actions=*byquery` 查看查询请求的状态。
+
+如果知道了 `task_id`，也可以使用 `GET /_tasks/task_id` 更加准确地查询指定的任务状态，避免集群的任务过多，不方便查看。
+
+如果遇到操作失误的场景，想取消任务，有没有办法呢？有，泼出去的水还是可以收回的，通过 `_tasks API`：
+
+```
+POST _tasks/task_id/_cancel
+```
+
+这里的 `task_id` 就是通过上面的查询任务接口获取的，另外还需要任务支持取消操作【`cancellable` 为 `true`】。
 
 
 # 备注
