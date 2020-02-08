@@ -246,7 +246,7 @@ Exception in thread "main" java.lang.NoSuchMethodError: org.apache.curator.frame
 
 它们之间的关系如下图：
 
-图。。
+![项目依赖关系](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200209000340.png "项目依赖关系")
 
 在这个 `Maven` 项目中，发生 `jar` 包冲突很明显是因为，项目中依赖了同一个 `jar` 包的多个版本，而且分别调用了高低版本特有的方法，或者引用了高低版本特有的类。面对此类问题，一般的解决思路是只保留一个版本，排除掉不需要的版本，但是上面这种情况太特殊了，排除 `jar` 包不能解决问题。
 
@@ -254,7 +254,7 @@ Exception in thread "main" java.lang.NoSuchMethodError: org.apache.curator.frame
 
 那就只能使用 `maven-shade-plugin` 插件来构建影子 `jar` 包，替换类路径，制作影子的效果如下图【思路就是构建 `c` 时替换掉 `guava` 的包名】：
 
-图。。
+![shade 插件替换类路径](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200209000438.png "shade 插件替换类路径")
 
 这样就可以非常优雅地解决问题，但是会导致打包的 `jar` 比以前大一点。如果 `Maven` 项目本身没有那么多模块，只有一个大模块，建议拆分，至少把有冲突的部分单独拆出来构建影子模块。
 
@@ -270,7 +270,7 @@ Exception in thread "main" java.lang.NoSuchMethodError: org.apache.curator.frame
 
 当然，如果上面的 `c` 本身就依赖了很多 `jar` 包，它们之间在 `c` 模块中就有冲突，也不好制作影子，还是单独新建一个纯净的子模块比较好【例如把类似 `guava` 冲突的 `jar` 包以及代码抽出来，单独创建 `c-sub-shade` 模块，在里面制作影子，这个模块给 `c` 引用】。
 
-如图。。
+![shade 子模块](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200209000650.png "shade 子模块")
 
 注意，上图和我本文中遇到的例子有一点不同，我的 `jar` 包在 `c` 模块中并没有冲突，所以可以直接利用 `c` 制作影子模块 `c-shade`，当然不怕麻烦也可以制作 `c-sub-shade`。
 
