@@ -1,16 +1,12 @@
 ---
 title: 解决 jar 包冲突的神器：maven-shade-plugin
-id: 2019-12-01 00:54:21
+id: 2019120101
 date: 2019-12-01 00:54:21
 updated: 2019-12-01 00:54:21
-categories:
-tags:
-keywords:
+categories: 踩坑记录
+tags: [Java,Maven,shade]
+keywords: Java,Maven,shade
 ---
-
-2019120101
-踩坑记录
-Java,Maven,shade
 
 
 最近因为协助升级相关业务 `sdk`，遇到过多次 ` jar` 包冲突的问题，此外自己在升级算法接口 `sdk` 时，也遇到过 `jar` 冲突问题。而且，这种冲突是灾难性的，不要指望通过排除、升级版本、降级版本解决，根本无法解决。
@@ -282,10 +278,11 @@ public static void runGuava() {
             </goals>
             <configuration>
                 <transformers>
-                    <!-- 指定主类入口 -->
+                    <!-- 使用资源转换器ManifestResourceTransformer,可执行的jar包 -->
                     <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                        <mainClass>org.playpi.study.ModuleARun</mainClass>
+                        
+                     <!-- 指定主类入口 -->                       <mainClass>org.playpi.study.ModuleARun</mainClass>
                     </transformer>
                 </transformers>
                 <!-- 指定jar包后缀 -->
@@ -355,18 +352,24 @@ java -jar iplaypistudy-shade-module-a-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 想要分析 `maven-shade-plugin` 插件是如何实现这个功能的，源代码少不了，下面简单分析一下。可以直接打断点调试一下源代码，跟着源代码跑一遍打包的流程即可。
 
-首先，需要下载源代码，在 `GitHub` 上面下载：[maven-shade-plugin](https://github.com/apache/maven-shade-plugin/tree/maven-shade-plugin-3.2.1) ，注意下载后切换到指定版本的，例如我使用的版本是 `v3.2.1`，则 `clone` 需要 `checkout` 到指定的 `tag`。
+首先，需要下载源代码，在 `GitHub` 上面下载：[maven-shade-plugin](https://github.com/apache/maven-shade-plugin/tree/maven-shade-plugin-3.2.1) ，注意下载后切换到指定版本的，例如我使用的版本是 `v3.2.1`，则 `git clone` 后需要 `git checkout` 到指定的 `tag`【例如：`maven-shade-plugin-3.2.1`】。
 
 源码下载成功后，它其实也是一个 `Maven` 项目，可以直接以 `Module` 的形式导入 `IDEA` 中，可以直接被我们自己的项目依赖。
 
+添加流程、截图。。
 
+此时，我们 `module-a` 的 `pom.xml` 文件中配置的 `maven-shade-plugin` 插件，实际使用的就不是本地仓库的了，而是我们导入的 `Module`，这样就可以调试代码了。
 
+找到 `maven-shade-plugin` 插件的入口，`Maven` 规定一般是 `@Mojo` 注解类的 `execute()` 方法，我在这里找到类：`org.apache.maven.plugins.shade.mojo.ShadeMojo`，`execute()` 方法在代码381行，在这个方法入口处385行：`setupHintedShader();`，打上断点，如下图：
 
-此时，我们的 `pom.xml` 文件中配置的 `maven-shade-plugin` 插件，实际使用的就不是本地仓库的了，而是我们导入的 `Module`，这样就可以调试代码了。
+图。。
 
-https://www.cnblogs.com/ilinuxer/p/6819560.html
+具体的 `shade relocation` 功能实现逻辑在 `org.apache.maven.plugins.shade.DefaultShader` 中，在160行的 `shadeJars()` 方法中打上断点，在539行的 `addJavaSource()` 方法中打上断点。
 
-https://blog.csdn.net/taiyangdao/article/details/78324723
+图。。
+
+图。。
+
 
 
 ## 另一种情况
