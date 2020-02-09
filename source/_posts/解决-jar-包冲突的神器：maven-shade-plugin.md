@@ -354,23 +354,41 @@ java -jar iplaypistudy-shade-module-a-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 首先，需要下载源代码，在 `GitHub` 上面下载：[maven-shade-plugin](https://github.com/apache/maven-shade-plugin/tree/maven-shade-plugin-3.2.1) ，注意下载后切换到指定版本的，例如我使用的版本是 `v3.2.1`，则 `git clone` 后需要 `git checkout` 到指定的 `tag`【例如：`maven-shade-plugin-3.2.1`】。
 
-源码下载成功后，它其实也是一个 `Maven` 项目，可以直接以 `Module` 的形式导入 `IDEA` 中，可以直接被我们自己的项目依赖。
+源码下载成功后，它其实也是一个 `Maven` 项目【如果导入时 `IDEA` 识别不了，可以先 `Open` 看一下，需要一些初始化动作】，可以直接以 `Module` 的形式导入 `IDEA` 中，可以直接被我们自己的项目依赖。
 
-添加流程、截图。。
+在 `IDEA` 中依次选择 `File`、`New`、`Module from existing Sources`【也可以在 `Project Structure` 中直接添加】，最终选择已经下载的项目源码，导入过程中还需要选择一些配置，例如项目为 `Maven` 类型，项目名称，使用默认值即可。
+
+![添加模块](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200209205501.png "添加模块")
+
+由于有部分 `jar` 包需要从远程仓库拉取，如果网络不好的话【或者没配置国内的仓库、镜像】，速度有点慢，需要耐心等待。
+
+添加成功后，需要确保 `maven-shade-plugin` 模块正常，通过 `File`、`Project Structure`、`Module` 查看。
+
+![检查模块](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200209205616.png "检查模块")
 
 此时，我们 `module-a` 的 `pom.xml` 文件中配置的 `maven-shade-plugin` 插件，实际使用的就不是本地仓库的了，而是我们导入的 `Module`，这样就可以调试代码了。
 
 找到 `maven-shade-plugin` 插件的入口，`Maven` 规定一般是 `@Mojo` 注解类的 `execute()` 方法，我在这里找到类：`org.apache.maven.plugins.shade.mojo.ShadeMojo`，`execute()` 方法在代码381行，在这个方法入口处385行：`setupHintedShader();`，打上断点，如下图：
 
-图。。
+具体的生成 `jar` 包以及 `shade relocation` 功能实现逻辑在 `org.apache.maven.plugins.shade.DefaultShader` 中，在160行的 `shadeJars()` 方法中打上断点。
 
-具体的 `shade relocation` 功能实现逻辑在 `org.apache.maven.plugins.shade.DefaultShader` 中，在160行的 `shadeJars()` 方法中打上断点，在539行的 `addJavaSource()` 方法中打上断点。
+接着准备调试的步骤，可以增加一个 `Run/Debug Configuration`，把 `mvn clean package` 配置成为一个 `Application`，最后点击 `debug` 按钮就可以调试了。也可以直接选中项目右键，依次选择 `Debug Maven`、`debug: package`，直接进行调试，我使用的就是这种方式，如下图：
 
-图。。
+![开始调试](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200209205712.png "开始调试")
 
-图。。
+首先进入到第一个断点：`execute()` 方法，说明调试程序执行正常，直接进入到下一个断点：`shadeJars()` 方法【注意，我这里截图执行的是 `module-c` 打包的流程，列出的 `jar` 包近和 `module-c` 有关】：
 
+![execute 方法](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200209205731.png "execute 方法")
 
+![shadeJars 方法](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200209205746.png "shadeJars 方法")
+
+可以从 `shadeRequest` 对象中看到 `jar` 包列表，以及 `relocators` 列表，`shade relocation` 的代码逻辑在 `org.apache.maven.plugins.shade.relocation.SimpleRelocator` 里面，里面有替换类路径、文件路径的操作实现。
+
+接着进入到 `shadeSingleJar()` 方法，可以看到对每一个文件进行处理，替换、合并等操作。
+
+![shadeSingleJar 方法](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200209205801.png "shadeSingleJar 方法")
+
+最后也可以测试一下，如果不对 `module-c` 做 `shade relocation`，最终项目打包收集的所有 `jar` 包中，是没有 `guava v26.0-jre` 的，只有 `guava v19.0`，这也可以解释为什么运行时会缺失。
 
 ## 另一种情况
 
