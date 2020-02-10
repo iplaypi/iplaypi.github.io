@@ -53,7 +53,7 @@ keywords: Spark,cache
 
 查看业务代码，里面有一个：`rdd.cache();` 操作，显然会占用大量的内存。
 
-查看官方文档的配置：[1.6.2-configuration](https://spark.apache.org/docs/1.6.2/configuration.html) ，里面有一个重要的参数：`spark.storage.memoryFraction`，它是一个系数，决定着缓存上限的大小。
+查看官方文档的配置：[1.6.2-configuration](https://spark.apache.org/docs/1.6.2/configuration.html) ，里面有一个重要的参数：`spark.storage.memoryFraction`，它是一个系数，决定着缓存上限的大小【基数是 `spark.excutor.memory`】。
 
 > (deprecated) This is read only if spark.memory.useLegacyMode is enabled. Fraction of Java heap to use for Spark's memory cache. This should not be larger than the "old" generation of objects in the JVM, which by default is given 0.6 of the heap, but you can increase it if you configure your own old generation size.
 
@@ -101,7 +101,7 @@ keywords: Spark,cache
 
 综上所述，有三种方式可以解决这个问题：
 
-- 提高缓存空间系数：`spark.storage.memoryFraction`【不建议】
+- 提高缓存空间系数：`spark.storage.memoryFraction`【或者增大 `spark.excutor.memory`，不建议】
 - 使用序列化 `RDD` 数据的方式：`rdd.persist(StorageLevel.MEMORY_ONLY_SER)`
 - 使用磁盘缓存的方式：`rdd.persist(StorageLevel.MEMORY_AND_DISK)`
 

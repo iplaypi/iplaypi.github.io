@@ -148,6 +148,8 @@ comments: false
 - 中国人民银行征信中心：[ipcrs.pbccrc](https://ipcrs.pbccrc.org.cn)
 - 广州市住房和城乡建设局：[广州市住房和城乡建设局](http://zfcj.gz.gov.cn)
 - 在线制作动图，例如制作表情包：[soogif](https://www.soogif.com)
+- 互联网档案馆，备份大量视频、音频、网页等：[archive.org](https://archive.org)
+- 中国卫健委：[nhc.gov.cn](http://www.nhc.gov.cn)
 
 ## 技术列表
 
