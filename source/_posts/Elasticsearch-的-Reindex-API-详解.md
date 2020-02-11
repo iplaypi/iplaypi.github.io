@@ -450,9 +450,12 @@ Validation Failed: 1: illegal version value [0] for version type [INTERNAL];
 
 ![版本号不合法](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200206012755.png "版本号不合法")
 
-在此引申一下脚本的内容，`Elasticsearch` 提供了脚本的支持，可以通过 `Groovy` 外置脚本【已经过时，不建议使用】、内置 `painless` 脚本实现各种复杂的操作【类似于写逻辑代码，对数据进行 `ETL` 操作】，如上面的示例。
+在此引申一下脚本的内容，`Elasticsearch` 提供了脚本的支持，可以通过 `Groovy` 外置脚本【已经过时，`v6.x` 以及之后的版本，不建议使用】、内置 `painless` 脚本实现各种复杂的操作【类似于写逻辑代码，对数据进行 `ETL` 操作】，如上面的示例。
 
 `painless` 有轻便之意，使用时直接在语法中调用即可，无需外置，也就是不支持通过外部文件存储 `painless` 脚本来调用。
+
+>默认的脚本语言是 Groovy，一种快速表达的脚本语言，在语法上与 JavaScript 类似。它在 Elasticsearch v1.3.0 版本首次引入并运行在沙盒中，然而 Groovy 脚本引擎存在漏洞，允许攻击者通过构建 Groovy 脚本，在 Elasticsearch Java VM 运行时脱离沙盒并执行 shell 命令。
+>因此，在版本 v1.3.8、v1.4.3 和 v1.5.0 及更高的版本中，它已经被默认禁用。此外，您可以通过设置集群中的所有节点的 config/elasticsearch.yml 文件来禁用动态 Groovy 脚本：script.groovy.sandbox.enabled: false，这将关闭 Groovy 沙盒，从而防止动态 Groovy 脚本作为请求的一部分被接受。
 
 当然，对于常用的脚本，可以通过 `_scripts/calculate-score` 接口创建后缓存起来【也需要集群的配置：`script.store: true`】，会生成一个唯一 `id`，下次可以直接使用【就像声明了一个方法】，还支持参数传递。
 

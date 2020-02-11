@@ -17,13 +17,16 @@ type: guide
 
 
 - 2020012201，[Spark 警告：Not enough space to cache rdd in memory](https://www.playpi.org/2020012201.html)
+- 2020011601，[Elasticsearch 的 Reindex API 详解](https://www.playpi.org/2020011601.html)
 - 2020010301，[DateTimeFormatter 简单使用示例](https://www.playpi.org/2020010301.html)
+- 2020010201，[Spark 异常之 Failed to create local dir](https://www.playpi.org/2020010201.html)
 
 
 # 2019
 
 
 - 2019122901，[写入 Elasticsearch 异常：413 Request Entity Too Large](https://www.playpi.org/2019122901.html)
+- 2019120101，[解决 jar 包冲突的神器：maven-shade-plugin](https://www.playpi.org/2019120101.html)
 - 2019112901，[Spark 项目依赖冲突问题总结](https://www.playpi.org/2019112901.html)
 - 2019110201，[使用海龟绘图绘制一些植物](https://www.playpi.org/2019110201.html)
 - 2019101901，[HBase 错误：The node hbase is not in ZooKeeper](https://www.playpi.org/2019101901.html)

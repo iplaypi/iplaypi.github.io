@@ -37,7 +37,7 @@ Elasticsearch,HTTP,RESTful
 
 
 
-## 删除数据
+# 删除数据
 
 根据查询条件删除数据：
 
@@ -55,9 +55,27 @@ POST my-index-user/user/_delete_by_query/
 }
 ```
 
-打开索引、关闭索引
+当然，如果是低版本的 `Elasticsearch`，在 `1.x` 的版本中还可以使用发送 `DELETE` 请求的方式删除数据，容易引发一些操作失误，不建议使用。
 
-迁移数据、查看迁移任务、取消迁移任务
+更多内容参考：[Elasticsearch 根据查询条件删除数据的 API](https://www.playpi.org/2018022401.html) 。
+
+
+# 索引关闭开启
+
+
+主要有两个接口：
+
+- 开启索引，`curl -XPOST http://localhost:9200/your_index/_open`
+- 关闭索引，`curl -XPOST http://localhost:9200/your_index/_close`
+
+参考这篇博客的部分内容：[使用 http 接口删除 Elasticsearch 集群的索引](https://www.playpi.org/2019082101.html) 。
+
+
+# 迁移数据
+
+
+参考：[Elasticsearch 的 Reindex API 详解](https://www.playpi.org/2020011601.html) ，里面包含了常见的参数使用方式，以及查看迁移任务进度、取消迁移任务的方式。
+
 
 关闭 `rebalance`，移动分片
 
