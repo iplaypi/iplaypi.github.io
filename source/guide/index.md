@@ -26,6 +26,7 @@ type: guide
 
 
 - 2019122901，[写入 Elasticsearch 异常：413 Request Entity Too Large](https://www.playpi.org/2019122901.html)
+- 2019121901，[大数据平台框架常用参数优化](https://www.playpi.org/2019121901.html)
 - 2019120101，[解决 jar 包冲突的神器：maven-shade-plugin](https://www.playpi.org/2019120101.html)
 - 2019112901，[Spark 项目依赖冲突问题总结](https://www.playpi.org/2019112901.html)
 - 2019110201，[使用海龟绘图绘制一些植物](https://www.playpi.org/2019110201.html)
@@ -36,6 +37,7 @@ type: guide
 - 2019093001，[HBase 错误之 NoClassDefFoundError：ProtobufUtil](https://www.playpi.org/2019093001.html)
 - 2019092901，[HBase 错误之 ConnectionLoss for hbase-unsecure](https://www.playpi.org/2019092901.html)
 - 2019092201，[爬山徒步：竹海丛林-广州第二峰鸡枕山](https://www.playpi.org/2019092201.html)
+- 2019092001，[Zookeeper 日志查看](https://www.playpi.org/2019092001.html)
 - 2019091701，[HBase 异常：RpcRetryingCaller-Call exception](https://www.playpi.org/2019091701.html)
 - 2019082801，[CentOS7 自动安装 Shadowsocks 脚本](https://www.playpi.org/2019082801.html)
 - 2019082101，[使用 http 接口删除 Elasticsearch 集群的索引](https://www.playpi.org/2019082101.html)
