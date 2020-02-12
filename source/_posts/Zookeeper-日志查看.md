@@ -20,15 +20,15 @@ keywords: Zookeeper,log
 
 `Zookeeper` 服务器会产生三类日志：**事务日志**、**快照日志**和 **log4j 日志**。
 
-在 `Zookeeper` 默认的配置文件 `zoo.cfg`【也可以修改文件名】中有一个配置项 `dataDir`，该配置项用于配置 `Zookeeper` 快照日志和事务日志的存储地址。
+在 `Zookeeper` 默认的配置文件 `zoo.cfg`【也可以修改文件名，在 `bin/zkEnv.sh` 指定使用的配置文件】中有一个配置项 `dataDir`，该配置项用于配置 `Zookeeper` 快照日志和事务日志的存储地址。
 
-在官方提供的默认参考配置文件 `zoo_sample.cfg` 中【解压下载的安装后，在 `conf` 目录下可以找到】，只有 `dataDir` 配置项，配置为：`dataDir=/tmp/zookeeper`。其实在实际应用中，还可以为事务日志专门配置存储地址，配置项名称为 `dataLogDir`，在 `zoo_sample.cfg` 中并未体现出来。
+在官方提供的默认参考配置文件 `zoo_sample.cfg` 中【解压下载的安装包后，在 `conf` 目录下可以找到】，只有 `dataDir` 配置项，配置为：`dataDir=/tmp/zookeeper`。其实在实际应用中，还可以为事务日志专门配置存储地址，配置项名称为 `dataLogDir`，在 `zoo_sample.cfg` 中并未体现出来。
 
 在没有 `dataLogDir` 配置项的时候，`Zookeeper` 默认将事务日志文件和快照日志文件都存储在 `dataDir` 对应的目录下。但是我们建议将事务日志【`dataLogDir`】与快照日志【`dataDir`】单独配置，存储时分开存储，因为当 `Zookeeper` 集群进行频繁的数据读写操作时，会产生大量的事务日志信息，将两类日志分开存储会提高系统的性能。而且，还可以允许将两类日志存储在不同的存储介质上，减少单一的磁盘压力。
 
 总结，`dataDir` 表示快照日志目录，`dataLogDir` 表示事务日志目录【不配置的时候事务日志目录同 `dataDir`】。
 
-而 `log4j` 用于记录 `Zookeeper` 集群服务器运行日志，该日志的生成目录配置在安装包解压后的 `conf` 目录下的 `log4j.properties`文件中【这个想必很多读者都熟悉了】。在 `bin/zkEnv.sh` 文件中有使用到一个变量为 `ZOO_LOG_DIR=.`，表示 `log4j` 日志文件在与执行程序【`zkServer.sh`】在同一目录下，当执行 `zkServer.sh` 时，在该目录下会产生 `zookeeper.out` 日志文件；另外还有一个变量 `ZOO_LOG4J_PROP` 表示日志级别。而这些变量，都可以在 `conf/zookeeper-env.sh` 文件中提前设置好，例如：`export ZOO_LOG_DIR=/var/log/zookeeper`。
+而 `log4j` 用于记录 `Zookeeper` 集群服务器运行日志，该日志的配置项在安装包解压后的 `conf` 目录下的 `log4j.properties`文件中【这个想必很多读者都熟悉了】。在 `bin/zkEnv.sh` 文件中有使用到一个变量 `ZOO_LOG_DIR=.`，表示 `log4j` 日志文件与执行程序【`zkServer.sh`】在同一目录下，当执行 `zkServer.sh` 时，在该目录下会产生 `zookeeper.out` 日志文件；另外还有一个变量 `ZOO_LOG4J_PROP` 表示日志级别。而这些变量，都可以在 `conf/zookeeper-env.sh` 文件中提前设置好，例如：`export ZOO_LOG_DIR=/var/log/zookeeper`。
 
 下面主要介绍**事务日志**与**快照日志**。
 
@@ -36,15 +36,15 @@ keywords: Zookeeper,log
 # 事务日志
 
 
-事务日志指 `Zookeeper` 系统在正常运行过程中，针对所有的更新操作，在返回客户端**更新成功**的响应前，`Zookeeper` 会保证已经将本次更新操作的事务日志写到磁盘上，只有这样，整个更新操作才会生效。
+事务日志是指 `Zookeeper` 系统在正常运行过程中，针对所有的更新操作，在返回客户端**更新成功**的响应前，`Zookeeper` 会保证已经将本次更新操作的事务日志写到磁盘上，只有这样，整个更新操作才会生效。
 
 根据上文所述，可以通过 `zoo.cfg` 文件中的 `dataLogDir` 配置项找到事务日志存储的路径：`dataLogDir=/cloud/data1/hadoop/zookeeper`【如果没有配置就看 `dataDir` 参数】，在 `dataLogDir` 对应的目录下存在一个文件夹 `version-2`，该文件夹中保存着所有事务日志文件，例如：`log.6305208d3f`。
 
-日志文件的命名规则为 `log.**`，文件大小为 `64MB`【超过后就会生成新事务日志文件】，`**`表示写入该日志的第一个事务的 `ID`，十六进制表示。日志文件的个数与参数 `autopurge.snapRetainCount` 配置有关，默认是3个，本文最后也会讲到。
+事务日志文件的命名规则为 `log.**`，文件大小为 `64MB`【超过后就会生成新的事务日志文件】，`**`表示写入该日志文件的第一个事务的 `ID`【也可以说触发该日志文件的事务】，十六进制表示。日志文件的个数与参数 `autopurge.snapRetainCount` 配置有关，默认是3个，本文最后也会讲到。
 
 ## 事务日志可视化
 
-`Zookeeper` 的事务日志为二进制文件，不能通过 `vim` 等工具直接访问，其实可以通过 `Zookeeper` 自带的 `jar` 包读取事务日志文件。
+`Zookeeper` 的事务日志为二进制文件，不能通过 `vim` 等工具直接访问，其实可以通过 `Zookeeper` 自带的 `jar` 包中的工具类读取事务日志文件。
 
 首先将 `libs` 中的 `slf4j-api-1.6.1.jar` 文件和 `Zookeeper` 根目录下的 `Zookeeper-3.4.6.jar` 文件复制到临时文件夹 `tmplibs` 中【不复制也可以，只要明确 `jar` 包位置，引用一下即可】，然后执行如下命令，将原始事务日志内容输出至 `6305208d3f.log` 文件中：
 
@@ -62,7 +62,7 @@ java -classpath .:./slf4j-api-1.6.1.jar:./zookeeper-3.4.6.2.2.6.0-2800.jar org.a
 
 声明一下，每次对 `Zookeeper` 操作导致的状态改变都会产生一个 `zxid`，即 `ZooKeeper Transaction Id`。
 
-接着就可以挑一些日志进行简单分析一下，输出前10行，最好能挑到前后有关联的，例如打开会话、关闭会话。
+接着就可以挑一些日志进行简单分析一下，输出前10行，最好能挑到前后有关联的，例如同一个会话的打开、关闭操作。
 
 ```
 ZooKeeper Transactional Log File with dbid 0 txnlog format version 2
@@ -93,7 +93,7 @@ ZooKeeper Transactional Log File with dbid 0 txnlog format version 2
 # 快照日志
 
 
-`Zookeeper` 的数据在内存中是以树形结构进行存储的，而快照就是每隔一段时间会把整个 `DataTree` 的数据序列化后，存储在磁盘中，这就是 `Zookeeper` 的快照文件。
+`Zookeeper` 的数据在内存中是以树形结构进行存储的，而快照就是每隔一段时间会把整个 `DataTree` 的数据序列化后，存储在磁盘中，这就是 `Zookeeper` 的快照日志。
 
 `Zookeeper` 快照日志的存储路径同样可以在 `zoo.cfg` 中查看，如上文所示，访问 `dataDir` 对应的路径就可以看到 `version-2` 文件夹。
 
@@ -101,11 +101,11 @@ ZooKeeper Transactional Log File with dbid 0 txnlog format version 2
 dataDir=/cloud/data1/hadoop/zookeeper
 ```
 
-`Zookeeper` 快照文件的命名规则为 `snapshot.**`，其中 `**` 表示 `Zookeeper` 触发快照的那个瞬间，提交的最后一个事务的 `ID`，类似于前面的事务日志文件命名规则，文件示例：`snapshot.6501d41a74`。
+`Zookeeper` 快照日志文件的命名规则为 `snapshot.**`，其中 `**` 表示 `Zookeeper` 触发快照的那个瞬间，提交的最后一个事务的 `ID`，类似于前面的事务日志文件命名规则，文件示例：`snapshot.6501d41a74`。
 
 ## 可视化
 
-与日志文件一样，快照文件不可直接查看，需要通过 `Zookeeper` 为快照文件提供的可视化工具转换，对应的类为 `org.apache.zookeeper.server` 包中的 `SnapshotFormatter`，接下来就使用该工具转换该事务日志文件，并举例解释部分内容。
+与事务日志文件一样，快照日志文件不可直接查看，需要通过 `Zookeeper` 为快照日志文件提供的可视化工具转换，对应的类为 `org.apache.zookeeper.server` 包中的 `SnapshotFormatter`，接下来就使用该工具转换该事务日志文件，并举例解释部分内容。
 
 执行命令：
 
@@ -113,7 +113,7 @@ dataDir=/cloud/data1/hadoop/zookeeper
 java -classpath .:./slf4j-api-1.6.1.jar:./zookeeper-3.4.6.2.2.6.0-2800.jar org.apache.zookeeper.server.SnapshotFormatter ./snapshot.6501d41a74 > 6501d41a74.snapshot.log
 ```
 
-把快照文件转换为普通的文本文件，结果输出到 `6501d41a74.snapshot.log` 中。
+把快照文件转换为普通的文本文件，结果输出到 `6501d41a74.snapshot.log` 文件中。
 
 ![快照日志文件转换](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200212215807.png "快照日志文件转换")
 
@@ -165,11 +165,11 @@ ZNode Details (count=26650):
 - `pZxid`，父节点的 `Zxid`
 - `cversion`，子节点更新次数
 - `dataVersion`，数据更新次数
-- `aclVersion`，节点 acl 更新次数
+- `aclVersion`，节点 `acl` 更新次数
 - `ephemeralOwner`，如果节点为 `ephemeral` 节点则该值为 `sessionid`，否则为0
 - `no data`，表示没有数据，如果有的话会显示 `dataLength = xx`，即数据长度为 `xx`
 
-在快照文件的末尾，会有很多如下内容：
+在快照文件的末尾，会有很多如下格式的内容：
 
 ```
 Session Details (sid, timeout, ephemeralCount):
@@ -188,12 +188,12 @@ Session Details (sid, timeout, ephemeralCount):
 
 ![快照日志文件末尾](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200212223216.png "快照日志文件末尾")
 
-这里表达的是当前抓取快照文件的时间 `Zookeeper` 中 `session` 的详情，第一个 `session` 的超时时间是60000毫秒，`ephemeral` 节点为0；第二个 `session` 的超时时间是60000毫秒，`ephemeral` 节点为1。
+这里表达的是当前抓取快照日志文件的时间，`Zookeeper` 中 `session` 的详情，第一个 `session` 的超时时间是60000毫秒，`ephemeral` 节点为0；第二个 `session` 的超时时间是60000毫秒，`ephemeral` 节点为1。
 
 ## 清理机制
 
 有两个参数，从不同维度考虑，配置在 `zoo.cfg` 文件中，实现日志文件的清理。
 
-- `autopurge.purgeInterval=24`，在 `v3.4.0` 及之后的版本，`Zookeeper` 提供了自动清理事务日志和快照文件的功能，这个参数指定了清理频率，单位是小时，需要配置一个1或更大的整数。默认是0，表示不开启自动清理功能
-- `autopurge.snapRetainCount=30`，参数指定了需要保留的事务日志和快照文件的数目，默认是保留3个，和 `autopurge.purgeInterval` 搭配使用
+- `autopurge.purgeInterval=24`，在 `v3.4.0` 及之后的版本，`Zookeeper` 提供了自动清理事务日志文件和快照日志文件的功能，这个参数指定了清理频率，单位是小时，需要配置一个1或更大的整数。默认是0，表示不开启自动清理功能
+- `autopurge.snapRetainCount=30`，参数指定了需要保留的事务日志文件和快照日志文件的数目，默认是保留3个，和 `autopurge.purgeInterval` 搭配使用
 
