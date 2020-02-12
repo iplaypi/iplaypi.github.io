@@ -58,7 +58,7 @@ java -classpath .:./slf4j-api-1.6.1.jar:./zookeeper-3.4.6.2.2.6.0-2800.jar org.a
 
 ![事务日志文件转换](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200212010141.png "事务日志文件转换")
 
-## 日志分析
+## 事务日志分析
 
 声明一下，每次对 `Zookeeper` 操作导致的状态改变都会产生一个 `zxid`，即 `ZooKeeper Transaction Id`。
 
@@ -103,7 +103,7 @@ dataDir=/cloud/data1/hadoop/zookeeper
 
 `Zookeeper` 快照日志文件的命名规则为 `snapshot.**`，其中 `**` 表示 `Zookeeper` 触发快照的那个瞬间，提交的最后一个事务的 `ID`，类似于前面的事务日志文件命名规则，文件示例：`snapshot.6501d41a74`。
 
-## 可视化
+## 快照日志可视化
 
 与事务日志文件一样，快照日志文件不可直接查看，需要通过 `Zookeeper` 为快照日志文件提供的可视化工具转换，对应的类为 `org.apache.zookeeper.server` 包中的 `SnapshotFormatter`，接下来就使用该工具转换该事务日志文件，并举例解释部分内容。
 
@@ -117,7 +117,7 @@ java -classpath .:./slf4j-api-1.6.1.jar:./zookeeper-3.4.6.2.2.6.0-2800.jar org.a
 
 ![快照日志文件转换](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200212215807.png "快照日志文件转换")
 
-## 快照分析
+## 快照日志分析
 
 由于快照日志文件的内容比较长，把 `Zookeeper` 的所有节点内容全部输出，主要是因为 `Zookeeper` 的目录比较多，所以只需要挑两个出来即可分析，其它目录都是类似的内容。
 
@@ -190,7 +190,9 @@ Session Details (sid, timeout, ephemeralCount):
 
 这里表达的是当前抓取快照日志文件的时间，`Zookeeper` 中 `session` 的详情，第一个 `session` 的超时时间是60000毫秒，`ephemeral` 节点为0；第二个 `session` 的超时时间是60000毫秒，`ephemeral` 节点为1。
 
-## 清理机制
+
+# 清理机制
+
 
 有两个参数，从不同维度考虑，配置在 `zoo.cfg` 文件中，实现日志文件的清理。
 
