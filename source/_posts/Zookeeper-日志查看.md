@@ -38,7 +38,7 @@ keywords: Zookeeper,log
 
 事务日志指 `Zookeeper` 系统在正常运行过程中，针对所有的更新操作，在返回客户端**更新成功**的响应前，`Zookeeper` 会保证已经将本次更新操作的事务日志写到磁盘上，只有这样，整个更新操作才会生效。
 
-根据上文所述，可以通过 `zoo.cfg` 文件中的 `dataLogDir` 配置项找到事务日志存储的路径：`dataDir=/cloud/data1/hadoop/zookeeper`，在 `dataLogDir` 对应的目录下存在一个文件夹 `version-2`，该文件夹中保存着所有事务日志文件，例如：`log.6305208d3f`。
+根据上文所述，可以通过 `zoo.cfg` 文件中的 `dataLogDir` 配置项找到事务日志存储的路径：`dataLogDir=/cloud/data1/hadoop/zookeeper`【如果没有配置就看 `dataDir` 参数】，在 `dataLogDir` 对应的目录下存在一个文件夹 `version-2`，该文件夹中保存着所有事务日志文件，例如：`log.6305208d3f`。
 
 日志文件的命名规则为 `log.**`，文件大小为 `64MB`【超过后就会生成新事务日志文件】，`**`表示写入该日志的第一个事务的 `ID`，十六进制表示。日志文件的个数与参数 `autopurge.snapRetainCount` 配置有关，默认是3个，本文最后也会讲到。
 
@@ -56,9 +56,11 @@ java -classpath .:./slf4j-api-1.6.1.jar:./zookeeper-3.4.6.2.2.6.0-2800.jar org.a
 
 产生可以查看的日志文件一份：`6305208d3f.log`。
 
-![转换日志文件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200212010141.png "转换日志文件")
+![事务日志文件转换](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200212010141.png "事务日志文件转换")
 
 ## 日志分析
+
+声明一下，每次对 `Zookeeper` 操作导致的状态改变都会产生一个 `zxid`，即 `ZooKeeper Transaction Id`。
 
 接着就可以挑一些日志进行简单分析一下，输出前10行，最好能挑到前后有关联的，例如打开会话、关闭会话。
 
@@ -91,15 +93,102 @@ ZooKeeper Transactional Log File with dbid 0 txnlog format version 2
 # 快照日志
 
 
-待整理。
+`Zookeeper` 的数据在内存中是以树形结构进行存储的，而快照就是每隔一段时间会把整个 `DataTree` 的数据序列化后，存储在磁盘中，这就是 `Zookeeper` 的快照文件。
+
+`Zookeeper` 快照日志的存储路径同样可以在 `zoo.cfg` 中查看，如上文所示，访问 `dataDir` 对应的路径就可以看到 `version-2` 文件夹。
+
+```
+dataDir=/cloud/data1/hadoop/zookeeper
+```
+
+`Zookeeper` 快照文件的命名规则为 `snapshot.**`，其中 `**` 表示 `Zookeeper` 触发快照的那个瞬间，提交的最后一个事务的 `ID`，类似于前面的事务日志文件命名规则，文件示例：`snapshot.6501d41a74`。
 
 ## 可视化
 
-待整理。
+与日志文件一样，快照文件不可直接查看，需要通过 `Zookeeper` 为快照文件提供的可视化工具转换，对应的类为 `org.apache.zookeeper.server` 包中的 `SnapshotFormatter`，接下来就使用该工具转换该事务日志文件，并举例解释部分内容。
+
+执行命令：
+
+```
+java -classpath .:./slf4j-api-1.6.1.jar:./zookeeper-3.4.6.2.2.6.0-2800.jar org.apache.zookeeper.server.SnapshotFormatter ./snapshot.6501d41a74 > 6501d41a74.snapshot.log
+```
+
+把快照文件转换为普通的文本文件，结果输出到 `6501d41a74.snapshot.log` 中。
+
+![快照日志文件转换](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200212215807.png "快照日志文件转换")
 
 ## 快照分析
 
-待整理。
+由于快照日志文件的内容比较长，把 `Zookeeper` 的所有节点内容全部输出，主要是因为 `Zookeeper` 的目录比较多，所以只需要挑两个出来即可分析，其它目录都是类似的内容。
+
+```
+ZNode Details (count=26650):
+----
+/
+  cZxid = 0x00000000000000
+  ctime = Thu Jan 01 08:00:00 CST 1970
+  mZxid = 0x00000000000000
+  mtime = Thu Jan 01 08:00:00 CST 1970
+  pZxid = 0x00006401bcbf78
+  cversion = 75
+  dataVersion = 0
+  aclVersion = 0
+  ephemeralOwner = 0x00000000000000
+  dataLength = 0
+----
+/prc
+  cZxid = 0x000063029f34a0
+  ctime = Sat Jul 27 14:14:01 CST 2019
+  mZxid = 0x000063029f34a0
+  mtime = Sat Jul 27 14:14:01 CST 2019
+  pZxid = 0x000063029f34a1
+  cversion = 1
+  dataVersion = 0
+  aclVersion = 0
+  ephemeralOwner = 0x00000000000000
+  no data
+----
+...省略很多内容
+```
+
+![快照日志内容查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200212220328.png "快照日志内容查看")
+
+看到第一行：`ZNode Details (count=26650):`，表示 `ZNode` 节点的个数，我这里有26650个，太多了。
+
+从 `----` 开始到下一个 `----` 结束，就是一个 `ZNode` 的信息，包含路径、创建时间、数据长度等等，下面简单说明【以上面的 `/prc` 为例】：
+
+- `/prc`，路径
+- `cZxid`，创建节点时的 `Zxid`
+- `ctime`，创建节点的时间
+- `mZxid`，节点最近一次更新对应的 `Zxid`
+- `mtime`，节点最近一次更新的时间
+- `pZxid`，父节点的 `Zxid`
+- `cversion`，子节点更新次数
+- `dataVersion`，数据更新次数
+- `aclVersion`，节点 acl 更新次数
+- `ephemeralOwner`，如果节点为 `ephemeral` 节点则该值为 `sessionid`，否则为0
+- `no data`，表示没有数据，如果有的话会显示 `dataLength = xx`，即数据长度为 `xx`
+
+在快照文件的末尾，会有很多如下内容：
+
+```
+Session Details (sid, timeout, ephemeralCount):
+0x56efad063889c37, 60000, 0
+0x1703047aa123b27, 60000, 1
+0x4701974cffc62fa, 90000, 0
+0x56efad063885c32, 90000, 0
+0x4701974cffc62fc, 90000, 0
+0x56efad063885c33, 90000, 0
+0x66f1c157df79788, 10000, 0
+0x4701974cffc62fe, 90000, 0
+0x76efad06454f9ed, 90000, 0
+0x4701974cffc62ff, 90000, 0
+...省略很多个
+```
+
+![快照日志文件末尾](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20200212223216.png "快照日志文件末尾")
+
+这里表达的是当前抓取快照文件的时间 `Zookeeper` 中 `session` 的详情，第一个 `session` 的超时时间是60000毫秒，`ephemeral` 节点为0；第二个 `session` 的超时时间是60000毫秒，`ephemeral` 节点为1。
 
 ## 清理机制
 
