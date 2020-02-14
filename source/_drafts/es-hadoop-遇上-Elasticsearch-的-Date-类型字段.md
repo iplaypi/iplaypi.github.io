@@ -17,6 +17,11 @@ Elasticsearch,Hadoop,Date
 <!-- more -->
 
 
+es-shadoop 读取 date 格式无法处理，获取的date不对，设置es.mapping.date.rich为false关闭，直接返回long数值；
+或者设置排除字段，不取这个字段的值；
+低版本es-hadoop无法处理，报错，见tower；
+
+
 
 注意，es-hadoop版本如果很低，例如v2.1.0，还不支持高版本的es，例如v2.3.5，此时会导致异常，无法处理date字段；
 另外，使用v2.4.5，有bug，会导致读取中文字段丢失，如果再写回去就悲剧了，中文字段全部丢失。【关于此问题的踩坑记录可以参考我的另外一篇博客，后续从tower整理出来，给出链接】
@@ -77,5 +82,9 @@ Elasticsearch,Hadoop,Date
   }
 }
 ```
+
+
+2018041801
+es-hadoop读取日期问题，乱码的链接指向另外一篇：
 
 
