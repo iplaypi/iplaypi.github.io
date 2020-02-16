@@ -170,6 +170,16 @@ POST my-index-post/_search
 对于场景二来说，表现的就是 `terms lookup` 无法支持复杂的查询条件，只能是和 `id` 字段有关的，这样就降低了 `Elasticsearch` 的计算量。
 
 
+# 流程总结
+
+
+回顾我们发送到 `Elasticsearch` 的查询条件，可以看到，它只是一个简单的过滤查询，包含一个 `terms` 过滤器，匹配指定的 `user_item_id`。只是该查询条件中的 `terms` 过滤器使用了一种不同的技巧，即不是明确指定某些 `term` 的值【没有明确指定 `user_item_id` 取值列表】，而是从其它的索引中动态加载【从用户索引中加载】。
+
+可以看到，我们的过滤器是基于 `user_item_id` 字段，但是并没有进一步指定取值列表，而是引用了新的属性：`index`、`type`、`id`、`path`。`index` 属性指明了加载 `terms` 的索引名称【在上面的例子中是 `my-index-user`】，`type` 属性指明了索引类型【在上面的例子中是 `user`】，`id` 属性指明了我们在指定索引上使用的查询匹配条件，最后 `path` 指明了 `Elasticsearch` 应该从哪个字段中加载 `terms`【在上面的例子中是 `friends`】。
+
+总结一下，`Elasticsearch` 所做的工作就是从 `my-index-user` 索引的 `user` 类型中，`id` 为 `0f42d65be1f5287e1c9c26e3728814aa` 的文档里加载 `friends` 字段中的所有取值。这些取得的值将用于 `terms filter` 来过滤从 `my-index-post` 索引中查询到的文档，过滤条件是文档的 `user_item_id` 字段的值在过滤器中存在。
+
+
 # 备注
 
 
@@ -177,3 +187,4 @@ POST my-index-post/_search
 
 2、`path` 参数指定的字段必须是存储在 `Elasticsearch` 中的，可以返回，如果只是做了索引是不支持的【使用 `_source.excludes` 关键字排除，只支持查询而已，无法返回】。
 
+a
