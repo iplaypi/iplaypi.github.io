@@ -74,6 +74,7 @@ comments: false
 - 加速热部署工具：[JRebel](https://jrebel.com)
 - Git 可视化管理工具：[gitkraken](https://www.gitkraken.com)
 - Git 在线可视化学习网站：[learngitbranching](https://learngitbranching.js.org)
+- 谷歌论坛群组，通过邮件订阅、沟通、跟踪：[groups.google.com](https://groups.google.com/forum)
 
 ## 辅助工具
 
