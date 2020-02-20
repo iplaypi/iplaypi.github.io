@@ -57,10 +57,10 @@ http://localhost:9200/_cat/thread_pool?v
 ```
 
 
-# 分词器
+# 分析器
 
 
-可以查看不同分词器的分词结果，或者基于某个索引的某个字段查看分词结果。下面列举一些例子，其它更多的内容请读者参考另外一篇博客：[Elasticsearch 分词器使用入门指南](https://www.playpi.org/2017082001.html) 。
+可以查看不同分析器的分词结果，或者基于某个索引的某个字段查看分词结果。下面列举一些例子，其它更多的内容请读者参考另外一篇博客：[Elasticsearch 分析器使用入门指南](https://www.playpi.org/2017082001.html) 。
 
 查看集群安装的各种分词器效果，指定文本内容、分词器即可：
 
@@ -180,6 +180,23 @@ PUT /my-index-post/_mapping/post/
             "type": "keyword"
         }
     }
+}
+```
+
+更新索引的 `mapping`【在索引、类型都已经存在的情况下】：
+
+```
+PUT /my-index-post/_mapping/post
+{
+  "post": {
+    "properties": {
+      "title": {
+        "type": "text",
+        "analyzer": "english",
+        "search_analyzer": "standard" 
+      }
+    }
+  }
 }
 ```
 
@@ -418,4 +435,24 @@ POST _tasks/task_id:1/_cancel
 
 
 需要先关闭 `rebalance`，再手动移动分片。
+
+
+# 验证
+
+
+检验查询语句的合法性，不仅仅是满足 `JSON` 格式那么简单：
+
+```
+POST /my-index-post/_validate/query?explain
+{
+  "query": {
+    "match": {
+      "content":{
+        "query": "，",
+        "analyzer": "wordsEN"
+      }
+    }
+  }
+}
+```
 
