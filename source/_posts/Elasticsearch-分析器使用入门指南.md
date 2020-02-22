@@ -8,7 +8,6 @@ tags: [Elasticsearch,analyzer,wordsEN,standard,english]
 keywords: Elasticsearch,analyzer,wordsEN,standard,english
 ---
 
-
 `ElasticSearch` 是一个基于 `Lucene` 构建的开源、分布式、`RESTful` 搜索引擎，能够达到实时搜索，并且稳定、可靠、快速。而其中最常用的全文检索【`match` 匹配】功能，在很多场景都有应用，这当然离不开分析器【`Analyzer`】，本文简单总结一下相关内容，入门级别。开发环境基于 `v5.6.8`。
 
 
@@ -253,7 +252,11 @@ PUT http://localhost:9202/my-index-post/_mapping/post/
 
 ## 查询
 
-查询时也可以指定分析器【这样的话索引数据时生成的词对本次查询就无效了】，利用 `analyzer` 属性：
+查询时也可以指定分析器，这样的话本次查询生成的词是单独的规则，可能无法匹配到索引数据时生成的词。如果不配置，则默认与索引数据时的分析器一致，这也符合用户的使用习惯，因为基本不会有人特别去指定查询的分析器。
+
+注意，给搜索指定分析器后，实际是对指定的文本进行分析后产生词，用这些词去匹配数据文档中的字段，例如指定文本 `iPhone8` 搜索，如果指定使用 `standard` 分析器，文本会被分析为 `iPhone8`，而如果索引数据使用的是 `wordsEN` 分析器【`iPhone8` 被分析为 `iphone`、`8`】，会造成无法命中。
+
+利用 `analyzer` 属性指定：
 
 ```
 POST my-index-post/_search
@@ -271,7 +274,7 @@ POST my-index-post/_search
 
 ![查询数据指定 standard 无结果](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200221004431.png "查询数据指定 standard 无结果")
 
-我这里 `content` 字段配置的分析器是 `wordsEN`，索引数据时会保留标点符号，而使用 `standard` 分析器查询时，由于 `standard` 分析器移除了标点符号，所以无法命中数据。
+我这里 `content` 字段配置的分析器是 `wordsEN`，索引数据时会保留标点符号，而使用 `standard` 分析器查询时，由于 `standard` 分析器移除了标点符号，那么此时的词等价于空串了，所以无法命中数据。
 
 换一个分析器查询，就可以查到数据了：
 
@@ -291,7 +294,29 @@ POST my-index-post/_search
 
 ![查询数据指定 wordsEN 有结果](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200221004501.png "查询数据指定 wordsEN 有结果")
 
-此外还有一种配置方法，除了可以给字段配置索引数据时的分析器，还可以给字段指定查询时的分析器，利用 `search_analyzer` 属性：
+下面再举一个典型的例子，虽然指定的文本在数据中并没有出现，但是通过指定查询的分析器【查询时会过滤掉标点符号】，也可以命中数据。
+
+想查询 `着，我` 这个短语，如果是正常的情况，`着`、`我` 应该出现在两个短句中，但是通过指定分析器 `standard`，就可以把逗号移除，从而命中带有 `着我` 的数据【这也改变了本来的查询需求】：
+
+```
+POST my-index-post/_search
+{
+  "query": {
+    "match": {
+      "content":{
+        "query": "着，我",
+        "type": "phrase", 
+        "slop": 0,
+        "analyzer": "standard"
+      }
+    }
+  }
+}
+```
+
+![典型例子](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200222142332.png "典型例子")
+
+此外还有一种配置方法，除了可以给字段配置索引数据时的分析器，还可以给字段指定查询时的分析器，利用 `search_analyzer` 属性【如果不配置则默认与索引数据时的分析器一致，如果用户查询时又手动指定了分析器则使用用户指定的，读者可以看上面的例子】：
 
 ```
 PUT /my-index-post/_mapping/post
