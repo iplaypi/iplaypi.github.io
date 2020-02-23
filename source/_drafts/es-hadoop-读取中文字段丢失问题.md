@@ -34,11 +34,62 @@ Hadoop,Elasticsearch,Spark
 
 此时就可以严重怀疑是 `elasticsearch-hadoop v2.4.5` 包的问题了，话不多说，直接打开源码排查。
 
+注意：`elasticsearch-hadoop` 中的部分依赖需要被排除，避免冲突：
+
+```
+<dependency> 
+  <groupId>org.elasticsearch</groupId>  
+  <artifactId>elasticsearch-hadoop</artifactId>  
+  <version>2.1.0</version>  
+  <!-- 必须移除,与spark-core_2.10里面有冲突 -->  
+  <exclusions> 
+    <exclusion> 
+      <groupId>com.esotericsoftware</groupId>  
+      <artifactId>kryo</artifactId> 
+    </exclusion> 
+  </exclusions> 
+</dependency>
+```
+
+![es-hadoop 依赖](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200224005458.png "es-hadoop 依赖")
+
+待重新整理一下。
+
+另外还有一种 `elasticsearch-spark` 依赖，不知道用处，我在项目中也同时依赖了，看起来没什么用处，因为没用到，暂时先不关心。
+
+```
+<dependency> 
+  <groupId>org.elasticsearch</groupId>  
+  <artifactId>elasticsearch-spark_2.10</artifactId>  
+  <version>2.1.0</version> 
+</dependency>
+```
+
+![es-spark 依赖](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200224010013.png "es-spark 依赖")
+
+看官网说明是为了支持 `spark SQL` 的，链接：[Supported Spark SQL versions](https://www.elastic.co/guide/en/elasticsearch/hadoop/master/spark.html) 。
+
+> Spark SQL while becoming a mature component, is still going through significant changes between releases. Spark SQL became a stable component in version 1.3, however it is not backwards compatible with the previous releases. Further more Spark 2.0 introduced significant changed which broke backwards compatibility, through the Dataset API. elasticsearch-hadoop supports both version Spark SQL 1.3-1.6 and Spark SQL 2.0 through two different jars: elasticsearch-spark-1.x-\<version>.jar and elasticsearch-hadoop-\<version>.jar support Spark SQL 1.3-1.6 (or higher) while elasticsearch-spark-2.0-\<version>.jar supports Spark SQL 2.0. In other words, unless you are using Spark 2.0, use elasticsearch-spark-1.x-\<version>.jar
+
 
 # 源码分析解读
 
 
+对于遇到的网络问题【国内网络毕竟有一堵墙存在】，不要着急，解决方案一般有两种：一是设置国内镜像，二是设置代理。对于遇到的各种卡住问题，不少人被折磨的很难受，最后可能就丧失了学习的乐趣，这一点也是令人头疼的地方。
+
+例如给 `Gradle` 设置代理，在项目的 `gradle.properties` 文件中配置【如果放在 `.gradle` 目录下就是全局生效了】：
+
+```
+org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
+```
+
+例如给 `IDEA` 设置代理，在 `File`、`Settings`、`HTTP Proxy`，选择 `Manual proxy configuration`，就可以设置了，使用 `check connection` 还可以测试代理有没有生效。
+
+## 下载源码
+
 首先需要下载源码，从 `GitHub` 上面下载，下载后记得要切换 `tag`，也就是切换到指定的版本，例如我这里切换到 `tag v2.5.4`【使用命令：`git checkout v2.4.5`】。
+
+## 构建工具
 
 `elasticsearch-hadoop` 使用的构建工具是 `Gradle`，导入 `IDEA` 需要注意【另外 `Elasticsearch` 从 `v5.0` 开始也将构建工具由 `Maven` 切换为 `Gradle` 了】。所以还需要提前安装好 `Gradle`，安装流程和 `Maven` 类似，比较简单，在此不再赘述，读者可以参考官网【最好配置一下 `GRADLE_HOME` 环境变量】。
 
@@ -93,28 +144,49 @@ allprojects{
 
 除了通过环境变量来设置，也可以使用 `Gradle` 原生的命令设置：`gradle -g 目录`，`-g` 是 `--gradle-user-home` 的简写。
 
-如果在 `Build` 过程中发现还是卡住：`Gradle: Resolve dependencies ':classpath'`，肯定是镜像的仓库没有设置好，确保设置好后关掉项目重新打开，不要无谓地等待。
+## scala sdk 安装
 
-另外，如果实在不行可以设置代理，在项目的 `gradle.properties` 文件中配置【如果放在 `.gradle` 目录下就是全局生效了】：
+`scala` 官网：[scala](https://www.scala-lang.org) 。
 
-```
-org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
-```
+如果在 `Build` 过程中发现还是卡住：`Gradle: Resolve dependencies ':classpath'`，千万不要无谓地等待。这乍一看是依赖问题，可能会怀疑镜像的仓库没有设置好，其实不是，而是因为 `scala` 没有安装，`classpath` 环境变量没有配置好，需要下载安装配置。
 
 由于 `elasticsearch-hadoop` 中与 `Elasticsearch` 相关的代码大部分是用 `scala` 写的，所以需要 `IDEA` 安装 `scala` 模块。
 
+如果是直接使用 `IDEA`，打开 `scala` 文件后，它会自动检测并提示 `Setup scala SDK`，只要点击就行了。但是，这个安装包有点大，100MB左右，在国内的网络环境下，不知道要几十个小时，如果下载卡住了，`IDEA` 也就跟着卡住了，此时需要考虑给 `IDEA` 设置代理，即翻墙连接。
+
+如果是在官网手动下载 `scala` 安装包，安装配置环境，类似于 `Java` 那样，也是可以的，但是国内的网络也是不行的【几KB/s】，使用浏览器下载很慢，也可以选择使用迅雷下载，会快很多【100KB/s】。
+
 顺利使用 `IDEA` 打开项目后，就可以开始查看源码了。
 
-xxx
+## 浏览源码
+
+先说一下核心类：`RestService`、`x`、`y`、`ScrollReader`，画了一张关联图：
+
+图。。。
+
+问题原因：
+
+`es-spark` 读取数据时会获取`ES Mapping`，但是会过滤掉type=completion(这个类型是suggest专有的)的字段,然后使用restcilent srcoll方式读取es的数据,此时会读取包含type=completion字段的数据,此时es-hadoop会进行一个过滤,将type=completion的字段的数据过滤掉,在版本2.3会出现问题是,如果遇见type=completion的字段数据会过滤该数据,同时也会过滤掉后面的其他的字段,所以会导致取出数据不完成。
+
+解决方案:
+
+升级到5.0之后,可以解决该问题,不过如果是type=completion的数据也不会取出来,这时候好像只能用es的自带的接口了。
+
+关键代码：
+
+核心类RestService 读取数据org.elasticsearch.hadoop.rest.RestService.findPartitions方法: 根据shard读取数据,此时先用http _mapping读取mapping,然后进行过滤,过滤方法org.elasticsearch.hadoop.serialization.dto.mapping.Field.parseField内部调 org.elasticsearch.hadoop.serialization.FieldType.isRelevant()读取mapping结束后,采用scroll的方式取数据,核心类org.elasticsearch.hadoop.serialization.ScrollReader ,真正的读取数据读数调用方法:map(String fieldMapping),内部调用过滤方法shouldSkip(absoluteName) --> skipCurrentBlock()[bug方法]
 
 
 # 备注
 
-版本问题，导致丢失中文字段；
 
 如果是使用 `index` 方式把数据写回原始索引，那么这些字段就彻底丢失了。
 
 建议不要使用中文字段名称，虽然 `Elasticsearch` 官方支持，但还是要提防一些未知的坑，哪怕不全是英文字段名称，退一步使用拼音、数字都可以【合法的字母、数字】。
 
-使用 jdk 版本问题，需要适配；
+使用 `JDK` 版本的问题，需要适配，如果 `Elasticsearch` 已经升级到 `v5.x`，需要使用 `JDK v1.8` 以及以上的版本【`v1.8.0_73`】，不再支持使用低版本的 `JDK` 了。
+
+官方说明：[setup](https://www.elastic.co/guide/en/elasticsearch/reference/5.0/setup.html) 。
+
+> We recommend installing Java version 1.8.0_73 or later. Elasticsearch will refuse to start if a known-bad version of Java is used.
 
