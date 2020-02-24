@@ -53,9 +53,7 @@ Hadoop,Elasticsearch,Spark
 
 ![es-hadoop 依赖](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200224005458.png "es-hadoop 依赖")
 
-待重新整理一下。
-
-另外还有一种 `elasticsearch-spark` 依赖，不知道用处，我在项目中也同时依赖了，看起来没什么用处，因为没用到，暂时先不关心。
+另外还有一种 `elasticsearch-spark` 依赖，它和 `elasticsearch-hadoop` 一样，添加了对 `Elasticsearch` 并发处理的支持扩展，并且它们大部分的源码是一样的，只不过对于 `Spark SQL` 的版本支持不一致。
 
 ```
 <dependency> 
