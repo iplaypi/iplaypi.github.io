@@ -13,7 +13,9 @@ keywords:
 踩坑系列
 Hadoop,Elasticsearch,Spark
 
-在使用 `elasticsearch-hadoop` 包时遇到一个坑：读取 `Elasticsearch` 数据时会过滤掉中文名称的字段，影响了数据处理流程，排查、测试了一整天才找到根本原因，本文记录这个问题。涉及到的开发环境基于 `Elasticsearch 2.4.5`，源码分析演示基于 `elasticsearch-hadoop v2.4.5`，当然，`elasticsearch-hadoop v2.3.x` 也是有这个问题的。
+在使用 `elasticsearch-hadoop` 包时遇到一个坑：读取 `Elasticsearch` 数据时会过滤掉中文名称的字段，影响了数据处理流程，排查、测试了一整天才找到根本原因，这个过程可以让我以后在遇到技术问题时快速定位、少走弯路，本文记录这个问题。
+
+涉及到的开发环境基于 `Elasticsearch 2.4.5`，源码分析演示基于 `elasticsearch-hadoop v2.4.5`，当然，`elasticsearch-hadoop v2.3.x` 也是有这个问题的。
 
 
 <!-- more -->

@@ -230,6 +230,33 @@ git log
 ```
 
 
+# 同步远程分支信息
+
+
+有时候发现本地的分支信息与远程的不一致，例如远程的分支已经被删除，但是每次 `git pull` 的时候并不能同步到本地，在本地依然显示这些分支。
+
+此时需要净化分支，使用命令：`git remote prune origin` 即可。
+
+
+# 代理设置
+
+
+有时候遇到网络问题，或者被墙的问题，下载的速度非常慢，可以设置代理：
+
+```
+--global是全局的意思
+设置代理
+git config --global https.proxy http://127.0.0.1:1080
+git config --global https.proxy https://127.0.0.1:1080
+git config --global http.proxy 'socks5://127.0.0.1:1080'
+git config --global https.proxy 'socks5://127.0.0.1:1080'
+
+取消代理
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+```
+
+
 # 一些建议
 
 

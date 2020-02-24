@@ -1,17 +1,17 @@
 ---
 title: es-hadoop 版本不匹配导致 discoverNodes 异常
-id: 2020-02-24 01:04:14
+id: 2018052901
 date: 2018-05-29 01:04:14
-updated: 2020-02-24 01:04:14
-categories:
-tags:
-keywords:
+updated: 2018-05-29 01:04:14
+categories: 踩坑系列
+tags: [Elasticsearch,elasticsearch-hadoop,Spark,Hadoop]
+keywords: Elasticsearch,elasticsearch-hadoop,Spark,Hadoop
 ---
 
 
-2018052901
-踩坑系列
-Elasticsearch,elasticsearch-hadoop,Spark,Hadoop
+在业务中遇到一个由 `elasticsearch-hadoop` 版本不匹配引发的异常，然后通过查看源代码的方式分析问题、解决问题。不仅解决了业务上的问题，也对 `elasticsearch-hadoop` 的使用有了更多的了解，同时对于不同版本的 `Elasticsearch` 集群信息有了更多的认识，这些认识可以让我以后在遇到技术问题时快速定位、少走弯路。
+
+本文涉及的开发环境：`Elasticsearch v1.7.5`、`Elasticsearch v2.4.5`。
 
 
 <!-- more -->
@@ -30,7 +30,7 @@ Elasticsearch,elasticsearch-hadoop,Spark,Hadoop
 </dependency>
 ```
 
-图。。
+![es-hadoop 依赖](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2018/20200225011632.png "es-hadoop 依赖")
 
 一直都是处理 `Elasticsearch 1.7.5` 的数据，某次临时处理了 `Elasticsearch v2.4.5` 的数据，结果发现异常，`Spark` 进程无法启动：
 
@@ -48,11 +48,11 @@ at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)
 at scala.Option.getOrElse(Option.scala:120)
 ```
 
-图。。
+![异常信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2018/20200225011729.png "异常信息")
 
-如果只看 `StringIndexOutOfBoundsException` 异常，发现就是一个普通的下标越界而已，得不到任何有用的信息，毕竟这是 `elasticsearch-hadoop` 框架抛出的，给出这样一个异常，并没有指明常见异常类型【例如网络连接、数据格式不对】，只能顺藤摸瓜去看源代码了。
+如果只看 `StringIndexOutOfBoundsException` 异常，发现就是一个普通的下标越界而已，得不到任何有用的信息，毕竟这是 `elasticsearch-hadoop` 框架抛出的，给出这样一个异常，并没有指明常见异常类型【例如网络连接问题、数据格式不对等等】，只能顺藤摸瓜去看源代码了。
 
-再看异常栈里面有一个 `RestClient.discoverNodes` 定位，基本可以找到源代码了。
+再看异常栈里面有一个 `RestClient.discoverNodes` 定位，基本可以找到源代码所在位置。
 
 
 # 问题分析解决
@@ -81,7 +81,7 @@ public List<String> discoverNodes() {
 }
 ```
 
-图。。
+![版本 210 源码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2018/20200225011754.png "版本 210 源码")
 
 可以看到这是一个发现节点的方法，结合异常栈里面的 `RestService.findPartitions` 可以猜测这是在读取数据前寻找节点，然后再创建连接。
 
@@ -91,7 +91,7 @@ public List<String> discoverNodes() {
 inet = inet.substring(startIp, endIp);
 ```
 
-截取网络地址从而获取 `ip` 信息，出现异常，说明网络地址格式不对，以至于按照标准方法截取时出现异常。
+截取网络地址从而获取 `ip:port` 信息，出现异常，说明网络地址格式不对，以至于按照标准方法截取时出现异常。
 
 通过代码中的 `_nodes/transport` 接口【再获取 `http_address` 的值】，我们可以自己看一下集群的信息：
 
@@ -99,7 +99,7 @@ inet = inet.substring(startIp, endIp);
 localhost:9202/_nodes/transport
 ```
 
-图。。
+![版本 245 节点信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2018/20200225011812.png "版本 245 节点信息")
 
 可以看到 `http_address` 的值是 `ip:port` 的格式，而在源代码中是通过截取 `/`、`]` 之间的子串来确定 `ip:port` 的值，这显然会造成 `substring` 的异常【`startIp`=0，`endIp`=-1】。
 
@@ -107,7 +107,7 @@ localhost:9202/_nodes/transport
 
 那我们再回头看一下 `v1.7.5` 的 `Elasticsearch` 节点信息：
 
-图。。
+![版本 175 节点信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2018/20200225011936.png "版本 175 节点信息")
 
 可以看到 `http_address` 的值是 `inet[/ip:port]` 的格式，这个刚好可以被源码处理。
 
@@ -135,9 +135,9 @@ public List<String> discoverNodes() {
 }
 ```
 
-图。。
+![版本 245 源码1](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2018/20200225011953.png "版本 245 源码1")
 
-可以看到，源码单独重新写了一个方法单独处理 `ip:port` 的信息，想必是考虑了多种情况，接着往下看：
+可以看到，源码单独重新写了一个方法处理 `ip:port` 的信息，想必是考虑了多种情况，接着往下看：
 
 ```
 public static IpAndPort parseIpAddress(String httpAddr) {
@@ -166,17 +166,54 @@ public static IpAndPort parseIpAddress(String httpAddr) {
 }
 ```
 
-图。。
+![版本 245 源码2](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2018/20200225012005.png "版本 245 源码2")
 
 果然，考虑周全，一共四种情况全部考虑到。这样的话，就可以利用 `elasticsearch-hadoop v2.4.5` 愉快地处理各种版本的 `Elasticsearch` 集群里面的数据了。
 
 ## 多版本小技巧
 
-在 `Maven` 项目中，如果的确需要应对多版本的 `Elasticsearch` 环境，而又不能同时依赖两个版本的 `elasticsearch-hadoop` 包，那怎么办呢，总不能写两套代码吧，或者至少需要两份 `pom` 文件。
+在 `Maven` 项目中，如果的确需要应对多版本的 `Elasticsearch` 环境，而又不能同时依赖两个版本的 `elasticsearch-hadoop` 包，那怎么办呢，总不能写两套代码吧，或者至少需要两份 `pom.xml` 文件。
 
 其实，大可不必，`Maven` 中有非常好用的 `profile`功能，可以在编译打包时动态指定激活哪一份配置。
 
-xxx
+在 `pom.xml` 中设置全局变量：`elastisearch.hadoop.version`，默认值为 `2.1.0`，在指定 `elasticsearch-hadoop` 依赖版本时直接使用：
+
+```
+全局变量
+<properties>
+    <elastisearch.hadoop.version>2.1.0</elastisearch.hadoop.version>
+</properties>
+
+直接使用
+<dependency>
+    <groupId>org.elasticsearch</groupId>
+    <artifactId>elasticsearch-hadoop</artifactId>
+    <version>${elastisearch.hadoop.version}</version>
+</dependency>
+```
+
+这样的话打包时使用的是 `elasticsearch-hadoop v2.1.0`。
+
+如果接着利用 `profile` 功能【一般加载线上环境、测试环境的配置文件时也会用到这个特性】，在 `pom.xml` 中配置：
+
+```
+<profiles>
+    <profile>
+        <id>es-245</id>
+        <properties>
+            <elastisearch.hadoop.version>2.4.5</elastisearch.hadoop.version>
+        </properties>
+    </profile>
+</profiles>
+```
+
+它其实就是更改了 `elastisearch.hadoop.version` 变量的值，但是需要编译打包时激活才会有效，编译打包时使用 `-P` 参数指定配置对应的 `id`：
+
+```
+mvn clean compile package -P es-245
+```
+
+表示激活 `es-245` 这个配置，那么 `elastisearch.hadoop.version` 变量的值就变为 `2.4.5` 了，则对应的依赖版本也就是它了，灵活好用。
 
 
 # 等价的依赖
