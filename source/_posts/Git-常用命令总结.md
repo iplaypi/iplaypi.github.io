@@ -257,6 +257,16 @@ git config --global --unset https.proxy
 ```
 
 
+# 查看日志
+
+
+查看日志，可以看到变更的文件信息：
+
+```
+git log --stat
+```
+
+
 # 一些建议
 
 
