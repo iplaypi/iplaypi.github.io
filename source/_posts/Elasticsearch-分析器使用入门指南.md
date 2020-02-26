@@ -112,6 +112,8 @@ PUT my-index-post/_settings
 
 这样我们的自定义分析器就构造完成，可以根据名称使用它了。
 
+注意，创建自定义分析器之前，需要先关闭索引，创建成功后再打开，否则无法创建成功。
+
 
 # 实战演示
 
@@ -296,7 +298,7 @@ POST my-index-post/_search
 
 下面再举一个典型的例子，虽然指定的文本在数据中并没有出现，但是通过指定查询的分析器【查询时会过滤掉标点符号】，也可以命中数据。
 
-想查询 `着，我` 这个短语，如果是正常的情况，`着`、`我` 应该出现在两个短句中，但是通过指定分析器 `standard`，就可以把逗号移除，从而命中带有 `着我` 的数据【这也改变了本来的查询需求】：
+想查询 `着，我` 这个短语，如果是正常的情况，`着`、`我` 应该出现在两个短句中，但是通过指定分析器 `standard`，就可以把逗号移除，从而命中带有 `着我` 的数据【这也改变了本来的查询含义，即人理解的含义，更多参考后面的**误解**小节】：
 
 ```
 POST my-index-post/_search
@@ -614,7 +616,9 @@ POST _analyze
 
 注意到，标点符号被剔除；缩写词 `let's` 没有拆开；`iPhone8` 被转为小写字母，但是字母、数字没有拆开。
 
-这里可以留意到，尽管分析器剔除了一些字符，但是每个词的位置并没有变化，例如 `123` 的位置 `start_offset` 是3，也就是在原文中的位置，并没有因为它前面的逗号被剔除而变为2，这是很重要的，关系到搜索时的命中结果【指定步长 `slop` 的查询】。
+这里可以留意到，尽管分析器剔除了一些字符，但是每个词的位置并没有变化，例如 `123` 的位置 `start_offset` 是3，也就是在原文中的位置，并没有因为它前面的逗号被剔除而变为2，这是很重要的。
+
+另外，注意一下 `position` 的值，它才是词元的位置，由于过滤一些字符后，`position` 的值和 `*_offset` 值的对应关系变化了，这可能会引起一些误解，因为关系到搜索时的命中结果【指定步长 `slop` 的短语查询，下面会有特别记录，见**误解**小节】。
 
 如果在一个索引中已经给某些字段指定了分析器，则可以直接查看赋值文本给这个字段后的分析结果。例如索引 `my-index-post` 中的 `content` 字段已经被设置分析器为 `wordsEN`，此时假如把 `content` 赋值为文本 `出发，123，let's go！来自iPhone8的客户端。`，看看分析结果。
 
@@ -627,6 +631,100 @@ POST my-index-post/_analyze
   "field":"content"
 }
 ```
+
+## 分析结果的误解
+
+上面在**查询**小节已经举了一个查询时指定分析器，可能会改变查询原义【人理解的含义】的例子，即查询时指定分析器可能会改变指定内容的分析结果【`着，我` 变成了 `着我`】，这会在一定情况下引起误解。
+
+同理，索引数据时指定的分析器也会改变分析的结果【部分字符会被移除，造成分析结果的词元位置变化】，例如以下示例。
+
+使用上面的自定义分析器，把带 `html` 标签的文本内容过滤，分析出来词元结果，然后利用纯中文的词组再去查询，虽然查询条件中没有指定完全一样的文本【不带 `html` 标签】，但是也可以匹配命中。
+
+```
+POST my-index-post/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "terms": {
+            "id": [
+              "1"
+            ]
+          }
+        },
+        {
+          "match": {
+            "content_custom_analyzer": {
+              "query": "晚安",
+              "type": "phrase",
+              "slop": 0,
+              "analyzer": "custom_analyzer"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+![查询结果](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200226191451.png "查询结果")
+
+这就是因为分析结果的词元中已经没有了 `html` 标签【注意看词元的位置 `position`】。
+
+```
+{
+  "tokens": [
+    {
+      "token": "exo",
+      "start_offset": 1,
+      "end_offset": 4,
+      "type": "<ALPHANUM>",
+      "position": 0
+    },
+    {
+      "token": "朴",
+      "start_offset": 6,
+      "end_offset": 7,
+      "type": "<IDEOGRAPHIC>",
+      "position": 1
+    },
+    {
+      "token": "灿",
+      "start_offset": 7,
+      "end_offset": 8,
+      "type": "<IDEOGRAPHIC>",
+      "position": 2
+    },
+    {
+      "token": "烈",
+      "start_offset": 8,
+      "end_offset": 9,
+      "type": "<IDEOGRAPHIC>",
+      "position": 3
+    },
+    {
+      "token": "晚",
+      "start_offset": 10,
+      "end_offset": 11,
+      "type": "<IDEOGRAPHIC>",
+      "position": 4
+    },
+    {
+      "token": "安",
+      "start_offset": 24,
+      "end_offset": 25,
+      "type": "<IDEOGRAPHIC>",
+      "position": 5
+    }
+  ]
+}
+```
+
+![对比文本可能会有误解](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200226191617.png "对比文本可能会有误解")
+
+如果用户只是查看 `content_custom_analyzer` 字段的内容，就很容易造成误解，可能会发出**文本明明不一致怎么会命中了呢**的疑问，背后其实是分析器在起作用。
 
 
 # 备注
