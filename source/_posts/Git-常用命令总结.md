@@ -235,7 +235,7 @@ git log
 
 有时候发现本地的分支信息与远程的不一致，例如远程的分支已经被删除，但是每次 `git pull` 的时候并不能同步到本地，在本地依然显示这些分支。
 
-此时需要净化分支，使用命令：`git remote prune origin` 即可。
+此时需要净化分支，使用命令：`git remote prune origin` 即可，或者也可以使用 `git remote update origin --prune`，效果一致。
 
 
 # 代理设置
