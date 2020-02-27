@@ -151,6 +151,8 @@ comments: false
 - 在线制作动图，例如制作表情包：[soogif](https://www.soogif.com)
 - 互联网档案馆，备份大量视频、音频、网页等：[archive.org](https://archive.org)
 - 中国卫健委：[nhc.gov.cn](http://www.nhc.gov.cn)
+- 广州住房公积金管理中心网上个人业务，可以从广东政务服务网找到相关业务，但没给跳转链接：[gr.gzgjj.gov.cn](https://gr.gzgjj.gov.cn/center/login.html)
+- 广州人力和社保网上办事系统：[gzlss.hrssgz.gov.cn](http://gzlss.hrssgz.gov.cn/cas/login)
 
 ## 技术列表
 
