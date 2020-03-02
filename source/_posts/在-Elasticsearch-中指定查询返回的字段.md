@@ -3,7 +3,7 @@ title: 在 Elasticsearch 中指定查询返回的字段
 id: 2020030201
 date: 2020-03-02 20:03:44
 updated: 2020-03-02 20:03:44
-categories: 大数据基础知识
+categories: 大数据技术知识
 tags: [Elasticsearch,fields,source,stored_fields]
 keywords: Elasticsearch,fields,source,stored_fields
 ---
