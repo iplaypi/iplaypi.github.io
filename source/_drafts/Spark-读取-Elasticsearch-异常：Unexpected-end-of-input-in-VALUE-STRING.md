@@ -258,3 +258,88 @@ Caused by: org.codehaus.jackson.JsonParseException: Unexpected end-of-input: exp
 
 分析一下这些是什么。
 
+
+还有 `Cannot parse value [4474199672084173] for field [id]` 异常：
+
+`id` 是字符串类型的字段，取值也是一个字符串。
+
+```
+org.apache.spark.SparkException: Job aborted due to stage failure: Task 147 in stage 4.0 failed 1 times, most recent failure: Lost task 147.0 in stage 4.0 (TID 832, localhost): org.elasticsearch.hadoop.rest.EsHadoopParsingException: Cannot parse value [4474199672084173] for field [id]
+	at org.elasticsearch.hadoop.serialization.ScrollReader.read(ScrollReader.java:721)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.map(ScrollReader.java:865)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.read(ScrollReader.java:708)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.readHitAsMap(ScrollReader.java:474)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.readHit(ScrollReader.java:399)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.read(ScrollReader.java:294)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.read(ScrollReader.java:267)
+	at org.elasticsearch.hadoop.rest.RestRepository.scroll(RestRepository.java:379)
+	at org.elasticsearch.hadoop.rest.ScrollQuery.hasNext(ScrollQuery.java:112)
+	at org.elasticsearch.spark.rdd.AbstractEsRDDIterator.hasNext(AbstractEsRDDIterator.scala:61)
+	at scala.collection.Iterator$$anon$11.hasNext(Iterator.scala:327)
+	at scala.collection.Iterator$$anon$11.hasNext(Iterator.scala:327)
+	at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1$$anonfun$13$$anonfun$apply$7.apply$mcV$sp(PairRDDFunctions.scala:1195)
+	at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1$$anonfun$13$$anonfun$apply$7.apply(PairRDDFunctions.scala:1195)
+	at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1$$anonfun$13$$anonfun$apply$7.apply(PairRDDFunctions.scala:1195)
+	at org.apache.spark.util.Utils$.tryWithSafeFinallyAndFailureCallbacks(Utils.scala:1277)
+	at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1$$anonfun$13.apply(PairRDDFunctions.scala:1203)
+	at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1$$anonfun$13.apply(PairRDDFunctions.scala:1183)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:66)
+	at org.apache.spark.scheduler.Task.run(Task.scala:89)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:227)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.elasticsearch.hadoop.serialization.EsHadoopSerializationException: org.codehaus.jackson.JsonParseException: Unexpected end-of-input in field name
+ at [Source: org.apache.commons.httpclient.AutoCloseInputStream@375decb0; line: 1, column: 187138]
+	at org.elasticsearch.hadoop.serialization.json.JacksonJsonParser.nextToken(JacksonJsonParser.java:95)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.parseValue(ScrollReader.java:770)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.read(ScrollReader.java:718)
+	... 23 more
+```
+
+图。。
+
+还有 `Unexpected end-of-input: was expecting closing '"' for name` 异常。
+
+```
+org.apache.spark.SparkException: Job aborted due to stage failure: Task 219 in stage 15.0 failed 1 times, most recent failure: Lost task 219.0 in stage 15.0 (TID 2683, localhost): org.elasticsearch.hadoop.serialization.EsHadoopSerializ
+ationException: org.codehaus.jackson.JsonParseException: Unexpected end-of-input: was expecting closing '"' for name
+ at [Source: org.apache.commons.httpclient.AutoCloseInputStream@60155fe4; line: 1, column: 156530]
+	at org.elasticsearch.hadoop.serialization.json.JacksonJsonParser.nextToken(JacksonJsonParser.java:95)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.map(ScrollReader.java:852)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.read(ScrollReader.java:708)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.readHitAsMap(ScrollReader.java:474)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.readHit(ScrollReader.java:399)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.read(ScrollReader.java:294)
+	at org.elasticsearch.hadoop.serialization.ScrollReader.read(ScrollReader.java:267)
+	at org.elasticsearch.hadoop.rest.RestRepository.scroll(RestRepository.java:379)
+	at org.elasticsearch.hadoop.rest.ScrollQuery.hasNext(ScrollQuery.java:112)
+	at org.elasticsearch.spark.rdd.AbstractEsRDDIterator.hasNext(AbstractEsRDDIterator.scala:61)
+	at scala.collection.Iterator$$anon$11.hasNext(Iterator.scala:327)
+	at scala.collection.Iterator$$anon$11.hasNext(Iterator.scala:327)
+	at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1$$anonfun$13$$anonfun$apply$7.apply$mcV$sp(PairRDDFunctions.scala:1195)
+	at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1$$anonfun$13$$anonfun$apply$7.apply(PairRDDFunctions.scala:1195)
+	at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1$$anonfun$13$$anonfun$apply$7.apply(PairRDDFunctions.scala:1195)
+	at org.apache.spark.util.Utils$.tryWithSafeFinallyAndFailureCallbacks(Utils.scala:1277)
+	at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1$$anonfun$13.apply(PairRDDFunctions.scala:1203)
+	at org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopDataset$1$$anonfun$13.apply(PairRDDFunctions.scala:1183)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:66)
+	at org.apache.spark.scheduler.Task.run(Task.scala:89)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:227)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.codehaus.jackson.JsonParseException: Unexpected end-of-input: was expecting closing '"' for name
+ at [Source: org.apache.commons.httpclient.AutoCloseInputStream@60155fe4; line: 1, column: 156530]
+	at org.codehaus.jackson.JsonParser._constructError(JsonParser.java:1433)
+	at org.codehaus.jackson.impl.JsonParserMinimalBase._reportError(JsonParserMinimalBase.java:521)
+	at org.codehaus.jackson.impl.JsonParserMinimalBase._reportInvalidEOF(JsonParserMinimalBase.java:454)
+	at org.codehaus.jackson.impl.Utf8StreamParser.slowParseFieldName(Utf8StreamParser.java:1397)
+	at org.codehaus.jackson.impl.Utf8StreamParser._parseFieldName(Utf8StreamParser.java:1231)
+	at org.codehaus.jackson.impl.Utf8StreamParser.nextToken(Utf8StreamParser.java:495)
+	at org.elasticsearch.hadoop.serialization.json.JacksonJsonParser.nextToken(JacksonJsonParser.java:93)
+	... 23 more
+```
+
+图。。。
+
