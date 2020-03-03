@@ -93,6 +93,8 @@ org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
 
 `elasticsearch-hadoop` 使用的构建工具是 `Gradle`，导入 `IDEA` 需要注意【另外 `Elasticsearch` 从 `v5.0` 开始也将构建工具由 `Maven` 切换为 `Gradle` 了】。所以还需要提前安装好 `Gradle`，安装流程和 `Maven` 类似，比较简单，在此不再赘述，读者可以参考官网【最好配置一下 `GRADLE_HOME` 环境变量】。
 
+注意选择合适的版本，否则会影响 `IDEA` 的使用，`IDEA` 的低版本支持不了 `Gradle` 的高版本。
+
 但是配置时需要注意，如果遇到依赖包下载很慢卡住的现象，一般是网络问题，毕竟中央仓库在国外，地址：[http://repo1.maven.org/maven2](http://repo1.maven.org/maven2) ，所以需要更改仓库的镜像地址，类似于 `Maven` 那样。
 
 当然，如果不配置环境变量，给每个项目都单独配置国内的镜像也可以，需要在项目的 `build.gradle` 文件中配置。
@@ -146,7 +148,7 @@ allprojects{
 
 ## scala sdk 安装
 
-`scala` 官网：[scala](https://www.scala-lang.org) 。
+`scala` 官网：[scala](https://www.scala-lang.org) ，注意选择合适的版本。
 
 如果在 `Build` 过程中发现还是卡住：`Gradle: Resolve dependencies ':classpath'`，千万不要无谓地等待。这乍一看是依赖问题，可能会怀疑镜像的仓库没有设置好，其实不是，而是因为 `scala` 没有安装，`classpath` 环境变量没有配置好，需要下载安装配置。
 
