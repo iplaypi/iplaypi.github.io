@@ -3,7 +3,7 @@ title: 解决 jar 包冲突的神器：maven-shade-plugin
 id: 2019120101
 date: 2019-12-01 00:54:21
 updated: 2019-12-01 00:54:21
-categories: 踩坑记录
+categories: 踩坑系列
 tags: [Java,Maven,shade]
 keywords: Java,Maven,shade
 ---
