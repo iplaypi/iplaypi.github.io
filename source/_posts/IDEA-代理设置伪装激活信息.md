@@ -38,7 +38,7 @@ keywords: IDEA,agent
 
 如果读者寻找后发现没有这个配置文件，不要着急，有些时候或者某些版本默认是没有这个配置文件的，需要自己手动生成。注意，不是要自己创建，而是在 `IDEA` 中创建，依次选择 `Help`、`Edit Costum VM Options` 就可以了，会自动创建一份和全局配置文件一样内容的文件，并且保存在用户目录下【就是上面的那个目录】。
 
-图。。
+![手动创建配置文件](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200304140621.png "手动创建配置文件")
 
 因为 `IDEA` 是运行在 `Java` 虚拟机之上的，其实就是更改一些 `JVM` 参数。
 
@@ -50,7 +50,7 @@ keywords: IDEA,agent
 
 表示给 `IDEA` 设置代理，`javaagent` 参数后面的值就是 `JetbrainsCrack.jar` 具体的存放位置。
 
-图。。
+![配置文件内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200304140549.png "配置文件内容")
 
 注意看一下这个配置文件的位置，就是在用户目录下：`C:\Users\Perry\.IntelliJIdea2017.2\config`。
 
@@ -131,7 +131,7 @@ keywords: IDEA,agent
 }
 ```
 
-图。。
+![填写激活信息](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200304135815.png "填写激活信息")
 
 注意，除了必须满足上面的 `JSON` 格式，这里面的个人信息可以任意更改，包含过期时间、证书名字、使用人、邮箱等等，更改后的信息会显示在 `Help`、`About` 里面【可以装逼使用】。
 
