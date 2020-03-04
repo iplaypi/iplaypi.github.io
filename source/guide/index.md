@@ -16,6 +16,7 @@ type: guide
 # 2020
 
 
+- 2020030201，[在 Elasticsearch 中指定查询返回的字段](https://www.playpi.org/2020030201.html)
 - 2020012201，[Spark 警告：Not enough space to cache rdd in memory](https://www.playpi.org/2020012201.html)
 - 2020011601，[Elasticsearch 的 Reindex API 详解](https://www.playpi.org/2020011601.html)
 - 2020010301，[DateTimeFormatter 简单使用示例](https://www.playpi.org/2020010301.html)
@@ -30,6 +31,7 @@ type: guide
 - 2019120101，[解决 jar 包冲突的神器：maven-shade-plugin](https://www.playpi.org/2019120101.html)
 - 2019112901，[Spark 项目依赖冲突问题总结](https://www.playpi.org/2019112901.html)
 - 2019110201，[使用海龟绘图绘制一些植物](https://www.playpi.org/2019110201.html)
+- 2019102401，[重装系统后软件环境清单](https://www.playpi.org/2019102401.html)
 - 2019101901，[HBase 错误：The node hbase is not in ZooKeeper](https://www.playpi.org/2019101901.html)
 - 2019101201，[HBase 错误：NotServingRegionException](https://www.playpi.org/2019101201.html)
 - 2019100801，[Git 异常之 Unlink of file](https://www.playpi.org/2019100801.html)
@@ -134,6 +136,7 @@ type: guide
 - 2018063001，[辣椒炒肉做法总结](https://www.playpi.org/2018063001.html)
 - 2018060301，[红烧肉做法总结](https://www.playpi.org/2018060301.html)
 - 2018053001，[玉米胡萝卜排骨汤做法总结](https://www.playpi.org/2018053001.html)
+- 2018052901，[es-hadoop 版本不匹配导致 discoverNodes 异常](https://www.playpi.org/2018052901.html)
 - 2018041801，[es-hadoop 遇上 Elasticsearch 的 Date 类型字段](https://www.playpi.org/2018041801.html)
 - 2018041301，[Elasticsearch 错误：None of the configured nodes are available](https://www.playpi.org/2018041301.html)
 - 2018022401，[Elasticsearch 根据查询条件删除数据的 API](https://www.playpi.org/2018022401.html)
@@ -145,6 +148,7 @@ type: guide
 
 - 2017123101，[Markdown 语法手册](https://www.playpi.org/2017123101.html)
 - 2017102901，[Hello World](https://www.playpi.org/2017102901.html)
+- 2017101701，[IDEA 代理设置伪装激活信息](https://www.playpi.org/2017101701.html)
 - 2017093001，[使用 Hexo、GitHub 搭建个人博客教程](https://www.playpi.org/2017093001.html)
 - 2017082001，[Elasticsearch 分析器使用入门指南](https://www.playpi.org/2017082001.html)
 - 2017060101，[记录一个 Kafka 错误：OffsetOutOfRangeException](https://www.playpi.org/2017060101.html)
