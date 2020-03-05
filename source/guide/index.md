@@ -151,6 +151,7 @@ type: guide
 - 2017101701，[IDEA 代理设置伪装激活信息](https://www.playpi.org/2017101701.html)
 - 2017093001，[使用 Hexo、GitHub 搭建个人博客教程](https://www.playpi.org/2017093001.html)
 - 2017082001，[Elasticsearch 分析器使用入门指南](https://www.playpi.org/2017082001.html)
+- 2017061401，[在 Elasticsearch 中一个字段支持的最大字符数](https://www.playpi.org/2017061401.html)
 - 2017060101，[记录一个 Kafka 错误：OffsetOutOfRangeException](https://www.playpi.org/2017060101.html)
 - 2017052101，[在 Windows 平台遇到 Hadoop 异常：UnsatisfiedLinkError](https://www.playpi.org/2017052101.html)
 - 2017051401，[VLOOKUP 函数跨工作表跨文件使用方式](https://www.playpi.org/2017051401.html)

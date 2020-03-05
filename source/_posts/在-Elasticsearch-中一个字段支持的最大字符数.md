@@ -9,9 +9,9 @@ keywords: Elasticsearch,bulk,keyword,ignore_above
 ---
 
 
-最近在项目中遇到一个异常，写入数据到 `Elasticsearch` 中，报错：`max_bytes_length_exceeded_exception`。这个其实和 `Elasticsearch` 的字段长度限制有关，本文就回顾一下在 `Elasticsearch` 中一个字段支持的最大字节数。
+最近在项目中遇到一个异常，写入数据到 `Elasticsearch` 中，报错：`max_bytes_length_exceeded_exception`。这个其实和 `Elasticsearch` 的字段长度限制有关，本文就回顾一下在 `Elasticsearch` 中一个字段支持的最大字符数。
 
-本文涉及的开发环境：`Elasticsearch v5.6.8`，读者需要注意字符数、字节数这两个基本概念。
+本文涉及的开发环境：`Elasticsearch v5.6.8`，读者需要注意字符数、字节数这两个基本概念的区别。
 
 
 <!-- more -->
@@ -29,7 +29,7 @@ ERROR ESBulkProcessor: {"index":"your_index","type":"your_type","id":"b20ddaf126
 ```
 
 
-可以看到，使用 `bulk` 方式，数据写入 `Elasticsearch` 遇到异常，如果一个字段的类型是 `keyword`，而实际写入数据时指定了一个非常长的文本值，会报错：`illegal_argument_exception`、`max_bytes_length_exceeded_exception`，字段写入失败【注意，会过滤掉当前整个文档，整条数据不能被写入，而如果长度小于32766是可以被写入的，但是可能不会被索引，参考下面的 `ignore_above` 参数】。
+可以看到，使用 `bulk` 方式，在数据写入 `Elasticsearch` 时遇到异常，如果一个字段的类型是 `keyword`，而实际写入数据时指定了一个非常长的文本值，会报错：`illegal_argument_exception`、`max_bytes_length_exceeded_exception`，整个文档写入失败并返回异常【注意，会过滤掉当前整个文档，即整条数据不能被写入，而如果字段长度小于32766文档是可以被写入的，但是这个字段可能不会被索引，参考下面的 `ignore_above` 参数】。
 
 更详细的信息：
 
@@ -37,7 +37,7 @@ ERROR ESBulkProcessor: {"index":"your_index","type":"your_type","id":"b20ddaf126
 whose UTF8 encoding is longer than the max length 32766
 ```
 
-`author.raw` 取值的字节数超过了32766，无法写入，综合异常，表明 `author.raw` 字段定义为 `keyword`，而实际写入数据时文本长度过大，字节数达到94724【大概率是脏数据】。
+`author.raw` 取值的字节数超过了32766，无法写入，综合上述异常信息，表明 `author.raw` 字段定义为 `keyword`，而实际写入数据时文本长度过大，字节数达到94724【大概率是脏数据】。
 
 注意，这里的无法写入是针对整个文档，即整条数据无法成功写入 `Elasticsearch`。
 
@@ -49,11 +49,11 @@ whose UTF8 encoding is longer than the max length 32766
 
 解决方法就是对这种长文本的字段不能定义为 `keyword`，而应该定义为分析类型，即 `text`，并指定必要的分析器。
 
-那如果这个字段本身就应该定义为 `keyword` 类型，而实际中存在少量的脏数据，这种超长的内容是可以忽略的，那就给这个字段指定一个最长字符数，例如200字符，在写入前判断一下长度，超过则移除或者截断，不要让这种超长的文本进入写的流程。毕竟这种超长文本写入到一个 `keyword` 类型的字段中，对于 `Elasticsearch` 是不友好的，底层的 `Lucene` 也无法支持，而且哪怕写入了，对于使用者来说也没有意义【要进行全文检索才是有意义的】。
+那如果这个字段本身就应该定义为 `keyword` 类型，而实际中存在少量的脏数据，这种超长的内容是可以忽略的，那就给这个字段指定一个最长字符数，例如200字符，在写入前判断一下长度，超过则移除或者截断，不要让这种超长的文本进入写 `Elasticsearch` 的流程。毕竟这种超长文本写入到一个 `keyword` 类型的字段中，对于 `Elasticsearch` 是不友好的，底层的 `Lucene` 也无法支持，而且哪怕写入了，对于使用者来说也没有意义【要进行全文检索才是有意义的】。
 
 ## 禁止索引
 
-当然，对于长度不超过32766字节的 `keyword` 类型字段值，如果太长也没有意义，例如几百几千个字符，而 `Elasticsearch` 原生也支持对 `keyword` 类型的字段设置禁止索引的长度上限，超过一定的字节数【前提是不超过32766字节】则不能被索引，但是数据还是能写入的，它就是 `ignore_above` 参数，下面举例说明。
+当然，对于长度不超过32766字节的 `keyword` 类型字段值，如果太长也没有意义，例如几百几千个字符，而 `Elasticsearch` 原生也支持对 `keyword` 类型的字段设置禁止索引的长度上限，超过一定的字节数【前提是不超过32766字节】则当前字段不能被索引，但是字段的数据还是能写入的，它就是 `ignore_above` 参数，下面举例说明。
 
 设置 `name_ignore` 字段为 `keyword` 类型，并指定 `ignore_above` 为8，表示最大可以索引8个字符的长度。同理，设置 `name` 字段为 `keyword` 类型，并指定 `ignore_above` 为32，表示最大可以索引32个字符的长度。
 
@@ -120,7 +120,7 @@ POST my-index-post/_search
 
 ![查看2条数据](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200305213903.png "查看2条数据")
 
-那设置了 `name_ignore` 参数的用处是什么呢，在于是否**索引**，我们加上精确匹配来查询一下：
+可以看到字段信息都完整，那设置了 `name_ignore` 参数的用处是什么呢，在于是否**索引**，我们加上精确匹配来查询一下：
 
 ```
 # 查不到数据
