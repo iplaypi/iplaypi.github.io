@@ -154,6 +154,8 @@ comments: false
 - 广州住房公积金管理中心网上个人业务，可以从广东政务服务网找到相关业务，但没给跳转链接：[gr.gzgjj.gov.cn](https://gr.gzgjj.gov.cn/center/login.html)
 - 广州人力和社保网上办事系统：[gzlss.hrssgz.gov.cn](http://gzlss.hrssgz.gov.cn/cas/login)
 - 一起做网店，里面可以查到全国各地批发市场的商品信息，网上的货源基本在此：[一起做网店](https://gz.17zwd.com)
+- 国家标准全文公开系统，可以看到各行各业的中国国家标准，并支持免费下载：[openstd](http://openstd.samr.gov.cn)
+- 美国国家标准网站，例如可以查到美军的军队标准：[everyspec](http://everyspec.com)
 
 ## 技术列表
 
