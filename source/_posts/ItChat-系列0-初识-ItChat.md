@@ -9,7 +9,7 @@ keywords: ItChat,微信接口,自定义接口,自动回复,微信机器人
 ---
 
 
-微信已经是我们日常生活中常用的 APP 之一，每天都离不开。作为掌握技术的理工科人员，有时候总想着是否可以利用微信的接口完成一些重复的工作，例如群发消息、自动回复、接入机器人自动聊天等。当然，这些都可以实现，而且只要是人工可以做到的事情，基本都可以做到自动化（前提是微信提供了对应的接口，反例就是自动收发红包不行，当然微信不会直接提供 API 接口，需要自己寻找）。本文就讲解为了做到这些，需要的入门知识点，主要就是利用 ItChat 工具（屏蔽了微信的 API 接口，简化了使用微信接口的过程，不懂技术的普通人也可以轻松掌握），当然本文只是一个入门的例子而已（完成后对自己来说很实用而且有成就感），后续会讲解更加深入与广泛的内容。本文基于 Windows 7 操作系统，Python 2.7 版本（为了兼容性与易维护性，我推荐使用 Python 3.x 版本）
+微信已经是我们日常生活中常用的 `APP` 之一，每天都离不开。作为掌握技术的理工科人员，有时候总想着是否可以利用微信的接口完成一些重复的工作，例如群发消息、自动回复、接入机器人自动聊天等。当然，这些都可以实现，而且只要是人工可以做到的事情，基本都可以做到自动化【前提是微信提供了对应的接口，反例就是自动收发红包不行，当然微信不会直接提供 `API` 接口，需要自己寻找】。本文就讲解为了做到这些，需要的入门知识点，主要就是利用 `ItChat` 工具【屏蔽了微信的 `API` 接口，简化了使用微信接口的过程，不懂技术的普通人也可以轻松掌握】，当然本文只是一个入门的例子而已【完成后对自己来说很实用而且有成就感】，后续会讲解更加深入与广泛的内容。本文基于 `Windows 7` 操作系统，`Python v2.7` 版本【为了兼容性与易维护性，我推荐使用 `Python v3.x` 版本】
 
 <!-- more -->
 
@@ -27,22 +27,23 @@ keywords: ItChat,微信接口,自定义接口,自动回复,微信机器人
 
 当然，我是觉得上面的描述有一些语句不通顺，但是不影响我们理解作者的原意。
 
-其实微信官方并没有提供详细的 API 接口，ItChat 是利用网页版微信收集了接口信息，然后独立封装一层，屏蔽掉底层的接口信息，提供一套简单的使用接口，方便使用者调用，这不仅提升了效率，还扩展了使用人群。
+其实微信官方并没有提供详细的 `API` 接口，`ItChat` 是利用网页版微信收集了接口信息，然后独立封装一层，屏蔽掉底层的接口信息，提供一套简单的使用接口，方便使用者调用，这不仅提升了效率，还扩展了使用人群。
 
 
 # 使用入门
 
 
-以下使用入门包括基础环境的安装、itcaht 的安装、代码的编写、实际运行，当然，为了避免赘述，不会讲解的很详细，如果遇到一些问题，自行利用搜索引擎解决。
+以下使用入门包括基础环境的安装、`itcaht` 的安装、代码的编写、实际运行，当然，为了避免赘述，不会讲解的很详细，如果遇到一些问题，自行利用搜索引擎解决。
 
 
 ## 安装 Python 环境
 
 ### 下载 Python
 
-去官网：https://www.python.org/downloads/windows ，选择自己需要的版本，我这里选择 Windows 系统的版本（64位操作系统），Python 2.7（这是一个很古老的版本了，推荐大家使用 3.x 版本）；
+去官网：https://www.python.org/downloads/windows ，选择自己需要的版本，我这里选择 `Windows` 系统的版本【64位操作系统】，`Python v2.7`【这是一个很古老的版本了，推荐大家使用 `v3.x` 版本】。
 
 我选择的版本
+
 ![Windows系统64位](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcck7qfjj21hc0p6n0z.jpg "Windows系统64位")
 
 下载过程就和下载普通的文件、视频等一样，根据网速的限制有快有慢。
@@ -51,32 +52,38 @@ keywords: ItChat,微信接口,自定义接口,自动回复,微信机器人
 
 就像安装普通程序一样，直接双击下载的程序文件，选择安装即可，这里就不再赘述详细的安装过程了；
 
-如果你们的环境不是 Windows 7系统的，可以自行使用搜索引擎搜索教程；
+如果你们的环境不是 `Windows 7` 系统的，可以自行使用搜索引擎搜索教程。
 
-这里一定要注意安装的版本是否适配自己的操作系统（包括系统类型与系统位数）；
+这里一定要注意安装的版本是否适配自己的操作系统【包括系统类型与系统位数】。
 
-在 Windows 系统的**程序和功能**中查看已经安装完成的 Python 程序（2.7版本，我是使用 Anaconda2 安装的，所以看起来有些不一样）：
+在 `Windows` 系统的**程序和功能**中查看已经安装完成的 `Python` 程序【2.7版本，我是使用 `Anaconda2` 安装的，所以看起来有些不一样】：
+
 ![windows程序和功能](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcbr6amhj20y80k5q5m.jpg "windows程序和功能")
 
 ### 配置环境变量
 
-如果这一步忽略了，使用 Python 或者 Python 自带的插件的时候（比如安装 ItChat 的时候就会用到 pip 工具），会找不到应用程序，只能先进入到 Python 目录或者插件所在的目录再使用对应的工具（例如进入 Python 所在的目录或者 pip 所在的目录），比较麻烦，所以在此建议大家配置一下环境变量；
+如果这一步忽略了，使用 `Python` 或者 `Python` 自带的插件的时候【比如安装 `ItChat` 的时候就会用到 `pip` 工具】，会找不到应用程序，只能先进入到 `Python` 目录或者插件所在的目录再使用对应的工具【例如进入 `Python` 所在的目录或者 `pip` 所在的目录】，比较麻烦，所以在此建议大家配置一下环境变量。
 
-配置环境变量的过程也不再赘述，大家自己利用搜索引擎获取，下图是基于 Windows 7版本的配置截图示例；
+配置环境变量的过程也不再赘述，大家自己利用搜索引擎获取，下图是基于 `Windows 7` 版本的配置截图示例。
 
 **系统属性**
+
 ![系统属性](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcdqptjbj215o0ngtez.jpg "系统属性")
 
 **高级系统设置**
+
 ![高级系统设置](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcf7mux2j20fe0f7ta0.jpg "高级系统设置")
 
-**环境变量**，我这里编辑用户环境变量 PATH 的内容（如果不存在就新建，当然编辑系统环境变量 PATH 的内容也是可以的），切记内容一定是英文格式下的，多个使用英文逗号分隔
+**环境变量**，我这里编辑用户环境变量 `PATH` 的内容【如果不存在就新建，当然编辑系统环境变量 `PATH` 的内容也是可以的】，切记内容一定是英文格式下的，多个使用英文逗号分隔。
+
 ![环境变量](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcfp2cdvj20ei0e03zq.jpg "环境变量")
 
-**用户环境变量**，我这里需要填写2条内容，使用英文逗号隔开（如果是直接安装的 Python，pip 和 python 应该在同一个路径下面，所以只需要1条就行了）
+**用户环境变量**，我这里需要填写2条内容，使用英文逗号隔开【如果是直接安装的 `Python`，`pip` 和 `python` 应该在同一个路径下面，所以只需要1条就行了】
+
 ![用户环境变量](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcg8856yj20ei0e0q4d.jpg "用户环境变量")
 
 我的环境需要配置2条内容
+
 ![配置2条内容](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzcgokfnqj209501tmwy.jpg "配置2条内容")
 
 内容解释：
@@ -92,23 +99,25 @@ D:\Anaconda2;
 ## 安装 ItChat 工具
 
 
-在 Python 安装完成的情况下，才能进行接下来的操作，因为 ItChat 是基于 Python 环境运行的；为了验证 Python 是否正确安装，可以在命令行中输入 python，如果看到以下内容，就说明 Python 安装成功：
+在 `Python` 安装完成的情况下，才能进行接下来的操作，因为 `ItChat` 是基于 `Python` 环境运行的。为了验证 `Python` 是否正确安装，可以在命令行中输入 `python`，如果看到以下内容，就说明 `Python` 安装成功：
+
 ![验证Python](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzfxmlh41j20n60873zj.jpg "验证Python")
 
-接下来利用 pip 工具（Python 自带的）直接安装 itchat，非常简单，使用命令（如果 pip 命令不可用，请检查 Python 的安装目录是否存在 pip.exe 文件）：
-````bash
+接下来利用 `pip` 工具【`Python` 自带的】直接安装 `itchat`，非常简单，使用命令【如果 `pip` 命令不可用，请检查 `Python` 的安装目录是否存在 `pip.exe` 文件】：
+
+````
 pip install itchat
 ````
 
-安装 ItChat
+安装 `ItChat`
+
 ![itchat安装命令](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzfy2t8p5j20be016741.jpg "itchat安装命令")
 
-如果看到以下内容，说明 ItChat 安装成功：
+如果看到以下内容，说明 `ItChat` 安装成功：
+
 ![itchat安装成功](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1fzzfyl5gcsj20n60a6t9e.jpg "itchat安装成功")
 
-
 ## 入门代码示例
-
 
 一切准备就绪，接下来就可以写代码了，当然，入门代码非常简单实用（我会尽可能多的添加注释说明）：
 

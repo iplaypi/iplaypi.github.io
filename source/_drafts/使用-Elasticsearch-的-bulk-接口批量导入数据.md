@@ -18,6 +18,16 @@ Elasticsearch,bulk,HTTP,HBase
 <!-- more -->
 
 
+```
+sed '1,600000 i{"index":{}}' -i post_es.txt
+curl -XPOST 'http://dev4:9200/my-index-post/post/_bulk' --data-binary @"$out"
+
+
+HBase的操作，注意字段的对齐
+/usr/hdp/current/phoenix-client/bin/psql.py -t MY_INDEX_POST dev4:2181 ./post_hbase.csv
+```
+
+
 `bulk` 批量接口
 
 注意，使用 `http` 请求写入数据时，
@@ -32,3 +42,11 @@ bulk 别名异常问题
 bulk 接口会自动生成 `_id`，表示文档的唯一标识，不等于文档里面的 id 字段；
 有没有参数可以指定呢？待查明；
 
+
+
+https://www.jianshu.com/p/1c8ba834e15c
+
+
+# 备注
+
+各种坑
