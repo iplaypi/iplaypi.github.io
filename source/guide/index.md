@@ -129,6 +129,7 @@ type: guide
 - 2018090701，[Win10 取消 Skype for Business 自动登录](https://www.playpi.org/2018090701.html)
 - 2018090601，[踩坑特殊字符之硬空格](https://www.playpi.org/2018090601.html)
 - 2018090501，[归来](https://www.playpi.org/2018090501.html)
+- 2018090101，[在 IDEA 中管理 Java 项目的文件夹类型](https://www.playpi.org/2018090101.html)
 - 2018082501，[Maven 使用中遇到的证书问题以及 JDK8 问题](https://www.playpi.org/2018082501.html)
 - 2018071801，[微博 id mid 相互转换算法实现-Python 版本](https://www.playpi.org/2018071801.html)
 - 2018071601，[武功山两天徒步登山总结](https://www.playpi.org/2018071601.html)
@@ -169,4 +170,5 @@ type: guide
 
 - 2016120801，[IDEA 热部署配置方法总结](https://www.playpi.org/2016120801.html)
 - 2016092001，[Java 中数值精度损失导致的 bug 现象](https://www.playpi.org/2016092001.html)
+- 2016060801，[使用 IDEA 自动生成 serialVersionUID](https://www.playpi.org/2016060801.html)
 
