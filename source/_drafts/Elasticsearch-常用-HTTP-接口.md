@@ -56,6 +56,23 @@ http://localhost:9200/_nodes/hot_threads
 http://localhost:9200/_cat/thread_pool?v
 ```
 
+## 使用堆内存大小
+
+使用
+
+```
+http://localhost:9200/_cat/fielddata
+```
+
+查看当前集群中每个数据节点上被 `fielddata` 所使用的堆内存大小。
+
+此外还可以指定字段
+
+```
+http://localhost:9200/_cat/fielddata?v&fields=uid&pretty
+http://localhost:9200/_cat/fielddata/uid?v&pretty
+```
+
 
 # 分析器
 
@@ -365,6 +382,110 @@ POST my-index-post/_search
 ```
 关闭缓存
 curl -XPOST 'localhost:9200/_cache/clear?filter_path=your_cache_key'
+```
+
+## 多层嵌套反转桶聚合
+
+多层聚合查询，关于嵌套、反转，参考：[nested-aggregation](https://www.elastic.co/guide/cn/elasticsearch/guide/current/nested-aggregation.html) 。
+
+```
+POST combine-paas-1003-index/2723-data/_search
+{
+    "aggs": {
+        "x": {
+            "aggs": {
+                "xx": {
+                    "aggs": {
+                        "xxx": {
+                            "aggs": {
+                                "xxxx_interaction_cnt": {
+                                    "sum": {
+                                        "field": "2723_interaction_cnt"
+                                    }
+                                }
+                            },
+                            "reverse_nested": {}
+                        }
+                    },
+                    "terms": {
+                        "field": "Titan_sports.yundongerji",
+                        "size": 100
+                    }
+                }
+            },
+            "nested": {
+                "path": "Titan_sports"
+            }
+        }
+    },
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "term": {
+                        "2723_is_noise": {
+                            "value": "否"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "size": 1
+}
+```
+
+## 存在查询
+
+`exists`、`missing` 这两类查询在不同的版本之间使用方式不一致。
+
+```
+-- 存在、不存在判断条件，1.7.5 版本和 2.3.4 版本的方式不一样
+-- 2.3.4：使用 exists、missing 关键字即可
+{
+    "query": {
+        "exists": {
+            "field": "gender"
+        }
+    }
+}
+
+{
+    "query": {
+        "missing": {
+            "field": "gender"
+        }
+    }
+}
+ 
+ 
+-- 更高版本【v5.x以及以上】的 ES 关键字 missing 已经被废弃，改为 must_not 和 exists 组合查询,以下有示例
+{
+    "query": {
+        "bool": {
+            "must_not": {
+                "exists": {
+                    "field": "user"
+                }
+            }
+        }
+    }
+}
+ 
+-- 1.7.5：使用 filter 后再使用对应关键词，本质是一种过滤器
+{
+  "query": {
+    "filtered": {
+      "filter": {
+        "exists": {
+          "field": "data_type"
+        }
+      }
+    }
+  }
+}
+
+-- 此外，不同版本连接 ES 的 client 方式也不一样【tcp 连接，如果是 http 连接就不会有问题】，代码不能兼容，所以只能使用其中1种方式【在本博客中可以搜索到相关总结】
 ```
 
 
