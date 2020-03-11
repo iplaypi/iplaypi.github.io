@@ -115,9 +115,9 @@ keytool -delete -keystore cacerts -alias maven.datastory
 
 ## 其它问题记录
 
-在同一时期，同事的环境已经升级到 JDK8 以上，并且 >=8u101，Maven 版本是3.2.1，可以正常 deploy 构件。但是突然有一天就出错，从日志来看是认证问题，切换为别人的账号密码就正常，使用他自己的账号密码却报错，我猜测是账号的问题，找运维解决。
+在同一时期，同事的环境已经升级到 `JDK8` 以上，并且 `>=8u101`，`Maven` 版本是 `v3.2.1`，可以正常 `deploy` 构件。但是突然有一天就出错，从日志来看是认证问题，切换为别人的账号密码就正常，使用他自己的账号密码却报错，我猜测是账号的问题，找运维解决。
 
-报错信息如下，留意关键部分【**Not authorized , ReasonPhrase:Unauthorized.**】：
+报错信息如下，留意关键部分：`Not authorized , ReasonPhrase:Unauthorized.`：
 
 ```
 [INFO] --- maven-install-plugin:2.4:install (default-install) @ project-name ---
@@ -143,29 +143,36 @@ Downloading: http://maven.domain/nexus/content/repositories/snapshots/com/datast
 [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
 ```
 
+`Not authorized , ReasonPhrase:Unauthorized.` 这个错误表明认证失败，说明远程仓库【或者私服】没有开放访问权限，需要密钥、用户名密码之类的认证方式。
+
+我检查了一下我的 `settings.xml` 配置文件，发现已经配置好了 `server` 属性，并且确保了 `id` 与 项目 `pom.xml` 中指定仓库的 `id` 一致。但是还是出现异常，感觉上 `Maven` 使用的配置文件就不是我的这份，查看 `MAVEN_HOME` 也没有指定。
+
+询问了一下运维人员，果然是的，服务器执行 `mvn` 相关命令，默认使用公共的配置文件【没有认证信息】，如果需要使用自己的配置文件【有自己特有的配置信息】，使用 `-s` 参数指定即可。如果需要经常使用，可以在 `.bashrc` 脚本中加上 `alias`：`alias mcp='mvn -s "/path/to/your/settings.xml" clean package'`，这样每次登录时都会自动设置别名命令。
+
 
 # JDK8注解问题
 
 
-切换到 JDK8 并且升级之后，在 deploy 构件到私服仓库的时候，出现了另外一个问题，直接 deploy 失败，报错信息如下：
+切换到 `JDK8` 并且升级之后，在 `deploy` 构件到私服仓库的时候，出现了另外一个问题，直接 `deploy` 失败，报错信息如下：
 
 ```
 Failed to execute goal org.apache.maven.plugins:maven-javadoc-plugin:2.7:jar (attach-javadocs) on project [projectname]: MavenReportException: Error while generating Javadoc:
 Exit code: 1 - [path-to-file]:[linenumber]: warning: no description for @param
 ```
 
-deploy 失败日志截图
+`deploy` 失败日志截图
+
 ![deploy 失败日志截图](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tay67elbj20qo0fqtfc.jpg "deploy 失败日志截图")
 
-查看里面的关键信息，可以找出 **maven-javadoc-plugin** 这个插件，说明是这个插件在生成 Javadoc 的时候出问题了。而我回想了一下，最近的插件版本、代码结构并没有变化，唯一变化的就是开发环境，JDK 由1.7版本切换为了1.8版本，那就往这方面找问题了。
+查看里面的关键信息，可以找出 `maven-javadoc-plugin` 这个插件，说明是这个插件在生成 `Javadoc` 的时候出问题了。而我回想了一下，最近的插件版本、代码结构并没有变化，唯一变化的就是开发环境，`JDK` 由1.7版本切换为了1.8版本，那就往这方面找问题了。
 
-查了一下资料，由于 JDK8 的 Javadoc 生成机制比之前的版本要严谨许多，在 Javadoc 中添加了 doclint，而这个工具的主要目的是获得符合 W3C HTML 4.01 标准规范的 HTML 文档。所以使用 **maven-javadoc-plugin** 插件 deploy 的时候，JDK8 环境触发了 Javadoc 验证，验证自然不能通过，Maven 插件直接报错，deploy 不成功。
+查了一下资料，由于 `JDK8` 的 `Javadoc` 生成机制比之前的版本要严谨许多，在 `Javadoc` 中添加了 `doclint`，而这个工具的主要目的是获得符合 `W3C HTML 4.01` 标准规范的 `HTML` 文档。所以使用 `maven-javadoc-plugin` 插件 `deploy` 的时候，`JDK8` 环境触发了 `Javadoc` 验证，验证自然不能通过，`Maven` 插件直接报错，`deploy` 不成功。
 
-为了验证这个过程，我又把本地环境的 JDK 切回到了1.7版本，可以正常 deploy，成功发布 SNAPSHOT 版本的构件到私服仓库。而由于线上发布系统的 JDK 版本强制设置为了1.8，无法更改，所以无法在线上做验证，只能发现在线上发布的 RELEASE 版本构件一定是失败的。
+为了验证这个过程，我又把本地环境的 `JDK` 切回到了1.7版本，可以正常 `deploy`，成功发布 `SNAPSHOT` 版本的构件到私服仓库。而由于线上发布系统的 `JDK` 版本强制设置为了1.8，无法更改，所以无法在线上做验证，只能发现在线上发布的 `RELEASE` 版本构件一定是失败的。
 
-既然找到了原因所在，接下来就容易操作了，可以选择关闭 Javadoc 验证，或者直接不使用 **maven-javadoc-plugin** 这个插件。而我选择继续使用这个插件，但是可以选择是跳过生成 Javadoc 还是关闭 Javadoc 验证，根据自己的需要了，具体步骤与效果我会在下面演示。
+既然找到了原因所在，接下来就容易操作了，可以选择关闭 `Javadoc` 验证，或者直接不使用 `maven-javadoc-plugin` 这个插件。而我选择继续使用这个插件，但是可以选择是跳过生成 `Javadoc` 还是关闭 `Javadoc` 验证，根据自己的需要了，具体步骤与效果我会在下面演示。
 
-先来看一下这个插件的 pom.xml 文件配置：
+先来看一下这个插件的 `pom.xml` 文件配置：
 
 ```
 <!-- javadoc打包插件 -->
@@ -197,13 +204,13 @@ deploy 失败日志截图
 
 以上配置是非常完整的，把所有的重要配置项都列出来了，并给出了注释，实际使用中选择自己需要的即可，如果看不懂没有关系，接着往下看，详细解释了参数的使用以及最终的优化配置方案。
 
-在这里需要注意一个问题，如果你的 pom.xml 文件中根本没有配置 **maven-javadoc-plugin** 插件，但是这些错误仍旧存在，那是为什么呢？其实是因为 Maven 已经默认给每个生命周期都绑定了对应的插件，如果没有在 pom.xml 中配置自定义的插件，则使用 Maven 默认的【这里的默认有2层意思，一个是插件类型默认，一个是版本号默认】。例如当前项目如果没有配置 **javadoc** 插件，则会默认使用仓库里版本最高的稳定版 **maven-javadoc-plugin** 插件，插件的配置也都是默认的，无法更改。
+在这里需要注意一个问题，如果你的 `pom.xml` 文件中根本没有配置 `maven-javadoc-plugin` 插件，但是这些错误仍旧存在，那是为什么呢？其实是因为 `Maven` 已经默认给每个生命周期都绑定了对应的插件，如果没有在 `pom.xml` 中配置自定义的插件，则使用 `Maven` 默认的【这里的默认有2层意思，一个是插件类型默认，一个是版本号默认】。例如当前项目如果没有配置 `javadoc` 插件，则会默认使用仓库里版本最高的稳定版 `maven-javadoc-plugin` 插件，插件的配置也都是默认的，无法更改。
 
-而使用 Maven 默认的插件，很可能会引发莫名的问题，根本原因就在于对于某个插件、某个版本的插件、插件的默认配置，我们都是未知的，出了问题也比较难定位，所以在一些重要的插件上面还是手动显式配置出来比较好，这样问题都能在自己的掌握之中。
+而使用 `Maven` 默认的插件，很可能会引发莫名的问题，根本原因就在于对于某个插件、某个版本的插件、插件的默认配置，我们都是未知的，出了问题也比较难定位，所以在一些重要的插件上面还是手动显式配置出来比较好，这样问题都能在自己的掌握之中。
 
 ## 跳过 Javadoc 的生成
 
-如果直接配置了跳过 Javadoc 的生成【使用 skip 参数】，**configuration** 下面的内容都不需要配置了，配置了也不会用到。由于插件会直接跳过 Javadoc 的生成，所以也就不存在验证的过程了。然而，这种做法对于构件的使用方是不友好的，因为缺失了 Javadoc，当查看源码遇到问题时就无法寻求有效的帮助了。
+如果直接配置了跳过 `Javadoc` 的生成【使用 `skip` 参数】，`configuration` 下面的内容都不需要配置了，配置了也不会用到。由于插件会直接跳过 `Javadoc` 的生成，所以也就不存在验证的过程了。然而，这种做法对于构件的使用方是不友好的，因为缺失了 `Javadoc`，当查看源码遇到问题时就无法寻求有效的帮助了。
 
 ```
 <configuration>
@@ -213,7 +220,7 @@ deploy 失败日志截图
 
 ## 开启 Javadoc 生成但是关闭 Javadoc 验证
 
-因此，还是要开启 Javadoc 的生成，但是关闭 JDK8 对于 Javadoc 的严格验证，此时需要在 **configuration** 里面增加参数：
+因此，还是要开启 `Javadoc` 的生成，但是关闭 `JDK8` 对于 `Javadoc` 的严格验证，此时需要在 `configuration` 里面增加参数：
 
 ```
 <configuration>
@@ -221,7 +228,7 @@ deploy 失败日志截图
 </configuration>
 ```
 
-一般为了方便他人查看项目的参数，最好把这种重要的参数值设置为全局变量，在 pom.xml 文件的 **properties** 节点下面声明即可，例如：
+一般为了方便他人查看项目的参数，最好把这种重要的参数值设置为全局变量，在 `pom.xml` 文件的 `properties` 节点下面声明即可，例如：
 
 ```
 -- 设置全局变量
@@ -237,7 +244,7 @@ deploy 失败日志截图
 
 ## 潜在的问题
 
-难道这样配置就完了吗，显然有潜在的问题，作为经历过的人，我告诉你，附加参数 **-Xdoclint:none** 是只有 JDK8 及以上版本才会支持的，如果有人在构建项目时使用了 JDK7 的环境，最终的结果还是失败，失败的原因是参数不合法，无法支持。
+难道这样配置就完了吗，显然有潜在的问题，作为经历过的人，我告诉你，附加参数 `-Xdoclint:none` 是只有 `JDK8` 及以上版本才会支持的，如果有人在构建项目时使用了 `JDK7` 的环境，最终的结果还是失败，失败的原因是参数不合法，无法支持。
 
 报错信息举例：
 
@@ -246,7 +253,7 @@ Failed to execute goal org.apache.maven.plugins:maven-javadoc-plugin:2.7:jar (at
 Exit code: 1 - javadoc:错误 - 无效的标记: -Xdoclint:none
 ```
 
-所以接下来还要想一个更好的办法，不仅能关闭 Javadoc 的验证，还要根据当前的实际 JDK 环境来自动切换参数的取值，这样就可以兼容所有的环境了。显然，没有什么比 profile 更适合这个情况了，配置一个 profile 激活信息，根据 JDK 的版本激活全局变量，参数值传入给 **additionalparam** 使用，比起上面的固定的全局变量，这种可变的全局变量更灵活。
+所以接下来还要想一个更好的办法，不仅能关闭 `Javadoc` 的验证，还要根据当前的实际 `JDK` 环境来自动切换参数的取值，这样就可以兼容所有的环境了。显然，没有什么比 `profile` 更适合这个情况了，配置一个 `profile` 激活信息，根据 `JDK` 的版本激活全局变量，参数值传入给 `additionalparam` 使用，比起上面的固定的全局变量，这种可变的全局变量更灵活。
 
 详细配置如下：
 
@@ -274,9 +281,9 @@ Exit code: 1 - javadoc:错误 - 无效的标记: -Xdoclint:none
 
 在解决问题的过程中还遇到了一个典型的问题，由插件版本引起。
 
-一开始在项目的 pom.xml 文件中没有配置插件 **maven-javadoc-plugin** 的版本号，即 **version** 参数，导致项目使用的是公司私服仓库最新的版本：v3.0.0，而在这个版本中使用 **-Xdoclint:none** 关闭验证是无效的，不知道是插件本身的问题还是参数 **-Xdoclint:none** 对3.0.0版本的插件无效。后来指定版本为2.9，就没有这个问题了。
+一开始在项目的 `pom.xml` 文件中没有配置插件 `maven-javadoc-plugin` 的版本号，即 `version` 参数，导致项目使用的是公司私服仓库最新的版本：`v3.0.0`，而在这个版本中使用 `-Xdoclint:none` 关闭验证是无效的，不知道是插件本身的问题还是参数 `-Xdoclint:none` 对3.0.0版本的插件无效。后来指定版本为2.9，就没有这个问题了。
 
-由于一开始没有指定插件 **maven-javadoc-plugin** 的版本号，出错了也不知道为啥，在 deploy 的输出日志中看到使用的 v3.0.0 版本的插件，猜测可能和插件版本有关系，于是更换了版本，就没有问题了。因此这种重要的插件还是要手动指定自己认为稳定的版本，这样有问题也能在自己的掌握之中。
+由于一开始没有指定插件 `maven-javadoc-plugin` 的版本号，出错了也不知道为啥，在 `deploy` 的输出日志中看到使用的 `v3.0.0` 版本的插件，猜测可能和插件版本有关系，于是更换了版本，就没有问题了。因此这种重要的插件还是要手动指定自己认为稳定的版本，这样有问题也能在自己的掌握之中。
 
 ## 参考
 
@@ -287,7 +294,7 @@ Exit code: 1 - javadoc:错误 - 无效的标记: -Xdoclint:none
 # IDEA 乱码问题
 
 
-在解决上面的 JDK8 注解的问题过程中，遇到了一个乱码问题，系统环境是 Windows7 X64。当在 JDK7 的环境中配置了以下内容时：
+在解决上面的 `JDK8` 注解的问题过程中，遇到了一个乱码问题，系统环境是 `Windows7 X64`。当在 `JDK7` 的环境中配置了以下内容时：
 
 ```
 <configuration>
@@ -295,18 +302,22 @@ Exit code: 1 - javadoc:错误 - 无效的标记: -Xdoclint:none
 </configuration>
 ```
 
-本意是想测试这个参数在 JDK7 环境中的效果【前面已经验证过在 JDK8 中是完美运行的】，发现报错了，但是错误信息是乱码的，导致看不出来错误信息是什么，也就没法解决问题。
+本意是想测试这个参数在 `JDK7` 环境中的效果【前面已经验证过在 `JDK8` 中是完美运行的】，发现报错了，但是错误信息是乱码的，导致看不出来错误信息是什么，也就没法解决问题。
 
-在 JDK7 中 deploy 报错乱码
+在 `JDK7` 中 `deploy` 报错乱码
+
 ![Maven报错信息乱码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tb5tee2qj20qo0a1td9.jpg "Maven报错信息乱码")
 
 其实，这只是 IDEA 的编码设置问题，更改一下编码就行了。在 **setting --> maven --> rumnner --> VMoptions** ，添加参数：**-Dfile.encoding=GB2312** ，就可以正常输出了。当然，Windows 系统配置编码为 **GBK** 也行。
+
 ![设置IDEA的Maven编码](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tb6bm56gj20qo0fi0vd.jpg "设置IDEA的Maven编码")
 
 为什么要这么配置呢，因为 Maven 是依赖于当前系统的编码的，可以使用 **mvn -version** 命令查看编码的信息，查看 **Default locale** 那一项，可以看到是 **GBK**。
+
 ![查看Maven的编码使用](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tb6jiivhj20gj0ahaab.jpg "查看Maven的编码使用")
 
 配置完成后，报错信息正常显示
+
 ![报错信息正常显示](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g1tb6u2gzgj20qo0awq7a.jpg "报错信息正常显示")
 
 
@@ -318,4 +329,3 @@ Exit code: 1 - javadoc:错误 - 无效的标记: -Xdoclint:none
 2、在与同事的开发环境对比的过程中，仔细对比了 Maven 的版本和 JDK 的版本，发现都是 Maven 3.5 与 JDK1.7，但是别人能用我的就不能用，一度怀疑人生。最终才发现根本原因是没有对比小版本号，同样是 JDK1.7，没有 **>=7u111** 也不行。
 
 3、关于 Maven 的插件版本问题，切记要手动指定自己认为可靠的版本，不要让 Maven 使用仓库最新的稳定版本，哪怕的确是使用最新的版本，也要指明，确保出了问题自己可控，否则就像无头的苍蝇乱打乱撞。
-
