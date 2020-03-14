@@ -1,42 +1,59 @@
 ---
 title: Elasticsearch 常用 HTTP 接口
-id: 2020-01-15 02:16:56
-date: 2020-01-15 02:16:56
+id: 2018051401
+date: 2018-05-14 02:16:56
 updated: 2020-01-15 02:16:56
-categories:
-tags:
-keywords:
+categories: 大数据技术知识
+tags: [Elasticsearch,HTTP,RESTful]
+keywords: Elasticsearch,HTTP,RESTful
 ---
 
-2018051401
-Elasticsearch,HTTP,RESTful
 
-本文记录工作中常用的关于 `Elasticsearch` 的 `HTTP` 接口，以作备用，读者也可以参考，会持续补充更新。开发环境基于 `Elasticsearch v5.6.8`。
+本文记录工作中常用的关于 `Elasticsearch` 的 `HTTP` 接口，以作备用，读者也可以参考，会持续补充更新。开发环境基于 `Elasticsearch v5.6.8`、`v1.7.5`、`v2.x`。
 
 
 <!-- more -->
 
-wiki同步完，待补充。
 
+# 集群状态
 
-# 集群状态cc
+## 集群信息
 
+```
+http://localhost:9200/_cluster/stats?pretty
+http://localhost:9200/_cat/nodes
+http://localhost:9200/_cat/indices
+```
+
+可以看到整个集群的索引数、分片数、文档数、内存使用等等信息。
+
+## 健康状况
+
+```
+http://localhost:9200/_cat/health?v
+```
+
+可以看到分片数量，状态【红、黄、绿】。
 
 ## 空间使用
 
 查询每个节点的空间使用情况，预估数据大小：
 
 ```
-http://localhost:9200//_cat/allocation?v
+http://localhost:9200/_cat/allocation?v
 ```
 
 ## 分片分布
 
-
+```
+http://localhost:9200/_cat/shards
+```
 
 ## 集群配置信息
 
-
+```
+http://localhost:9200/_cluster/settings?pretty
+```
 
 ## 热点线程
 
@@ -254,10 +271,20 @@ POST /_aliases
 ```
 
 
-# 导入数据cc
+# 导入数据
 
 
-`bulk` 接口，详情参考另外一篇博客：xx。
+```
+把文件中的数据导入索引，批量的形式
+由于数据中可能存在一些特殊符号，所以使用文件的形式，in为文件路径
+文件内容格式，1条数据需要包含2行内容，index表示索引数据
+{"index":{}}
+JSON原始数据
+
+curl -XPOST 'http://localhost:9200/my-index-post/post/_bulk' --data-binary @"$in"
+```
+
+`bulk` 接口，详情参考另外一篇博客：[使用 Elasticsearch 的 bulk 接口批量导入数据](https://www.playpi.org/2019101701.html) 。
 
 
 # 查询数据
@@ -552,10 +579,66 @@ POST _tasks/task_id:1/_cancel
 此外，参考：[Elasticsearch 的 Reindex API 详解](https://www.playpi.org/2020011601.html) ，里面包含了常见的参数使用方式，以及查看迁移任务进度、取消迁移任务的方式。
 
 
-# 移动分片cc
+# 移动分片
 
 
-需要先关闭 `rebalance`，再手动移动分片。
+需要先关闭 `rebalance`，再手动移动分片，否则由于手动迁移分片造成集群进行分片的重新分配，进而消耗 `IO`、`CPU` 资源。手动迁移分片完成之后，再打开 `rebalance`，让集群自行进行重新分配管理。
+
+临时参数设置：
+
+```
+关闭
+curl -XPUT 'localhost:9200/_cluster/settings' -d
+'{
+  "transient": {
+    "cluster.routing.allocation.enable": "none"
+  }
+}'
+
+打开
+curl -XPUT 'localhost:9200/_cluster/settings' -d
+'{
+  "transient": {
+    "cluster.routing.allocation.enable": "all"
+  }
+}'
+```
+
+分片的迁移使用：
+
+```
+move：移动分片
+cancel：取消分片
+allocate：重新分配分片
+
+curl -XPOST 'localhost:9200/_cluster/reroute' -d '{
+    "commands" : [ {
+        "move" :
+            {
+              "index" : "test", "shard" : 0,
+              "from_node" : "node1", "to_node" : "node2"
+            }
+        },
+       "cancel" :
+            {
+              "index" : "test", "shard" : 0, "node" : "node1"
+            }
+        },
+        {
+          "allocate" : {
+              "index" : "test", "shard" : 1, "node" : "node3"
+          }
+        }
+    ]
+}'
+
+将分配失败的分片重新分配
+curl -XGET 'localhost:9200/_cluster/reroute?retry_failed=true'
+```
+
+注意，`allocate` 命令还有一个参数，`"allow_primary" : true`，即允许该分片做主分片，但是这样可能会造成数据丢失【在不断写入数据的时候】，因此要慎用【如果数据在分配过程中是静态的则可以考虑使用】。
+
+当然，手动操作需要在熟悉集群的 `API` 使用的情况下，例如需要获取节点、索引、分片的信息，不然的话不知道参数怎么填写、分片怎么迁移。此时可以使用 `Head`、`kopf`、`Cerebro` 等可视化工具进行查看，比较适合运维人员，而且，分片的迁移指挥工作也可以交给这些工具，只要通过鼠标点击就可以完成分片的迁移，很方便。
 
 
 # 验证
@@ -575,5 +658,19 @@ POST /my-index-post/_validate/query?explain
     }
   }
 }
+```
+
+检查分片分配的相关信息：
+
+```
+不带任何参数执行该命令，会输出当前所有未分配分片的失败原因
+curl -XGET 'localhost:9200/_cluster/allocation/explain
+
+该命令可查看指定分片当前所在节点以及分配到该节点的理由，和未分配到其他节点的原因
+curl -XPOST 'localhost:9200/_cluster/reroute' -d '{
+    "index": <索引名>,
+    "shard": <分片号>,
+    "primary": true/false
+}'
 ```
 

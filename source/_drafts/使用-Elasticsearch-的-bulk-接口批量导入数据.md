@@ -19,6 +19,13 @@ Elasticsearch,bulk,HTTP,HBase
 
 
 ```
+把文件中的数据导入索引，批量的形式
+由于数据中可能存在一些特殊符号，所以使用文件的形式，in为文件路径
+文件内容格式，1条数据需要包含2行内容，index表示索引数据
+{"index":{}}
+JSON原始数据
+
+
 sed '1,600000 i{"index":{}}' -i post_es.txt
 curl -XPOST 'http://dev4:9200/my-index-post/post/_bulk' --data-binary @"$out"
 
