@@ -23,6 +23,8 @@ keywords: Elasticsearch,HTTP,RESTful
 http://localhost:9200/_cluster/stats?pretty
 http://localhost:9200/_cat/nodes
 http://localhost:9200/_cat/indices
+http://localhost:9200/_cluster/state
+http://localhost:9200/_cat/aliases
 ```
 
 可以看到整个集群的索引数、分片数、文档数、内存使用等等信息。

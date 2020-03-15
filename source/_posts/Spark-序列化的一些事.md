@@ -1,16 +1,13 @@
 ---
 title: Spark 序列化的一些事
-id: 2020-03-15 00:23:05
+id: 2017071701
 date: 2017-07-17 00:23:05
-updated: 2020-03-15 00:23:05
-categories:
-tags:
-keywords:
+updated: 2017-07-17 00:23:05
+categories: 大数据技术知识
+tags: [NotSerializableException,serializable,Spark]
+keywords: NotSerializableException,serializable,Spark
 ---
 
-2017071701
-大数据技术知识
-NotSerializableException,serializable,Spark
 
 在 `Spark` 任务中，大家经常遇到的一个异常恐怕就是 `Task not serializable: java.io.NotSerializableException` 了，只要稍不注意，就会忘记了序列化这件事，当然解决方法也是很简单。
 
@@ -23,29 +20,46 @@ NotSerializableException,serializable,Spark
 # 问题分析
 
 
+常见的序列化错误：
+
+```
+Exception in thread "main" org.apache.spark.SparkException: Task not serializable
+at org.apache.spark.util.ClosureCleaner$.ensureSerializable(ClosureCleaner.scala:166)
+at org.apache.spark.util.ClosureCleaner$.clean(ClosureCleaner.scala:158)
+at org.apache.spark.SparkContext.clean(SparkContext.scala:1242)
+at org.apache.spark.rdd.RDD.map(RDD.scala:270)
+at org.apache.spark.api.java.JavaRDDLike$class.mapToPair(JavaRDDLike.scala:99)
+at org.apache.spark.api.java.JavaRDD.mapToPair(JavaRDD.scala:32)
+```
+
 由于 `Spark` 任务在分发的过程中，需要对必要的对象进行序列化传输，在 `executor` 端接收到数据后再反序列化，如果没有控制好需要序列化的类，可能会出现 `NotSerializableException` 异常。这种情况还算好的，直接修改对应的类，就可以解决问题。
 
-有时候如果使用了类成员，不小心使用 `static` 修饰，而且初始化为 `null`，再在初始化 `Spark` 任务时对它进行赋值，实际上在 `executor` 端执行进程时是接收不到这个变量的值的，因为对 `static` 变量的修改是归于本地 `JVM` 管理的，不会序列化传输。
+有时候如果使用了类成员，不小心使用 `static` 修饰，而且初始化为 `null`，再在初始化 `Spark` 任务时对它进行赋值，实际上在 `executor` 端执行进程时是接收不到这个变量的值的，因为对 `static` 变量的修改是归于本地 `JVM` 管理的，不会序列化传输【传输的只是默认值】。
 
-对于常见的不会经过序列化的三种场景：
+对于常见的不会经过序列化的四种场景【注意 `static` 变量的初始值很重要】：
 
 - 加上临时修饰符 `transient`，不会参与序列化
 - `static` 变量，属于类属性，不会参与序列化
 - `static` 方法，属于类属性，不会参与序列化
+- `SparkContext` 对象不需要序列化
 
 对于常见的需要序列化的三种场景：
 
-- 1
-- 2
-- 3
+- 普通的变量，如果在算子中使用到，则这个变量所属的类以及所有成员都需要支持序列化
+- 普通的方法，如果在算子中使用到，则这个变量所属的类以及所有成员都需要支持序列化
+- 类引用，如果在算子中使用到某个类，则这个类需要支持序列化
 
 
 # 建议
 
 
-使用静态方法
-需要实例化的类，放在算子内部
-函数式方法
+1、对于需要在算子中使用的方法、变量，全部使用 `static` 修饰，避免序列化整个类。
+
+2、对于需要在算子中使用的变量，最好使用 `SparkContext` 传输，或者使用广播变量。
+
+3、对于确实需要实例化的类【整个类】，把类定义放在算子内部，也就是内部类，减少序列化的网络传输。
+
+4、对于需要在算子中使用的方法，可以使用函数式方法，这样就可以避免序列化方法所属的整个类了。
 
 
 # 备注
