@@ -158,6 +158,7 @@ comments: false
 - 美国国家标准网站，例如可以查到美军的军队标准：[everyspec](http://everyspec.com)
 - 免费在线作图工具，流程图、思维导图、`UML` 图等等：[ProcessOn](https://www.processon.com)
 - `JSON` 到 `csv` 的转换工具：[json-csv.com](https://json-csv.com)
+- 标准地图服务，可以免费下载非常规范的地图类文件，标注审图号，避免出问题：[标准地图服务](http://bzdt.ch.mnr.gov.cn)
 
 ## 技术列表
 
