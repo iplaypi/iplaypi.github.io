@@ -464,6 +464,33 @@ POST combine-paas-1003-index/2723-data/_search
 }
 ```
 
+## 统计个数聚合
+
+对于多篇文章，统计每个站点下面的作者个数：
+
+```
+-- 多层嵌套以及特殊的聚合，每个 site_name 下面的作者个数统计
+{
+    "aggs": {
+        "s": {
+            "aggs": {
+                "a": {
+                    "cardinality": {
+                        "field": "author"
+                    }
+                }
+            },
+            "terms": {
+                "field": "site_name",
+                "size": 0
+            }
+        }
+    },
+    "query": {},
+    "size": 0
+}
+```
+
 ## 存在查询
 
 `exists`、`missing` 这两类查询在不同的版本之间使用方式不一致。
