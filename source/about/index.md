@@ -71,6 +71,7 @@ comments: false
   - 插件之交互设计、原型设计工具：[Axure RP](https://chrome.google.com/webstore/detail/axure-rp-extension-for-ch/dogkpdfcklifaemcdfbildhcofnopogp) ，官网：[axure](https://www.axure.com)
   - 应用之需求设计作图工具（流程图、类图、时序图）：[Gliffy Diagrams](https://chrome.google.com/webstore/detail/gliffy-diagrams/bhmicilclplefnflapjmnngmkkkkpfad?hl=zh-CN)
   - 应用之模拟 Http 请求工具：[Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=zh-CN)
+  - 插件之浏览器编码更改工具【针对一些不规范的网站使用】：[set-character-encoding](https://chrome.google.com/webstore/detail/set-character-encoding/bpojelgakakmcfmjfilgdlmhefphglae)
 - 加速热部署工具：[JRebel](https://jrebel.com)
 - Git 可视化管理工具：[gitkraken](https://www.gitkraken.com)
 - Git 在线可视化学习网站：[learngitbranching](https://learngitbranching.js.org)
