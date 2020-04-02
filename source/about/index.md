@@ -72,6 +72,7 @@ comments: false
   - 应用之需求设计作图工具（流程图、类图、时序图）：[Gliffy Diagrams](https://chrome.google.com/webstore/detail/gliffy-diagrams/bhmicilclplefnflapjmnngmkkkkpfad?hl=zh-CN)
   - 应用之模拟 Http 请求工具：[Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=zh-CN)
   - 插件之浏览器编码更改工具【针对一些不规范的网站使用】：[set-character-encoding](https://chrome.google.com/webstore/detail/set-character-encoding/bpojelgakakmcfmjfilgdlmhefphglae)
+  - 插件之爬虫工具，在不写代码的情况下，可以通过配置来抓取网页内容：[web-scraper](https://chrome.google.com/webstore/detail/web-scraper/jnhgnonknehpejjnehehllkliplmbmhn/related)
 - 加速热部署工具：[JRebel](https://jrebel.com)
 - Git 可视化管理工具：[gitkraken](https://www.gitkraken.com)
 - Git 在线可视化学习网站：[learngitbranching](https://learngitbranching.js.org)
