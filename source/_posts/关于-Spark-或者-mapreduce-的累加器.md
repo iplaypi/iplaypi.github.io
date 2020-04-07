@@ -9,7 +9,7 @@ keywords: Spark,MapReduce,Accumulator,Java,Hadoop
 ---
 
 
-在 `Spark` 和 `Hadoop` 的 `MapReduce` 中都有累加器的概念，顾名思义，累加器就是用来做累加【或者累减】使用的，有时候为了统计某些值，在程序中埋入指标，这样在程序运行中、运行后都可以清晰观察到统计指标，还能辅助检查程序的问题。在 `Spark`、`MapReduce` 中，它们的使用方式尽管有一点点不同的地方，甚至在 `Spark` 的不同版本中使用方式也会不一致，但也算是大同小异。本文简单记录在 `Spark`、`MapReduce` 中累加器的使用，并补充说明一些重要的坑，`Spark` 环境基于 v1.6.2，`Hadoop` 环境基于 v2.7.1 。
+在 `Spark` 和 `Hadoop` 的 `MapReduce` 中都有累加器的概念，顾名思义，累加器就是用来做累加【或者累减】使用的，有时候为了统计某些值，在程序中埋入指标，这样在程序运行中、运行后都可以清晰观察到统计指标，还能辅助检查程序的问题。在 `Spark`、`MapReduce` 中，它们的使用方式尽管有一点点不同的地方，甚至在 `Spark` 的不同版本中使用方式也会不一致，但也算是大同小异。本文简单记录在 `Spark`、`MapReduce` 中累加器的使用，并补充说明一些重要的坑，`Spark` 环境基于 `v1.6.2`，`Hadoop` 环境基于 `v2.7.1` 。
 
 
 <!-- more -->
@@ -26,7 +26,7 @@ keywords: Spark,MapReduce,Accumulator,Java,Hadoop
 
 ![在 SparkUI 中查看任务的累加器](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190714001039.png "在 SparkUI 中查看任务的累加器")
 
-而在 `Hadoop` 的 `MapReduce` 中，累加器的用法也是一样，不同的是，在 `MapReduce` 的调度系统 `Yarn` 中，~~无法观察到累加器的取值变化，只能等待 `MapReduce` 运行完成~~【其实也可以，需要开启 `HistoryServer` 服务，见下文的介绍】，才能在输出日志中查看累加器的最终取值。而且这是自动统计打印出来的，不需要手动输出。
+而在 `Hadoop` 的 `MapReduce` 中，累加器的用法也是一样，不同的是，在 `MapReduce` 的调度系统 `Yarn` 中，无法观察到累加器的取值变化，只能等待 `MapReduce` 运行完成【其实也可以，需要开启 `HistoryServer` 服务，见下文的介绍】，才能在输出日志中查看累加器的最终取值。而且这是自动统计打印出来的，不需要手动输出。
 
 下面详细介绍累加器的使用方式。
 
