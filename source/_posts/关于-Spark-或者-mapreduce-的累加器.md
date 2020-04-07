@@ -23,9 +23,10 @@ keywords: Spark,MapReduce,Accumulator,Java,Hadoop
 只要在代码中指定了累加器，并在 `Task` 中使用它，通过 `Action` 算子触发后，在 `Spark` 任务运行中或者运行完成后，都可以观察到累计器的值。
 
 例如在 `Spark` 任务运行的过程中，通过 `SparkUI` 可以观察累加器的取值变化，在 `Stages` 标签页中选择带有累加器的某一个 `Stage`，查看详情，就可以看到在 `Accumulators` 指标列表中，列出了所有累加器的名字和取值。
+
 ![在 SparkUI 中查看任务的累加器](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190714001039.png "在 SparkUI 中查看任务的累加器")
 
-而在 `Hadoop` 的 `MapReduce` 中，累加器的用法也是一样，不同的是，在 `MapReduce` 的调度系统 `Yarn` 中，无法观察到累加器的取值变化，只能等待 `MapReduce` 运行完成，才能在输出日志中查看累加器的最终取值。而且这是自动统计打印出来的，不需要手动输出。
+而在 `Hadoop` 的 `MapReduce` 中，累加器的用法也是一样，不同的是，在 `MapReduce` 的调度系统 `Yarn` 中，~~无法观察到累加器的取值变化，只能等待 `MapReduce` 运行完成~~【其实也可以，需要开启 `HistoryServer` 服务，见下文的介绍】，才能在输出日志中查看累加器的最终取值。而且这是自动统计打印出来的，不需要手动输出。
 
 下面详细介绍累加器的使用方式。
 
@@ -35,9 +36,9 @@ keywords: Spark,MapReduce,Accumulator,Java,Hadoop
 
 ## 在 Spark 中的使用
 
-首先说明一下，注意不同版本的影响，使用方式会不一致，我下面列出的例子都是基于 `Spark` v1.6.2，例如在 `Spark` v2.x 的版本中，初始化累加器的方式就改变了一些，在此不再赘述。
+首先说明一下，注意不同版本的影响，使用方式会不一致，我下面列出的例子都是基于 `Spark v1.6.2`，例如在 `Spark v2.x` 的版本中，初始化累加器的方式就改变了一些，在此不再赘述。
 
-`Spark` 提供的 `Accumulator`，主要用于多个节点【Excutor】对同一个变量进行共享性的操作。`Accumulator` 只提供了累加的功能【调用 add() 方法】，给我们提供了多个 `Task` 对一个变量并行操作的功能。但是 `Task` 只能对 `Accumulator` 进行累加操作，不能读取它的值，只有 `Driver` 端的程序可以读取 `Accumulator` 的值【调用 value() 方法】。
+`Spark` 提供的 `Accumulator`，主要用于多个节点【Excutor】对同一个变量进行共享性的操作。`Accumulator` 只提供了累加的功能【调用 add() 方法】，给我们提供了多个 `Task` 对一个变量并行操作的功能。但是 `Task` 只能对 `Accumulator` 进行累加操作，不能读取它的值，只有 `Driver` 端的程序可以读取 `Accumulator` 的值【调用 `value()` 方法】。
 
 ### 代码接口
 
@@ -69,6 +70,7 @@ saveTotalAcc.add(1);
 ```
 
 代码片段截图如下：
+
 ![使用累加器代码片段](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190714003706.png "使用累加器代码片段")
 
 注意一点，在 `Function` 中对累加器只能增加，不能取值，如果在 `Spark` 的 `RDD` 中试图取出累加器的值，`Spark` 任务会抛出异常而失败。
@@ -81,11 +83,12 @@ System.out.println("====saveTotal:" + saveTotalAcc.value());
 ```
 
 代码片段截图如下：
+
 ![累加器取值代码片段](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190714004227.png "累加器取值代码片段")
 
 ### 前端界面查看
 
-而如果有一个需求就是要在某时刻查看累加器的值，或者说需要实时查看累加器的值，能不能实现呢，当然可以，这就需要 SparkUI 出场了。
+而如果有一个需求就是要在某时刻查看累加器的值，或者说需要实时查看累加器的值，能不能实现呢，当然可以，这就需要 `SparkUI` 出场了。
 
 在提交 `Spark` 任务时，创建 `JavaSparkContext` 对象成功后，注意观察输出日志，会发现有一个重要的链接信息出现：SparkUI 的地址。当然，如果已经知道了自己所使用的 `Yarn` 或者 `Standalone` 集群的信息，就不需要关心这个日志了，直接打开浏览器就可以查看了。
 
@@ -97,7 +100,7 @@ System.out.println("====saveTotal:" + saveTotalAcc.value());
 16:50:10 [main] INFO ui.SparkUI:58: Started SparkUI at http://192.168.10.99:4041 
 ```
 
-这个就是 SparkUI 的地址，直接在浏览器中打开，就可以看到这个 `Spark` 任务的运行状态，其它的信息我在这里不关心，直接选择 `Stages` 标签页，可以看到下面有一个 `Stages` 列表，里面是运行中或者运行完成的 `Stage`：
+这个就是 `SparkUI` 的地址，直接在浏览器中打开，就可以看到这个 `Spark` 任务的运行状态，其它的信息我在这里不关心，直接选择 `Stages` 标签页，可以看到下面有一个 `Stages` 列表，里面是运行中或者运行完成的 `Stage`：
 
 ![在 SparkUI 中查看 Stages](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190714005348.png "在 SparkUI 中查看 Stages")
 
@@ -134,6 +137,7 @@ if (StringUtil.isNullOrEmpty(pk)) {
 ```
 
 代码片段截图如下：
+
 ![使用累加器代码片段](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190714013323.png "使用累加器代码片段")
 
 使用累加器的核心代码就是：
@@ -145,22 +149,31 @@ context.getCounter(MREnum.MAP_FILTER).increment(1);
 其中，`Context` 就是 `MapReduce` 中的上下文对象，`MREnum.MAP_FILTER` 是自定义的枚举类型，每个累加器对应一个。
 
 `MapReduce` 任务完成后，不需要手动输出累加器的取值，`Hadoop` 框架会自动统计输出各种指标，当然也包括累加器的取值。
+
 ![累加器取值输出](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20190714013755.png "累加器取值输出")
 
-可以从上图中看到有5个累加器：DONE、READ、REDUCE、SHUFFLE、WRITE，它们的取值都是千万级别的数字。
+可以从上图中看到有5个累加器：`DONE`、`READ`、`REDUCE`、`SHUFFLE`、`WRITE`，它们的取值都是千万级别的数字。
 
-此外，在 `Yarn` 等调度系统中无法查看 `MapReduce` 任务的累加器取值变化，这是一个遗憾。
+此外，在 `Yarn` 等调度系统中无法查看 `MapReduce` 任务的累加器取值变化，~~这是一个遗憾~~。
+
+以下为2020-04-07更新内容，可以通过 `Tracking UI` 查看累加器的取值。
+
+### 前端页面查看
+
+在 `Tracking UI` 的页面中【前提是要开启 `HistoryServer` 服务】，可以看到左上角 `Job` 下有一个 `Counters` 选项，打开它就可以查看累加器了。除了基本的内置累加器，还有自定义累加器，这里看到的内容和日志中输出的一致。
+
+![MapReduce 查看 Counters](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2017/20200407220450.png "MapReduce 查看 Counters")
 
 
 # 注意踩坑
 
 1、前面已经说过，使用累加器时，只能在 `Spark` 任务运行中【Task 端】进行累加，然后等待 `Spark` 任务运行完成后，才能在 `Driver` 端进行取值操作。如果强行在 `Task` 中对累加器进行取值，`Spark` 任务会抛出异常而失败。
 
-2、在 `Spark` 中，由于累加器是在 `Task` 中进行的，所以针对 `RDD` 的 `Transform` 操作【例如 map、filter】是不会触发累加器的执行的，必须是 `Action` 操作【例如 count】才会触发。所以如果读者发现自己的程序中输出的累加器取值不正确，看看是不是这个原因。
+2、在 `Spark` 中，由于累加器是在 `Task` 中进行的，所以针对 `RDD` 的 `Transform` 操作【例如 `map`、`filter`】是不会触发累加器的执行的，必须是 `Action` 操作【例如 `count`】才会触发。所以如果读者发现自己的程序中输出的累加器取值不正确，看看是不是这个原因。
 
 3、正是因为2的原因，用户可能会进行多次 `Action` 操作后，发现累加器的数值不对，远远大于正确的数值，然后懵了。这种现象是正常的，属于人为误操作，因此用户一定要正确使用累加器，控制好 `Action` 操作，或者及时使用 `cache()` 方法，这样可以断开与前面 `DataSet` 的血缘关系，保证累加器只被执行一次。
 
-4、通过2也可以发现一个问题，如果 `Spark` 任务的某个 `Task` 反复执行了多次【Spark 的容错性，例如某个 Task 失败重试了多次之后才成功】，那累加器进行累加时会不会重复计算。当然会重复计算，这也是一个坑，为了避免这个坑，尽量把对累加器的操作放在 `Action` 算子中，这样就可以保证累加器被操作一次。
+4、通过2也可以发现一个问题，如果 `Spark` 任务的某个 `Task` 反复执行了多次【Spark 的容错性，例如某个 `Task` 失败重试了多次之后才成功】，那累加器进行累加时会不会重复计算。当然会重复计算，这也是一个坑，为了避免这个坑，尽量把对累加器的操作放在 `Action` 算子中，这样就可以保证累加器被操作一次。
 
-5、在创建累加器时，如果没有指定累加器的名字，那么只能在程序中通过代码操作累加器，而在 sparkUI 中无法看到累加器的取值。
+5、在创建累加器时，如果没有指定累加器的名字，那么只能在程序中通过代码操作累加器，而在 `SparkUI` 中无法看到累加器的取值。
 
