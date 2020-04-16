@@ -11,7 +11,7 @@ keywords: Elasticsearch,bulk,keyword,ignore_above
 
 最近在项目中遇到一个异常，写入数据到 `Elasticsearch` 中，报错：`max_bytes_length_exceeded_exception`。这个其实和 `Elasticsearch` 的字段长度限制有关，本文就回顾一下在 `Elasticsearch` 中一个字段支持的最大字符数。
 
-本文涉及的开发环境：`Elasticsearch v5.6.8`，读者需要注意字符数、字节数这两个基本概念的区别。
+本文涉及的开发环境：`Elasticsearch v5.6.8`，读者需要注意**字符数**、**字节数**这两个基本概念的区别。
 
 
 <!-- more -->
@@ -29,7 +29,7 @@ ERROR ESBulkProcessor: {"index":"your_index","type":"your_type","id":"b20ddaf126
 ```
 
 
-可以看到，使用 `bulk` 方式，在数据写入 `Elasticsearch` 时遇到异常，如果一个字段的类型是 `keyword`，而实际写入数据时指定了一个非常长的文本值，会报错：`illegal_argument_exception`、`max_bytes_length_exceeded_exception`，整个文档写入失败并返回异常【注意，会过滤掉当前整个文档，即整条数据不能被写入，而如果字段长度小于32766文档是可以被写入的，但是这个字段可能不会被索引，参考下面的 `ignore_above` 参数】。
+可以看到，使用 `bulk` 方式，在数据写入 `Elasticsearch` 时遇到异常，如果一个字段的类型是 `keyword`，而实际写入数据时指定了一个非常长的文本值，会报错：`illegal_argument_exception`、`max_bytes_length_exceeded_exception`，整个文档写入失败并返回异常【注意，会过滤掉当前整个文档，即整条数据不能被写入，而如果字段的字节长度小于等于32766，文档是可以被写入的，但是这个字段可能不会被索引，参考下面的 `ignore_above` 参数】。
 
 更详细的信息：
 
@@ -53,9 +53,11 @@ whose UTF8 encoding is longer than the max length 32766
 
 ## 禁止索引
 
-当然，对于长度不超过32766字节的 `keyword` 类型字段值，如果太长也没有意义，例如几百几千个字符，而 `Elasticsearch` 原生也支持对 `keyword` 类型的字段设置禁止索引的长度上限，超过一定的字节数【前提是不超过32766字节】则当前字段不能被索引，但是字段的数据还是能写入的，它就是 `ignore_above` 参数，下面举例说明。
+当然，对于长度不超过32766字节的 `keyword` 类型字段值，如果太长也没有意义，例如几百几千个字符【对应的字节数可能是几千几万】，而 `Elasticsearch` 原生也支持对 `keyword` 类型的字段设置禁止索引的长度上限，超过一定的字符数【前提是不超过32766字节】则当前字段不能被索引，但是字段的数据还是能写入的，它就是 `ignore_above` 参数，下面举例说明。
 
 设置 `name_ignore` 字段为 `keyword` 类型，并指定 `ignore_above` 为8，表示最大可以索引8个字符的长度。同理，设置 `name` 字段为 `keyword` 类型，并指定 `ignore_above` 为32，表示最大可以索引32个字符的长度。
+
+注意，`ignore_above` 参数限制的是字符数，具体字节数要根据实际内容转换，如果内容中都是字母、数字，则字符数就是字节数，但是当内容中大多数是中文、韩文，则字节数等于字符数乘以4。
 
 ```
 PUT /my-index-post/_mapping/post
@@ -183,6 +185,7 @@ POST my-index-post/_search
 可以发现，使用 `name_ignore` 字段做精确匹配时查不到数据，而使用 `name` 字段却可以，说明 `Elasticsearch` 在写入 `name_ignore` 字段的值时没有对超过8个字符的做索引，只是简单的存储，也就无法查询。
 
 官方说明：
+
 >Strings longer than the ignore_above setting will not be indexed or stored.
 
 
@@ -195,16 +198,16 @@ POST my-index-post/_search
 
 3、写入数据时，内容的字符数超过 `ignore_above` 的限制，整条数据仍旧可以入库【包含当前字段】，只是内容不会被索引，在查询命中这条数据时字段对应的值仍旧可以返回。
 
-4、如果不设置 `ignore_above` 的值，默认为256，要考虑到字节、字符之间的转换，但是记住这个值首先受限于 `keyword` 类型的限制，并不能无限大。
+4、如果不设置 `ignore_above` 的值，默认为256个字符，但是记住这个值首先受限于 `keyword` 类型的限制，并不能无限大。
 
 ## 引申说明
 
-1、由于 `keyword` 的长度限制，`keyword` 类型的最大支持的长度为32766个字节，大概只有8000个 `UTF-8` 类型的字符，也就是说 `term` 精确匹配的最大支持长度为8000个 `UTF-8` 个字符【而实际上这么长在应用中是没有意义的】。
+1、由于 `keyword` 的长度限制，`keyword` 类型的最大支持的长度为32766个字节，注意如果是 `UTF-8` 类型的字符【占用1-4个字节】，也就能支持8000个左右【如果都是数字、字母则会长一点】，也就是说 `term` 精确匹配的最大支持长度为8000个 `UTF-8` 个字符【而实际上这么长在应用中是没有意义的】。
 
 2、两种类型的区别：
 
 - `text` 类型：没有最大长度限制，支持分词、全文检索，不支持聚合、排序，因此适合大字段存储，例如文章详情
-- `keyword` 类型：最大字节数32766，如果使用 `UTF-8` 编码，最大字符数粗略估计可以使用最大字节数除以4，支持精确匹配，支持聚合、排序，适合精确字段匹配，例如：`url`、姓名、性别
+- `keyword` 类型：最大字节数为32766，如果使用 `UTF-8` 编码，最大字符数粗略估计可以使用最大字节数除以4，支持精确匹配，支持聚合、排序，适合精确字段匹配，例如：`url`、姓名、性别
 
 官方说明：
 
@@ -219,7 +222,7 @@ POST my-index-post/_search
 
 2、字段的 `ignore_above` 可以变更，类型不会变更，不会影响已经存储的内容【使用 `put` 接口，参考官方文档：[indices-put-mapping](https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-put-mapping.html)】，只会影响以后写入的内容，因为字段类型并没有变化，只是限制了写入长度。
 
-3、设置时取值为数值，例如6、16等。
+3、设置时取值为数值，例如6、16等，注意它表示的是字符数，不是字节数，所以如果数据都是字母、数字最大就可以设置为32766，但是当数据是中文、韩文时最大只能设置为8000了。
 
 4、如果需要同一个字段存在多种类型，可以使用 `multi-fields` 特性，参考：[multi-fields](https://www.elastic.co/guide/en/elasticsearch/reference/5.6/multi-fields.html) 。
 
