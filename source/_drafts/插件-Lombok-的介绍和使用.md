@@ -17,7 +17,7 @@ keywords:
 Maven,Lombok
 
 
-
+使用注解可以方便解决一些繁琐的代码问题，显得更优雅。
 
 
 <!-- more -->
