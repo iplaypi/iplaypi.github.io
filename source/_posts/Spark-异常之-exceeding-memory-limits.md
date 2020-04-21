@@ -11,7 +11,7 @@ keywords: Spark,elasticsearch-hadoop,yarn,Elasticsearch
 
 业务上使用 `elasticsearch-hadoop` 框架来处理 `Elasticsearch` 里面的数据，流程就是读取、中间处理、写入，然后由于数据量级太大的【占用的内存也大】原因，出现异常：`Container killed by YARN for exceeding memory limits.`，这个异常其实很常见，做大数据开发的工程师基本都遇到过，稍微调整一下内存配置即可。
 
-本文简单记录一下，给读者参考，开发环境基于 `Elasticsearch v1.7.5`、`Spark v1.6.2`、`elasticsearch-hadoop v2.1.0`。
+本文简单记录一下，给读者参考，开发环境基于 `Elasticsearch v1.7.5`、`Spark v1.6.2`、`elasticsearch-hadoop v2.1.0`、`Hadoop v2.7.1`。
 
 
 <!-- more -->
