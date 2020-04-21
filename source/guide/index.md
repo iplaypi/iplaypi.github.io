@@ -17,6 +17,7 @@ type: guide
 
 
 - 2020030201，[在 Elasticsearch 中指定查询返回的字段](https://www.playpi.org/2020030201.html)
+- 2020021301，[在技术之路上的一些小技巧](https://www.playpi.org/2020021301.html)
 - 2020012201，[Spark 警告：Not enough space to cache rdd in memory](https://www.playpi.org/2020012201.html)
 - 2020011601，[Elasticsearch 的 Reindex API 详解](https://www.playpi.org/2020011601.html)
 - 2020010301，[DateTimeFormatter 简单使用示例](https://www.playpi.org/2020010301.html)
@@ -142,6 +143,7 @@ type: guide
 - 2018051401，[Elasticsearch 常用 HTTP 接口](https://www.playpi.org/2018051401.html)
 - 2018041801，[es-hadoop 遇上 Elasticsearch 的 Date 类型字段](https://www.playpi.org/2018041801.html)
 - 2018041301，[Elasticsearch 错误：None of the configured nodes are available](https://www.playpi.org/2018041301.html)
+- 2018022501，[Spark 异常之 exceeding memory limits](https://www.playpi.org/2018022501.html)
 - 2018022401，[Elasticsearch 根据查询条件删除数据的 API](https://www.playpi.org/2018022401.html)
 - 2018020101，[注册 Facebook Twitter Tumblr 遇到的问题](https://www.playpi.org/2018020101.html)
 
