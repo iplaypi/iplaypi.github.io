@@ -2,72 +2,72 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.playpi.org/tags/index.html</loc>
+    <loc>https://www.playpi.org/live2d_models/hijiki/hijiki.model.json</loc>
     
-    <lastmod>2020-04-16T16:36:25.398Z</lastmod>
+    <lastmod>2020-04-21T17:23:58.367Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/live2d_models/hijiki/hijiki.pose.json</loc>
     
-    <lastmod>2020-04-16T16:36:25.394Z</lastmod>
+    <lastmod>2020-04-21T17:23:58.367Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.playpi.org/live2d_models/hijiki/hijiki.model.json</loc>
+    <loc>https://www.playpi.org/tags/index.html</loc>
     
-    <lastmod>2020-04-16T16:36:25.394Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/about/index.html</loc>
-    
-    <lastmod>2020-04-16T16:36:25.386Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/2018090501.html</loc>
-    
-    <lastmod>2020-04-16T16:36:25.386Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/archives/index.html</loc>
-    
-    <lastmod>2020-04-16T16:36:25.386Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/categories/index.html</loc>
-    
-    <lastmod>2020-04-16T16:36:25.386Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.playpi.org/guide/index.html</loc>
-    
-    <lastmod>2020-04-16T16:36:25.386Z</lastmod>
+    <lastmod>2020-04-21T17:23:58.367Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/books/index.html</loc>
     
-    <lastmod>2020-04-16T16:36:25.386Z</lastmod>
+    <lastmod>2020-04-21T17:23:58.359Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/about/index.html</loc>
+    
+    <lastmod>2020-04-21T17:23:58.359Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/archives/index.html</loc>
+    
+    <lastmod>2020-04-21T17:23:58.359Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/guide/index.html</loc>
+    
+    <lastmod>2020-04-21T17:23:58.359Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/categories/index.html</loc>
+    
+    <lastmod>2020-04-21T17:23:58.359Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.playpi.org/2017102901.html</loc>
     
-    <lastmod>2020-04-16T16:36:25.382Z</lastmod>
+    <lastmod>2020-04-21T17:23:58.355Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/2018090501.html</loc>
+    
+    <lastmod>2020-04-21T17:23:58.355Z</lastmod>
     
   </url>
   
@@ -992,6 +992,13 @@
     <loc>https://www.playpi.org/2018052901.html</loc>
     
     <lastmod>2018-05-28T17:04:14.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.playpi.org/2018022501.html</loc>
+    
+    <lastmod>2018-02-24T16:51:24.000Z</lastmod>
     
   </url>
   
