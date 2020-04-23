@@ -272,6 +272,8 @@ attempting reconnect
 
 使用 `netstat -antp | grep 2181 | wc -l` 命令，注意需要 `root` 用户的权限。这个命令统计的是所有 `Zookeeper` 连接【通过使用2181端口过滤】，包含等待的和正在通信的，如果查看正在通信的，加上一个 `grep ESTABLISHED` 过滤即可。
 
+当然，如果机器开放了部分可以使用高级用户执行的命令【例如使用 `root` 用户执行 `pwdx`】，则更方便查看，操作时指定用户即可，例如：`sudo -u root netstat -antp | grep 2181 | wc -l`，可以查看端口2181占用的情况。
+
 局部截图如下：
 
 ![zk 连接进程查看](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190930214400.png "zk 连接进程查看")
@@ -290,4 +292,6 @@ attempting reconnect
 问题排查出来，解决就简单了，直接找到问题程序，修复资源泄漏问题，然后重启，保证合理的 `Zookeeper` 连接数量，不要因为某一个程序的失误而影响到其它业务。
 
 另外如果有必要查看 `Zookeeper` 日志，需要特别留意 `Zookeeper` 查看日志的方法，日志文件是不能被直接打开的，需要工具转换为文本日志，然后才能查看分析。
+
+关于 `Zookeeper` 日志的转换查看方法，可以参考我的另外一篇博客内容：[Zookeeper-日志查看](https://www.playpi.org/2019092001.html) 。
 

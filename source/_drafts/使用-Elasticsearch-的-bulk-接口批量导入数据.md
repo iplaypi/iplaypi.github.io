@@ -47,7 +47,7 @@ HBase的操作，注意字段的对齐
 
 bulk 接口会自动生成 `_id`，表示文档的唯一标识，不等于文档里面的 id 字段；
 
-有没有参数可以指定呢？待查明；
+有没有参数可以指定呢？待查明；【有参数可以指定，不指定则会随机生成】
 
 
 # 知识延伸
@@ -76,6 +76,8 @@ https://www.elastic.co/guide/cn/elasticsearch/guide/current/bulk.html
 正常查询
 退出查看文件
 ```
+
+使用 `phoenix` 往 `HBase` 表里面导数，遇到过一个小问题，参考：[HBase 错误：The node hbase is not in ZooKeeper](https://www.playpi.org/2019101901.html) 。
 
 
 # 一些异常
