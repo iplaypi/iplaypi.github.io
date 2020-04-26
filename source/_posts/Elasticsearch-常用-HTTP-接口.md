@@ -51,6 +51,16 @@ http://localhost:9200/_cat/allocation?v
 http://localhost:9200/_cat/shards
 ```
 
+## 索引状态
+
+可以看到索引的数据条数、磁盘大小、分片个数【可以使用别名】。
+
+各项指标解释说明参考：[indices-stats](https://www.elastic.co/guide/en/elasticsearch/reference/5.6/indices-stats.html) 。
+
+```
+http://localhost:9200/your_index/_stats
+```
+
 ## 集群配置信息
 
 ```
