@@ -85,6 +85,14 @@ http://localhost:9200/_nodes/hot_threads
 http://localhost:9200/_cat/thread_pool?v
 ```
 
+## 节点配置信息
+
+可以查看节点的 `JVM` 配置、插件信息、队列配置等等。
+
+```
+http://localhost:9200/_nodes/node_id
+```
+
 ## 使用堆内存大小
 
 使用
