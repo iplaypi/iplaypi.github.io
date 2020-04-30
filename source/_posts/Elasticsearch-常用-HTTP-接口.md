@@ -110,6 +110,20 @@ http://localhost:9200/_cat/fielddata?v&fields=uid&pretty
 http://localhost:9200/_cat/fielddata/uid?v&pretty
 ```
 
+按照节点、索引来查询：
+
+```
+按照索引、分片
+http://localhost:9200/_stats/fielddata?fields=*
+
+按照节点
+http://localhost:9200/_nodes/stats/indices/fielddata?fields=*
+
+按照节点、索引分片
+http://localhost:9200/_nodes/stats/indices/fielddata?level=indices&fields=*
+http://localhost:9200/_nodes/stats/indices/fielddata?level=indices&fields=_uid
+```
+
 
 # 分析器
 
