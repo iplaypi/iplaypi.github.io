@@ -129,5 +129,48 @@ RestHighLevelClient restHighLevelClient = new RestHighLevelClient(builder);
 Sniffer sniffer = Sniffer.builder(restHighLevelClient.getLowLevelClient()).build();
 ```
 
-2、`TransportClient` 方式使用起来比较麻烦，需要证书文件，以及很多配置【类似于 `Search Guard` 在 `Elasticsearch` 中的那些配置】，本质是通过 `tcp` 与 `Elasticsearch` 进行连接。此时只是加了一层认证，但对于权限管控的具体粒度是比较粗糙的，适用于管理员使用，不适用于普通的客户端使用。
+2、`TransportClient` 方式使用起来比较麻烦，需要证书文件，以及很多配置【类似于 `Search Guard` 在 `Elasticsearch` 中的那些配置】，本质是通过 `tcp` 与 `Elasticsearch` 进行连接【所以不需要密码了，证书已经表明了合法用户】。详细使用方式以及权限管理参考：[transport-clients](https://search-guard.com/searchguard-elasicsearch-transport-clients) 。
+
+条件描述：
+
+> The Transport Client needs to identify itself against the cluster by sending a trusted TLS certificate
+> For that, you need to specify the location of your keystore and truststore containing the respective certificates
+> A role with appropriate permissions has to be configured in Search Guard, either based on the hostname of the client, or the DN of the certificate
+
+当然，集群层面也需要开启相应的配置。
+
+首先在配置文件 `sgconfig/sg_config.yml` 中开启认证方式：
+
+```
+transport_auth_domain:
+  enabled: true
+  order: 2
+  http_authenticator:
+  authentication_backend:
+    type: internal
+```
+
+其次需要证书完整的DN信息，配置在 `sgconfig/sg_internal_users.yml` 文件中：
+
+```
+CN=root-ca.playpi.com, OU=Ops, O="Playpi Com, Inc.", DC=playpi, DC=com
+    hash: $2a$12$1HqHxm3QTfzwkse7vwzhFOV4gDv787cZ8BwmCwNEyJhn0CZoo8VVu
+```
+
+当然，如果忘记了 `DN` 信息，可以使用 `Java` 自带的工具获取：
+
+```
+keytool -printcert -file ./config/client-custom.pem
+```
+
+同样，需要在角色映射文件 `sgconfig/sg_roles_mapping.yml` 中配置：
+
+```
+client-custom:
+    users:
+        - banyan-custom
+        - 'root-ca.datatub.com, OU=Ops, O="Datatub Com, Inc.", DC=datatub, DC=com'
+
+注意单引号的使用
+```
 
