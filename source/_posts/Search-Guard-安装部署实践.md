@@ -1,18 +1,12 @@
 ---
 title: Search Guard 安装部署实践
-id: 2020-05-02 17:30:52
-date: 2020-05-02 17:30:52
+id: 2020042701
+date: 2020-04-27 17:30:52
 updated: 2020-05-02 17:30:52
-categories:
-tags:
-keywords:
+categories: 大数据技术知识
+tags: [SearchGuard,Elasticsearch,HTTP,TLS]
+keywords: SearchGuard,Elasticsearch,HTTP,TLS
 ---
-
-
-
-2020042701
-大数据技术知识
-SearchGuard,Elasticsearch,HTTP,TLS
 
 
 最近 `Elasticsearch` 集群出了一个小事故，根本原因在于对集群请求的监控不完善，以及对 `Elasticsearch` 访问权限无监控【目前是使用 `LDAP` 账号就可以登录访问，而且操作权限很大，这有很大的隐患】。因此，最近准备上线 `Search Guard`，先在测试环境部署安装了一遍，并测试了相关服务，整理了如下安装部署文档，以供读者参考。
@@ -152,7 +146,7 @@ Passwords for the private keys of the client certificates have been auto-generat
 
 输出证书文件
 
-图。。
+![生成证书文件一览](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2020/20200504162349.png "生成证书文件一览")
 
 备注 `Windows` 操作：
 
@@ -407,21 +401,95 @@ http.cors.allow-headers: "Authorization,X-Requested-With,-Content-Length,Content
 # 备注
 
 
+以下配置文件信息仅供参考，实际部署时，`Elasticsearch` 配置信息随证书而生成，直接复制即可，权限配置信息由实际情况而定。
+
+参考链接：[internal-users-database](https://docs.search-guard.com/v5/internal-users-database) 。
+
 ## 用户配置
 
-Elasticsearch
+`sg_internal_users.yml` 为用户信息配置，包含用户名、密码及角色【这里的角色是后台角色，不是 `sg` 角色，目前用不到，不用配置，以最终的 `sg_roles_mapping.yml` 为准】。
+
+密码 `hash` 使用自带的脚本生成：`./tools/hasher.sh -p mycleartextpassword`。
+
+```
+admin:
+    hash: $2a$12$qDsJtWx/IIkqhOVZXKh4M.bBLpjBmG6tL00vNhsfb4WS6wH7M1M3C
+    #password is: admin-!#%
+    #roles:
+    #    - admin
+    #    - can-read-all
+    #    - can-write-all
+
+custom:
+    hash: $2a$12$URJTPgsK9v7iYcq/dAYJVeH2t/VftkoHr2DraNnYS/ooqW3sZrJhS
+    #password is: custom-$@~
+    #roles:
+    #    - custom
+    #    - can-read-all
+```
 
 ## 角色配置
 
+`sg_roles.yml` 为角色权限配置【定义2种角色】，可自定义角色名及其权限。
 
+```
+admin:
+    cluster:
+        - UNLIMITED
+    indices:
+        '*':
+            '*':
+                - UNLIMITED
+
+custom:
+    cluster:
+        - CLUSTER_MONITOR
+        - CLUSTER_COMPOSITE_OPS_RO
+        - indices:data/read/scroll*
+    indices:
+        '*':
+            '*':
+                - READ
+                - SEARCH
+```
 
 ## 关联权限配置
 
+`sg_roles_mapping.yml` 角色、用户的映射【2个用户分属于2种角色】，必须在这里配置映射，只在第一个 `sg_internal_users.yml` 文件配置用户的后台角色不生效。
 
+```
+admin:
+    users:
+        - admin
+
+custom:
+    users:
+        - custom
+```
 
 ## Elasticsearch配置
 
+在 `elasticsearch.yml` 中增加以下与 `Search Guard` 相关的配置，以 `dev4` 作为示例：
 
+```
+searchguard.ssl.transport.pemcert_filepath: dev4.pem
+searchguard.ssl.transport.pemkey_filepath: dev4.key
+searchguard.ssl.transport.pemkey_password: 9NdKF2PBoU8A
+searchguard.ssl.transport.pemtrustedcas_filepath: root-ca.pem
+searchguard.ssl.transport.enforce_hostname_verification: false
+searchguard.ssl.transport.resolve_hostname: false
+searchguard.ssl.http.enabled: false
+searchguard.ssl.http.pemcert_filepath: dev4_http.pem
+searchguard.ssl.http.pemkey_filepath: dev4_http.key
+searchguard.ssl.http.pemkey_password: YVI8mGC654TQ
+searchguard.ssl.http.pemtrustedcas_filepath: root-ca.pem
+searchguard.nodes_dn:
+- CN=dev4.playpi.com,OU=Ops,O=Playpi Com\, Inc.,DC=playpi,DC=com
+- CN=dev5.playpi.com,OU=Ops,O=Playpi Com\, Inc.,DC=playpi,DC=com
+- CN=dev6.playpi.com,OU=Ops,O=Playpi Com\, Inc.,DC=playpi,DC=com
+searchguard.authcz.admin_dn:
+- CN=client-admin.playpi.com,OU=Ops,O=Playpi Com\, Inc.,DC=playpi,DC=com
+```
 
 ## 一些问题
 
