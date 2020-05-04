@@ -207,9 +207,9 @@ PUT /_cluster/settings/
 包含以下内容：
 
 - 1份根证书文件【2个文件】：`root-ca.key` 和 `root-ca.pem`
-- 对应  节点的1份证书文件【4个文件】：`<node>.key`、`<node>.pem`、 `<node>_http.key`、`<node>_http.pem`
+- 对应 `Elasticsearch` 节点的1份证书文件【4个文件】：`<node>.key`、`<node>.pem`、 `<node>_http.key`、`<node>_http.pem`
 - 注意：`client` 客户端4个证书文件不需要拷贝，只把 `admin` 权限的2个文件拷贝到某一个节点即可，用于激活管理 `Search Guard`
-- 4个证书文件【普通权限2个、`admin` 权限2个】，实际会用到 `admin` 权限的2个：`client-admin.key`、`client-admin.pem`【这2个文件给通过 `tcp` 访问的客户端使用，此外在执行 `sgadmin.sh` 的时候也需要使用】
+- 4个证书文件【普通权限2个、`admin` 权限2个】，实际会用到 `admin` 权限的2个：`client-admin.key`、`client-admin.pem`【这4个证书文件实际是给通过 `tcp` 访问的客户端使用的，此外在执行 `sgadmin.sh` 的时候也需要使用】
 
 ### 修改集群配置
 
@@ -231,7 +231,7 @@ PUT /_cluster/settings/
 
 2、配置 `Search Guard`，所有的 `Elasticsearch` 节点都需要，可以提前做好。
 
-在 `Elasticsearch` 的 `plugins/search-guard-5/sgconfig` 目录下，配置好3个与权限相关文件，密码密文由 `hash.sh` 工具转换：
+在 `Elasticsearch` 的 `plugins/search-guard-5/sgconfig` 目录下，配置好3个与权限相关的文件，密码密文由 `hash.sh` 工具转换：
 
 - `sg_internal_users.yml`，用户定义，指定用户名、密码
 - `sg_roles.yml`，角色定义，用来限制权限，指定2种角色
