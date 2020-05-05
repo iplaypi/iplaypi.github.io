@@ -16,6 +16,8 @@ type: guide
 # 2020
 
 
+- 2020050101，[Elasticsearch 的 fielddata 入门指引](https://www.playpi.org/2020050101.html)
+- 2020042701，[Search Guard 安装部署实践](https://www.playpi.org/2020042701.html)
 - 2020030201，[在 Elasticsearch 中指定查询返回的字段](https://www.playpi.org/2020030201.html)
 - 2020021301，[在技术之路上的一些小技巧](https://www.playpi.org/2020021301.html)
 - 2020012201，[Spark 警告：Not enough space to cache rdd in memory](https://www.playpi.org/2020012201.html)
