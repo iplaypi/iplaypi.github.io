@@ -124,6 +124,14 @@ http://localhost:9200/_nodes/stats/indices/fielddata?level=indices&fields=*
 http://localhost:9200/_nodes/stats/indices/fielddata?level=indices&fields=_uid
 ```
 
+## 清理缓存
+
+```
+curl localhost:9200/index/_cache/clear?pretty&filter=false&field_data=true&fields=_uid,site_name
+
+关于 `&bloom=false` 参数的问题，要看当前 `Elasticsearch` 版本是否支持，`v5.6.x` 是不支持了。
+```
+
 
 # 分析器
 

@@ -162,7 +162,21 @@ GET /_nodes/stats/indices/fielddata?fields=field*
 }
 ```
 
-2、关于 `fielddata` 属性【不是本文描述的 `fielddata` 缓存】。
+2、对于一般的字段，很难达到大量的内存占用，而多值的字段则很容易，例如 `id`、时间戳等字段，取值范围太广了，无论是聚合还是排序，都需要大内存【而且对于这种字段做聚合、排序显然是无意义的】。
+
+此外还有一种内置元字段，可能也会被误操作加载到内存中去了【上述现象就是这种】，关于 `_uid` 元字段的内容请参考官网【`v7.x` 之后不再有这个字段，因为取消了 `type`】：[mapping-uid-field](https://www.elastic.co/guide/en/elasticsearch/reference/5.6/mapping-uid-field.html) 。
+
+由于 `fielddata` 缓存优先级非常高，`JVM` 做 `Full GC` 时很难把它清理掉，所以会永远占用着内存，如果内存使用已经达到了上限，则就会引发频繁的 `Full GC`，严重点 `Elasticsearch` 节点可能会挂掉。
+
+所以，手动清除缓存也是有必要的：
+
+```
+curl localhost:9200/index/_cache/clear?pretty&filter=false&field_data=true&fields=_uid,site_name
+
+关于 `&bloom=false` 参数的问题，要看当前 `Elasticsearch` 版本是否支持，`v5.6.x` 是不支持了。
+```
+
+3、关于 `fielddata` 属性【不是本文描述的 `fielddata` 缓存】。
 
 关于 `text` 类型字段的 `fielddata` 解释，官网链接：[fielddata](https://www.elastic.co/guide/en/elasticsearch/reference/5.6/fielddata.html) 。
 
