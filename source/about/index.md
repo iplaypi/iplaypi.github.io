@@ -144,6 +144,7 @@ comments: false
 - 一起做网店，里面可以查到全国各地批发市场的商品信息，网上的货源基本在此：[一起做网店](https://gz.17zwd.com)
 - 免费在线作图工具，流程图、思维导图、`UML` 图等等：[ProcessOn](https://www.processon.com)
 - `JSON` 到 `csv` 的转换工具：[json-csv.com](https://json-csv.com)
+- 针对 `md5`、`sha1` 等全球通用公开的加密算法进行反向查询：[cmd5](https://www.cmd5.com)
 
 ## 官方网站
 
