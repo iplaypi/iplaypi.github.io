@@ -165,6 +165,21 @@ Passwords for the private keys of the client certificates have been auto-generat
 - 客户端1份证书文件【5个文件，用于 `sgadmin.sh` 执行激活】：`client-admin`.key、`client-admin.pem`、`client-custom.key`、`client-custom.pem`【若密码生成方式设为 `auto`，密码在 `client_certificates.readme` 中找】
 - 其中，每个 `<node>_elasticsearch_config_snippet.yml` 文件中的内容，可以直接复制粘贴到每个 `Elasticsearch` 节点的配置文件中【视情况变更部分配置，例如 `searchguard.ssl.http.enabled: false`】
 
+除了用肉眼检查文件个数是否正确，还要检查证书文件是否合法【校验】，可以使用自带的工具：`/tools/sgtlsdiag.sh` 。
+
+例如：`./tools/sgtlsdiag.sh -ca out/root-ca.pem -crt out/dev4.pem`。
+
+- -ca，指定本地授权中心
+- -crt，指定 `Elasticsearch` 节点证书文件
+
+此外，还可以检查 `Elasticsearch` 节点的配置是否正确：
+
+```
+./tools/sgtlsdiag.sh -es /etc/elasticsearch/elasticsearch.yml
+```
+
+- -es，指定 `Elasticsearch` 配置文件
+
 ## 安装 Search Guard
 
 提示：以下列出的是常规的安装、配置流程，实际操作中，可以提前把一切工作做好【证书生成、配置、插件安装】，然后直接重启 `Elasticsearch` 集群、激活 `Search Guard`，实际停机时间很短【保守估计30分钟以内，等待集群状态恢复绿色需要几小时到十几小时，视集群的分片恢复能力而定】。
@@ -495,11 +510,11 @@ searchguard.authcz.admin_dn:
 
 0、在线生成证书文件，`Search Guard` 也提供了在线生成证书文件的工具，见：[tls-certificate-generator](https://search-guard.com/tls-certificate-generator) ，但是如果 `Elasticsearch` 节点很多，配置也就多，还是通过离线工具自己生成比较方便，效果是一样的。
 
-1、嗅探问题，不能开启，集群节点无法自动嗅探，会抛出超时异常。
+1、嗅探问题，可以同步开启，集群节点自动更新，避免单个 `Elasticsearch` 节点出问题出现超时异常。
 
-`TransportClient` 方式有参数 `client.transport.sniff` 对应，设置为 `false` 即可。
+`TransportClient` 方式有参数 `client.transport.sniff` 对应，设置为 `true` 即可。
 
-`HTTP` 方式有 `Sniffer.builder()` 方法，不使用即可：
+`HTTP` 方式有 `Sniffer.builder()` 方法，可以使用：
 
 ```
 RestClientBuilder builder = RestClient.builder(hosts);
@@ -507,7 +522,46 @@ RestHighLevelClient restHighLevelClient = new RestHighLevelClient(builder);
 Sniffer sniffer = Sniffer.builder(restHighLevelClient.getLowLevelClient()).build();
 ```
 
-2、`TransportClient` 方式使用起来比较麻烦，需要证书文件，以及很多配置【类似于 `Search Guard` 在 `Elasticsearch` 中的那些配置】，本质是通过 `tcp` 与 `Elasticsearch` 进行连接【所以不需要密码了，证书已经表明了合法用户】。详细使用方式以及权限管理参考：[transport-clients](https://search-guard.com/searchguard-elasicsearch-transport-clients) 。
+2、节点变更新增证书
+
+如果有 `Elasticsearch` 节点被移除，则可以直接移除。但是如果有 `Elasticsearch` 节点需要被添加进入集群，证书怎么生成？
+
+也是可以的，即可以手动生成证书文件，但是要保留当前生成的 `ca` 授权中心，即第一次生成证书时指定 `-ca` 参数输出到 `out` 目录的 `root-xx` 这3个文件。都很重要，一定要保留【要把 `config`、`out` 目录保留，甚至整个 `search-guard-tlstool` 目录保留，以后可以直接使用】。
+
+在 `config` 中，就是一些配置文件，很重要，在 `out` 中，其中 `root-ca.readme` 用来查看密码，很重要，`root-ca.pem`、`root-ca.key` 是秘钥文件，也很重要。
+
+以后需要添加 `Elasticsearch` 节点时，需要申请证书，必须利用这个 `ca` 授权中心，否则生成的证书无法使用。
+
+准备完成后，具体操作：
+
+把 `root-ca.readme` 中的密码配置在 `config/tlsconfig.yml` 文件的 `ca -> root -> pkPassword` 值上面【表示用这个密码、`root-ca` 来生成新的证书，第一次使用时配置的是 `auto`】，然后根据 `Elasticsearch` 节点名称配置 `nodes` 项。
+
+然后生成证书时，去掉 `-ca` 参数，则会默认使用本地的 `ca`，即 `out` 里面的 `root-ca`，它会自动对比配置中的 `nodes` 节点和 `out` 目录中以前的证书文件，如果存在则跳过，不存在时会生成【即为新 `Elasticsearch` 节点生成可用的证书】。
+
+备注 `Windows` 操作：
+
+```
+.\tools\sgtlstool.bat -c .\config\tlsconfig.yml -crt
+
+输出日志中会显示跳过了什么，生成了什么。
+
+xx.key does already exist. Skipping creation of certificate for yy
+...
+...
+Created 2 node certificates.
+Passwords for the private keys of the node certificates have been auto-generated.
+The passwords are stored in the config snippet files.
+```
+
+3、单物理机多节点证书问题
+
+开发环境中的 `Elasticsearch` 节点是一台物理机上有2个 `Elasticsearch` 节点，它们的节点名称不一样，但是 `ip` 是一样的，这种仍旧需要生成2份证书【每个 `Elasticsearch` 节点1份】，配置时全部使用 `Elasticsearch` 节点的名字来配置，多个 `node` 的 `ip` 地址可以一样。
+
+4、用户更新
+
+以后如果需要变更 `SaerchGuard` 的用户，例如新增、删除、添加权限，不需要重启 `Elasticsearch` 集群了，直接更改与权限相关的那几个配置文件就行，然后使用 `./sgadmin.sh` 工具重新激活一次即可。
+
+5、`TransportClient` 方式使用起来比较麻烦，需要证书文件，以及很多配置【类似于 `Search Guard` 在 `Elasticsearch` 中的那些配置】，本质是通过 `tcp` 与 `Elasticsearch` 进行连接【所以不需要密码了，证书已经表明了合法用户】。详细使用方式以及权限管理参考：[transport-clients](https://search-guard.com/searchguard-elasicsearch-transport-clients) 。
 
 条件描述：
 
