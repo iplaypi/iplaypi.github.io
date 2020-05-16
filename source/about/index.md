@@ -157,6 +157,8 @@ comments: false
 - 广州人力和社保网上办事系统：[gzlss.hrssgz.gov.cn](http://gzlss.hrssgz.gov.cn/cas/login)
 - 中国人民银行征信中心：[ipcrs.pbccrc](https://ipcrs.pbccrc.org.cn)
 - 广州市住房和城乡建设局：[广州市住房和城乡建设局](http://zfcj.gz.gov.cn)
+- 阳光家缘，广州市住房和城乡建设局支持：[阳光家缘](http://zfcj.gz.gov.cn/data/Category_623/Index.aspx)
+- 广州市存量房自行交易网签系统：[广州存量房网签](https://clf.gzcc.gov.cn:7800/home)
 - 中华人民共和国住房和城乡建设部：[mohurd](http://www.mohurd.gov.cn)
 - 黑猫投诉，消费者维权：[黑猫投诉](https://tousu.sina.com.cn)
 - 百度取证，保障司法效力，在线申请，简单快捷：[百度取证](http://quzheng.baidu.com)
