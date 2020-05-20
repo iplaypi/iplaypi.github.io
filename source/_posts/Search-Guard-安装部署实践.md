@@ -314,9 +314,9 @@ PUT /_cluster/settings/
 [2020-04-24T22:05:01,677][WARN ][c.f.s.s.t.SearchGuardSSLNettyTransport] [dev6] Someone (/192.168.1.62:44524) speaks transport plaintext instead of ssl, will close the channel
 ```
 
-由于 `Search Guard` 需要创建自己的索引，如果关闭了自动分配，新创建的索引从分片可能无法分配，`Search Guard` 激活过程会卡住，可以选择 `-er 1` 设置副本数为0，即只有主分片，等 `Elasticsearch` 集群恢复后再设置为1。如果 `Elasticsearch` 集群默认是开启了自动分配，无需关心此问题。
+由于 `Search Guard` 需要创建自己的索引，如果关闭了自动分配，新创建的索引从分片可能无法分配，`Search Guard` 激活过程会卡住，可以选择 `-esa` 参数，如果集群分片很多，需要开启，否则 `SearchGuard` 的主分片等待初始化需要很久。如果 `Elasticsearch` 集群默认是开启了自动分配，无需关心此问题。
 
-通过测试发现 `Search Guard` 开启了分片自动扩展，实际初始时只有1个主分片，可以分配成功。
+通过测试发现 `Search Guard` 开启了分片自动扩展，实际初始时只有1个主分片，可以分配成功。但是注意副本数太多，自动扩展【`index.auto_expand_replicas` 设置为 `0-all`】是根据可用 `Elasticsearch` 节点来设置副本数的，实际中没必要【设置为 `false`】，并且把副本数减小【参数 `index.number_of_replicas`】，例如设置为2或者3。
 
 集群黄色的时候创建索引无法成功，一直在等待【大概率是因为测试环境的分片太多，加上刚刚重启，分配太慢了，等了至少20分钟还在等待，看 `Elasticsearch` 节点的日志，`put mapping` 超时】，后来等集群绿色的时候很快创建成功。
 
