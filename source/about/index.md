@@ -145,6 +145,7 @@ comments: false
 - 免费在线作图工具，流程图、思维导图、`UML` 图等等：[ProcessOn](https://www.processon.com)
 - `JSON` 到 `csv` 的转换工具：[json-csv.com](https://json-csv.com)
 - 针对 `md5`、`sha1` 等全球通用公开的加密算法进行反向查询：[cmd5](https://www.cmd5.com)
+- 马克思主义网络文库：[Marxists Internet Archive](https://www.marxists.org)
 
 ## 官方网站
 

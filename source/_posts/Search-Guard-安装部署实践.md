@@ -127,7 +127,7 @@ clients:
 参数含义：
 
 - -c，指定配置文件位置
-- -ca，创建证书授权中心
+- -ca，创建并指定本地证书授权中心【如果已经存在本地证书授权中心则不需要】
 - -crt，使用本地证书授权中心创建证书
 
 除了 `root` 证书总计有3个文件【包含 `readme`】，`client` 总计有5个文件【包含 `readme`】，此外每个 `Elasticsearch` 节点对应有5个文件【包含 `config`】。
@@ -169,7 +169,7 @@ Passwords for the private keys of the client certificates have been auto-generat
 
 例如：`./tools/sgtlsdiag.sh -ca out/root-ca.pem -crt out/dev4.pem`。
 
-- -ca，指定本地授权中心
+- -ca，创建并指定本地证书授权中心【如果已经存在本地证书授权中心则不需要】
 - -crt，指定 `Elasticsearch` 节点证书文件
 
 此外，还可以检查 `Elasticsearch` 节点的配置是否正确：
