@@ -67,6 +67,28 @@ http://localhost:9200/your_index/_stats
 http://localhost:9200/_cluster/settings?pretty
 ```
 
+对于一些可以设置的参数，临时生效，对于集群的管理很有帮助。
+
+例如节点黑名单：`cluster.routing.allocation.exclude._ip`，临时下线节点，类似于黑名单，分片不会往指定的主机移动，同时会把分片从指定的节点全部移除，最终可以下线该节点，可通过 `put transient` 设置临时生效。
+
+```
+curl -XPUT 127.0.0.1:9200/_cluster/settings -d '{
+    "transient" :{
+        "cluster.routing.allocation.exclude._ip" : "192.168.0.1"
+    }
+}'
+```
+
+例如临时关闭分片重分配【开启时设置值为 `all`】。
+
+```
+curl -XPUT 127.0.0.1:9200/_cluster/settings -d '{
+    "transient": {
+        "cluster.routing.allocation.enable": "none"
+    }
+}'
+```
+
 ## 热点线程
 
 查看热点线程，可以判断热点线程是 `search`，`bulk`，还是 `merge` 类型，从而进一步分析是查询还是写入导致 `CPU` 负载过高。
