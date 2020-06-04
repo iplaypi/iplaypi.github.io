@@ -73,4 +73,26 @@ node.ingest: true
 
 `Coordinating Node`，协调节点，每一个节点都是一个潜在的协调节点，且不能被禁用，协调节点最大的作用就是将各个分片里的数据汇集起来一并返回给客户端，因此 `Elasticsearch` 的节点需要有足够的 `CPU` 和内存去处理协调节点的 `gather` 阶段。
 
+# 线程类型
+
+
+写入、索引、查询、拉取
+
+
+并发大小，队列长度
+
+
+
+线程池的类型：
+
+cached  无限制的线程池，为每个请求创建一个线程。这种线程池是为了防止请求被阻塞或者拒绝，其中的每个线程都有一个超时时间(`keep_alive`)，默认5分钟，一旦超时就会回收终止。
+
+`v5.x` 之后被取消。
+
+fixed  有着固定大小的线程池，大小由size属性指定，默认是`5*cores`数，允许你指定一个队列（使用`queue_size`属性指定，默认是-1，即无限制）用来保存请求，直到有一个空闲的线程来执行请求。如果Elasticsearch无法把请求放到队列中（队列满了），该请求将被拒绝。
+
+scaling  可变大小的pool，大小根据负载在1到size间，同样`keep_alive`参数指定了闲置线程被回收的时间。
+
+
+参考：[modules-threadpool](https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-threadpool.html) 。
 

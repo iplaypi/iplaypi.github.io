@@ -89,6 +89,22 @@ curl -XPUT 127.0.0.1:9200/_cluster/settings -d '{
 }'
 ```
 
+设置慢索引阈值，指定索引进行操作，可以使用通配符：
+
+```
+curl -XPUT 127.0.0.1:9200/your_index_*/_settings -d '{
+  "index.indexing.slowlog.threshold.index.info": "10s"
+}''
+```
+
+设置慢查询阈值方式类似：
+
+```
+curl -XPUT 127.0.0.1:9200/your_index_*/_settings -d '{
+  "index.indexing.slowlog.threshold.search.info": "10s"
+}'
+```
+
 ## 热点线程
 
 查看热点线程，可以判断热点线程是 `search`，`bulk`，还是 `merge` 类型，从而进一步分析是查询还是写入导致 `CPU` 负载过高。
@@ -113,7 +129,11 @@ http://localhost:9200/_cat/thread_pool?v
 
 ```
 http://localhost:9200/_nodes/node_id
+http://localhost:9200/_nodes?pretty=true
+http://localhost:9200/_nodes/stats/thread_pool?pretty=true
 ```
+
+注意，`thread_pool` 线程池相关参数自从 `v5.x` 以后不支持动态设置【即通过 `put` 接口】，只能通过更改节点的配置文件并重启节点来操作，这也说明了这个参数是对于节点生效，不同配置的节点可以设置不同的值。
 
 ## 使用堆内存大小
 
