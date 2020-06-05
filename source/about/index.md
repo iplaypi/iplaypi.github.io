@@ -174,6 +174,7 @@ comments: false
 - 广州互联网法院：[gzinternetcourt.gov.cn](https://www.gzinternetcourt.gov.cn)
 - 杭州互联网法院：[hztl.zjcourt.cn](http://hztl.zjcourt.cn)
 - 国家企业信息公示系统：[gsxt.gdgs](http://gsxt.gdgs.gov.cn)
+- 北京师范大学，中国收入分配研究院，政府顶级智库：[中国收入分配研究院](http://ciidbnu.org)
 
 ## 技术列表
 

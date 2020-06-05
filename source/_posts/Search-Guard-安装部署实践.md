@@ -553,6 +553,41 @@ Passwords for the private keys of the node certificates have been auto-generated
 The passwords are stored in the config snippet files.
 ```
 
+2020-06-06 追加内容：
+
+在实际操作中，发现了问题，导致无法新增节点，对于新生成的证书，由于 `nodesDn` 不在集群的列表中，无法被识别，总是有异常：
+
+```
+[2020-06-04T22:53:18,346][WARN ][o.e.d.z.UnicastZenPing   ] [xx_node0] [1] failed send ping to {#zen_unicast_xx:9300_0#}{07QOvQd_Q9KEO7FIxcpzAQ}{xx}{192.168.1.x:9300}
+java.lang.IllegalStateException: handshake failed with {#zen_unicast_xx:9302_0#}{07QOvQd_Q9KEO7FIxcpzAQ}{xx}{192.168.20.x:9300}
+	at org.elasticsearch.transport.TransportService.handshake(TransportService.java:413) ~[elasticsearch-5.6.8.jar:5.6.8]
+	at org.elasticsearch.transport.TransportService.handshake(TransportService.java:380) ~[elasticsearch-5.6.8.jar:5.6.8]
+	at org.elasticsearch.discovery.zen.UnicastZenPing$PingingRound.getOrConnect(UnicastZenPing.java:400) ~[elasticsearch-5.6.8.jar:5.6.8]
+	at org.elasticsearch.discovery.zen.UnicastZenPing$3.doRun(UnicastZenPing.java:507) [elasticsearch-5.6.8.jar:5.6.8]
+	at org.elasticsearch.common.util.concurrent.ThreadContext$ContextPreservingAbstractRunnable.doRun(ThreadContext.java:674) [elasticsearch-5.6.8.jar:5.6.8]
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37) [elasticsearch-5.6.8.jar:5.6.8]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [?:1.8.0_161]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [?:1.8.0_161]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_161]
+Caused by: org.elasticsearch.transport.RemoteTransportException: [xx_master][192.168.20.x:9300][internal:transport/handshake]
+Caused by: org.elasticsearch.ElasticsearchException: Illegal parameter in http or transport request found.
+This means that one node try to connect to another with 
+a non-node certificate (no OID or searchguard.nodes_dn incorrect configured) or that someone 
+is spoofing requests. Check you TLS certificate setup as described here: See http://docs.search-guard.com/latest/troubleshooting-tls
+	at com.floragunn.searchguard.ssl.util.ExceptionUtils.createBadHeaderException(ExceptionUtils.java:58) ~[?:?]
+	at com.floragunn.searchguard.transport.SearchGuardRequestHandler.messageReceivedDecorate(SearchGuardRequestHandler.java:165) ~[?:?]
+```
+
+此时去更新集群中所有节点的 `elasticsearch.yml` 配置文件中的 `searchguard.nodes_dn` 属性也没有用处了，新增节点始终无法加入集群。
+
+通过分析，发现了问题所在：
+
+一开始安装插件时，`searchguard.nodes_dn:` 配置项没有使用正则通配符的方式，导致后续的新增节点证书无法被识别，进而新增节点无法加入集群。
+
+同时，一开始生成证书时没有使用 `nodeOid` 配置，导致无法使用 `searchguard.cert.oid` 来标记合法的证书，新增节点无法加入集群。
+
+那么，解决方案也就有两种，一是重新配置 `searchguard.nodes_dn:` 项，并重启集群；二是使用 `nodeOid` 配置的方式重新生成证书，更改所有配置，重启集群。
+
 3、单物理机多节点证书问题
 
 开发环境中的 `Elasticsearch` 节点是一台物理机上有2个 `Elasticsearch` 节点，它们的节点名称不一样，但是 `ip` 是一样的，这种仍旧需要生成2份证书【每个 `Elasticsearch` 节点1份】，配置时全部使用 `Elasticsearch` 节点的名字来配置，多个 `node` 的 `ip` 地址可以一样。
@@ -605,4 +640,10 @@ custom:
 
 注意单引号的使用
 ```
+
+6、使用 `elasticsearch-hadoop` 框架
+
+实际上，上文中指定的 `custom` 用户的权限是不够的，`elasticsearch-hadoop` 框架它通过 `_nodes/http` 接口来获取集群的节点信息，进一步通过具体的节点来访问，读取数据、写入数据等。而对于节点的数据读取，`custom` 用户没有权限，也就导致在使用 `elasticsearch-hadoop` 框架时，无法连接集群的节点，进而无法读写数据。
+
+此时，需要考虑更加宽泛的用户权限，待补充。
 
