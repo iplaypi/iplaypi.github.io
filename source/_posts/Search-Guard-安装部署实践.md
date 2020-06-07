@@ -641,9 +641,3 @@ custom:
 注意单引号的使用
 ```
 
-6、使用 `elasticsearch-hadoop` 框架
-
-实际上，上文中指定的 `custom` 用户的权限是不够的，`elasticsearch-hadoop` 框架它通过 `_nodes/http` 接口来获取集群的节点信息，进一步通过具体的节点来访问，读取数据、写入数据等。而对于节点的数据读取，`custom` 用户没有权限，也就导致在使用 `elasticsearch-hadoop` 框架时，无法连接集群的节点，进而无法读写数据。
-
-此时，需要考虑更加宽泛的用户权限，待补充。
-
