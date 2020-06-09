@@ -105,6 +105,19 @@ curl -XPUT 127.0.0.1:9200/your_index_*/_settings -d '{
 }'
 ```
 
+推迟索引分片的重新分配时间平【适用于 `Elasticsearch` 节点短时间离线再加入集群，提前设置好这个参数，避免从分片的复制移动，降低网络 `IO`】。
+
+```
+PUT /your_index/_settings
+{
+  "settings": {
+    "index.unassigned.node_left.delayed_timeout": "5m"
+  }
+}
+```
+
+可以使用索引别名、通配符设置，这样就可以一次性设置多个索引，甚至全部的索引。
+
 ## 热点线程
 
 查看热点线程，可以判断热点线程是 `search`，`bulk`，还是 `merge` 类型，从而进一步分析是查询还是写入导致 `CPU` 负载过高。
