@@ -227,6 +227,12 @@ git tag 1.0.1 commit_id
 # 当然,这里的commit_id会很长,不用全部写出来,一般6-10位足够了,只要保证它是唯一的就行
 # 如果需要获取commit_id,可以使用log命令
 git log
+
+# 删除本地标签
+git tag -d your_tag_name
+# 删除远程标签
+git push origin :refs/tags/your_tag_name
+
 ```
 
 
