@@ -233,6 +233,12 @@ git tag -d your_tag_name
 # 删除远程标签
 git push origin :refs/tags/your_tag_name
 
+# 删除本地子模块的标签
+git submodule foreach git tag -d your_tag_name
+# 删除远程子模块的标签
+git submodule foreach git push origin :refs/tags/your_tag_name
+
+注意：有时候，项目子模块的标签是不允许被删除的，就会有一些关于权限的错误提示，只要到管理员那里添加对应的权限就行。
 ```
 
 
