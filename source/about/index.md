@@ -179,6 +179,8 @@ comments: false
 - 浙江政务服务网：[行政处罚结果信息公开](http://www.zjzwfw.gov.cn/zjzw/punish/frontpunish/showadmins.do?webId=1)
 - 中国外来入侵物种信息系统，可以搜索入侵名录，例如刺沙蓬：[iplant.cn](http://www.iplant.cn/ias)
 - 国家标本资源平台，也可以查询入侵植物：[www.nsii.org.cn](http://www.nsii.org.cn)
+- 广州市公安局，可以看到例如户政业务、车管所业务入口：[gaj.gz.gov.cn](http://gaj.gz.gov.cn)
+- 广州市中小客车指标调控管理信息系统：[广州车牌摇号](https://jtzl.gzjt.gov.cn)
 
 ## 技术列表
 
