@@ -146,6 +146,8 @@ comments: false
 - `JSON` 到 `csv` 的转换工具：[json-csv.com](https://json-csv.com)
 - 针对 `md5`、`sha1` 等全球通用公开的加密算法进行反向查询：[cmd5](https://www.cmd5.com)
 - 马克思主义网络文库：[Marxists Internet Archive](https://www.marxists.org)
+- 古诗词搜索、字典搜索：[搜韵网](https://sou-yun.cn)
+- 古诗文搜索，内容丰富完整，收费：[中华经典古籍库](http://publish.ancientbooks.cn)
 
 ## 官方网站
 
