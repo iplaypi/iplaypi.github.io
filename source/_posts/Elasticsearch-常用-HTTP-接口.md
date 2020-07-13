@@ -134,6 +134,9 @@ http://localhost:9200/_nodes/hot_threads
 
 ```
 http://localhost:9200/_cat/thread_pool?v
+
+# 添加参数可以查看各个指标
+http://localhost:9200/_cat/thread_pool/search?v&h=node_name,ip,name,active,queue,rejected,completed,type,queue_size
 ```
 
 ## 节点配置信息
@@ -185,6 +188,39 @@ http://localhost:9200/_nodes/stats/indices/fielddata?level=indices&fields=_uid
 curl localhost:9200/index/_cache/clear?pretty&filter=false&field_data=true&fields=_uid,site_name
 
 关于 `&bloom=false` 参数的问题，要看当前 `Elasticsearch` 版本是否支持，`v5.6.x` 是不支持了。
+```
+
+## 推迟索引分片的重新分配时间
+
+适用于节点短时间离线再加入集群，提前设置好，避免从分片的复制移动。
+
+```
+PUT your_index/_settings
+{
+  "settings": {
+    "index.unassigned.node_left.delayed_timeout": "5m"
+  }
+}
+```
+
+## 排除掉节点
+
+不让索引的分片分配在上面，想取消设置为 `null` 即可。
+
+```
+# 索引级别的
+PUT your_index/_settings
+{
+  "index.routing.allocation.exclude._ip": "ip1,ip2"
+}
+
+# 集群级别的，等价于下线节点，滚动重启时需要
+PUT /_cluster/settings/
+{
+    "transient": {
+        "cluster.routing.allocation.exclude._ip": "ip1,ip2"
+    }
+}
 ```
 
 
