@@ -223,6 +223,29 @@ PUT /_cluster/settings/
 }
 ```
 
+## 基于负载的智能路由查询
+
+`v6.2` 以及以上版本，`search` 智能路由设置，`v7.0` 以及以上版本默认开启。
+
+```
+PUT /_cluster/settings
+{
+    "transient": {
+        "cluster.routing.use_adaptive_replica_selection": true
+    }
+}
+```
+
+## 查询全局超时时间
+
+`search` 全局超时时间，避免某些耗时的查询把集群拖垮。
+
+```
+search.default_search_timeout
+
+示例：5m
+```
+
 
 # 分析器
 
