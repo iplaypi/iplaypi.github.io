@@ -87,6 +87,26 @@ curl -XPUT 127.0.0.1:9200/_cluster/settings -d '{
         "cluster.routing.allocation.enable": "none"
     }
 }'
+
+PUT /_cluster/settings/
+{
+    "transient": {
+        "cluster.routing.allocation.enable": "none"
+    }
+}
+```
+
+设置整个集群每个节点可以分配的分片数，主要是为了数据分布均匀。
+
+```
+GET _cluster/settings
+
+PUT /_cluster/settings/
+{
+    "transient": {
+        "cluster.routing.allocation.total_shards_per_node": "50"
+    }
+}
 ```
 
 设置慢索引阈值，指定索引进行操作，可以使用通配符：
@@ -244,6 +264,46 @@ PUT /_cluster/settings
 search.default_search_timeout
 
 示例：5m
+```
+
+## 查询时指定分片主机等
+
+```
+preference=_shards:8,12
+preference=_only_nodes:1
+preference=_primary
+preference=_replica
+ 
+POST your_index/_search?preference=_shards:12
+{
+  "query": {
+    "match_phrase": {
+      "content": "查证"
+    }
+  }
+}
+```
+
+## 分片迁移的并发数带宽流量大小等等
+
+```
+# 并发数
+PUT _cluster/settings
+{
+  "transient": {
+    "cluster.routing.allocation.node_concurrent_outgoing_recoveries": "3",
+    "cluster.routing.allocation.node_concurrent_incoming_recoveries": "3",
+    "cluster.routing.allocation.node_concurrent_recoveries": 3
+  }
+}
+
+# 带宽
+PUT _cluster/settings
+{
+    "transient": {
+        "indices.recovery.max_bytes_per_sec": "20mb" 
+    }
+}
 ```
 
 
@@ -752,11 +812,18 @@ POST _reindex
   }
 }
 
+size参数在最外层表示随机抽取n条测试；
+size参数在source里面表示batch大小，默认1000；
+ 
+参数 wait_for_completion=false 可以让任务在后台一直运行到完成，否则当数据量大的时候，执行时间过长，会超时退出。
+
 查看任务状态，取消任务
 
 GET _tasks?detailed=true&actions=*reindex
 
 POST _tasks/task_id:1/_cancel
+
+POST _tasks/_cancel?nodes=nodexx&actions=*search*
 ```
 
 此外，参考：[Elasticsearch 的 Reindex API 详解](https://www.playpi.org/2020011601.html) ，里面包含了常见的参数使用方式，以及查看迁移任务进度、取消迁移任务的方式。
@@ -817,6 +884,20 @@ curl -XPOST 'localhost:9200/_cluster/reroute' -d '{
 
 将分配失败的分片重新分配
 curl -XGET 'localhost:9200/_cluster/reroute?retry_failed=true'
+
+用命令手动分配分片，接受丢数据（ES集群升级前关闭了your_index索引，升级后，把副本数设置为0，打开有20个分片无法分配，集群保持红色。关闭也无效，只好接受丢数据恢复空分片）。
+{
+  "commands": [
+    {
+      "allocate_empty_primary": {
+        "index": "your_index",
+        "shard": 17,
+        "node": "nodexx",
+        "accept_data_loss": true
+      }
+    }
+  ]
+}
 ```
 
 注意，`allocate` 命令还有一个参数，`"allow_primary" : true`，即允许该分片做主分片，但是这样可能会造成数据丢失【在不断写入数据的时候】，因此要慎用【如果数据在分配过程中是静态的则可以考虑使用】。
