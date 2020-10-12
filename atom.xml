@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.playpi.org/"/>
-  <updated>2020-05-01T09:06:06.000Z</updated>
+  <updated>2020-10-09T08:21:16.000Z</updated>
   <id>https://www.playpi.org/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>未预期的符号，附近有语法错误</title>
+    <link href="https://www.playpi.org/2020091601.html"/>
+    <id>https://www.playpi.org/2020091601.html</id>
+    <published>2020-09-16T08:21:16.000Z</published>
+    <updated>2020-10-09T08:21:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在 <code>Windows</code> 系统上面使用 <code>Sublime text 3</code>，创建了一个 <code>Shell</code> 文件，然后上传到 <code>Linux</code> 系统去执行。结果总是报错：<code>未预期的符号，附近有语法错误 </code>，折腾了我一个多小时，反复仔细检查了脚本没有发现问题，最后没想到是文件的格式在不同操作系统下不兼容，本质是回车换行符的问题，气死我了。</p><a id="more"></a><h1 id="问题出现"><a href="# 问题出现" class="headerlink" title="问题出现"></a> 问题出现 </h1><p> 执行脚本文件，总是报错：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kafka_monitor_offset.sh: 行 16: 未预期的符号 `$&apos;do\r&apos;&apos; 附近有语法错误 </span><br><span class="line">&apos;afka_monitor_offset.sh: 行 16:`    do</span><br></pre></td></tr></table></figure><p>但是回到脚本查看，又没有什么语法错误。</p><p>仔细回想了一下，突然想到：自己是在 <code>Windows</code> 系统上面创建、编辑的 <code>Shell</code> 脚本文件，而现在是放在 <code>Linux</code> 系统上面来执行，大概率是这个问题了，朝这个方向找找原因。</p><h1 id="问题解决"><a href="# 问题解决" class="headerlink" title="问题解决"></a>问题解决 </h1><p> 先用最简单的方式尝试了一下，即在 <code>Linux</code> 系统上面重新创建 <code>Shell</code> 文件，然后编辑填充内容，执行没问题，一次成功，顿时喜悦又崩溃。</p><p>那接着就可以回到前面的问题了，如果非要在 <code>Windows</code> 系统上面编辑文件，该怎么解决呢？或者说我收到的是同事发过来的文件，该怎么解决呢？</p><p>其实，也是有办法的，这个问题早就有人遇到过了，并且考虑周全，早就给了解决方案。</p><p>首先，可以使用 <code>vim</code> 工具来验证文件的系统格式：<code>:set ff</code>。如果结果为 <code>fileformat=unix</code> 说明可以在 <code>Linux</code> 系统上面执行，如果结果为 <code>ileformat=dos</code> 说明是 <code>Windows</code> 格式的文件，无法直接在 <code>Linux</code> 系统上面执行，需要转换。</p><p>转换方式有多种多样，以下列出几种：</p><p>1、解铃还须系铃人，自己惹的事自己平，那就继续使用 <code>Sublime text 3</code> 文本编辑器，再给它个机会。依次选择首选项、设置、用户，就会弹出配置文件，在里面加上配置项：<code>&quot;default_line_ending&quot;: &quot;unix&quot;</code>，保存。</p><p>设置了文件的默认格式，之后新建的脚本文件默认就可以在 <code>Linux</code> 上面执行了。</p><p>2、使用 <code>vim</code> 工具，直接设置 <code>:set ff=unix</code> 或者 <code>:set fileformat=unix</code>，效果一样。设置后，脚本文件的格式就自动转换为 <code>Linux</code> 系统上面可以使用的。</p><p>3、手动搜索替换，这是最原始的方案，既然是回车换行符造成的【有时候不一定是】，那就手动把它替换掉就行了。由于在 <code>Windows</code> 系统上面，回车换行符号是 <code>\n\r</code>，而在 <code>Linux</code> 系统上面是 <code>\n</code>，所以把 <code>\r</code> 去掉就行了。例如使用 <code>sed</code> 命令：<code>sed -i&quot;s/\r//&quot;file.sh</code>。</p><p>4、使用 <code>dos2unix</code> 工具，如果系统上面安装了 <code>dos2unix</code> 工具，可以使用它转换：<code>dos2unix file.sh</code>，效果和 <code>vim</code> 工具一样。</p><p>5、另外使用一些文本编辑器，例如：<code>UltraEdit</code>、<code>EditPlus</code>、<code>NotePad</code>，也可以一键转换，读者自行搜索解决方案。</p><h1 id="问题总结"><a href="# 问题总结" class="headerlink" title="问题总结"></a>问题总结 </h1><p> 工程师还是买 <code>Mac</code> 办公比较好，攒钱买它！</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在 &lt;code&gt;Windows&lt;/code&gt; 系统上面使用 &lt;code&gt;Sublime text 3&lt;/code&gt;，创建了一个 &lt;code&gt;Shell&lt;/code&gt; 文件，然后上传到 &lt;code&gt;Linux&lt;/code&gt; 系统去执行。结果总是报错：&lt;code&gt;未预期的符号，附近有语法错误&lt;/code&gt;，折腾了我一个多小时，反复仔细检查了脚本没有发现问题，最后没想到是文件的格式在不同操作系统下不兼容，本质是回车换行符的问题，气死我了。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="踩坑系列" scheme="https://www.playpi.org/categories/series-of-fixbug/"/>
+    
+    
+      <category term="Shell" scheme="https://www.playpi.org/tags/Shell/"/>
+    
+      <category term="Windows" scheme="https://www.playpi.org/tags/Windows/"/>
+    
+      <category term="Linux" scheme="https://www.playpi.org/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Elasticsearch 的 fielddata 入门指引</title>
@@ -134,13 +160,13 @@
     
       <category term="Shell" scheme="https://www.playpi.org/tags/Shell/"/>
     
+      <category term="Linux" scheme="https://www.playpi.org/tags/Linux/"/>
+    
       <category term="Phoenix" scheme="https://www.playpi.org/tags/Phoenix/"/>
     
       <category term="Zookeeper" scheme="https://www.playpi.org/tags/Zookeeper/"/>
     
       <category term="Excel" scheme="https://www.playpi.org/tags/Excel/"/>
-    
-      <category term="Linux" scheme="https://www.playpi.org/tags/Linux/"/>
     
       <category term="Kakfa" scheme="https://www.playpi.org/tags/Kakfa/"/>
     
@@ -539,32 +565,6 @@
       <category term="HBase" scheme="https://www.playpi.org/tags/HBase/"/>
     
       <category term="Zookeeper" scheme="https://www.playpi.org/tags/Zookeeper/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>爬山徒步：竹海丛林 - 广州第二峰鸡枕山</title>
-    <link href="https://www.playpi.org/2019092201.html"/>
-    <id>https://www.playpi.org/2019092201.html</id>
-    <published>2019-09-22T08:03:49.000Z</published>
-    <updated>2019-09-22T08:03:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在 2019 年 9 月 21 日，我们几个小伙伴相约去广州鸡枕山登山徒步，给久坐的身体放松一下。<strong> 鸡枕山 </strong>位于广东省广州市从化区良口镇，海拔 1175 米，为广州市的第二高峰，仅次于天堂顶。另外有一点比较好的地方在于，鸡枕山虽然是广州第二高峰，但是它全程都被树木、竹林遮挡，基本不会被晒到，而且山路比较平缓，除了几处陡一点的路段，整体来说走起来非常舒适。</p><p>因此，这条线路非常适合没有登山经验的人，或者是平时缺少锻炼的人，或者体能差的人，这是一个比较好的入门路线。本文记录这次徒步的过程，给读者一个观察参考。</p><a id="more"></a><h1 id="集合"><a href="# 集合" class="headerlink" title="集合"></a>集合 </h1><p> 我们规定 07:00 在 <strong>客村 </strong>地铁站集合，签到、吃早餐、准备食物水等必需品。这时候有些人没有买够水的去买，没有买够食物的也去买，保证登山过程中能量补给。</p><h1 id="启程"><a href="# 启程" class="headerlink" title="启程"></a>启程 </h1><p>07:40，所有人到齐，准备出发，一个大巴装了 40 多人。</p><h1 id="到达"><a href="# 到达" class="headerlink" title="到达"></a> 到达 </h1><p>08:50 到达服务区，大家下车休息，还可以买水，09:00 继续出发。</p><p> 由于领队的麦克风坏掉了，所以没有进行互动，在过了服务区快要到达的时候，领队讲了一下注意事项。</p><p>在 09:50 到达山脚，做了一下热身，稍微休息几分钟，准备登山。</p><p>为了保留体力，避免运动过量，我们决定慢慢走，全程都是最后一批，其中一个领队就在我们后面。</p><h1 id="登山"><a href="# 登山" class="headerlink" title="登山"></a>登山 </h1><p>10:00 开始登山。</p><p> 在登山入口，我们的小队伍合影。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923005645.jpg" alt="山脚小合照" title="山脚小合照"></p><p>登山路过竹林，有人仰望天空，发现的心形竹林空隙。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923005740.jpg" alt="心形的竹林空隙" title="心形的竹林空隙"></p><p>走过竹林间的小路，看光影婆娑。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923005830.jpg" alt="竹林间的小路" title="竹林间的小路"></p><p>路过小水坝，领队抓拍到的如画风景，我是倒数第二个人。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923005941.jpg" alt="路过小水坝" title="路过小水坝"></p><p>这个小水坝是很小的，看看小水坝的蓄水池就知道了。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923010019.jpg" alt="小水坝的蓄水池" title="小水坝的蓄水池"></p><p>总是有人善于观察，看看路边的小花，斑驳的台阶。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923010102.jpg" alt="路边的小花" title="路边的小花"></p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923010113.jpg" alt="斑驳的台阶" title="斑驳的台阶"></p><p>路上少有的开阔视野，可以看看风景，远处的蓝蓝天空。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923010213.jpg" alt="蓝蓝的天空" title="蓝蓝的天空"></p><h1 id="午餐休息"><a href="# 午餐休息" class="headerlink" title="午餐休息"></a>午餐休息 </h1><p>12:00 到达登顶前的平台，可以休息吃午餐，养好体力准备登顶。</p><p> 领队竟然带了一个西瓜，背上来整整一个大西瓜，切开大家分了，竟然是冰冻的，爽口解渴。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011540.jpg" alt="切西瓜" title="切西瓜"></p><p>吃瓜群众，阳光洒在我全身，像个孩子。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011556.jpg" alt="吃瓜群众" title="吃瓜群众"></p><p>我带的西红柿，都给队友吃了。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011609.jpg" alt="吃西红柿" title="吃西红柿"></p><h1 id="登顶"><a href="# 登顶" class="headerlink" title="登顶"></a>登顶 </h1><p>12:40 开始登顶。</p><p> 最后有一段稍微陡峭的登顶路段，全程是暴露在阳光下的，只有灌木丛，慢慢登上去大概需要 20 分钟。</p><p>登顶大合照之一。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011649.jpg" alt="登顶大合照之一" title="登顶大合照之一"></p><p>登顶大合照之二。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011702.jpg" alt="登顶大合照之二" title="登顶大合照之二"></p><p>登顶小合照，我站在最高的石头上，眼睛被阳光照射，只能眯得很小。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011715.jpg" alt="登顶小合照" title="登顶小合照"></p><p>可以看到鸡枕山卫峰。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011731.jpg" alt="鸡枕山卫峰" title="鸡枕山卫峰"></p><p>山顶的平台被阳光直射，还是有点晒的，不过还好有风，感觉不是那么炎热，在上面遥看远方，风景如画，谈笑风生。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011904.jpg" alt="登顶远眺之一" title="登顶远眺之一"></p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011915.jpg" alt="登顶远眺之二" title="登顶远眺之二"></p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011924.jpg" alt="登顶远眺之三" title="登顶远眺之三"></p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923011934.jpg" alt="登顶远眺之四" title="登顶远眺之四"></p><h1 id="下山"><a href="# 下山" class="headerlink" title="下山"></a>下山 </h1><p>13:30 开始下山，一路小树林、竹林、灌木丛、缓坡。</p><p> 下山会有几段灌木丛的路，大概是下图这样，感觉像是玉米地，每次路过时双手挡脸，要防止被叶子刮伤。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923012043.jpg" alt="灌木丛" title="灌木丛"></p><p>下山遇到的竹林，不过此时已经很累，无心观赏。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923012346.jpg" alt="下山遇到的竹林" title="下山遇到的竹林"></p><p>仰望竹林。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923012433.jpg" alt="仰望竹林" title="仰望竹林"></p><p>阳光洒下，一片片翠绿金黄的竹叶；微风袭来，一阵阵扑面而来的凉爽。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923012128.jpg" alt="翠绿金黄的竹林" title="翠绿金黄的竹林"></p><p>竟然在山脚遇到了一群走地鸡，公鸡的羽毛特别漂亮。</p><p><img src="https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/2019/20190923012211.jpg" alt="走地鸡" title="走地鸡"></p><h1 id="集合返程"><a href="# 集合返程" class="headerlink" title="集合返程"></a>集合返程 </h1><p> 在 16:30 到达山脚。</p><p>返程到山脚，有一些人很早就到了，等了两个多小时。</p><p>大家换衣服、洗脸、去厕所，休息一会，然后喝水、吃东西，聊聊天。</p><p>一切准备就绪后，大家集合，准备返程。</p><h1 id="归来"><a href="# 归来" class="headerlink" title="归来"></a>归来 </h1><p>17:00 开始返程。</p><p> 在下山的路上，由于是曲折蜿蜒的 S 型路线，而且路比较窄，所以堵车很严重，特别在转弯处，还需要下去人去指挥，毕竟安全第一。</p><p>本来 10 分钟可以走完的路花了将近 1 小时。</p><p>最后在 20:00 到达广州。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在 2019 年 9 月 21 日，我们几个小伙伴相约去广州鸡枕山登山徒步，给久坐的身体放松一下。&lt;strong&gt; 鸡枕山 &lt;/strong&gt;位于广东省广州市从化区良口镇，海拔 1175 米，为广州市的第二高峰，仅次于天堂顶。另外有一点比较好的地方在于，鸡枕山虽然是广州第二高峰，但是它全程都被树木、竹林遮挡，基本不会被晒到，而且山路比较平缓，除了几处陡一点的路段，整体来说走起来非常舒适。&lt;/p&gt;&lt;p&gt;因此，这条线路非常适合没有登山经验的人，或者是平时缺少锻炼的人，或者体能差的人，这是一个比较好的入门路线。本文记录这次徒步的过程，给读者一个观察参考。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="游玩" scheme="https://www.playpi.org/categories/have-for-fun/"/>
-    
-    
-      <category term="Guangzhou" scheme="https://www.playpi.org/tags/Guangzhou/"/>
-    
-      <category term="hike" scheme="https://www.playpi.org/tags/hike/"/>
-    
-      <category term="climbing" scheme="https://www.playpi.org/tags/climbing/"/>
     
   </entry>
   
