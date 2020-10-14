@@ -25,6 +25,8 @@ Kafka,Shell
 
 待整理
 
+Kafka基础知识，常用脚本。
+
 
 # 脚本内容
 
@@ -42,4 +44,6 @@ kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --zkconnect localhost:2181 
 ```
 
 待整理
+
+注意，大家在写 `Shell` 脚本的时候，如果遇到在不同操作系统之间传输文件后不可用的问题，要注意转换格式，参考我的另外一篇博客：[未预期的符号，附近有语法错误](https://playpi.org/2020091601.html) 。
 
