@@ -107,7 +107,7 @@ export LESSCHARSET=utf-8
 
 3、特殊说明
 
-**gui.encoding = utf-8** 是为了解决 git gui 和 gitk 中的中文乱码问题，如果发现代码中的注释显示乱码，可以在所属项目的根目录中 **.git/config** 文件中添加：
+**gui.encoding = utf-8** 是为了解决 `git gui` 和 `gitk` 中的中文乱码问题，如果发现代码中的注释显示乱码，可以在所属项目的根目录中 **.git/config** 文件中添加：
 
 ```
 [gui]
@@ -120,10 +120,10 @@ export LESSCHARSET=utf-8
 
 ## 验证
 
-add 执行的时候 Git 输出的日志都是中文显示的，特别是带有中文名称的文件。
+`add` 执行的时候 `Git` 输出的日志都是中文显示的，特别是带有中文名称的文件。
 ![add命令输出中文](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17bv0ph2yj20l50f20uh.jpg "add命令输出中文")
 
-验证提交时填写日志信息，可以直接填写中文日志，另外 Git 的输出日志也是以中文来显示的，可以看到哪些文件变更了。
+验证提交时填写日志信息，可以直接填写中文日志，另外 `Git` 的输出日志也是以中文来显示的，可以看到哪些文件变更了。
 ![验证提交时填写中文日志](https://raw.githubusercontent.com/iplaypi/img-playpi/master/img/old/b7f2e3a3gy1g17boorhqyj20l50cpgn8.jpg "验证提交时填写中文日志")
 
 验证使用 **git log** 查看历史日志时正常显示中文内容
@@ -136,5 +136,5 @@ add 执行的时候 Git 输出的日志都是中文显示的，特别是带有�
 # 注意事项
 
 
-1、此外，Cygwin 在 Windows 平台上也有同样的问题，设置方式也是类似的。当然，如果只是查看目录文件，使用基本的命令，请尽量脱离带有中文的目录和带有中文的文件，避免踩坑，这样还可以把编码直接设置为 GBK 了，但是遇到特殊的情况还是脱离不了 UTF-8 编码。
+1、此外，`Cygwin` 在 `Windows` 平台上也有同样的问题，设置方式也是类似的。当然，如果只是查看目录文件，使用基本的命令，请尽量脱离带有中文的目录和带有中文的文件，避免踩坑，这样还可以把编码直接设置为 `GBK` 了，但是遇到特殊的情况还是脱离不了 `UTF-8` 编码。
 
