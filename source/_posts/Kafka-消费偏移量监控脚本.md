@@ -51,7 +51,7 @@ kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --zkconnect localhost:2181 
 
 注意，大家在写 `Shell` 脚本的时候，如果遇到在不同操作系统之间传输文件后不可用的问题，要注意转换格式，参考我的另外一篇博客：[未预期的符号，附近有语法错误](https://playpi.org/2020091601.html) 。
 
-`Shell` 脚本已经被我上传至 `GitHub`：[kafka_monitor_offset.sh](xx)，读者可以下载使用，脚本内容如下：
+`Shell` 脚本已经被我上传至 `GitHub`：[kafka_monitor_offset.sh](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/bin/2020050701)，读者可以下载使用，脚本内容如下：
 
 ```
 #!/bin/bash
@@ -132,7 +132,7 @@ done
 IFS="$ORIGIN_IFS"
 ```
 
-配置文件也已经被我上传至 `GitHub`：[kafka_monitor_group_topic.txt](xx)，读者可以下载使用，内容示例如下：
+配置文件也已经被我上传至 `GitHub`：[kafka_monitor_group_topic.txt](https://github.com/iplaypi/iplaypistudy/tree/master/iplaypistudy-normal/src/bin/2020050701)，读者可以下载使用，内容示例如下：
 
 ```
 消费组1	group_xx_v1	topic_xx_v1	100000
