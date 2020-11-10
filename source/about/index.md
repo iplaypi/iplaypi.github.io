@@ -184,6 +184,7 @@ comments: false
 - 广州市公安局，可以看到例如户政业务、车管所业务入口：[gaj.gz.gov.cn](http://gaj.gz.gov.cn)
 - 广州市中小客车指标调控管理信息系统：[广州车牌摇号](https://jtzl.gzjt.gov.cn)
 - 广州市教育局官网：[广州市教育局](http://jyj.gz.gov.cn)
+- 默沙东诊疗手册：[中文版](https://www.msdmanuals.com/zh) ，例如讲解「糖、脂肪、蛋白质」之间的区别与联系：[糖、脂肪、蛋白质](https://www.msdmanuals.com/zh/home/disorders-of-nutrition/overview-of-nutrition/carbohydrates-proteins-and-fats) 
 
 ## 技术列表
 
