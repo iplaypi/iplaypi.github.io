@@ -25,6 +25,8 @@ http://localhost:9200/_cat/nodes
 http://localhost:9200/_cat/indices
 http://localhost:9200/_cluster/state
 http://localhost:9200/_cat/aliases
+
+GET _nodes/_all/stats/fs?pretty=true
 ```
 
 可以看到整个集群的索引数、分片数、文档数、内存使用等等信息。
@@ -157,6 +159,15 @@ http://localhost:9200/_cat/thread_pool?v
 
 # 添加参数可以查看各个指标
 http://localhost:9200/_cat/thread_pool/search?v&h=node_name,ip,name,active,queue,rejected,completed,type,queue_size
+
+注意，size 指标【在节点启动时是0，随着请求进来才会增加】有特殊含义，不代表配置文件中的 size 参数【fixed 类型】。
+
+size：会从0开始增长，表示已经开启的线程池大小，直到 max 值，即配置文件中配置的。
+min、max：含义根据线程池类型不同而不同。
+
+查询请求：/_tasks?detailed=true&actions=*search*
+取消单个请求：/_tasks/xx/_cancel
+取消整个节点：/_tasks/_cancel?nodes=xx&actions=*search*
 ```
 
 ## 节点配置信息
@@ -241,6 +252,9 @@ PUT /_cluster/settings/
         "cluster.routing.allocation.exclude._ip": "ip1,ip2"
     }
 }
+
+#集群均衡移动分片的并发数，不能太大
+cluster.routing.allocation.cluster_concurrent_rebalance
 ```
 
 ## 基于负载的智能路由查询
@@ -282,6 +296,17 @@ POST your_index/_search?preference=_shards:12
     }
   }
 }
+
+#注意，指定节点之后还要指定分片，否则查询时报错：找不到某个分片对应的节点。
+#示例：
+POST your_index_name/_search?preference=_only_nodes:YKA3ZivmSj2K6qutW6KNQQ&preference=_shards:3
+{
+  "query": {
+    "match_all": {
+        
+    }
+  }
+}
 ```
 
 ## 分片迁移的并发数带宽流量大小等等
@@ -305,6 +330,40 @@ PUT _cluster/settings
     }
 }
 ```
+
+## 只读索引问题
+
+在集群机器的磁盘快用完之前，集群会自动设置这台机器上面的节点的索引为【只读模式】，不可写入，写入直接拒绝并抛出异常信息。
+
+```
+20/10/10 19:02:44 ERROR ESBulkProcessor: {"index":"your_index_name","type":"post","id":"12aad31610551fb2e236367bbde01db7","cause":{"type":"exception","reason":"Elasticsearch exception [type=cluster_block_exception, reason=blocked by: [FORBIDDEN/12/index read-only / allow delete (api)];]"},"status":403}
+```
+
+此时，除了清理数据，还需要手动设置。
+
+```
+GET your_index_*/_settings
+ 
+PUT your_index_*/_settings
+{
+  "index": {
+    "blocks": {
+      "read_only_allow_delete": "false"
+    }
+  }
+}
+ 
+PUT your_index_*/_settings
+{
+  "index": {
+    "blocks": {
+      "read_only_allow_delete": null
+    }
+  }
+}
+```
+
+参考官方文档：[cluster.routing.allocation.disk.watermark.flood_stage](cluster.routing.allocation.disk.watermark.flood_stage) 。
 
 
 # 分析器
@@ -541,6 +600,30 @@ painless脚本
           }
         }
       }
+    }
+  }
+}
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "update_timestamp": {
+              "gte": 1607670109000
+            }
+          }
+        },
+        {
+          "script": {
+            "script": {
+              "source": "(doc['view_cnt'].value)>doc['comment_cnt'].value",
+              "lang": "painless"
+            }
+          }
+        }
+      ]
     }
   }
 }
@@ -936,5 +1019,37 @@ curl -XPOST 'localhost:9200/_cluster/reroute' -d '{
     "shard": <分片号>,
     "primary": true/false
 }'
+
+将分配失败的分片重新进行分配
+POST _cluster/reroute?retry_failed=true
+
+移动分片
+POST /_cluster/reroute/
+{
+  "commands": [
+    {
+      "move": {
+        "index": "your_index_name",
+        "shard": 0,
+        "from_node": "dev5",
+        "to_node": "dev6"
+      }
+    }
+  ]
+}
+
+用命令手动分配分片，接受丢数据【原因：ES 集群升级前关闭了某个索引，升级后，把副本数设置为0，打开有20个分片无法分配，集群保持红色。关闭也无效，只好接受丢数据恢复空分片】。
+{
+  "commands": [
+    {
+      "allocate_empty_primary": {
+        "index": "your_index_name",
+        "shard": 17,
+        "node": "node1",
+        "accept_data_loss": true
+      }
+    }
+  ]
+}
 ```
 
