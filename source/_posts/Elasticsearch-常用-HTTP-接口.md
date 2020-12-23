@@ -841,6 +841,29 @@ POST combine-paas-1003-index/2723-data/_search
 -- 此外，不同版本连接 ES 的 client 方式也不一样【tcp 连接，如果是 http 连接就不会有问题】，代码不能兼容，所以只能使用其中1种方式【在本博客中可以搜索到相关总结】
 ```
 
+## 随机取数
+
+随机取数【需要 `ES` 集群支持脚本请求】
+
+```
+GET your_index_name/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": {
+    "_script": {
+      "script": "Math.random()",
+      "type": "number",
+      "order": "desc"
+    }
+  },
+  "size": 20
+}
+```
+
+如果 `ES` 集群不支持脚本请求，会抛出异常：`illegal_argument_exception`，原因：`cannot execute [inline] scripts`。
+
 
 # 删除数据
 
