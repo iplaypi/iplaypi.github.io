@@ -159,7 +159,7 @@ comments: false
 - 广州住房公积金管理中心网上个人业务，可以从广东政务服务网找到相关业务，但没给跳转链接：[gr.gzgjj.gov.cn](https://gr.gzgjj.gov.cn/center/login.html)
 - 广州人力和社保网上办事系统：[gzlss.hrssgz.gov.cn](http://gzlss.hrssgz.gov.cn/cas/login)
 - 中国人民银行征信中心：[ipcrs.pbccrc](https://ipcrs.pbccrc.org.cn)
-- 广州市住房和城乡建设局：[广州市住房和城乡建设局](http://zfcj.gz.gov.cn)
+- 广州市住房和城乡建设局，在行业数据、房屋信息、存量房交易登记统计信息中可以看到历史交易统计信息：[广州市住房和城乡建设局](http://zfcj.gz.gov.cn)
 - 阳光家缘，广州市住房和城乡建设局支持：[阳光家缘](http://zfcj.gz.gov.cn/data/Category_623/Index.aspx)
 - 广州市存量房自行交易网签系统：[广州存量房网签](https://clf.gzcc.gov.cn:7800/home)
 - 中华人民共和国住房和城乡建设部：[mohurd](http://www.mohurd.gov.cn)
@@ -188,6 +188,8 @@ comments: false
 - 广州市中小客车指标调控管理信息系统：[广州车牌摇号](https://jtzl.gzjt.gov.cn)
 - 广州市教育局官网：[广州市教育局](http://jyj.gz.gov.cn)
 - 默沙东诊疗手册：[中文版](https://www.msdmanuals.com/zh) ，例如讲解「糖、脂肪、蛋白质」之间的区别与联系：[糖、脂肪、蛋白质](https://www.msdmanuals.com/zh/home/disorders-of-nutrition/overview-of-nutrition/carbohydrates-proteins-and-fats) 
+- 佛山市住房和城乡建设局，在政务公开、重点信息公开、房地产市场、数据统计中可以看到历史房产交易统计表格：[佛山市住房和城乡建设局](http://fszj.foshan.gov.cn)
+- 网易房产-数据中心-二手房：[网易房产](http://data.house.163.com/gzesf/district/index.html)
 
 ## 技术列表
 
