@@ -248,6 +248,8 @@ POST _reindex
 
 注意，千万不要用错 `size` 参数的位置，可以继续参考下面的**随机 size 配置**小节。
 
+此外，在请求 `url` 中也可以添加参数 `scroll_size=5000` 来控制批次大小。它和 `source` 里面的 `size` 参数具有同样的作用。
+
 ## 多对一迁移
 
 如果需要把多个索引的数据或者多个 `type` 的数据共同迁移到同一个目标索引中，则需要在 `source` 参数中指定多个索引。
@@ -655,6 +657,10 @@ POST _tasks/task_id/_cancel
 
 # 备注
 
+
+特别注意，如果进行 `reindex` 的数据量很大，一时半会任务无法完成，记得不要退出浏览器窗口【耗时太长的记得设置后台运行】，否则任务就停止了【因为浏览器在等待请求返回信息，如果单方面关闭，连接超时，任务停止】。
+
+当然，如果耗时太长，记得一定要设置后台运行，添加参数 `wait_for_completion=false`，这个技巧在我的另外一篇博客中也有说明：[Elasticsearch 常用 HTTP 接口](https://www.playpi.org/2018051401.html) 。
 
 参考官网：[docs-reindex](https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docs-reindex.html) 。
 
