@@ -13,6 +13,12 @@ type: guide
 谨记：**每日有思考，每周有产出。**
 
 
+# 2021
+
+
+- 2021062601，[使用-Stream-Load-的方式批量导入数据到-Doris-中](https://www.playpi.org/2021062601.html)
+
+
 # 2020
 
 
