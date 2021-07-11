@@ -365,6 +365,56 @@ PUT your_index_*/_settings
 
 参考官方文档：[cluster.routing.allocation.disk.watermark.flood_stage](cluster.routing.allocation.disk.watermark.flood_stage) 。
 
+## 合并小文件
+
+由于 `ES` 的存储结构决定，在 `ES` 写入大量数据时会产生很多的 `segment`，需要定期 `merge`，否则会极大地影响查询速度。当组件在做 `merge` 时，会大量用到网络以及 `IO`，并阻塞读写，需要在集群请求低峰期做。
+
+触发方式：
+
+```
+curl -XPOST 'http://ip:9200/your_index/_forcemerge?max_num_segments=6'
+```
+
+可设置参数以及常用接口：
+
+1、注意，参数 `max_num_segments` 不建议设置太小。对于没有写单纯读的索引（只读），可以设置为1；但是如果还有少量的写，建议设置为 `5GB` 大小1个 `segment`，按照实际索引大小计算个数。
+
+2、线程池大小设置，通过 `http://ip:9200/_cat/thread_pool/force_merge?v` 查看线程数。
+
+```
+thread_pool.force_merge.size 
+thread_pool.force_merge.queue_size 
+```
+
+3、查看 `segment` 详情
+
+```
+查看索引的所有segment列表
+http://ip:9200/_cat/segments/your_index?v 
+
+查看索引的segment统计信息
+https://ip:9200/_cat/indices/?s=segmentsCount:desc&v&h=index,segmentsCount,segmentsMemory,memoryTotal,mergesCurrent,mergesCurrentDocs,storeSize,p,r
+
+查看节点的segment统计信息
+https://ip:9200/_cat/nodes?v&h=segments.count,segments.memory,segments.index_writer_memory,segments.version_map_memory,segments.fixed_bitset_memory,name 
+```
+
+4、限速方式
+
+从 `v5.0` 开始，以下参数取消，采用后台 `Lucene` 的 `CMS(ConcurrentMergeScheduler)` 的 `auto throttle` 机制，自动合并 `segment`，此时参数默认取值10240MB。
+
+```
+默认20MB，SSD磁盘建议设置100MB以上
+# curl -XPUT http://127.0.0.1:9200/_cluster/settings -d'
+{
+    "persistent" : {
+        "indices.store.throttle.max_bytes_per_sec" : "100mb"
+    }
+}'
+```
+
+线程数：`index.merge.scheduler.max_thread_count`，计算方式为 `Math.min(3, Runtime.getRuntime().availableProcessors() / 2)` 。如果磁盘 `IO` 速度跟不上合并的速度，例如磁盘 `IO` 升高，影响了其它读写请求，可以把这个参数调小。
+
 
 # 分析器
 
