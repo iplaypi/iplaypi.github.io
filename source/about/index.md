@@ -191,6 +191,8 @@ comments: false
 - 默沙东诊疗手册：[中文版](https://www.msdmanuals.com/zh) ，例如讲解「糖、脂肪、蛋白质」之间的区别与联系：[糖、脂肪、蛋白质](https://www.msdmanuals.com/zh/home/disorders-of-nutrition/overview-of-nutrition/carbohydrates-proteins-and-fats) 
 - 佛山市住房和城乡建设局，在政务公开、重点信息公开、房地产市场、数据统计中可以看到历史房产交易统计表格：[佛山市住房和城乡建设局](http://fszj.foshan.gov.cn)
 - 网易房产-数据中心-二手房：[网易房产](http://data.house.163.com/gzesf/district/index.html)
+- 深圳遗嘱库，非营利性公益项目：[深圳遗嘱库](http://www.szwills.org)
+- 国家统计局，例如可以看到人口普查、经济普查：[国家统计局](http://www.stats.gov.cn)
 
 ## 技术列表
 
