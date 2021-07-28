@@ -195,6 +195,8 @@ comments: false
 - 国家统计局，例如可以看到人口普查、经济普查：[国家统计局](http://www.stats.gov.cn)
 - 广州市交通规划研究院：[广州市交通规划研究院](http://www.gztpri.com)
 - 广州市规划和自然资源局：[广州市规划和自然资源局](http://ghzyj.gz.gov.cn)
+- 中国商务部，例如首页、走出去服务、国别指南，可以看到国家百科大全：[中国商务部](http://www.mofcom.gov.cn)
+- 中国商务部出版的，世界各国全貌，投资、旅游都可以看：[对外投资合作国别（地区）指南](http://fec.mofcom.gov.cn/article/gbdqzn)
 
 ## 技术列表
 
