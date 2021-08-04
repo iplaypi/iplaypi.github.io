@@ -197,6 +197,7 @@ comments: false
 - 广州市规划和自然资源局：[广州市规划和自然资源局](http://ghzyj.gz.gov.cn)
 - 中国商务部，例如首页、走出去服务、国别指南，可以看到国家百科大全：[中国商务部](http://www.mofcom.gov.cn)
 - 中国商务部出版的，世界各国全貌，投资、旅游都可以看：[对外投资合作国别（地区）指南](http://fec.mofcom.gov.cn/article/gbdqzn)
+- 可以查询市面上药品的事故情况，例如中药注射液：穿琥宁、炎琥宁：[国家药品监督管理局](https://www.nmpa.gov.cn/index.html)
 
 ## 技术列表
 
