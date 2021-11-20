@@ -199,6 +199,9 @@ comments: false
 - 中国商务部出版的，世界各国全貌，投资、旅游都可以看：[对外投资合作国别（地区）指南](http://fec.mofcom.gov.cn/article/gbdqzn)
 - 可以查询市面上药品的事故情况，例如中药注射液：穿琥宁、炎琥宁：[国家药品监督管理局](https://www.nmpa.gov.cn/index.html)
 - 广州房产查册网站【或者广州不动产登记微信公众号】，系统专区、相关查询、不动产登记资料查询：[广州市规划和自然资源局](http://ghzyj.gz.gov.cn)
+- 国家法律法规数据库【或者同名小程序】，收录了法律相关文件：[国家法律法规数据库](https://flk.npc.gov.cn)
+- Google 项目，扫描和 OCR 了两千多份报纸的历史版本，其中最早的是1738年的，可以研究历史事件：[新闻归档搜索](https://news.google.com/newspapers)
+- 香港旧报纸资源，即 MultiMedia Information System，首页查看 collection 板块：[MMIS](https://mmis.hkpl.gov.hk/web/guest/old-hk-collection)
 
 ## 技术列表
 
