@@ -246,9 +246,65 @@ git push origin source        # 推送即触发构建
 
 ---
 
-## 10. 已知遗留
+## 10. 待办备忘（TODO）
 
-- `.travis.yml`：已失效，保留仅作历史。
-- 原 Travis 中的「提交 URL 到百度站长」步骤未迁移（依赖 `BAIDU_TOKEN`）。
-- 统一标签后 `/tags/aria2/`、`/tags/java/` 等旧 URL 返回 404，尚未加 301 重定向。
+以下三项是 2026-11 改造时**有意未做**的，需要时按此清单执行。
+
+### 10.1 迁移「提交 URL 到百度站长」
+
+**现状**：原 Travis 在构建前推送站点 URL 到百度，迁移 CI 时未带上。
+
+原逻辑（`.travis.yml` 第 28~30 行）：
+
+```bash
+curl -H 'Content-Type:text/plain' \
+     --data-binary @baidu_urls.txt \
+     "http://data.zz.baidu.com/urls?site=https://www.playpi.org&token=${BAIDU_TOKEN}"
+```
+
+**素材**：
+- `auto_collect_urls.sh`：扫描 `source/_posts/*.md`，从第 3 行取 `id: <10位数字>`，拼成
+  `https://www.playpi.org/<id>.html`，不存在则追加进 `baidu_urls.txt`。
+- `baidu_urls.txt`：当前 145 行，作为累计 URL 清单。
+
+**实现要点**：
+1. 在 GitHub 仓库 Secrets 里新建 `BAIDU_TOKEN`（Travis 上的旧值需重新获取，可能已失效）。
+2. 放到 workflow 的构建之后、部署之前，作为独立 `step`，并加 `if: ${{ secrets.BAIDU_TOKEN != '' }}` 之类的防护，避免 fork/无密钥时失败。
+3. **不要每次全量推送 145 条**：百度接口有每日配额，全量推送会迅速耗尽。应先 diff 出本次新增/变更的 URL 再推送。
+4. 接口失败不应阻断部署，用 `continue-on-error: true` 或吞掉退出码。
+
+### 10.2 旧标签 URL 的 301 重定向
+
+**现状**：标签大小写统一后，旧地址全部 404（如 `/tags/java/`、`/tags/aria2/`、`/tags/hexo/`）。
+
+受影响的映射（统一前 → 统一后）：
+
+```
+aria2        → Aria2            jvm      → JVM
+ElasticSearch→ Elasticsearch    mapreduce→ MapReduce
+Github       → GitHub           markdown → Markdown
+hexo         → Hexo             maven    → Maven
+http         → HTTP             NexT     → Next
+java         → Java             serializable → Serializable
+shadowsocks  → Shadowsocks      ssl      → SSL
+vps          → VPS              yarn     → Yarn
+```
+
+**实现要点**：
+- GitHub Pages 是纯静态托管，**没有服务端 301**；只能用 HTML 跳转页兜底：
+  在 `source/` 下放 `<旧路径>/index.html`，内容为 `<meta http-equiv="refresh" content="0;url=/tags/Java/">`
+  ＋ `<link rel="canonical" href="...">`，Hexo 会原样拷贝到 `public/`。
+- 也可用 `hexo-generator-alias` 插件，但**本仓库禁止随意加依赖**，优先用静态文件方案。
+- 完成后需回归验证旧 URL 返回 200 且能跳转。
+
+### 10.3 删除 `.travis.yml`
+
+**现状**：文件仍在 `source` 根目录，已确认失效（最后构建 2021-06-09，Travis 侧已停用）。
+
+**做法**：`git rm .travis.yml` 后提交即可，无其他引用。删除前确认 `.github/workflows/deploy.yml` 工作正常。
+
+---
+
+## 11. 其他已知情况（暂不处理）
+
 - Hexo 3.9 依赖链存在若干中危漏洞（Dependabot 提示），属历史包袱，升级需整体评估。
