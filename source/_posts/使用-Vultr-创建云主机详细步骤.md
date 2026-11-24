@@ -4,7 +4,7 @@ id: 2019072801
 date: 2019-07-28 01:20:23
 updated: 2019-08-04 01:20:23
 categories: 知识改变生活
-tags: [Vultr,VPS,vps,Shadowsocks,Affiliate,cloud]
+tags: [Vultr,VPS,Shadowsocks,Affiliate,cloud]
 keywords: Vultr,VPS,vps,Shadowsocks,Affiliate,cloud
 ---
 

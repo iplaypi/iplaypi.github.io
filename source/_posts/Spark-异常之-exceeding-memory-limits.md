@@ -4,7 +4,7 @@ id: 2018022501
 date: 2018-02-25 00:51:24
 updated: 2018-02-25 00:51:24
 categories: 大数据技术知识
-tags: [Spark,elasticsearch-hadoop,yarn,Elasticsearch]
+tags: [Spark,elasticsearch-hadoop,Yarn,Elasticsearch]
 keywords: Spark,elasticsearch-hadoop,yarn,Elasticsearch
 ---
 

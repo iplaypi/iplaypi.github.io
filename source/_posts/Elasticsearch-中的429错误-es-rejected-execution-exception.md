@@ -4,7 +4,7 @@ id: 2017042601
 date: 2017-04-26 19:46:43
 updated: 2019-04-23 19:46:43
 categories: 踩坑系列
-tags: [Elasticsearch,HBase,mapreduce,BulkProcessor]
+tags: [Elasticsearch,HBase,MapReduce,BulkProcessor]
 keywords: Elasticsearch,HBase,mapreduce,BulkProcessor
 ---
 

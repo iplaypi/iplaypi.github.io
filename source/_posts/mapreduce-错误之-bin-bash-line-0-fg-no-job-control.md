@@ -4,7 +4,7 @@ id: 2019042401
 date: 2019-04-24 22:50:17
 updated: 2019-04-24 22:50:17
 categories: 踩坑系列
-tags: [mapreduce]
+tags: [MapReduce]
 keywords: mapreduce
 ---
 

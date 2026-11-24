@@ -4,7 +4,7 @@ id: 2019022501
 date: 2019-02-25 01:00:21
 updated: 2019-02-26 01:00:21
 categories: 基础技术知识
-tags: [hexo,markdown,java,bash,xml]
+tags: [Hexo,Markdown,Java,bash,xml]
 keywords: hexo,markdown,java,bash,xml
 ---
 

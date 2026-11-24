@@ -4,7 +4,7 @@ id: 2021062601
 date: 2021-06-26 22:27:23
 updated: 2021-06-26 22:27:23
 categories: 大数据技术知识
-tags: [Doris,JSON,http,curl,Stream Load]
+tags: [Doris,JSON,HTTP,curl,Stream Load]
 keywords: Doris,JSON,http,curl,Stream Load
 ---
 

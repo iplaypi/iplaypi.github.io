@@ -4,7 +4,7 @@ id: 2019030601
 date: 2019-03-06 23:13:32
 updated: 2019-03-07 23:13:32
 categories: 建站
-tags: [Github,PHP,WebHooks,Git,自动更新,钩子]
+tags: [GitHub,PHP,WebHooks,Git,自动更新,钩子]
 keywords: Github,PHP,WebHooks,Git,自动更新,钩子
 ---
 

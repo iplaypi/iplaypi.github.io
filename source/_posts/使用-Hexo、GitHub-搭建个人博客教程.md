@@ -4,7 +4,7 @@ id: 2017093001
 date: 2017-09-30 00:28:53
 updated: 2019-06-09 00:28:53
 categories: 建站
-tags: [Hexo,GitHub,NexT]
+tags: [Hexo,GitHub,Next]
 keywords: Hexo,GitHub,NexT
 ---
 

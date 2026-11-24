@@ -4,7 +4,7 @@ id: 2019082801
 date: 2019-08-28 23:48:21
 updated: 2019-09-19 23:48:21
 categories: 知识改变生活
-tags: [Shell,shadowsocks,firewalld,Shadowsocks,CentOS]
+tags: [Shell,Shadowsocks,firewalld,CentOS]
 keywords: Shell,shadowsocks,firewalld,Shadowsocks,CentOS
 ---
 

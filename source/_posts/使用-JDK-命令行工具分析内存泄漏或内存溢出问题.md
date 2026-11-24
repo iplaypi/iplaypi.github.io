@@ -4,7 +4,7 @@ id: 2019040301
 date: 2019-04-03 18:14:23
 updated: 2019-04-20 18:14:23
 categories: 基础技术知识
-tags: [JDK,内存泄漏,内存溢出,jvm]
+tags: [JDK,内存泄漏,内存溢出,JVM]
 keywords: JDK,内存泄漏,内存溢出,jvm
 ---
 

@@ -4,7 +4,7 @@ id: 2018122101
 date: 2018-12-21 00:43:50
 updated: 2018-12-21 00:43:50
 categories: 基础技术知识
-tags: [Spark,Spark序列化,serializable]
+tags: [Spark,Spark序列化,Serializable]
 keywords: Spark,Spark序列化,JavaSparkContext not serializable,
 ---
 

@@ -4,7 +4,7 @@ id: 2017071701
 date: 2017-07-17 00:23:05
 updated: 2017-07-17 00:23:05
 categories: 大数据技术知识
-tags: [NotSerializableException,serializable,Spark]
+tags: [NotSerializableException,Serializable,Spark]
 keywords: NotSerializableException,serializable,Spark
 ---
 
