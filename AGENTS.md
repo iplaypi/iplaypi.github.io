@@ -113,6 +113,9 @@ npx hexo server -p 4000
 | `git push --force origin HEAD:master` | 与历史部署方式一致，`master` 历史每次重置 |
 | `concurrency: deploy-master` | 连续提交时取消上一次构建，避免并发强推 |
 
+> 注：`master` 的每次构建都会整体变化（主题会在 HTML 里写入 build time 注释），所以「跳过部署」
+> 分支基本不会走到，`master` 会稳定地一次 push 一个提交。
+
 前置条件：仓库 **Settings → Actions → General → Workflow permissions** 必须是 **Read and write**，否则最后一步推送 403。
 
 ### 关于 Travis CI
@@ -236,7 +239,9 @@ git push origin source        # 推送即触发构建
 
 - 推送后 GitHub Actions 自动构建并强推 `master`，约 3~5 分钟。
 - 构建失败时 `master` 不会被改动（守卫步骤会拦住）。
-- 若产物无变化，部署步骤会输出「产物无变化，跳过部署」并成功退出。
+- 部署步骤里有一个「产物无变化则跳过」的判断，但**实际不会触发**：渲染出的页面内嵌了
+  `<!-- build time:... -->` 注释，每次构建 592 个文件都会变，因此每次 push 都会在 `master`
+  上新增一个提交。这是正常现象，不是配置错误。
 - 提交信息使用 Conventional Commit 风格；不要直接向 `master` 推送。
 
 ---
