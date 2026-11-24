@@ -1,0 +1,67 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - source
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-master
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    # 该站点是 Hexo 3.9，官方 CI 当年使用 Node 10；新 Node 会导致产物异常
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '10.24.1'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build site
+        run: |
+          npx hexo clean
+          npx hexo generate
+          echo "生成文件数: $(find public -type f | wc -l)"
+          test -s public/index.html || { echo "::error::生成结果为空，终止部署"; exit 1; }
+
+      - name: Deploy to master
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin master
+          rm -rf /tmp/deploy
+          git worktree add --detach /tmp/deploy origin/master
+
+          # 清空旧产物，避免已删除的页面（例如旧的大小写标签目录）残留
+          find /tmp/deploy -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+
+          cp -rf public/. /tmp/deploy/
+          cp CNAME LICENSE README.md index.php /tmp/deploy/
+          : > /tmp/deploy/.gitignore
+
+          cd /tmp/deploy
+          git add -A
+          if git diff --cached --quiet; then
+            echo "产物无变化，跳过部署"
+            exit 0
+          fi
+          git commit -m "Auto Builder at $(date +'%Y-%m-%d %H:%M')"
+          git push --force origin HEAD:master
